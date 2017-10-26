@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+</head>
+<body>
+	<div th:replace="layout :: header"></div>
+	
+	<div class="slideshow">
+				<div><a href="#"><img src="/images/BR1.JPG" th:src="@{/images/BR2.jpg}" alt="" border="0" /></a></div>
+				<div><a href="#"><img src="/images/BR2.jpg" th:src="@{/images/BR1.JPG}" alt="" border="0" /></a></div>
+				<div><a href="#"><img src="/images/BR3.jpg" th:src="@{/images/BR3.jpg}" alt="" border="0" /></a></div>
+				<div><a href="#"><img src="/images/BR4.jpg" th:src="@{/images/BR4.jpg}" alt="" border="0" /></a></div>
+				<div><a href="#"><img src="/images/BR5.jpg" th:src="@{/images/BR5.jpg}" alt="" border="0" /></a></div>
+	</div>
+			
+	<div class="container">
+		<div class="row">
+			
+		</div>
+	</div>
+</body>
+</html>

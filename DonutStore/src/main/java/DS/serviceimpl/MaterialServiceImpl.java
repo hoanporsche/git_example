@@ -1,0 +1,35 @@
+package DS.serviceimpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import DS.model.Material;
+import DS.repository.MaterialRepository;
+import DS.service.MaterialService;
+
+@Service
+public class MaterialServiceImpl implements MaterialService {
+	@Autowired
+	private MaterialRepository materialRepository;
+
+	@Override
+	public Iterable<Material> findAll() {
+		return materialRepository.findAll();
+	}
+
+	@Override
+	public void save(Material material) {
+		materialRepository.save(material);
+	}
+
+	@Override
+	public void delete(int id) {
+		materialRepository.delete(id);
+	}
+
+	@Override
+	public Material findOne(int id) {
+		return materialRepository.findOne(id);
+	}
+	
+}
