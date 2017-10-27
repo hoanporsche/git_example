@@ -16,7 +16,13 @@ public class MainController {
     public String index() {
         return "home";
     }
-
+    
+    @GetMapping("/checkLogined")
+    public String checkLogined() {
+    	
+    	return "redirect:/";
+    }
+    
     @GetMapping("/admin") 
     public String admin() {
         return "admin";

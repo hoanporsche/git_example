@@ -30,7 +30,7 @@ public class Item implements Serializable {
 	private String itemName;
 	@Column(name="item_date_created",nullable=false)
 	private String itemDateCreated;
-	@Column(name="iteam_date_updated",nullable=false)
+	@Column(name="item_date_updated",nullable=false)
 	private String itemDateUpdated;
 	@Column(name="item_single_value",nullable=false)
 	private double iteamSingleValue;

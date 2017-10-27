@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
-<meta charset="ISO-8859-1"/>
+<meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Bánh rán Bác Thân</title>
@@ -10,15 +10,12 @@
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
     rel="stylesheet" />
-    
-<!-- Custom style -->
-<link th:href="@{/static/css/style.css}" rel="stylesheet" />
-<link th:href="@{/static/js/homejs.js}" rel="stylesheet" />
+<link href="/css/style.css"
+	th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
 
 <body>
-	<div th:fragment="header">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded" th:fragment="header">
 		<div class="container">
 			<div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
@@ -37,11 +34,10 @@
       			<li><a th:href="@{/user/registry}">Registry</a></li>
       			<li><a th:href="@{/main/reference}">Hướng dẫn</a></li>
       			<li><a th:href="@{/main/contact}">Liên hệ</a></li>
-      			<li><a>Since 2001</a></li>
+      			<li><h4 style="margin-top: 17px;margin-left: 100px;color: red;">Since 2001</h4></li>
     			</ul>
 		</div>
 	</nav>
-	</div>
 	
 	<footer th:fragment="footer">
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -52,6 +48,7 @@
 		<script 
     		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
     		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    	<script type="text/javascript"></script>
 	</footer>
 </body>
 </html>
