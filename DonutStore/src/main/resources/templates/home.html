@@ -3,10 +3,10 @@
 <head th:replace="layout :: head">
 </head>
 <body>
+<div style="background:#F2E2E2;">
 	<nav th:replace="layout :: header"></nav>
 
-	<div style="background:#F2E2E2;">
-	<div class="col-md-12" id="slider" >
+	<div id="slider" >
 		<img class="slide" src="images/BR1.JPG" />
 		<img class="slide" src="images/BR2.jpg" style="display:none;"/>
 		<img class="slide" src="images/BR3.jpg" style="display:none;"/>
@@ -17,60 +17,87 @@
 	</div>
 	
 	<div class="row">
-		<h2 style="background: red" align="center">============Menu==============</h2>
+		<hr style="background: red" align="center"/>
 	</div>
 	
 	<div class="container">
 		<div class="row">
-			<h2><b><span class="label label-warning">Bánh rán </span></b></h2>
-			<div class="row">
-				<div class="col-md-4">
-					<img alt="" src="images/BR1.JPG" style="width:100%;"/>
-				</div>
-				<div class="col-md-8">
-					<div class="panel panel-warning">
-						<div class="panel-heading">
-							<div class="panel-title">Bánh rán mặn</div>
+			<div class="panel panel-warning">
+				<h2><b><span class="label label-warning">Bánh rán</span></b></h2>
+				<div class="row produc-info" align="center">
+					<div class="col-md-4">
+						<img alt="" src="images/BR1.JPG" style="width:80%;"/>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<div class="panel-title">Bánh rán mặn</div>
+							</div>
+							<div class="panel-body"></div>
 						</div>
-						<div class="panel-body"></div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<img alt="" src="images/BR2.jpg" style="height:20%;width:100%;"/>
-				</div>
-				<div class="col-md-8">
-					<div class="panel panel-warning">
-						<div class="panel-heading">
-							<div class="panel-title">Bánh rán ngọt</div>
+				<div class="row produc-info" align="center">
+					<div class="col-md-4">
+						<img alt="" src="images/BR2.jpg" style="height:20%;width:80%;"/>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<div class="panel-title">Bánh rán ngọt</div>
+							</div>
+							<div class="panel-body"></div>
 						</div>
-						<div class="panel-body"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="row">
-			<h2><b><span class="label label-info">Bánh mỳ</span></b></h2>
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-8"></div>
-			</div>
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-8"></div>
+			<div class="panel panel-info">
+				<h2><b><span class="label label-info">Bánh mì</span></b></h2>
+				<div class="row produc-info">
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/BM1.jpg" style="height:20%;width:80%;"/>
+						<h3>Bánh mì pate trứng</h3>
+						<p>12.000đ</p>
+					</div>
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/BM2.jpg" style="height:20%;width:80%;"/>
+						<h3>Bánh mì pate xúc xích</h3>
+						<p>15.000đ</p>
+					</div>
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/BM3.jpg" style="height:20%;width:80%;"/>
+						<h4><b>Bánh mì pate trứng xúc xích</b></h4>
+						<p>18.000đ</p>
+					</div>
+				</div>
 			</div>
 		</div>
 		
-		<div class="row">
-			<h2><b><span class="label label-success">Đồ uống</span></b></h2>
-			<div class="col-md-4"></div>
-			<div class="col-md-4"></div>
-			<div class="col-md-4"></div>
+		<div class="row produc-info">
+			<div class="panel panel-success">
+				<h2><b><span class="label label-success">Đồ uống</span></b></h2>
+				<div class="col-md-4" align="center">
+					<img alt="" src="images/COCA.jpg" style="height:20%;width:80%;"/>
+					<h4><b>Coca cola</b></h4>
+					<p>12.000đ</p>
+				</div>
+				<div class="col-md-4" align="center">
+					<img alt="" src="images/TRADA.jpg" style="height:20%;width:80%;"/>
+					<h4><b>Trà đá</b></h4>
+					<p>3.000đ</p>
+				</div>
+				<div class="col-md-4" align="center">
+					<img alt="" src="images/MIRINDA.jpg" style="height:20%;width:80%;"/>
+					<h4><b>Mirrinda</b></h4>
+					<p>12.000đ</p>
+				</div>
+			</div>
 		</div>
 	</div>
-	</div>
+</div>
 	<footer th:replace="layout :: footer"></footer>
 	<script src="/static/js/homejs.js" th:src="@{/js/homejs.js}"></script>
 </body>

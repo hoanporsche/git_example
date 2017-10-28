@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-toggleable-md navbar-light bg-faded" th:fragment="header">
+	<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
 		<div class="container">
 			<div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
@@ -28,14 +28,18 @@
                 </button>
                 <a class="navbar-brand" th:href="@{/}">Trang chủ</a>
             </div>
-            <ul class="nav navbar-nav">
-            	<li><a class="active" th:href="@{/order}">Đặt hàng</a></li>
-      			<li><a th:href="@{/checkLogined}">Log in</a></li>
-      			<li><a th:href="@{/user/registry}">Registry</a></li>
-      			<li><a th:href="@{/main/reference}">Hướng dẫn</a></li>
-      			<li><a th:href="@{/main/contact}">Liên hệ</a></li>
-      			<li><h4 style="margin-top: 17px;margin-left: 100px;color: red;">Since 2001</h4></li>
+            <div class="navbar-collapse collapse" id="navbar">
+            	<ul class="nav navbar-nav">
+            		<li><a class="active" th:href="@{/order}">Đặt hàng</a></li>
+      				<li><a th:href="@{/main/reference}">Hướng dẫn</a></li>
+      				<li><a th:href="@{/main/contact}">Liên hệ</a></li>
+      				<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
     			</ul>
+    			<div class="navbar-right">
+    				<button class="btn btn-danger navbar-btn">Đăng ký</button>
+    				<button class="btn btn-info navbar-btn">Đăng nhập</button>
+    			</div>
+    		</div>
 		</div>
 	</nav>
 	
