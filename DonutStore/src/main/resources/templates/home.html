@@ -4,6 +4,8 @@
 </head>
 <body>
 	<nav th:replace="layout :: header"></nav>
+
+	<div style="background:#F2E2E2;">
 	<div class="col-md-12" id="slider" >
 		<img class="slide" src="images/BR1.JPG" />
 		<img class="slide" src="images/BR2.jpg" style="display:none;"/>
@@ -13,27 +15,44 @@
 		<button class="button" id="prev">&#10094;</button>
 		<button class="button" id="next">&#10095;</button>
 	</div>
-
-	<h2 style="background: red;margin-top:0px" align="center">============Menu==============</h2>
+	
+	<div class="row">
+		<h2 style="background: red" align="center">============Menu==============</h2>
+	</div>
+	
 	<div class="container">
 		<div class="row">
-			<h3><b>Bánh rán </b></h3>
+			<h2><b><span class="label label-warning">Bánh rán </span></b></h2>
 			<div class="row">
 				<div class="col-md-4">
-					<img alt="" src="images/BR1.JPG" style="height:20%;width:100%;"/>
+					<img alt="" src="images/BR1.JPG" style="width:100%;"/>
 				</div>
-				<div class="col-md-8"></div>
+				<div class="col-md-8">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<div class="panel-title">Bánh rán mặn</div>
+						</div>
+						<div class="panel-body"></div>
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<img alt="" src="images/BR2.jpg" style="height:20%;width:100%;"/>
 				</div>
-				<div class="col-md-8"></div>
+				<div class="col-md-8">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<div class="panel-title">Bánh rán ngọt</div>
+						</div>
+						<div class="panel-body"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 		
 		<div class="row">
-			<h3><b>Bánh mỳ</b></h3>
+			<h2><b><span class="label label-info">Bánh mỳ</span></b></h2>
 			<div class="row">
 				<div class="col-md-4"></div>
 				<div class="col-md-8"></div>
@@ -45,13 +64,13 @@
 		</div>
 		
 		<div class="row">
-			<h3><b>Đồ uống</b></h3>
+			<h2><b><span class="label label-success">Đồ uống</span></b></h2>
 			<div class="col-md-4"></div>
 			<div class="col-md-4"></div>
 			<div class="col-md-4"></div>
 		</div>
 	</div>
-
+	</div>
 	<footer th:replace="layout :: footer"></footer>
 	<script src="/static/js/homejs.js" th:src="@{/js/homejs.js}"></script>
 </body>
