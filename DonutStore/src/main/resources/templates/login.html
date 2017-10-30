@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title>Login Page</title>
-<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+<head th:replace="layout :: head">
 </head>
 <body>
-    <div class="main-content">
-        <p th:if="${param.error}" class="error">Invalid email or password</p>
-        <p th:if="${param.logout}" class="success">You have been logged out</p>
-        <h3>Login to continue</h3>
-        <form th:action="@{/login}" method="POST">
-            <input type="text" name="userName" placeholder="Your email" /><br />
-            <input type="password" name="userPassword" placeholder="Your password" /><br />
-            <button type="submit">Login</button> <br />
-        </form>
+    <div style="background:#F2E2E2;">
+        <nav th:replace="layout :: header"></nav>
+        <div class="container">
+        
+        </div>
+        <div class="container" style="background:white;" align="center">
+            <div th:if="${logined}" class="row">
+                <h2>Bạn đã đăng nhập</h2>
+            </div>
+            <div th:unless="${logined}" class="row form-style">
+                <h3 th:if="${param.error}" class="error">Sai mật khẩu hoặc tài khoản</h3>
+                <h3 th:if="${param.logout}" class="success">Bạn đã đăng xuất</h3>
+                <div class="form-group col-md-6 col-md-offset-3">
+                    <form th:action="@{/login}" method="POST">
+                        <input type="text" class="form-control" name="userName" placeholder="Your email" /><br />
+                        <input type="password" class="form-control" name="userPassword" placeholder="Your password" /><br />
+                        <button type="submit">Login</button> <br />
+                    </form>
+                 </div>
+            </div>
+            
+        </div>
     </div>
+    
+    <footer th:replace="layout :: footer"></footer>
 </body>
 </html>

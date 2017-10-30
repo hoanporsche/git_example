@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="head">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,19 +30,23 @@
                 <a class="navbar-brand" th:href="@{/}">Trang chủ</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
-            		<ul class="nav navbar-nav">
-            			<li><a class="active" th:href="@{/order}">Đặt hàng</a></li>
-      					<li><a th:href="@{/main/reference}">Hướng dẫn</a></li>
-      					<li><a th:href="@{/main/contact}">Liên hệ</a></li>
+            		<ul class="nav navbar-nav" >
+            			<li><a class="active" th:href="@{/order}" style="color:white;">Đặt hàng</a></li>
+      					<li><a th:href="@{/main/reference}" style="color:white;">Hướng dẫn</a></li>
+      					<li><a th:href="@{/main/contact}" style="color:white;">Liên hệ</a></li>
       					<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
     				</ul>
-    				
-    				<div th:if="${logined}" class="navbar-right">
-    					<h4>Bạn đã đăng nhập</h4>
-    					<a th:href="@{/logout}">Đăng xuất</a>
-    				</div>
+    				<ul th:if="${loginedAdmin}" class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/admin/order}">Đơn hàng</a></li>
+                        <li><a th:href="@{/admin/user}">Người dùng</a></li>
+                        <li><a th:href="@{/admin/income}">Thu nhập</a></li>
+                    </ul>
+    				<ul th:if="${logined}" class="nav navbar-nav navbar-right">
+    					<li><a sec:authentication="name" style="color:white"></a></li>
+    					<li><a th:href="@{/logout}">[Đăng xuất]</a></li>
+    				</ul>
     				<div th:unless="${logined}" class="navbar-right">
-    					<button class="btn btn-danger navbar-btn">Đăng ký</button>
+    					<a class="btn btn-danger navbar-btn" th:href="@{/registry}">Đăng ký</a>
     					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#userLogin">Đăng nhập</button>
     				</div>
     			</div>

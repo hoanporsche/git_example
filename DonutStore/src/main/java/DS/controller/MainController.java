@@ -16,7 +16,7 @@ public class MainController {
 
     @GetMapping("/")
     public String home(Model model,Authentication auth, RedirectAttributes redirect) {
-    	auth = SecurityContextHolder.getContext().getAuthentication();
+    auth = SecurityContextHolder.getContext().getAuthentication();
 		boolean userRole0 = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_MEMBER"));
 		if(userRole0) {
 			model.addAttribute("logined", "You have been logined");
@@ -45,8 +45,17 @@ public class MainController {
     }
 
     @GetMapping("/login") 
-    public String getLogin() {
-        return "login";
+    public String getLogin(Model model,Authentication auth) {
+      auth = SecurityContextHolder.getContext().getAuthentication();
+      boolean userRole0 = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_MEMBER"));
+      if(userRole0) {
+        model.addAttribute("logined", "You have been logined");
+      }
+      boolean userRole1 = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+      if(userRole1) {
+        model.addAttribute("loginedAdmin", "You have been logined as ADMIN");
+      }
+       return "login";
     }
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {

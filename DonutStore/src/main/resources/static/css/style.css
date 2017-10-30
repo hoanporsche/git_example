@@ -1,7 +1,6 @@
 #slider{
 	position:relative;
 	list-style: none;
-  	overflow: scroll;
  	width: 100%;
  	max-height:600px;
   	padding: 0;
