@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+	<nav class="navbar navbar-inverse" th:fragment="header">
 		<div class="container">
 			<div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
@@ -29,17 +29,44 @@
                 <a class="navbar-brand" th:href="@{/}">Trang chủ</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
-            	<ul class="nav navbar-nav">
-            		<li><a class="active" th:href="@{/order}">Đặt hàng</a></li>
-      				<li><a th:href="@{/main/reference}">Hướng dẫn</a></li>
-      				<li><a th:href="@{/main/contact}">Liên hệ</a></li>
-      				<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
-    			</ul>
-    			<div class="navbar-right">
-    				<button class="btn btn-danger navbar-btn">Đăng ký</button>
-    				<button class="btn btn-info navbar-btn">Đăng nhập</button>
+            		<ul class="nav navbar-nav">
+            			<li><a class="active" th:href="@{/order}">Đặt hàng</a></li>
+      					<li><a th:href="@{/main/reference}">Hướng dẫn</a></li>
+      					<li><a th:href="@{/main/contact}">Liên hệ</a></li>
+      					<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
+    				</ul>
+    				
+    				<div th:if="${logined}" class="navbar-right">
+    					<h4>Bạn đã đăng nhập</h4>
+    					<a th:href="@{/logout}">Đăng xuất</a>
+    				</div>
+    				<div th:unless="${logined}" class="navbar-right">
+    					<button class="btn btn-danger navbar-btn">Đăng ký</button>
+    					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#userLogin">Đăng nhập</button>
+    				</div>
     			</div>
-    		</div>
+		</div>
+		
+		<div id="userLogin" class="modal modal-style fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" align="center"><b>Đăng nhập</b></h4>
+					</div>
+					<div class="modal-body form-style">
+						<form action="#" th:action="@{/login}" method="post">
+							<div class="form-group">
+								<label><b>Tên tài khoản</b></label>
+								<input type="text" class="form-control" name="userName" placeholder="" />
+								<label><b>Mật khẩu</b></label>
+								<input type="password" class="form-control" name="userPassword" placeholder="" />
+								<button type="submit">Đăng nhập</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>		
 		</div>
 	</nav>
 	
