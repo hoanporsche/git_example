@@ -6,6 +6,6 @@ import DS.model.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    User findByuserName(String userName);
+  User findByuserName(String userName);
 
 }

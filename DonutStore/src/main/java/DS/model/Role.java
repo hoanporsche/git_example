@@ -1,6 +1,5 @@
 package DS.model;
 
-
 import java.io.Serializable;
 import java.util.Set;
 
@@ -16,48 +15,48 @@ import javax.persistence.Table;
 @Table(name = "role")
 public class Role implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id", nullable = false)
-    private int roleId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "role_id", nullable = false)
+  private int roleId;
 
-    @Column(name = "role_name", nullable = false)
-    private String roleName;
+  @Column(name = "role_name", nullable = false)
+  private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+  @ManyToMany(mappedBy = "roles")
+  private Set<User> users;
 
-    public Role() {
-    }
+  public Role() {
+  }
 
-    public Role(String name) {
-        this.roleName = name;
-    }
-    
-	public int getRoleId() {
-		return roleId;
-	}
+  public Role(String name) {
+    this.roleName = name;
+  }
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
+  public int getRoleId() {
+    return roleId;
+  }
 
-	public String getRoleName() {
-		return roleName;
-	}
+  public void setRoleId(int roleId) {
+    this.roleId = roleId;
+  }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+  public String getRoleName() {
+    return roleName;
+  }
 
-	public Set<User> getUsers() {
-		return users;
-	}
+  public void setRoleName(String roleName) {
+    this.roleName = roleName;
+  }
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
+  public Set<User> getUsers() {
+    return users;
+  }
+
+  public void setUsers(Set<User> users) {
+    this.users = users;
+  }
 
 }

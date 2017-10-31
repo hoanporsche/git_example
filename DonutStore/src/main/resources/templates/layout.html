@@ -36,16 +36,16 @@
       					<li><a th:href="@{/main/contact}" style="color:white;">Liên hệ</a></li>
       					<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
     				</ul>
-    				<ul th:if="${loginedAdmin}" class="nav navbar-nav navbar-right">
+    				<ul th:if="${session.loginedAdmin}" class="nav navbar-nav navbar-right">
                         <li><a th:href="@{/admin/order}">Đơn hàng</a></li>
                         <li><a th:href="@{/admin/user}">Người dùng</a></li>
                         <li><a th:href="@{/admin/income}">Thu nhập</a></li>
                     </ul>
-    				<ul th:if="${logined}" class="nav navbar-nav navbar-right">
+    				<ul th:if="${session.loginedUser}" class="nav navbar-nav navbar-right">
     					<li><a sec:authentication="name" style="color:white"></a></li>
     					<li><a th:href="@{/logout}">[Đăng xuất]</a></li>
     				</ul>
-    				<div th:unless="${logined}" class="navbar-right">
+    				<div th:unless="${session.loginedUser}" class="navbar-right">
     					<a class="btn btn-danger navbar-btn" th:href="@{/registry}">Đăng ký</a>
     					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#userLogin">Đăng nhập</button>
     				</div>

@@ -3,8 +3,9 @@ package DS.service;
 import DS.model.User;
 
 public interface UserService {
-	Iterable<User> findAll();
-	void save(User user);
-	void delete(int id);
-	User findOne(int id);
+  Iterable<User> findAll();
+  void save(User user);
+  void delete(int id);
+  User findOne(int id);
+  User findByuserName(String userName);
 }

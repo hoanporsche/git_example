@@ -1,8 +1,8 @@
 package DS.repository;
 
-import org.springframework.data.repository.CrudRepository;
-
 import DS.model.Material;
+
+import org.springframework.data.repository.CrudRepository;
 
 public interface MaterialRepository extends CrudRepository<Material, Integer> {
 

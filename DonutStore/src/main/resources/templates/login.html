@@ -8,18 +8,20 @@
         <div class="container">
         
         </div>
-        <div class="container" style="background:white;" align="center">
-            <div th:if="${logined}" class="row">
+        <div class="container" style="background:white;" >
+            <div th:if="${session.loginedUser}" class="row" align="center">
                 <h2>Bạn đã đăng nhập</h2>
             </div>
-            <div th:unless="${logined}" class="row form-style">
+            <div th:unless="${session.loginedUser}" class="row form-style">
                 <h3 th:if="${param.error}" class="error">Sai mật khẩu hoặc tài khoản</h3>
                 <h3 th:if="${param.logout}" class="success">Bạn đã đăng xuất</h3>
                 <div class="form-group col-md-6 col-md-offset-3">
                     <form th:action="@{/login}" method="POST">
-                        <input type="text" class="form-control" name="userName" placeholder="Your email" /><br />
-                        <input type="password" class="form-control" name="userPassword" placeholder="Your password" /><br />
-                        <button type="submit">Login</button> <br />
+                        <label><b>Tên tài khoản</b></label>
+                        <input type="text" class="form-control" name="userName" placeholder="Your email" />
+                        <label><b>Mật khẩu</b></label>
+                        <input type="password" class="form-control" name="userPassword" placeholder="Your password" />
+                        <button type="submit">Đăng nhập</button>
                     </form>
                  </div>
             </div>

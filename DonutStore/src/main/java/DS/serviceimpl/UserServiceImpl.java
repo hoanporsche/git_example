@@ -10,28 +10,32 @@ import DS.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-	@Override
-	public Iterable<User> findAll() {
-		return userRepository.findAll();
-	}
+  @Override
+  public Iterable<User> findAll() {
+    return userRepository.findAll();
+  }
 
-	@Override
-	public void save(User user) {
-		userRepository.save(user);
-	}
+  @Override
+  public void save(User user) {
+    userRepository.save(user);
+  }
 
-	@Override
-	public void delete(int id) {
-		userRepository.delete(id);
-	}
+  @Override
+  public void delete(int id) {
+    userRepository.delete(id);
+  }
 
-	@Override
-	public User findOne(int id) {
-		return userRepository.findOne(id);
-	}
-	
-	
+  @Override
+  public User findOne(int id) {
+    return userRepository.findOne(id);
+  }
+
+  @Override
+  public User findByuserName(String userName) {
+    return userRepository.findByuserName(userName);
+  }
+
 }

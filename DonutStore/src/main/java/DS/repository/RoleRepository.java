@@ -1,11 +1,11 @@
 package DS.repository;
 
-import org.springframework.data.repository.CrudRepository;
-
 import DS.model.Role;
+
+import org.springframework.data.repository.CrudRepository;
 
 public interface RoleRepository extends CrudRepository<Role, Integer> {
 
-    Role findByroleName(String roleName);
+  Role findByroleName(String roleName);
 
 }

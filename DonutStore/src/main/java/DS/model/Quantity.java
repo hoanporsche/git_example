@@ -10,66 +10,63 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="quantity")
+@Table(name = "quantity")
 public class Quantity implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="quantity_id",nullable=false)
-	private int quantityId;
-	@Column(name="quantity_order_id",nullable=false)
-	private int quantityOrderId;
-	@Column(name="quantity_item_id",nullable=false)
-	private int quantityItemId;
-	@Column(name="quantity_item_quantity",nullable=false)
-	private int quantityItemQuantity;
-	
-//	private Order order;
+  static final long serialVersionUID = 1L;
 
-	public int getQuantityId() {
-		return quantityId;
-	}
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "quantity_id", nullable = false)
+  private int quantityId;
+  @Column(name = "quantity_order_id", nullable = false)
+  private int quantityOrderId;
+  @Column(name = "quantity_item_id", nullable = false)
+  private int quantityItemId;
+  @Column(name = "quantity_item_quantity", nullable = false)
+  private int quantityItemQuantity;
 
-	public void setQuantityId(int quantityId) {
-		this.quantityId = quantityId;
-	}
+  // private Order order;
 
-	public int getQuantityOrderId() {
-		return quantityOrderId;
-	}
+  public int getQuantityId() {
+    return quantityId;
+  }
 
-	public void setQuantityOrderId(int quantityOrderId) {
-		this.quantityOrderId = quantityOrderId;
-	}
+  public void setQuantityId(int quantityId) {
+    this.quantityId = quantityId;
+  }
 
-	public int getQuantityItemId() {
-		return quantityItemId;
-	}
+  public int getQuantityOrderId() {
+    return quantityOrderId;
+  }
 
-	public void setQuantityItemId(int quantityItemId) {
-		this.quantityItemId = quantityItemId;
-	}
+  public void setQuantityOrderId(int quantityOrderId) {
+    this.quantityOrderId = quantityOrderId;
+  }
 
-	public int getQuantityItemQuantity() {
-		return quantityItemQuantity;
-	}
+  public int getQuantityItemId() {
+    return quantityItemId;
+  }
 
-	public void setQuantityItemQuantity(int quantityItemQuantity) {
-		this.quantityItemQuantity = quantityItemQuantity;
-	}
+  public void setQuantityItemId(int quantityItemId) {
+    this.quantityItemId = quantityItemId;
+  }
 
-//	public Order getOrder() {
-//		return order;
-//	}
-//
-//	public void setOrder(Order order) {
-//		this.order = order;
-//	}
-//	
-	
+  public int getQuantityItemQuantity() {
+    return quantityItemQuantity;
+  }
+
+  public void setQuantityItemQuantity(int quantityItemQuantity) {
+    this.quantityItemQuantity = quantityItemQuantity;
+  }
+
+  // public Order getOrder() {
+  // return order;
+  // }
+  //
+  // public void setOrder(Order order) {
+  // this.order = order;
+  // }
+  //
+
 }

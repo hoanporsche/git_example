@@ -1,5 +1,9 @@
 package DS.serviceimpl;
 
+import DS.model.Role;
+import DS.model.User;
+import DS.repository.UserRepository;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,32 +16,28 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import DS.model.Role;
-import DS.model.User;
-import DS.repository.UserRepository;
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByuserName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Set<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserName(), user.getUserPassword(), grantedAuthorities);
+  @Override
+  @Transactional
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.findByuserName(username);
+    if (user == null) { 
+      throw new UsernameNotFoundException("User not found"); 
     }
+
+    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+    Set<Role> roles = user.getRoles();
+    for (Role role : roles) {
+      grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+    }
+
+    return new org.springframework.security.core.userdetails.User(user.getUserName(),
+        user.getUserPassword(), grantedAuthorities);
+  }
 
 }

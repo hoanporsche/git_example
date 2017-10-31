@@ -16,50 +16,50 @@ import DS.repository.UserRepository;
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+  @Autowired
+  private RoleRepository roleRepository;
 
-    @Autowired 
-    private PasswordEncoder passwordEncoder;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent arg0) {
-        // Roles
-        if (roleRepository.findByroleName("ROLE_ADMIN") == null) {
-            roleRepository.save(new Role("ROLE_ADMIN"));
-        }
-
-        if (roleRepository.findByroleName("ROLE_MEMBER") == null) {
-            roleRepository.save(new Role("ROLE_MEMBER"));
-        }
-
-        // Admin account
-        if (userRepository.findByuserName("admin@gmail.com") == null) {
-            User admin = new User();
-            admin.setUserName("admin@gmail.com");
-            admin.setUserPassword(passwordEncoder.encode("123456"));
-            admin.setName("hoan");
-            HashSet<Role> roles = new HashSet<>();
-            roles.add(roleRepository.findByroleName("ROLE_ADMIN"));
-            roles.add(roleRepository.findByroleName("ROLE_MEMBER"));
-            admin.setRoles(roles);
-            userRepository.save(admin);
-        }
-
-        // Member account
-        if (userRepository.findByuserName("member@gmail.com") == null) {
-            User user = new User();
-            user.setUserName("member@gmail.com");
-            user.setUserPassword(passwordEncoder.encode("123456"));
-            user.setName("Somebody");
-            HashSet<Role> roles = new HashSet<>();
-            roles.add(roleRepository.findByroleName("ROLE_MEMBER"));
-            user.setRoles(roles);
-            userRepository.save(user);
-        }
+  @Override
+  public void onApplicationEvent(ContextRefreshedEvent arg0) {
+    // Roles
+    if (roleRepository.findByroleName("ROLE_ADMIN") == null) {
+      roleRepository.save(new Role("ROLE_ADMIN"));
     }
+
+    if (roleRepository.findByroleName("ROLE_MEMBER") == null) {
+      roleRepository.save(new Role("ROLE_MEMBER"));
+    }
+
+    // Admin account
+    if (userRepository.findByuserName("admin@gmail.com") == null) {
+      User admin = new User();
+      admin.setUserName("admin@gmail.com");
+      admin.setUserPassword(passwordEncoder.encode("123456"));
+      admin.setName("hoan");
+      HashSet<Role> roles = new HashSet<>();
+      roles.add(roleRepository.findByroleName("ROLE_ADMIN"));
+      roles.add(roleRepository.findByroleName("ROLE_MEMBER"));
+      admin.setRoles(roles);
+      userRepository.save(admin);
+    }
+
+    // Member account
+    if (userRepository.findByuserName("member@gmail.com") == null) {
+      User user = new User();
+      user.setUserName("member@gmail.com");
+      user.setUserPassword(passwordEncoder.encode("123456"));
+      user.setName("Somebody");
+      HashSet<Role> roles = new HashSet<>();
+      roles.add(roleRepository.findByroleName("ROLE_MEMBER"));
+      user.setRoles(roles);
+      userRepository.save(user);
+    }
+  }
 
 }

@@ -1,8 +1,8 @@
 package DS.repository;
 
-import org.springframework.data.repository.CrudRepository;
-
 import DS.model.Item;
+
+import org.springframework.data.repository.CrudRepository;
 
 public interface ItemRepository extends CrudRepository<Item,Integer> {
 
