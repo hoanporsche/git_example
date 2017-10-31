@@ -1,10 +1,13 @@
-package DS.service;
+package ds.service;
 
-import DS.model.Quantity;
+import ds.model.Quantity;
 
 public interface QuantityService {
-	Iterable<Quantity> findAll();
-	void save(Quantity quantity);
-	void delete(int id);
-	Quantity findOne(int id);
+  Iterable<Quantity> findAll();
+
+  void save(Quantity quantity);
+
+  void delete(int id);
+
+  Quantity findOne(int id);
 }

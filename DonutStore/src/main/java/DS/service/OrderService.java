@@ -1,10 +1,13 @@
-package DS.service;
+package ds.service;
 
-import DS.model.Order;
+import ds.model.Order;
 
 public interface OrderService {
-	Iterable<Order> findAll();
-	void save(Order order);
-	void delete(int id);
-	Order findOne(int id);
+  Iterable<Order> findAll();
+
+  void save(Order order);
+
+  void delete(int id);
+
+  Order findOne(int id);
 }

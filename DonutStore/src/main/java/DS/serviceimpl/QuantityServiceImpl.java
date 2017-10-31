@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Quantity;
-import DS.repository.QuantityRepository;
-import DS.service.QuantityService;
+import ds.model.Quantity;
+import ds.repository.QuantityRepository;
+import ds.service.QuantityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class QuantityServiceImpl implements QuantityService {
   @Autowired
   private QuantityRepository quantityRepository;
-  
+
   @Override
   public Iterable<Quantity> findAll() {
     return quantityRepository.findAll();

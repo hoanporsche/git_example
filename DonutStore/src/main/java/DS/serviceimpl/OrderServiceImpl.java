@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Order;
-import DS.repository.OrderRepository;
-import DS.service.OrderService;
+import ds.model.Order;
+import ds.repository.OrderRepository;
+import ds.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
   @Autowired
   private OrderRepository orderRepository;
-  
+
   @Override
   public Iterable<Order> findAll() {
     return orderRepository.findAll();

@@ -1,4 +1,4 @@
-package DS.config;
+package ds.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,20 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http
-      .authorizeRequests()
-        .antMatchers("/registry").permitAll()
-        .antMatchers("/").permitAll()
-        .antMatchers("/admin/*").hasRole("ADMIN")
-      .and()
-        .formLogin().loginPage("/login")
-        .usernameParameter("userName")
-        .passwordParameter("userPassword")
-        .defaultSuccessUrl("/")
-        .failureUrl("/login?error")
-      .and()
-        .exceptionHandling()
-        .accessDeniedPage("/403");
+    http.authorizeRequests().antMatchers("/registry").permitAll().antMatchers("/").permitAll()
+        .antMatchers("/admin/*").hasRole("ADMIN").and().formLogin().loginPage("/login")
+        .usernameParameter("userName").passwordParameter("userPassword").defaultSuccessUrl("/")
+        .failureUrl("/login?error").and().exceptionHandling().accessDeniedPage("/403");
   }
 
 }

@@ -1,6 +1,6 @@
-package DS.repository;
+package ds.repository;
 
-import DS.model.Order;
+import ds.model.Order;
 
 import org.springframework.data.repository.CrudRepository;
 

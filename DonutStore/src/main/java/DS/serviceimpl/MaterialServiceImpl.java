@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Material;
-import DS.repository.MaterialRepository;
-import DS.service.MaterialService;
+import ds.model.Material;
+import ds.repository.MaterialRepository;
+import ds.service.MaterialService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

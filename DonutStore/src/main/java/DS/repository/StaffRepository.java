@@ -1,6 +1,6 @@
-package DS.repository;
+package ds.repository;
 
-import DS.model.Staff;
+import ds.model.Staff;
 
 import org.springframework.data.repository.CrudRepository;
 

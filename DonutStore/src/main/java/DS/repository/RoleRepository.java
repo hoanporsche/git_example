@@ -1,6 +1,6 @@
-package DS.repository;
+package ds.repository;
 
-import DS.model.Role;
+import ds.model.Role;
 
 import org.springframework.data.repository.CrudRepository;
 

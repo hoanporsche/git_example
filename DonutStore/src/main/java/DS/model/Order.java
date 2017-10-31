@@ -1,8 +1,7 @@
-package DS.model;
+package ds.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,10 +29,10 @@ public class Order implements Serializable {
 
   @Column(name = "order_name_created", nullable = false)
   private User orderNameCreated;
-  
+
   @Column(name = "order_phone_number", nullable = false)
   private User orderPhoneNumber;
-  
+
   @Column(name = "order_mod_name")
   private User orderModName;
 
@@ -50,7 +49,7 @@ public class Order implements Serializable {
 
   @Column(name = "order_shipping_price")
   private double orderShippingPrice;
-  
+
   @Column(name = "order_total_price", nullable = false)
   private double orderTotalPrice;
 
@@ -111,31 +110,31 @@ public class Order implements Serializable {
   public boolean getOrderIsShipping() {
     return orderIsShipping;
   }
-  
+
   public void setOrderIsShipping(boolean orderIsShipping) {
     this.orderIsShipping = orderIsShipping;
   }
-  
+
   public String getOrderAddressShipping() {
     return orderAddressShipping;
   }
-  
+
   public void setOrderAddressShipping(String orderAddressShipping) {
     this.orderAddressShipping = orderAddressShipping;
   }
-  
+
   public double getOrderShippingPrice() {
     return orderShippingPrice;
   }
-  
+
   public void setOrderShippingPrice(double orderShippingPrice) {
     this.orderShippingPrice = orderShippingPrice;
   }
-  
+
   public double getOrderTotalPrice() {
     return orderTotalPrice;
   }
-  
+
   public void setOrderTotalPrice(double orderTotalPrice) {
     this.orderTotalPrice = orderTotalPrice;
   }
@@ -147,5 +146,5 @@ public class Order implements Serializable {
   public void setOrderPhoneNumber(User orderPhoneNumber) {
     this.orderPhoneNumber = orderPhoneNumber;
   }
-  
+
 }

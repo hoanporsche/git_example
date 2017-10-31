@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Staff;
-import DS.repository.StaffRepository;
-import DS.service.StaffService;
+import ds.model.Staff;
+import ds.repository.StaffRepository;
+import ds.service.StaffService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class StaffServiceImpl implements StaffService {
   @Autowired
   private StaffRepository staffRepository;
-  
+
   @Override
   public Iterable<Staff> findAll() {
     return staffRepository.findAll();

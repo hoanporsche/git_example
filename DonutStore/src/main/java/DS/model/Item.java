@@ -1,4 +1,4 @@
-package DS.model;
+package ds.model;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -34,53 +34,53 @@ public class Item implements Serializable {
 
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"),
-        inverseJoinColumns = @JoinColumn(name = "material_id"))
+      inverseJoinColumns = @JoinColumn(name = "material_id"))
   private Set<Material> materials;
 
   public int getItemId() {
     return itemId;
   }
-  
+
   public void setItemId(int itemId) {
     this.itemId = itemId;
   }
-  
+
   public String getItemName() {
     return itemName;
   }
-  
+
   public void setItemName(String itemName) {
     this.itemName = itemName;
   }
-  
+
   public String getItemDateCreated() {
     return itemDateCreated;
   }
-  
+
   public void setItemDateCreated(String itemDateCreated) {
     this.itemDateCreated = itemDateCreated;
   }
-  
+
   public String getItemDateUpdated() {
     return itemDateUpdated;
   }
-  
+
   public void setItemDateUpdated(String itemDateUpdated) {
     this.itemDateUpdated = itemDateUpdated;
   }
-  
+
   public double getIteamSingleValue() {
     return iteamSingleValue;
   }
-  
+
   public void setIteamSingleValue(double iteamSingleValue) {
     this.iteamSingleValue = iteamSingleValue;
   }
-  
+
   public Set<Material> getMaterials() {
     return materials;
   }
-  
+
   public void setMaterials(Set<Material> materials) {
     this.materials = materials;
   }

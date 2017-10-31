@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Role;
-import DS.model.User;
-import DS.repository.UserRepository;
+import ds.model.Role;
+import ds.model.User;
+import ds.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +26,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     User user = userRepository.findByuserName(username);
-    if (user == null) { 
-      throw new UsernameNotFoundException("User not found"); 
+    if (user == null) {
+      throw new UsernameNotFoundException("User not found");
     }
 
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();

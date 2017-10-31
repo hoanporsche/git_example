@@ -1,6 +1,6 @@
-package DS.controller;
+package ds.controller;
 
-import DS.model.User;
+import ds.model.User;
 
 import javax.validation.Valid;
 
@@ -17,7 +17,7 @@ public class UserController {
   public String user() {
     return "user";
   }
-  
+
   /**
    * @author HoanVD - 31/10/2017.
    * @param user.
@@ -27,11 +27,11 @@ public class UserController {
   @PostMapping("/create")
   public String userCreate(@Valid User user, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
-      return "registry"; 
+      return "registry";
     }
     return "redirect:/";
   }
-  
+
   @GetMapping("/registry")
   public String userRegistry(Model model) {
     model.addAttribute("user", new User());

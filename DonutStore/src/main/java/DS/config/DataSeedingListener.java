@@ -1,4 +1,9 @@
-package DS.config;
+package ds.config;
+
+import ds.model.Role;
+import ds.model.User;
+import ds.repository.RoleRepository;
+import ds.repository.UserRepository;
 
 import java.util.HashSet;
 
@@ -8,10 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import DS.model.Role;
-import DS.model.User;
-import DS.repository.RoleRepository;
-import DS.repository.UserRepository;
+
 
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {

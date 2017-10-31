@@ -1,4 +1,4 @@
-package DS.model;
+package ds.model;
 
 import java.io.Serializable;
 import java.util.Set;

@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Role;
-import DS.repository.RoleRepository;
-import DS.service.RoleService;
+import ds.model.Role;
+import ds.repository.RoleRepository;
+import ds.service.RoleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class RoleServiceImpl implements RoleService {
   @Autowired
   private RoleRepository roleRepository;
-  
+
   @Override
   public Iterable<Role> findAll() {
     return roleRepository.findAll();

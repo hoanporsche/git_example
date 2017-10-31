@@ -1,10 +1,13 @@
-package DS.service;
+package ds.service;
 
-import DS.model.Item;
+import ds.model.Item;
 
 public interface ItemService {
-	Iterable<Item> findAll();
-	void save(Item item);
-	void delete(int id);
-	Item findOne(int id);
+  Iterable<Item> findAll();
+
+  void save(Item item);
+
+  void delete(int id);
+
+  Item findOne(int id);
 }

@@ -1,6 +1,6 @@
-package DS.repository;
+package ds.repository;
 
-import DS.model.Timekeeping;
+import ds.model.Timekeeping;
 
 import org.springframework.data.repository.CrudRepository;
 

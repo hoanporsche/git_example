@@ -1,6 +1,6 @@
-package DS.repository;
+package ds.repository;
 
-import DS.model.Quantity;
+import ds.model.Quantity;
 
 import org.springframework.data.repository.CrudRepository;
 

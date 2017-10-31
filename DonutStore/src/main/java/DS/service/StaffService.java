@@ -1,10 +1,13 @@
-package DS.service;
+package ds.service;
 
-import DS.model.Staff;
+import ds.model.Staff;
 
 public interface StaffService {
-	Iterable<Staff> findAll();
-	void save(Staff staff);
-	void delete(int id);
-	Staff findOne(int id);
+  Iterable<Staff> findAll();
+
+  void save(Staff staff);
+
+  void delete(int id);
+
+  Staff findOne(int id);
 }

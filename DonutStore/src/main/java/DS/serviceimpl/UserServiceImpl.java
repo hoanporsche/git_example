@@ -1,11 +1,11 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
+
+import ds.model.User;
+import ds.repository.UserRepository;
+import ds.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import DS.model.User;
-import DS.repository.UserRepository;
-import DS.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

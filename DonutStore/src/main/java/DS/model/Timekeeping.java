@@ -1,4 +1,4 @@
-package DS.model;
+package ds.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -34,47 +34,47 @@ public class Timekeeping implements Serializable {
   public long getId() {
     return id;
   }
-  
+
   public void setId(int id) {
     this.id = id;
   }
-  
+
   public Staff getStaffId() {
     return staffId;
   }
-  
+
   public void setStaffId(Staff staffId) {
     this.staffId = staffId;
   }
-  
+
   public Date getTimekeepingCreatedDate() {
     return timekeepingCreatedDate;
   }
-  
+
   public void setTimekeepingCreatedDate(Date timekeepingCreatedDate) {
     this.timekeepingCreatedDate = timekeepingCreatedDate;
   }
-  
+
   public Date getTimekeepingIn() {
     return timekeepingIn;
   }
-  
+
   public void setTimekeepingIn(Date timekeepingIn) {
     this.timekeepingIn = timekeepingIn;
   }
-  
+
   public Date getTimekeepingOut() {
     return timekeepingOut;
   }
-  
+
   public void setTimekeepingOut(Date timekeepingOut) {
     this.timekeepingOut = timekeepingOut;
   }
-  
+
   public int getTimekeepingStatus() {
     return timekeepingStatus;
   }
-  
+
   public void setTimekeepingStatus(int timekeepingStatus) {
     this.timekeepingStatus = timekeepingStatus;
   }

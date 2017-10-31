@@ -1,6 +1,6 @@
-package DS.repository;
+package ds.repository;
 
-import DS.model.Material;
+import ds.model.Material;
 
 import org.springframework.data.repository.CrudRepository;
 

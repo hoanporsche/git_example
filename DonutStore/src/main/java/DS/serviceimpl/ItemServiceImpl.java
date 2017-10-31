@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Item;
-import DS.repository.ItemRepository;
-import DS.service.ItemService;
+import ds.model.Item;
+import ds.repository.ItemRepository;
+import ds.service.ItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

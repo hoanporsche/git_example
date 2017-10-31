@@ -1,4 +1,4 @@
-package DS.model;
+package ds.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,71 +42,71 @@ public class Staff implements Serializable {
   public int getStaffId() {
     return staffId;
   }
-  
+
   public void setStaffId(int staffId) {
     this.staffId = staffId;
   }
-  
+
   public String getStaffName() {
     return staffName;
   }
-  
+
   public void setStaffName(String staffName) {
     this.staffName = staffName;
   }
-  
+
   public Date getStaffCreatedTime() {
     return staffCreatedTime;
   }
-  
+
   public void setStaffCreatedTime(Date staffCreatedTime) {
     this.staffCreatedTime = staffCreatedTime;
   }
-  
+
   public Date getStaffUpdatedTime() {
     return staffUpdatedTime;
   }
-  
+
   public void setStaffUpdatedTime(Date staffUpdatedTime) {
     this.staffUpdatedTime = staffUpdatedTime;
   }
-  
+
   public String getStaffPhoneNumber() {
     return staffPhoneNumber;
   }
-  
+
   public void setStaffPhoneNumber(String staffPhoneNumber) {
     this.staffPhoneNumber = staffPhoneNumber;
   }
-  
+
   public String getStaffAddress() {
     return staffAddress;
   }
-  
+
   public void setStaffAddress(String staffAddress) {
     this.staffAddress = staffAddress;
   }
-  
+
   public String getStaffIdentityCard() {
     return staffIdentityCard;
   }
-  
+
   public void setStaffIdentityCard(String staffIdentityCard) {
     this.staffIdentityCard = staffIdentityCard;
   }
-  
+
   public String getStaffHomeTown() {
     return staffHomeTown;
   }
-  
+
   public void setStaffHomeTown(String staffHomeTown) {
     this.staffHomeTown = staffHomeTown;
   }
-  
+
   public int getStaffStatus() {
     return staffStatus;
   }
-  
+
   public void setStaffStatus(int staffStatus) {
     this.staffStatus = staffStatus;
   }

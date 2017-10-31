@@ -1,8 +1,8 @@
-package DS.serviceimpl;
+package ds.serviceimpl;
 
-import DS.model.Timekeeping;
-import DS.repository.TimekeepingRepository;
-import DS.service.TimekeepingService;
+import ds.model.Timekeeping;
+import ds.repository.TimekeepingRepository;
+import ds.service.TimekeepingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TimekeepingServiceImpl implements TimekeepingService {
   @Autowired
   private TimekeepingRepository timekeepingRepository;
-  
+
   @Override
   public Iterable<Timekeeping> findAll() {
     return timekeepingRepository.findAll();
