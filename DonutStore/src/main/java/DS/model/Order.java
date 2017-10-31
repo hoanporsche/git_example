@@ -34,7 +34,7 @@ public class Order implements Serializable {
   @Column(name = "order_phone_number", nullable = false)
   private User orderPhoneNumber;
   
-  @Column(name = "order_mod_name", nullable = false)
+  @Column(name = "order_mod_name")
   private User orderModName;
 
   @Column(name = "order_status", nullable = false)
