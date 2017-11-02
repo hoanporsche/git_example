@@ -4,135 +4,131 @@
 <head th:replace="layout :: head">
 </head>
 <body>
-	<div style="background: #F2E2E2;">
-		<nav th:replace="layout :: header"></nav>
-		<div class="container">
-			<div class="row">
-				<div class="panel panel-warning">
-					<div class="panel-heading">
-						<div class="panel-title">
-						  <h2 align="center">Ä�áº·t hÃ ng</h2></div>
-					</div>
-					<div class="panel-body form-style">
-						<div class="col-md-8 col-md-offset-2 form-group">
-							<form th:action="@{/create}" th:object="${order}" method="POST">
-							    <div class="row">
-							         <div class="col-md-5 col-md-offset-0,5">
-							             <h4><label><b>TÃªn ngÆ°á»�i mua</b></label></h4>
-                                        <input type="text" class="form-control" th:field="*{orderNameCreated}" placeholder="TÃªn ngÆ°á»�i mua" />
-							         </div>
-							         <div class="col-md-5 col-md-offset-1">
-                                        <h4><label><b>Sá»‘ Ä‘iá»‡n thoáº¡i</b></label></h4>
-                                        <input type="text" class="form-control" th:field="*{orderPhoneNumber}" placeholder="Sá»‘ Ä‘iá»‡n thoáº¡i" />
-                                     </div>
-                                     <div class="clearfix"></div>
-                                     <div class="col-md-5 col-md-offset-0,5">
-                                        <h4><label><b>Thá»�i gian nháº­n / láº¥y hÃ ng</b></label></h4>
-                                        <input type="datetime-local" class="form-control" th:field="*{orderDateDone}" />
-                                     </div>
-                                     <div class="col-md-5 col-md-offset-1">
-                                        <h4><label><b>Ä�áº¿n láº¥y / Giao Ä‘i</b></label></h4>            
-                                        <select class="form-control" id="isShipping" th:field="*{orderIsShipping}">
-                                            <option value="0" >Ä�áº¿n láº¥y</option>
-                                            <option value="1" >Giao Ä‘i</option>
-                                        </select>
-                                     </div>
-							    </div>
+	<nav th:replace="layout :: header"></nav>
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<div class="panel-title">
+					  <h2 align="center">Đặt hàng</h2></div>
+				</div>
+				<div class="panel-body form-style">
+					<div class="col-md-8 col-md-offset-2 form-group">
+						<form th:action="@{/create}" th:object="${order}" method="POST">
+						    <div class="row">
+						         <div class="col-md-5 col-md-offset-0,5">
+	       				             <h4><label><b>Tên người mua mua</b></label></h4>
+                                      <input type="text" class="form-control" th:field="*{orderNameCreated}" placeholder="Tên người mua" />
+						         </div>
+						         <div class="col-md-5 col-md-offset-1">
+                                    <h4><label><b>Số điện thoại</b></label></h4>
+                                    <input type="text" class="form-control" th:field="*{orderPhoneNumber}" placeholder="Số điện thoại" />
+                                 </div>
+                                 <div class="clearfix"></div>
+                                 <div class="col-md-5 col-md-offset-0,5">
+                                    <h4><label><b>Thời gian nhận hàng</b></label></h4>
+                                    <input type="datetime-local" class="form-control" th:field="*{orderDateDone}" />
+                                 </div>
+                                 <div class="col-md-5 col-md-offset-1">
+                                     <h4><label><b>Đến lấy / Giao đi</b></label></h4>            
+                                     <select class="form-control" id="isShipping" th:field="*{orderIsShipping}">
+                                         <option value="0" >Đến lấy</option>
+                                         <option value="1" >Giao đi</option>
+                                     </select>
+                                 </div>
+						    </div>
 
-                                <div class="row">
-                                    <div class="col-xs-3 col-xs-offset-1"><h4><b>BÃ¡nh rÃ¡n </b>
-                                        <input type="checkbox" id="br" /></h4></div>
-                                    <div class="col-xs-3 col-xs-offset-1"><h4><b>BÃ¡nh mÃ¬  </b>
-                                        <input type="checkbox" id="bm" /></h4></div>
-                                    <div class="col-xs-3 col-xs-offset-1"><h4><b>Ä�á»“ uá»‘ng  </b>
-                                        <input type="checkbox" id="du" /></h4></div>     
+                            <div class="row">
+                              <div class="col-xs-3 col-xs-offset-1"><h4><b>Bánh rán mặn </b>
+                                 <input type="checkbox" id="br" /></h4></div>
+                              <div class="col-xs-3 col-xs-offset-1"><h4><b>Bánh mì </b>
+                                 <input type="checkbox" id="bm" /></h4></div>
+                              <div class="col-xs-3 col-xs-offset-1"><h4><b>Đồ uống </b>
+                                 <input type="checkbox" id="du" /></h4></div>     
+                            </div>
+                                
+                            <div id="show_br" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;">
+                                 <div class="col-md-5 col-md-offset-1">
+                                   <label class="label label-warning">Số lượng bánh rán mặn</label><br/>
+                                   <input type="text" class="brValue" /><br/>
+                                   <label>Đơn giá 5.000đ</label>
                                 </div>
-                                
-                                <div id="show_br" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;">
-                                    <div class="col-md-5 col-md-offset-1">
-                                        <label class="label label-warning">Sá»‘ lÆ°á»£ng BÃ¡nh rÃ¡n Máº·n</label><br/>
-                                        <input type="text" class="brValue" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 5.000Ä‘</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="label label-warning">Sá»‘ lÆ°á»£ng BÃ¡nh rÃ¡n Ngá»�t</label><br/>
-                                        <input type="text" class="brValue" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 5.000Ä‘</label>
-                                    </div>
-
+                                <div class="col-md-6">
+                                   <label class="label label-warning">Số lượng bánh rán ngọt</label><br/>
+                                   <input type="text" class="brValue" /><br/>
+                                   <label>Đơn giá 5.000đ</label>
                                 </div>
+                            </div>
                                 
-                                <div id="show_bm" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;">
-                                    <div class="col-md-4" >
-                                        <label class="label label-info">Sá»‘ lÆ°á»£ng BÃ¡nh mÃ¬ Pate Trá»©ng</label><br/>
-                                        <input type="text" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 12.000Ä‘</label>
-                                    </div>
-                                    <div class="col-md-4" >
-                                        <label class="label label-info">Sá»‘ lÆ°á»£ng BÃ¡nh mÃ¬ Pate XÃºc xÃ­ch</label><br/>
-                                        <input type="text" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 15.000Ä‘</label>
-                                    </div>
-                                    <div class="col-md-4" >
-                                        <label class="label label-info">Sá»‘ lÆ°á»£ng BÃ¡nh mÃ¬ Pate Trá»©ng XÃºc xÃ­ch</label><br/>
-                                        <input type="text" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 18.000Ä‘</label>
-                                    </div>
+                            <div id="show_bm" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;">
+                                <div class="col-md-4" >
+                                    <label class="label label-info">Số lượng pate Trứng</label><br/>
+                                    <input type="text" /><br/>
+                                    <label>Đơn giá 12.000đ</label>
                                 </div>
-                                
-                                
-                                <div id="show_du" class="col-md-12" style="display:none;border:2px solid #cecece;margin:10px auto;">
-                                    <div class="col-md-4" >
-                                        <label class="label label-info">Sá»‘ lÆ°á»£ng Coca mÃ¬ Pate Trá»©ng</label><br/>
-                                        <input type="text" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 10.000Ä‘</label>
-                                    </div>
-                                    <div class="col-md-4" >
-                                        <label class="label label-info">Sá»‘ lÆ°á»£ng TrÃ  Ä‘Ã¡</label><br/>
-                                        <input type="text" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 3.000Ä‘</label>
-                                    </div>
-                                    <div class="col-md-4" >
-                                        <label class="label label-info">Sá»‘ lÆ°á»£ng Mirinda</label><br/>
-                                        <input type="text" /><br/>
-                                        <label>Ä�Æ¡n giÃ¡ 10.000Ä‘</label>
-                                    </div>
+                                <div class="col-md-4" >
+                                    <label class="label label-info">Số lượng pate Xúc xích</label><br/>
+                                    <input type="text" /><br/>
+                                    <label>Đơn giá 15.000đ</label>
                                 </div>
+                                <div class="col-md-4" >
+                                    <label class="label label-info">Số lượng pate Trứng Xúc xích</label><br/>
+                                    <input type="text" /><br/>
+                                    <label>Đơn giá 18.000đ</label>
+                                </div>
+                            </div>
                                 
-                                <div id="show_is_shipping" class="row" style="display:none;margin:10px auto;
-                                        padding-bottom:10px;border:2px solid #cecece;">
-                                    <table class="col-md-12">
-                                        <tbody>
-                                            <tr>
-                                                <th><h5><label class="label label-success">Ä�á»‹a chá»‰ nháº­n hÃ ng</label></h5></th>
-                                                <th><h5><label class="label label-success">Tiá»�n giao hÃ n</label></h5></th>
-                                            </tr>
-                                            <tr>
-                                                <th><input type="text" class="form-control" id="ggmaps_input" th:field="*{orderAddressShipping}" placeholder="Ä�á»‹a chá»‰ nháº­n hÃ ng" /></th>
-                                                <th><input type="text" class="form-control" placeholder="Tiá»�n giao hÃ ng" /></th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div id="show_ggmaps">
+                            <div id="show_du" class="col-md-12" style="display:none;border:2px solid #cecece;margin:10px auto;">
+                                <div class="col-md-4" >
+                                    <label class="label label-info">Số lượng Coca</label><br/>
+                                    <input type="text" /><br/>
+                                    <label>Đơn giá 10.000đ</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <label class="label label-info">Số lượng trà đá</label><br/>
+                                    <input type="text" /><br/>
+                                    <label>Đơn giá 3.000đ</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <label class="label label-info">Số lượng Mirinda</label><br/>
+                                    <input type="text" /><br/>
+                                    <label>Đơn giá 10.000đ</label>
+                                </div>
+                            </div>
+                                
+                            <div id="show_is_shipping" class="row" style="display:none;margin:10px auto;
+                                    padding-bottom:10px;border:2px solid #cecece;">
+                                <table class="col-md-12">
+                                    <tbody>
+                                        <tr>
+                                            <th><h5><label class="label label-success">Địa chỉ giao hàng</label></h5></th>
+                                            <th><h5><label class="label label-success">Tiền giao hàng</label></h5></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type="text" class="form-control" id="ggmaps_input" th:field="*{orderAddressShipping}" placeholder="địa chỉ nhận" /></th>
+                                            <th><input type="text" class="form-control" placeholder="Tiền giao hàng" /></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div id="show_ggmaps">
                                     
-                                    </div>
                                 </div>
-                                
-                                <h4 align="center"><label><b>Tá»•ng tiá»�n </b></label>
-                                <input type="text" th:field="*{orderTotalPrice}"/></h4>
-                                <br/>
-                                <h3 align="center"><button type="submit" >Ä�áº·t hÃ ng</button></h3>
+                            </div>
+                           
+                            <h4 align="center"><label><b>Tổng tiền </b></label>
+                            <input type="text" th:field="*{orderTotalPrice}"/></h4>
+                            <br/>
+                            <h3 align="center"><button type="submit" >Đặt hàng</button></h3>
 
-							</form>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<footer th:replace="layout :: footer"></footer>
-		<script src="/js/order.js" th:src="@{/js/order.js}"></script>
-		<script th:src="@{https://maps.googleapis.com/maps/api/js(key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM,libraries=places,callback=initMap)}" 
-         	></script>
 	</div>
+    <footer th:replace="layout :: footer"></footer>
+	<script src="/js/order.js" th:src="@{/js/order.js}"></script>
+	<script th:src="@{https://maps.googleapis.com/maps/api/js(key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM,libraries=places,callback=showGgmaps)}" 
+     	async="async" defer="defer"></script>
 </body>
 </html>
