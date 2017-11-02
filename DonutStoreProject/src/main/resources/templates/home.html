@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="layout :: head">
+</head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+
+	<div id="slider" >
+		<img class="slide" src="images/BR1.JPG" />
+		<img class="slide" src="images/BR2.jpg" style="display:none;"/>
+		<img class="slide" src="images/BR3.jpg" style="display:none;"/>
+		<img class="slide" src="images/BR4.jpg" style="display:none;"/>
+		<img class="slide" src="images/BR5.jpg" style="display:none;"/>
+		<button class="button" id="prev">&#10094;</button>
+		<button class="button" id="next">&#10095;</button>
+	</div>
+	
+	<div class="container-fluid" style="margin-top:3%;">
+	   <div class="col-md-10 col-md-offset-1" style="background:white;">
+           <div class="col-md-7">
+           
+           </div>
+           <div class="col-md-5">
+               <div class="panel" id="show_ggmaps">
+               </div>
+           </div>
+       </div>
+	</div>
+	<div class="container">
+		<div class="row" style="margin-top:1%;">
+			<div class="panel panel-warning">
+				<h2 align="center"><b><span class="label label-warning">Bánh rán</span></b></h2>
+				<div class="row product-info" align="center">
+					<div class="col-md-4">
+						<img alt="" src="images/BR7.JPG" style="width:80%;"/>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<div class="panel-title">Bánh rán Mặn</div>
+							</div>
+							<div class="panel-body"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row product-info" align="center">
+					<div class="col-md-4">
+						<img alt="" src="images/BR8.jpg" style="height:20%;width:80%;"/>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<div class="panel-title">Bánh rán Ngọt</div>
+							</div>
+							<div class="panel-body"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="panel panel-info">
+				<h2 align="center"><b><span class="label label-info">Bánh mì</span></b></h2>
+				<div class="row product-info">
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/BM1.jpg" style="height:20%;width:80%;"/>
+						<h3><b>Bánh mì pate Trứng</b></h3>
+						<p>12.000đ</p>
+					</div>
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/BM2.jpg" style="height:20%;width:80%;"/>
+						<h3><b>Bánh mì pate Xúc xích</b></h3>
+						<p>15.000Ä‘</p>
+					</div>
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/BM3.jpg" style="height:20%;width:80%;"/>
+						<h3><b>Bánh mì pate Trứng Xúc xích</b></h3>
+						<p>18.000Ä‘</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="panel panel-success">
+				<h2 align="center"><b><span class="label label-success">Đồ uống</span></b></h2>
+				<div class="row product-info">
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/COCA.jpg" style="height:20%;width:80%;"/>
+						<h3><b>Coca cola</b></h3>
+						<p>10.000đ</p>
+					</div>
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/TRADA.jpg" style="height:20%;width:80%;"/>
+						<h3><b>Trà đá</b></h3>
+						<p>3.000đ</p>
+					</div>
+					<div class="col-md-4" align="center">
+						<img alt="" src="images/MIRINDA.jpg" style="height:20%;width:80%;"/>
+						<h3><b>Mirrinda</b></h3>
+						<p>10.000đ</p>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+	<script src="/js/homejs.js" th:src="@{/js/homejs.js}"></script>
+	<script type="text/javascript" 
+          th:src="@{http://maps.googleapis.com/maps/api/js(key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM,sensor=false)}"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="layout :: head">
+</head>
+<body>
+    <div style="background:#F2E2E2;">
+        <nav th:replace="layout :: header"></nav>
+    
+	   <h2>403 Error: Access denied</h2>
+	   <h2>Quay về <a th:href="@{/}">trang chủ</a></h2>
+	   <footer th:replace="layout :: footer"></footer>
+	</div>
+</body>
+</html>
