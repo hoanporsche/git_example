@@ -33,10 +33,6 @@ public class User implements Serializable {
   private String userName;
 
   @NotEmpty
-  @Column(name = "name", nullable = false)
-  private String name;
-
-  @NotEmpty
   @Column(name = "user_password", nullable = false)
   private String userPassword;
 
@@ -49,10 +45,10 @@ public class User implements Serializable {
   @Email
   @Column(name = "user_email")
   private String userEmail;
-  @NotEmpty
+
   @Column(name = "user_phone_number")
   private String userPhoneNumber;
-  @NotEmpty
+
   @Column(name = "user_address")
   private String userAddress;
   @Column(name = "user_created_time")
@@ -76,14 +72,6 @@ public class User implements Serializable {
 
   public void setUserName(String userName) {
     this.userName = userName;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getUserPassword() {
