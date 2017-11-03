@@ -22,7 +22,7 @@ USE `donutstore` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `item_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `item_name` VARCHAR(255) NOT NULL,
+  `item_name` NVARCHAR(255) NOT NULL,
   `item_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_single_value` DECIMAL(10,0) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `material_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_sangle_value` DECIMAL(10,0) NOT NULL,
-  `material_remain` VARCHAR(45) NOT NULL,
+  `material_remain` NVARCHAR(45) NOT NULL,
   `material_supply_name` NVARCHAR(255) NULL DEFAULT NULL,
   `material_supply_phone` NVARCHAR(18) NULL DEFAULT NULL,
   `material_single_value` DOUBLE NOT NULL,
@@ -60,19 +60,12 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item_material` (
   `items_item_id` INT(11) NOT NULL,
   `materials_material_id` INT(11) NOT NULL,
   PRIMARY KEY (`item_id`, `material_id`),
-  INDEX `FKb0jb9yfq06acdpqq28uxadolk` (`materials_material_id` ASC),
-  INDEX `FKjfmmh1hkkqm78qpree4ucnhhl` (`items_item_id` ASC),
-  INDEX `FK1qp33uu8qd7q2trf483n7e081` (`material_id` ASC),
-  CONSTRAINT `FK1qp33uu8qd7q2trf483n7e081`
     FOREIGN KEY (`material_id`)
     REFERENCES `donutstore`.`material` (`material_id`),
-  CONSTRAINT `FKb0jb9yfq06acdpqq28uxadolk`
     FOREIGN KEY (`materials_material_id`)
     REFERENCES `donutstore`.`material` (`material_id`),
-  CONSTRAINT `FKfr2jh7l7x0b7pny7jrpbyc9xv`
     FOREIGN KEY (`item_id`)
     REFERENCES `donutstore`.`item` (`item_id`),
-  CONSTRAINT `FKjfmmh1hkkqm78qpree4ucnhhl`
     FOREIGN KEY (`items_item_id`)
     REFERENCES `donutstore`.`item` (`item_id`))
 ENGINE = InnoDB
@@ -91,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`order` (
   `order_mod_name` NVARCHAR(255) NOT NULL,
   `order_status` INT(11) NOT NULL,
   `order_is_shipping` TINYINT(4) NOT NULL,
-  `order_address_shipping` VARCHAR(255) NULL DEFAULT NULL,
+  `order_address_shipping` NVARCHAR(255) NULL DEFAULT NULL,
   `order_shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `order_total_price` DECIMAL(10,0) NOT NULL,
   PRIMARY KEY (`order_id`))
@@ -173,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `user_updated_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_last_order_time` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC))
+  UNIQUE INDEX `user_email_UNIQUE` (`user_name` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
@@ -186,11 +179,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user_role` (
   `user_id` INT(11) NOT NULL,
   `role_id` INT(11) NOT NULL,
   PRIMARY KEY (`user_id`, `role_id`),
-  INDEX `FKa68196081fvovjhkek5m97n3y` (`role_id` ASC),
-  CONSTRAINT `FK859n2jvi8ivhui0rl0esws6o`
     FOREIGN KEY (`user_id`)
     REFERENCES `donutstore`.`user` (`user_id`),
-  CONSTRAINT `FKa68196081fvovjhkek5m97n3y`
     FOREIGN KEY (`role_id`)
     REFERENCES `donutstore`.`role` (`role_id`))
 ENGINE = InnoDB

@@ -29,7 +29,7 @@ public class User implements Serializable {
   private int userId;
 
   @NotEmpty
-  @Column(name = "user_name", nullable = false, unique = true)
+  @Column(name = "user_name", nullable = false)
   private String userName;
 
   @NotEmpty
@@ -43,7 +43,7 @@ public class User implements Serializable {
 
   @NotEmpty
   @Email
-  @Column(name = "user_email")
+  @Column(name = "user_email",nullable = false, unique = true)
   private String userEmail;
 
   @Column(name = "user_phone_number")

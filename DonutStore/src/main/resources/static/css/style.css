@@ -1,23 +1,4 @@
-#slider{
-	position:relative;
-	list-style: none;
- 	width: 100%;
- 	max-height:600px;
-  	padding: 0;
-  	margin-top:0px;
-}
-#prev{
-	text-transform:uppercase;
-	top: 130px;
-	left:20px;
-	position:absolute;
-}
-#next{
-	text-transform:uppercase;
-	top: 130px;
-	right:20px;
-	position:absolute;
-}
+
 .main-content {
 	min-height: 500px;
 	max-width: 700px;
@@ -41,9 +22,8 @@
 	border: 1px soild #ff0000;
 	margin-bottom: 10px;
 }
-.slide{
-	width: 100%;
-	
+img{
+	width:100%;
 }
 #show_ggmaps{
 	width:100%;

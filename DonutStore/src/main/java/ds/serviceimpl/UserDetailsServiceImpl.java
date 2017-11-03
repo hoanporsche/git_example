@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByuserName(username);
+    User user = userRepository.findByuserEmail(username);
     if (user == null) {
       throw new UsernameNotFoundException("User not found");
     }
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
     }
 
-    return new org.springframework.security.core.userdetails.User(user.getUserName(),
+    return new org.springframework.security.core.userdetails.User(user.getUserEmail(),
         user.getUserPassword(), grantedAuthorities);
   }
 

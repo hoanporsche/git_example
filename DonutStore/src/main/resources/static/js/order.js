@@ -58,15 +58,64 @@ function showGgmaps(){
 		map: map,
 		title: "Vị trí của bạn"
 	});
-	
 	marker2.setVisible(false);
+
+//	new MyMapsService(map,latlng);
+//	
+//	function MyMapsService(map,latlng){
+//		this.map = map;
+//		this.mainPlace = latlng;
+//		var newplace = document.getElementById("ggmaps_input");
+//		var autocomplete = new google.maps.places.Autocomplete(newplace);
+//		autocomplete.bindTo('bounds', map);//gắn nó vào map
+//		var place = autocomplete.getPlace();
+//		autocomplete.addListener('place_changed',function(){
+//			var place = autocomplete.getPlace();	
+//			//Bắt đầu sử dụng Directions
+//			var directionsService = new google.maps.DirectionsService;
+//			var directionsDisplay = new google.maps.DirectionsRenderer;
+//			directionsDisplay.setMap(map);
+//			
+//			if (!place.geometry) {
+//				window.alert(place.name + " không tồn tại");
+//				return;
+//			}
+//			if (place.geometry.viewport) {
+//				map.fitBounds(place.geometry.viewport);
+//			} else {
+//				map.setCenter(place.geometry.location);
+//			}
+//			marker2.setPosition(place.geometry.location);
+//			this.route();
+//			marker2.setVisible(true);
+//		});
+//	}
+//	
+//	MyMapsService.prototype.route = function(){
+//		this.directionsService.route({
+//			origin: this.place;
+//			destination:this.latlng,
+//			travelMode:'DRIVING'
+//		   }, function(response, status){
+//			   if (status === 'OK') {
+//		            this.directionsDisplay.setDirections(response);
+//		          } else {
+//		            window.alert('Directions request failed due to ' + status);
+//		          }
+//		   }
+//		});
+//	}
 	//Bắt đầu sử dụng autocomple place
 	var newplace = document.getElementById("ggmaps_input");
 	var autocomplete = new google.maps.places.Autocomplete(newplace);
 	autocomplete.bindTo('bounds', map);//gắn nó vào map
-	
 	autocomplete.addListener('place_changed',function(){
-		var place = autocomplete.getPlace();
+		var place = autocomplete.getPlace();	
+		//Bắt đầu sử dụng Directions
+		var directionsService = new google.maps.DirectionsService;
+		var directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
+		
 		if (!place.geometry) {
 			window.alert(place.name + " không tồn tại");
 			return;
