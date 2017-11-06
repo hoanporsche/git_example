@@ -2,23 +2,25 @@ package ds.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "order_id", nullable = false)
+  @Column(name = "orders_id", nullable = false)
   private int orderId;
 
   @Column(name = "order_date_created", nullable = false)
@@ -39,7 +41,8 @@ public class Order implements Serializable {
   @Column(name = "order_status", nullable = false)
   private int orderStatus;
 
-  // private Set<Quantity> orderListQuantities;
+  @OneToMany(mappedBy="order")
+   private Set<Quantity> quantities;
 
   @Column(name = "order_is_shipping", nullable = false)
   private boolean orderIsShipping;
@@ -101,12 +104,6 @@ public class Order implements Serializable {
     this.orderStatus = orderStatus;
   }
 
-  // public Set<Quantity> getOrderListQuantities() {
-  // return orderListQuantities;
-  // }
-  // public void setOrderListQuantities(Set<Quantity> orderListQuantities) {
-  // this.orderListQuantities = orderListQuantities;
-  // }
   public boolean getOrderIsShipping() {
     return orderIsShipping;
   }
@@ -145,6 +142,14 @@ public class Order implements Serializable {
 
   public void setOrderPhoneNumber(User orderPhoneNumber) {
     this.orderPhoneNumber = orderPhoneNumber;
+  }
+
+  public Set<Quantity> getQuantities() {
+    return quantities;
+  }
+
+  public void setQuantities(Set<Quantity> quantities) {
+    this.quantities = quantities;
   }
 
 }

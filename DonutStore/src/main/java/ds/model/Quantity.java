@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +28,9 @@ public class Quantity implements Serializable {
   @Column(name = "quantity_item_quantity", nullable = false)
   private int quantityItemQuantity;
 
-  // private Order order;
+  @ManyToOne
+  @JoinColumn(name="orders_id", nullable=false)
+   private Order order;
 
   public int getQuantityId() {
     return quantityId;
@@ -60,13 +64,13 @@ public class Quantity implements Serializable {
     this.quantityItemQuantity = quantityItemQuantity;
   }
 
-  // public Order getOrder() {
-  // return order;
-  // }
-  //
-  // public void setOrder(Order order) {
-  // this.order = order;
-  // }
-  //
+   public Order getOrder() {
+   return order;
+   }
+  
+   public void setOrder(Order order) {
+   this.order = order;
+   }
+  
 
 }

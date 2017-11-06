@@ -1,8 +1,3 @@
--- MySQL Workbench Forward Engineering
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -75,8 +70,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `donutstore`.`order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `donutstore`.`order` (
-  `order_id` INT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
+  `orders_id` INT(11) NOT NULL AUTO_INCREMENT,
   `order_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `order_date_done` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `order_name_created` NVARCHAR(255) NOT NULL,
@@ -87,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`order` (
   `order_address_shipping` NVARCHAR(255) NULL DEFAULT NULL,
   `order_shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `order_total_price` DECIMAL(10,0) NOT NULL,
-  PRIMARY KEY (`order_id`))
+  PRIMARY KEY (`orders_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -100,8 +95,10 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   `quantity_order_id` INT(11) NOT NULL,
   `quantity_item_quantity` INT(11) NOT NULL,
   `quantity_item_id` INT(11) NOT NULL,
-  `order_id` INT(11) NOT NULL,
-  PRIMARY KEY (`quantity_id`))
+  `orders_id` INT(11) NOT NULL,
+  PRIMARY KEY (`quantity_id`),
+KEY `orders_id` (`orders_id`),
+  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`orders_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -114,7 +111,6 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`role` (
   `role_name` NVARCHAR(255) NOT NULL,
   PRIMARY KEY (`role_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -168,7 +164,6 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_email_UNIQUE` (`user_name` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -185,8 +180,3 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user_role` (
     REFERENCES `donutstore`.`role` (`role_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
