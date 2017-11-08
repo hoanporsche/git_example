@@ -66,6 +66,11 @@ function showGgmaps(){
 	var autocomplete = new google.maps.places.Autocomplete(newplace);
 	autocomplete.bindTo('bounds', map);//gắn nó vào map
 	
+	var directionsService = new google.maps.DirectionsService;
+	var directionsDisplay = new google.maps.DirectionsRenderer;
+	directionsDisplay.setMap(map);
+	var service = new google.maps.DistanceMatrixService;
+	
 	autocomplete.addListener('place_changed',function(){
 		var place = autocomplete.getPlace();	
 		
@@ -79,27 +84,10 @@ function showGgmaps(){
 			map.setCenter(place.geometry.location);
 		}
 		
-		//Bắt đầu sử dụng Directions
-		var directionsService = new google.maps.DirectionsService;
-		var directionsDisplay = new google.maps.DirectionsRenderer;
-		directionsDisplay.setMap(map);
-		
 		var destinationPlaceId = place.place_id;
-//		var geocoder = new google.maps.Geocoder;
-//		
-//		geocoder.geocode({'location': latlng}, function(results, status) {
-//		    if (status === google.maps.GeocoderStatus.OK) {
-//		      if (results[0]) {
-//                var originPlaceId  = results[0].place_id;
-//                return originPlaceId;
-//		      } else {
-//		        window.alert('No results found');
-//		      }
-//		    } else {
-//		      window.alert('Geocoder failed due to: ' + status);
-//		    }
-//		  });
+		var destinationLocation = place.geometry.location;
 
+		//Bắt đầu sử dụng Directions
 		directionsService.route({
 			origin : {'placeId': "ChIJK7dSb3GrNTERxFvb2QVeOw8"},
 			destination :{'placeId': destinationPlaceId},
@@ -112,6 +100,21 @@ function showGgmaps(){
 				}
 		});
 		
+		service.getDistanceMatrix({
+			origins:[latlng],
+			destinations: [destinationLocation],
+			travelMode: 'DRIVING',	
+		},function(response, status) {
+			if(status != 'OK'){
+				alert('Error was: ' + status);
+			}else {
+				
+				var results = response.rows[0].elements;
+				document.getElementById('distance').value = results[0].distance.text;
+			}
+		});
+		
+		marker1.setVisible(false);
 		marker2.setPosition(place.geometry.location);
 		marker2.setVisible(true);
 	});	
