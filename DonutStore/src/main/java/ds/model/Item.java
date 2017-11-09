@@ -31,6 +31,8 @@ public class Item implements Serializable {
   private String itemDateUpdated;
   @Column(name = "item_single_value", nullable = false)
   private double iteamSingleValue;
+  @Column(name = "item_status", nullable = false)
+  private boolean itemStatus;
 
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"),
@@ -85,4 +87,12 @@ public class Item implements Serializable {
     this.materials = materials;
   }
 
+  public boolean isItemStatus() {
+    return itemStatus;
+  }
+
+  public void setItemStatus(boolean itemStatus) {
+    this.itemStatus = itemStatus;
+  }
+  
 }

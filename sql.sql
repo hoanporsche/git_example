@@ -1,12 +1,3 @@
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema donutstore
--- -----------------------------------------------------
-
--- -----------------------------------------------------
 -- Schema donutstore
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `donutstore` DEFAULT CHARACTER SET utf8 ;
@@ -22,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `item_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_single_value` DECIMAL(10,0) NOT NULL,
   `iteam_date_updated` NVARCHAR(255) NOT NULL,
+	`item_status` boolean not null,
   PRIMARY KEY (`item_id`),
   UNIQUE INDEX `item_name_UNIQUE` (`item_name` ASC))
 ENGINE = InnoDB
@@ -126,7 +118,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `staff_address` NVARCHAR(255) NOT NULL,
   `staff_identity_card` NVARCHAR(12) NOT NULL,
   `staff_home_town` NVARCHAR(45) NOT NULL,
-  `staff_status` INT(11) NOT NULL,
+	`staff_salary` decimal(10,0) not null,
+  `staff_status` tinyint NOT NULL,
   PRIMARY KEY (`staff_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -141,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping` (
   `timekeeping_created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `timekeeping_in` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_out` TIMESTAMP NULL DEFAULT NULL,
-  `timekeeping_status` INT(11) NOT NULL,
+  `timekeeping_status` tinyint NOT NULL,
   `id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`timekeeping_id`))
 ENGINE = InnoDB
@@ -161,6 +154,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `user_created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_updated_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_last_order_time` TIMESTAMP NULL DEFAULT NULL,
+	`user_status` boolean not null,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_email_UNIQUE` (`user_name` ASC))
 ENGINE = InnoDB

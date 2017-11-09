@@ -57,6 +57,8 @@ public class User implements Serializable {
   private Date userUpdateTime;
   @Column(name = "user_last_order_time")
   private String userLastOrderTime;
+  @Column(name = "user_status",nullable = false)
+  private boolean userStatus;
 
   public int getUserId() {
     return userId;
@@ -137,4 +139,13 @@ public class User implements Serializable {
   public void setUserLastOrderTime(String userLastOrderTime) {
     this.userLastOrderTime = userLastOrderTime;
   }
+
+  public boolean isUserStatus() {
+    return userStatus;
+  }
+
+  public void setUserStatus(boolean userStatus) {
+    this.userStatus = userStatus;
+  }
+  
 }

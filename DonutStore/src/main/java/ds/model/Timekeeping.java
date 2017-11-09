@@ -29,7 +29,7 @@ public class Timekeeping implements Serializable {
   @Column(name = "timekeeping_out", nullable = true)
   private Date timekeepingOut;
   @Column(name = "timekeeping_status", nullable = false)
-  private int timekeepingStatus;
+  private byte timekeepingStatus;
 
   public long getId() {
     return id;
@@ -75,7 +75,7 @@ public class Timekeeping implements Serializable {
     return timekeepingStatus;
   }
 
-  public void setTimekeepingStatus(int timekeepingStatus) {
+  public void setTimekeepingStatus(byte timekeepingStatus) {
     this.timekeepingStatus = timekeepingStatus;
   }
 

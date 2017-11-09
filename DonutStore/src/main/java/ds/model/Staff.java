@@ -36,8 +36,11 @@ public class Staff implements Serializable {
   private String staffIdentityCard;
   @Column(name = "staff_home_town", nullable = false)
   private String staffHomeTown;
+  @Column(name = "staff_salary", nullable = false)
+  private double staffSalary;
+  
   @Column(name = "staff_status", nullable = false)
-  private int staffStatus;
+  private byte staffStatus;
 
   public int getStaffId() {
     return staffId;
@@ -102,13 +105,21 @@ public class Staff implements Serializable {
   public void setStaffHomeTown(String staffHomeTown) {
     this.staffHomeTown = staffHomeTown;
   }
+  
+  public double getStaffSalary() {
+    return staffSalary;
+  }
+
+  public void setStaffSalary(double staffSalary) {
+    this.staffSalary = staffSalary;
+  }
 
   public int getStaffStatus() {
     return staffStatus;
   }
 
-  public void setStaffStatus(int staffStatus) {
+  public void setStaffStatus(byte staffStatus) {
     this.staffStatus = staffStatus;
   }
-
+  
 }
