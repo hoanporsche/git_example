@@ -37,9 +37,7 @@
       					<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
     				</ul>
     				<ul th:if="${session.loginedAdmin}" class="nav navbar-nav navbar-right">
-                        <li><a th:href="@{/admin/order}">Đơn hàng</a></li>
-                        <li><a th:href="@{/admin/user}">Người dùng</a></li>
-                        <li><a th:href="@{/admin/income}">Thu nhập</a></li>
+                        <li><a th:href="@{/admin}">Admin</a></li>
                     </ul>
     				<ul th:if="${session.loginedUser}" class="nav navbar-nav navbar-right">
     					<li><a sec:authentication="name" style="color:white"></a></li>
