@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
@@ -22,18 +24,20 @@ public class Order implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "orders_id", nullable = false)
   private int orderId;
-
+  
   @Column(name = "order_date_created", nullable = false)
   private Date orderDateCreated;
 
   @Column(name = "order_date_done")
   private Date orderDateDone;
 
+  @NotEmpty
   @Column(name = "order_name_created", nullable = false)
-  private User orderNameCreated;
+  private String orderNameCreated;
 
+  @NotEmpty
   @Column(name = "order_phone_number", nullable = false)
-  private User orderPhoneNumber;
+  private String orderPhoneNumber;
 
   @Column(name = "order_mod_name")
   private User orderModName;
@@ -80,11 +84,11 @@ public class Order implements Serializable {
     this.orderDateDone = orderDateDone;
   }
 
-  public User getOrderNameCreated() {
+  public String getOrderNameCreated() {
     return orderNameCreated;
   }
 
-  public void setOrderNameCreated(User orderNameCreated) {
+  public void setOrderNameCreated(String orderNameCreated) {
     this.orderNameCreated = orderNameCreated;
   }
 
@@ -136,11 +140,11 @@ public class Order implements Serializable {
     this.orderTotalPrice = orderTotalPrice;
   }
 
-  public User getOrderPhoneNumber() {
+  public String getOrderPhoneNumber() {
     return orderPhoneNumber;
   }
 
-  public void setOrderPhoneNumber(User orderPhoneNumber) {
+  public void setOrderPhoneNumber(String orderPhoneNumber) {
     this.orderPhoneNumber = orderPhoneNumber;
   }
 

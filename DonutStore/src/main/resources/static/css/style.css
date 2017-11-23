@@ -112,3 +112,9 @@ footer{
     margin-right: 10px;
     font-size:14px;
 }
+input:disabled {
+    background: white;
+}
+.error{
+	color:red;
+}

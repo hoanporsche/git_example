@@ -21,8 +21,6 @@ public class Quantity implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "quantity_id", nullable = false)
   private int quantityId;
-  @Column(name = "quantity_order_id", nullable = false)
-  private int quantityOrderId;
   @Column(name = "quantity_item_id", nullable = false)
   private int quantityItemId;
   @Column(name = "quantity_item_quantity", nullable = false)
@@ -38,14 +36,6 @@ public class Quantity implements Serializable {
 
   public void setQuantityId(int quantityId) {
     this.quantityId = quantityId;
-  }
-
-  public int getQuantityOrderId() {
-    return quantityOrderId;
-  }
-
-  public void setQuantityOrderId(int quantityOrderId) {
-    this.quantityOrderId = quantityOrderId;
   }
 
   public int getQuantityItemId() {

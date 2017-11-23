@@ -17,6 +17,11 @@ public class AdminController {
   public String adminUser(Model model, Authentication auth) {
     return "adminUser";
   }
+  
+  @GetMapping("/admin/staff")
+  public String adminStaff(Model model, Authentication auth) {
+    return "adminStaff";
+  }
 
   @GetMapping("/admin/income")
   public String adminIncome(Model model, Authentication auth) {

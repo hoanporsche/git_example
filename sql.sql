@@ -84,7 +84,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   `quantity_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `quantity_order_id` INT(11) NOT NULL,
   `quantity_item_quantity` INT(11) NOT NULL,
   `quantity_item_id` INT(11) NOT NULL,
   `orders_id` INT(11) NOT NULL,

@@ -14,20 +14,25 @@
 				</div>
 				<div class="panel-body form-style">
 					<div class="col-md-8 col-md-offset-2 form-group">
-						<form th:action="@{/create}" th:object="${order}" method="POST">
+						<form id="createOrder" th:object="${order}">
 						    <div class="row">
 						         <div class="col-md-5 col-md-offset-0,5">
 	       				             <h4><label><b>Tên người mua mua</b></label></h4>
-                                      <input type="text" class="form-control" th:field="*{orderNameCreated}" placeholder="Tên người mua" />
+                                      <input type="text" id="nameCreate" class="form-control" th:field="*{orderNameCreated}" placeholder="Tên người mua" />
+                                      <span class="error" id="error-name"></span>
+                                      <p th:if="${#fields.hasErrors('orderNameCreated')}" th:errors="*{orderNameCreated}">User Name Error></p>
 						         </div>
 						         <div class="col-md-5 col-md-offset-1">
                                     <h4><label><b>Số điện thoại</b></label></h4>
-                                    <input type="text" class="form-control" th:field="*{orderPhoneNumber}" placeholder="Số điện thoại" />
+                                    <input type="text" id="phoneReceiver" class="form-control" th:field="*{orderPhoneNumber}" placeholder="Số điện thoại" />
+                                    <span class="error" id="error-phone" >Hãy nhập số điện thoại</span>
+                                    <p th:if="${#fields.hasErrors('orderPhoneNumber')}" th:errors="*{orderPhoneNumber}">User Name Error></p>
                                  </div>
                                  <div class="clearfix"></div>
                                  <div class="col-md-5 col-md-offset-0,5">
                                     <h4><label><b>Thời gian nhận hàng</b></label></h4>
-                                    <input type="datetime-local" class="form-control" th:field="*{orderDateDone}" />
+                                    <span class="error" id="error-date" >Hãy nhập thời gian</span>
+                                    <input type="datetime-local" id="dateDone" class="form-control" th:field="*{orderDateDone}" />
                                  </div>
                                  <div class="col-md-5 col-md-offset-1">
                                      <h4><label><b>Đến lấy / Giao đi</b></label></h4>            
@@ -47,66 +52,68 @@
                                  <input type="checkbox" id="du" /></h4></div>     
                             </div>
                                 
-                            <div id="show_br" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;">
-                                 <div class="col-md-5 col-md-offset-1">
+                            <div id="show_br" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;" align="center">
+                                 <div class="col-md-5 col-md-offset-1 col-xs-6">
                                    <label class="label label-warning">Số lượng bánh rán mặn</label><br/>
-                                   <input type="text" class="brValue" /><br/>
+                                   <input type="text" style="width:80%;" id="brmValue" /><br/>
                                    <label>Đơn giá 5.000đ</label>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5 col-xs-6">
                                    <label class="label label-warning">Số lượng bánh rán ngọt</label><br/>
-                                   <input type="text" class="brValue" /><br/>
+                                   <input type="text" style="width:80%;" id="brnValue" /><br/>
                                    <label>Đơn giá 5.000đ</label>
                                 </div>
                             </div>
                                 
-                            <div id="show_bm" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;">
+                            <div id="show_bm" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;" align="center">
                                 <div class="col-md-4" >
                                     <label class="label label-info">Số lượng pate Trứng</label><br/>
-                                    <input type="text" /><br/>
+                                    <input type="text" style="width:80%;" id="bmtValue"/><br/>
                                     <label>Đơn giá 12.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
                                     <label class="label label-info">Số lượng pate Xúc xích</label><br/>
-                                    <input type="text" /><br/>
+                                    <input type="text" style="width:80%;" id="bmxxValue"/><br/>
                                     <label>Đơn giá 15.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
                                     <label class="label label-info">Số lượng pate Trứng Xúc xích</label><br/>
-                                    <input type="text" /><br/>
+                                    <input type="text" style="width:80%;" id="bmtxxValue"/><br/>
                                     <label>Đơn giá 18.000đ</label>
                                 </div>
                             </div>
                                 
-                            <div id="show_du" class="col-md-12" style="display:none;border:2px solid #cecece;margin:10px auto;">
+                            <div id="show_du" class="row" style="display:none;border:2px solid #cecece;margin:10px auto;" align="center">
                                 <div class="col-md-4" >
                                     <label class="label label-info">Số lượng Coca</label><br/>
-                                    <input type="text" /><br/>
+                                    <input type="text" style="width:80%;" id="cocaValue"/><br/>
                                     <label>Đơn giá 10.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
                                     <label class="label label-info">Số lượng trà đá</label><br/>
-                                    <input type="text" /><br/>
+                                    <input type="text" style="width:80%;" id="tradaValue"/><br/>
                                     <label>Đơn giá 3.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
                                     <label class="label label-info">Số lượng Mirinda</label><br/>
-                                    <input type="text" /><br/>
+                                    <input type="text" style="width:80%;" id="mirindaValue"/><br/>
                                     <label>Đơn giá 10.000đ</label>
                                 </div>
                             </div>
                                 
                             <div id="show_is_shipping" class="row" style="display:none;margin:10px auto;
                                     padding-bottom:10px;border:2px solid #cecece;">
-                                <table class="col-md-12">
+                                <table>
                                     <tbody>
                                         <tr>
-                                            <th><h5><label class="label label-success">Địa chỉ giao hàng</label></h5></th>
-                                            <th><h5><label class="label label-success">Quãng đường</label></h5></th>
+                                            <th class="col-xs-6"><h5><label class="label label-success">Địa chỉ giao hàng</label></h5></th>
+                                            <th class="col-xs-2"><h5><label class="label label-success">Quãng đường</label></h5></th>
+                                            <th class="col-xs-4"><h5><label class="label label-success">Tiền ship</label></h5></th>
                                         </tr>
                                         <tr>
-                                            <th><input type="text" class="form-control" id="ggmaps_input" th:field="*{orderAddressShipping}" placeholder="địa chỉ nhận" /></th>
-                                            <th><input type="text" class="form-control" id="distance" placeholder="Quãng đường" /></th>
+                                            <th class="col-xs-6"><input type="text" class="form-control" id="ggmaps_input" th:field="*{orderAddressShipping}" placeholder="địa chỉ nhận" /></th>
+                                            <th class="col-xs-2"><input type="text" class="form-control" id="distance" placeholder="Quãng đường" disabled="disabled"/></th>
+                                            <th class="col-xs-4"><input type="text" class="form-control" id="shippingPrice" placeholder="Tiền ship" disabled="disabled"/></th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -116,9 +123,9 @@
                             </div>
                            
                             <h4 align="center"><label><b>Tổng tiền </b></label>
-                            <input type="text" th:field="*{orderTotalPrice}"/></h4>
+                            <input type="text" th:field="*{orderTotalPrice}" disabled="disabled"/></h4>
                             <br/>
-                            <h3 align="center"><button type="submit" >Đặt hàng</button></h3>
+                            <h3 align="center"><button type="submit" id="submitOrder">Đặt hàng</button></h3>
 
 						</form>
 					</div>

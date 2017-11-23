@@ -4,10 +4,34 @@
 <head th:replace="layout :: head">
 </head>
 <body>
-    <nav th:replace="layout :: header">
+    <nav th:replace="admin :: header"></nav>
     
-    </nav>
+    <div class="container">
+    		<div class="row">
+    			<div align="left"><h3>Order ngày:</h3></div>
+    			<div align="center"><h3 th:text="${today}"></h3></div>
+    			<div align="right">
+    				<label style="padding-top:30px;">
+						Kết quả từ <b th:text="${pageStart}"></b> đến <b th:text="${pageLast}"></b> trong tổng <b th:text="${totalOrder}"></b>
+				</label>
+				<nav aria-lable="..">
+						<ul class="pagination">
+							<li class="page-item">
+								<a th:if="${page==1}" class="page-link disabled">Trước</a>
+								<a th:unless="${page==1}" class="page-link" th:href="@{${'/admin'}(page=${page-1})}">Trước</a></li>
+							<li th:each="i : ${#numbers.sequence(1, {totalPage},1)}" th:class="${page == i} ? 'active' : ''" >
+								<a class="page-link" th:href="@{${'/admin'}(page=${i})}" th:text="${i}"></a>
+							</li>
+							<li class="page-item">
+								<a th:if="${page}==${totalPage}" class="page-link disabled">Sau</a>
+								<a th:unless="${totalPage}==${page}" class="page-link" th:href="@{${'/admin'}(page=${page+1})}">Sau</a>
+							</li>
+						</ul>
+					</nav>
+    			</div>
+    		</div>
+    </div>
     
-    <footer th:replace="layout :: footer"></footer>
+    <footer th:replace="admin :: footer"></footer>
 </body>
 </html>

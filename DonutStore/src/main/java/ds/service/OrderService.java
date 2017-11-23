@@ -1,5 +1,7 @@
 package ds.service;
 
+import java.util.Date;
+
 import ds.model.Order;
 
 public interface OrderService {
@@ -10,4 +12,8 @@ public interface OrderService {
   void delete(int id);
 
   Order findOne(int id);
+  
+  long countAll();
+  
+  Iterable<Order> findByDate(Date myDate);
 }

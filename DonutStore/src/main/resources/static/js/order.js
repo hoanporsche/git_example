@@ -8,7 +8,8 @@ $('#br').change(function(){
 		$('#show_br').fadeIn('fast');
 	}else{
 		$('#show_br').fadeOut('fast');
-		
+		$('#brmValue').val("");
+		$('#brnValue').val("");
 	}
 });
 
@@ -17,6 +18,9 @@ $('#bm').change(function(){
 		$('#show_bm').fadeIn('fast');
 	}else{
 		$('#show_bm').fadeOut('fast');
+		$('#bmtValue').val("");
+		$('#bmxxValue').val("");
+		$('#bmtxxValue').val("");
 	}
 });
 
@@ -25,8 +29,102 @@ $('#du').change(function(){
 		$('#show_du').fadeIn('fast');
 	}else{
 		$('#show_du').fadeOut('fast');
+		$('#cocaValue').val("");
+		$('#tradaValue').val("");
+		$('#mirindaValue').val("");
 	}
 });
+
+$(document).ready(function(){	
+	$('#error-name').hide();
+	$('#error-phone').hide();
+	$('#error-date').hide();
+	
+	$('#nameCreate').focusout(function(){
+		var nameCreate = $('#nameCreate').val().length;
+		if(nameCreate == 0){
+			$('#error-name').html("Hãy nhập tên");
+			$('#error-name').show();
+		} else {
+			$('#error-name').hide();
+		}
+	});
+	$('#phoneReceiver').focusout(function(){
+		var phoneReceiver = $('#nameCreate').val().length;
+		if(phoneReceiver == 0){
+			$('#error-phone').html("Hãy nhập số điện thoại");
+			$('#error-phone').show();
+		} else {
+			$('#error-phone').hide();
+		}
+	});
+	$('#dateDone').focusout(function(){
+		var nameCreate = $('#dateDone').val().length;
+		if(nameCreate == 0){
+			$('#error-date').html("Hãy nhập thời gian");
+			$('#error-date').show();
+		} else {
+			$('#error-date').hide();
+		}
+	});
+});
+
+//$(document).ready(function(){
+//	$('#createForm').submit(function(e){
+//		e.preventDefault();
+//		var nameCreate = $('#nameCreate').val();
+//		var phoneReceiver = $('#phoneReceiver').val();
+//		var dateDone = $('#dateDone').val();
+//		var submit = $('#submitOrder').val();
+//		
+//		if(nameCreate == ""){
+//			$("#error-name").html("Nhập thiếu Tên người nhận");
+//			document.getElementById("nameCreate").className = document.getElementById("nameCreate").className + " error-input";
+//		}else{
+//			document.getElementById("nameCreate").style.borderStyle='solid';
+//			document.getElementById("nameCreate").style.borderWidth='1px';
+//			document.getElementById("nameCreate").style.borderColor='#ccc';
+//			$("#error-name").remove();
+//		}
+//		
+//		if(phoneReceiver == ""){
+//			$("#error-phone").html("Nhập thiếu số điện thoại");
+//			document.getElementById("phoneReceiver").className = document.getElementById("phoneReceiver").className + " error-input";
+//		}else{
+//			document.getElementById("phoneReceiver").style.borderStyle='solid';
+//			document.getElementById("phoneReceiver").style.borderWidth='1px';
+//			document.getElementById("phoneReceiver").style.borderColor='#ccc';
+//			$("#error-phone").remove();
+//		}
+//		
+//		if(dateDone == ""){
+//			$("#error-date").html("Nhập thiếu thời gian lấy hàng");
+//			document.getElementById("dateDone").className = document.getElementById("dateDone").className + " error-input";
+//		}else{
+//			document.getElementById("dateDone").style.borderStyle='solid';
+//			document.getElementById("dateDone").style.borderWidth='1px';
+//			document.getElementById("dateDone").style.borderColor='#ccc';
+//			$("#error-date").remove();
+//		}
+//		
+//		$.ajax({
+//			type: "post",
+//			dataType : "text",
+//			url : "/createOrder",
+//			data: {
+//				orderNameCreated : nameCreate,
+//				orderPhoneNumber : phoneReceiver,
+//				action : submit
+//			}, 
+//			success : function(data){
+//				window.location.href = "order";
+//			},
+//			error : function(e){
+//				
+//			}
+//		});
+//	});
+//});
 
 $('#isShipping').change(function(){
 	var isShipping = $('#isShipping').val();
@@ -111,6 +209,11 @@ function showGgmaps(){
 				
 				var results = response.rows[0].elements;
 				document.getElementById('distance').value = results[0].distance.text;
+				var distance = $('#distance').val();
+				distance = distance.replace(" km","");
+				distance = distance.replace(",",".");
+				console.log(distance);
+				$('#shippingPrice').val(distance*5000 + " nghìn");
 			}
 		});
 		
