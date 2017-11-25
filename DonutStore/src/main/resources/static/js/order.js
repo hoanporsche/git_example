@@ -36,95 +36,101 @@ $('#du').change(function(){
 });
 
 $(document).ready(function(){	
-	$('#error-name').hide();
-	$('#error-phone').hide();
-	$('#error-date').hide();
 	
-	$('#nameCreate').focusout(function(){
-		var nameCreate = $('#nameCreate').val().length;
-		if(nameCreate == 0){
-			$('#error-name').html("Hãy nhập tên");
-			$('#error-name').show();
-		} else {
-			$('#error-name').hide();
-		}
-	});
-	$('#phoneReceiver').focusout(function(){
-		var phoneReceiver = $('#nameCreate').val().length;
-		if(phoneReceiver == 0){
-			$('#error-phone').html("Hãy nhập số điện thoại");
-			$('#error-phone').show();
-		} else {
-			$('#error-phone').hide();
-		}
-	});
-	$('#dateDone').focusout(function(){
-		var nameCreate = $('#dateDone').val().length;
-		if(nameCreate == 0){
-			$('#error-date').html("Hãy nhập thời gian");
-			$('#error-date').show();
-		} else {
-			$('#error-date').hide();
-		}
-	});
-});
-
-//$(document).ready(function(){
-//	$('#createForm').submit(function(e){
-//		e.preventDefault();
-//		var nameCreate = $('#nameCreate').val();
-//		var phoneReceiver = $('#phoneReceiver').val();
-//		var dateDone = $('#dateDone').val();
-//		var submit = $('#submitOrder').val();
+	$('.form_datetime').datetimepicker({
+        startDate: new Date() ,
+        endDate : new Date(new Date().getTime()+1000*60*60*36),//limit 36 hours
+        todayHighlight: true,
+        weekStart: 1,
+        autoclose: 1,
+        inline: true,
+        sideBySide: true
+    });
+//	var orderNameCreated = $('#nameCreate').val();
+//	var orderPhoneReceiver = $('#phoneReceiver').val();
+//	var orderDateDone = $('#dateDone').val();
+//	
+//	$('#error-name').hide();
+//	$('#error-phone').hide();
+//	$('#error-date').hide();
+//	var errorName = false;
+//	var errorPhone = false;
+//	var errorDate = false;
+//	var subimt = $('submitOrder').val();
+//	
+//	$('#nameCreate').focusout(function(){
+//		checkName();
+//	});
+//	$('#phoneReceiver').focusout(function(){
+//		checkPhone();
+//	});
+//	$('#dateDone').focusout(function(){
+//		checkDate();
+//	});
+//	
+//	$('#createOrder').submit(function(){
+//		errorName = false;
+//		errorPhone = false;
+//		errorDate = false;
 //		
-//		if(nameCreate == ""){
-//			$("#error-name").html("Nhập thiếu Tên người nhận");
-//			document.getElementById("nameCreate").className = document.getElementById("nameCreate").className + " error-input";
-//		}else{
-//			document.getElementById("nameCreate").style.borderStyle='solid';
-//			document.getElementById("nameCreate").style.borderWidth='1px';
-//			document.getElementById("nameCreate").style.borderColor='#ccc';
-//			$("#error-name").remove();
+//		checkName();
+//		checkPhone();
+//		checkDate();
+//		if(errorName == false && errorPhone == false && errorDate == false){
+//			return true;
+//		} else {
+//			return false;
 //		}
-//		
-//		if(phoneReceiver == ""){
-//			$("#error-phone").html("Nhập thiếu số điện thoại");
-//			document.getElementById("phoneReceiver").className = document.getElementById("phoneReceiver").className + " error-input";
-//		}else{
-//			document.getElementById("phoneReceiver").style.borderStyle='solid';
-//			document.getElementById("phoneReceiver").style.borderWidth='1px';
-//			document.getElementById("phoneReceiver").style.borderColor='#ccc';
-//			$("#error-phone").remove();
-//		}
-//		
-//		if(dateDone == ""){
-//			$("#error-date").html("Nhập thiếu thời gian lấy hàng");
-//			document.getElementById("dateDone").className = document.getElementById("dateDone").className + " error-input";
-//		}else{
-//			document.getElementById("dateDone").style.borderStyle='solid';
-//			document.getElementById("dateDone").style.borderWidth='1px';
-//			document.getElementById("dateDone").style.borderColor='#ccc';
-//			$("#error-date").remove();
-//		}
-//		
 //		$.ajax({
 //			type: "post",
 //			dataType : "text",
 //			url : "/createOrder",
 //			data: {
-//				orderNameCreated : nameCreate,
-//				orderPhoneNumber : phoneReceiver,
+//				orderNameCreated : orderNameCreated,
+//				orderPhoneNumber : orderPhoneReceiver,
+//				orderDateDone : orderDateDone,
 //				action : submit
 //			}, 
 //			success : function(data){
-//				window.location.href = "order";
+//				window.location.href = "user";
 //			},
 //			error : function(e){
 //				
 //			}
 //		});
 //	});
-//});
+//	
+//	function checkName(){
+//		var nameCreate = $('#nameCreate').val().length;
+//		if(nameCreate == 0){
+//			$('#error-name').html("Hãy nhập tên");
+//			$('#error-name').show();
+//			errorName = true;
+//		} else {
+//			$('#error-name').hide();
+//		}
+//	}
+//	function checkPhone(){
+//		var phoneReceiver = $('#nameCreate').val().length;
+//		if(phoneReceiver == 0){
+//			$('#error-phone').html("Hãy nhập số điện thoại");
+//			$('#error-phone').show();
+//			errorPhone = true;
+//		} else {
+//			$('#error-phone').hide();
+//		}
+//	}
+//	function checkDate(){
+//		var nameCreate = $('#dateDone').val().length;
+//		if(nameCreate == 0){
+//			$('#error-date').html("Hãy nhập thời gian");
+//			$('#error-date').show();
+//			errorDate = true;
+//		} else {
+//			$('#error-date').hide();
+//		}
+//	}
+});
 
 $('#isShipping').change(function(){
 	var isShipping = $('#isShipping').val();

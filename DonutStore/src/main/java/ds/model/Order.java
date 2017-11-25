@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
@@ -31,11 +29,9 @@ public class Order implements Serializable {
   @Column(name = "order_date_done")
   private Date orderDateDone;
 
-  @NotEmpty
   @Column(name = "order_name_created", nullable = false)
   private String orderNameCreated;
 
-  @NotEmpty
   @Column(name = "order_phone_number", nullable = false)
   private String orderPhoneNumber;
 

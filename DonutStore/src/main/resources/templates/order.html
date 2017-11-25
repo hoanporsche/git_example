@@ -14,29 +14,33 @@
 				</div>
 				<div class="panel-body form-style">
 					<div class="col-md-8 col-md-offset-2 form-group">
-						<form id="createOrder" th:object="${order}">
+						<form id="createOrder" th:action="@{/createOrder}" th:object="${orderForm}" method="post">
 						    <div class="row">
 						         <div class="col-md-5 col-md-offset-0,5">
 	       				             <h4><label><b>Tên người mua mua</b></label></h4>
-                                      <input type="text" id="nameCreate" class="form-control" th:field="*{orderNameCreated}" placeholder="Tên người mua" />
+                                      <input type="text" id="nameCreate" class="form-control" th:field="*{nameCreate}" placeholder="Tên người mua" />
                                       <span class="error" id="error-name"></span>
-                                      <p th:if="${#fields.hasErrors('orderNameCreated')}" th:errors="*{orderNameCreated}">User Name Error></p>
+                                      <p th:if="${#fields.hasErrors('nameCreate')}" th:errors="*{nameCreate}"></p>
 						         </div>
 						         <div class="col-md-5 col-md-offset-1">
                                     <h4><label><b>Số điện thoại</b></label></h4>
-                                    <input type="text" id="phoneReceiver" class="form-control" th:field="*{orderPhoneNumber}" placeholder="Số điện thoại" />
-                                    <span class="error" id="error-phone" >Hãy nhập số điện thoại</span>
-                                    <p th:if="${#fields.hasErrors('orderPhoneNumber')}" th:errors="*{orderPhoneNumber}">User Name Error></p>
+                                    <input type="text" id="phoneReceiver" class="form-control" th:field="*{phoneReceiver}" placeholder="Số điện thoại" />
+                                    <span class="error" id="error-phone" ></span>
+                                    <p th:if="${#fields.hasErrors('phoneReceiver')}" th:errors="*{phoneReceiver}"></p>
                                  </div>
                                  <div class="clearfix"></div>
                                  <div class="col-md-5 col-md-offset-0,5">
                                     <h4><label><b>Thời gian nhận hàng</b></label></h4>
-                                    <span class="error" id="error-date" >Hãy nhập thời gian</span>
-                                    <input type="datetime-local" id="dateDone" class="form-control" th:field="*{orderDateDone}" />
+                                    <div class="input-group date form_datetime">
+                							<input class="form-control" id="dateDone1" th:field="*{dateDone}" type="text" />
+										<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            							</div>
+            							<span class="error" id="error-date"></span>
+            							<p th:if="${#fields.hasErrors('dateDone')}" th:errors="*{dateDone}"></p>
                                  </div>
                                  <div class="col-md-5 col-md-offset-1">
                                      <h4><label><b>Đến lấy / Giao đi</b></label></h4>            
-                                     <select class="form-control" id="isShipping" th:field="*{orderIsShipping}">
+                                     <select class="form-control" id="isShipping" th:field="*{shipping}">
                                          <option value="0" >Đến lấy</option>
                                          <option value="1" >Giao đi</option>
                                      </select>
@@ -44,7 +48,7 @@
 						    </div>
 
                             <div class="row">
-                              <div class="col-xs-3 col-xs-offset-1"><h4><b>Bánh rán mặn </b>
+                              <div class="col-xs-3 col-xs-offset-1"><h4><b>Bánh rán </b>
                                  <input type="checkbox" id="br" /></h4></div>
                               <div class="col-xs-3 col-xs-offset-1"><h4><b>Bánh mì </b>
                                  <input type="checkbox" id="bm" /></h4></div>
@@ -111,9 +115,9 @@
                                             <th class="col-xs-4"><h5><label class="label label-success">Tiền ship</label></h5></th>
                                         </tr>
                                         <tr>
-                                            <th class="col-xs-6"><input type="text" class="form-control" id="ggmaps_input" th:field="*{orderAddressShipping}" placeholder="địa chỉ nhận" /></th>
+                                            <th class="col-xs-6"><input type="text" class="form-control" id="ggmaps_input" th:field="*{addressShipping}" placeholder="địa chỉ nhận" /></th>
                                             <th class="col-xs-2"><input type="text" class="form-control" id="distance" placeholder="Quãng đường" disabled="disabled"/></th>
-                                            <th class="col-xs-4"><input type="text" class="form-control" id="shippingPrice" placeholder="Tiền ship" disabled="disabled"/></th>
+                                            <th class="col-xs-4"><input type="text" class="form-control" id="shippingPrice" th:field="*{shippingPrice}" placeholder="Tiền ship" disabled="disabled"/></th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -123,7 +127,7 @@
                             </div>
                            
                             <h4 align="center"><label><b>Tổng tiền </b></label>
-                            <input type="text" th:field="*{orderTotalPrice}" disabled="disabled"/></h4>
+                            <input type="text" th:field="*{totalPrice}" disabled="disabled"/></h4>
                             <br/>
                             <h3 align="center"><button type="submit" id="submitOrder">Đặt hàng</button></h3>
 

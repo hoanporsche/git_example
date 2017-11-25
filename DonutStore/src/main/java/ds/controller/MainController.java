@@ -1,5 +1,6 @@
 package ds.controller;
 
+import ds.form.OrderForm;
 import ds.model.Order;
 import ds.service.OrderService;
 import ds.service.UserService;
@@ -61,16 +62,18 @@ public class MainController {
 
   @GetMapping("/order")
   public String order(Model model) {
-    model.addAttribute("order", new Order());
+    model.addAttribute("orderForm", new OrderForm());
     return "order";
   }
   
   @PostMapping("/createOrder")
-  public String createOrder(@Valid Order order,BindingResult bindingResult) {
+  public String createOrder(@Valid OrderForm orderForm,BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       return "order";
     }
-    return "order";
+//    Date date = order.getOrderDateDone();
+//    System.out.println(date.toString());
+    return "redirect:/";
   }
 
   @GetMapping("/admin")
