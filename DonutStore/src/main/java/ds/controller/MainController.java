@@ -67,10 +67,12 @@ public class MainController {
   }
   
   @PostMapping("/createOrder")
-  public String createOrder(@Valid OrderForm orderForm,BindingResult bindingResult) {
+  public String createOrder(@Valid OrderForm orderForm,BindingResult bindingResult,HttpServletRequest request) {
     if (bindingResult.hasErrors()) {
       return "order";
     }
+    String brMan = request.getParameter("brMan");
+    System.out.println(brMan);
 //    Date date = order.getOrderDateDone();
 //    System.out.println(date.toString());
     return "redirect:/";
@@ -99,7 +101,7 @@ public class MainController {
     model.addAttribute("pageLast", pageLast);
     model.addAttribute("totalOrder", totalOrder);
     model.addAttribute("totalPage", totalPage);
-    model.addAttribute("orders", orderService);
+    model.addAttribute("orders", "123");
     return "adminOrder";
   }
 

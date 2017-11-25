@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="layout :: head">
+<head th:replace="admin :: head">
 </head>
 <body>
     <nav th:replace="admin :: header"></nav>
     
-    <div class="container">
+    <!-- <div class="container">
     		<div class="row">
     			<div align="left"><h3>Order ngày:</h3></div>
     			<div align="center"><h3 th:text="${today}"></h3></div>
@@ -30,7 +30,7 @@
 					</nav>
     			</div>
     		</div>
-    </div>
+    </div> -->
     
     <footer th:replace="admin :: footer"></footer>
 </body>

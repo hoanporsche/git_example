@@ -32,7 +32,7 @@
                                  <div class="col-md-5 col-md-offset-0,5">
                                     <h4><label><b>Thời gian nhận hàng</b></label></h4>
                                     <div class="input-group date form_datetime">
-                							<input class="form-control" id="dateDone1" th:field="*{dateDone}" type="text" />
+                							<input class="form-control" id="dateDone1" th:field="*{dateDone}" type="text" placeholder="Thời gian" />
 										<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
             							</div>
             							<span class="error" id="error-date"></span>
@@ -58,12 +58,12 @@
                                 
                             <div id="show_br" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;" align="center">
                                  <div class="col-md-5 col-md-offset-1 col-xs-6">
-                                   <label class="label label-warning">Số lượng bánh rán mặn</label><br/>
-                                   <input type="text" style="width:80%;" id="brmValue" /><br/>
+                                   <label class="label label-warning">Bánh rán mặn</label><br/>
+                                   <input type="text" style="width:80%;" id="brmValue" name="brMan" /><br/>
                                    <label>Đơn giá 5.000đ</label>
                                 </div>
                                 <div class="col-md-5 col-xs-6">
-                                   <label class="label label-warning">Số lượng bánh rán ngọt</label><br/>
+                                   <label class="label label-warning">Bánh rán ngọt</label><br/>
                                    <input type="text" style="width:80%;" id="brnValue" /><br/>
                                    <label>Đơn giá 5.000đ</label>
                                 </div>
@@ -71,17 +71,17 @@
                                 
                             <div id="show_bm" class="row" style="display:none; border:2px solid #cecece;margin:10px auto;" align="center">
                                 <div class="col-md-4" >
-                                    <label class="label label-info">Số lượng pate Trứng</label><br/>
+                                    <label class="label label-info">Pate Trứng</label><br/>
                                     <input type="text" style="width:80%;" id="bmtValue"/><br/>
                                     <label>Đơn giá 12.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
-                                    <label class="label label-info">Số lượng pate Xúc xích</label><br/>
+                                    <label class="label label-info">Pate Xúc xích</label><br/>
                                     <input type="text" style="width:80%;" id="bmxxValue"/><br/>
                                     <label>Đơn giá 15.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
-                                    <label class="label label-info">Số lượng pate Trứng Xúc xích</label><br/>
+                                    <label class="label label-info">Pate Trứng Xúc xích</label><br/>
                                     <input type="text" style="width:80%;" id="bmtxxValue"/><br/>
                                     <label>Đơn giá 18.000đ</label>
                                 </div>
@@ -89,17 +89,17 @@
                                 
                             <div id="show_du" class="row" style="display:none;border:2px solid #cecece;margin:10px auto;" align="center">
                                 <div class="col-md-4" >
-                                    <label class="label label-info">Số lượng Coca</label><br/>
+                                    <label class="label label-info">Coca</label><br/>
                                     <input type="text" style="width:80%;" id="cocaValue"/><br/>
                                     <label>Đơn giá 10.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
-                                    <label class="label label-info">Số lượng trà đá</label><br/>
+                                    <label class="label label-info">Trà đá</label><br/>
                                     <input type="text" style="width:80%;" id="tradaValue"/><br/>
                                     <label>Đơn giá 3.000đ</label>
                                 </div>
                                 <div class="col-md-4" >
-                                    <label class="label label-info">Số lượng Mirinda</label><br/>
+                                    <label class="label label-info">Mirinda</label><br/>
                                     <input type="text" style="width:80%;" id="mirindaValue"/><br/>
                                     <label>Đơn giá 10.000đ</label>
                                 </div>
