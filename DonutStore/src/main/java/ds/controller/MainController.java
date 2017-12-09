@@ -30,7 +30,7 @@ public class MainController {
 
   @Autowired
   private UserService userService;
-  
+
   @Autowired
   private OrderService orderService;
 
@@ -65,37 +65,38 @@ public class MainController {
     model.addAttribute("orderForm", new OrderForm());
     return "order";
   }
-  
+
   @PostMapping("/createOrder")
-  public String createOrder(@Valid OrderForm orderForm,BindingResult bindingResult,HttpServletRequest request) {
+  public String createOrder(@Valid OrderForm orderForm, BindingResult bindingResult,
+      HttpServletRequest request) {
     if (bindingResult.hasErrors()) {
       return "order";
     }
     String brMan = request.getParameter("brMan");
-    System.out.println(brMan);
-//    Date date = order.getOrderDateDone();
-//    System.out.println(date.toString());
+    System.out.println(brMan + "===" + orderForm.getNameCreate());
+    // Date date = order.getOrderDateDone();
+    // System.out.println(date.toString());
     return "redirect:/";
   }
 
   @GetMapping("/admin")
-  public String admin(@RequestParam(value="page", defaultValue="1") int page ,
-      @RequestParam(value="size", defaultValue = "10") int size,Model model) {
+  public String admin(@RequestParam(value = "page", defaultValue = "1") int page,
+      @RequestParam(value = "size", defaultValue = "10") int size, Model model) {
     long totalOrder = orderService.countAll();
-    
-    long pageStart = 0, pageLast = 0,totalPage = 0;
-    if(totalOrder % size == 0){
-      totalPage =  totalOrder / size;
-    }else {
+
+    long pageStart = 0, pageLast = 0, totalPage = 0;
+    if (totalOrder % size == 0) {
+      totalPage = totalOrder / size;
+    } else {
       totalPage = (totalOrder / size) + 1;
     }
     pageStart = size * (page - 1);
-    if(page == totalPage){
-      pageLast = totalOrder ;
-    }else{
+    if (page == totalPage) {
+      pageLast = totalOrder;
+    } else {
       pageLast = page * size;
     }
-    
+
     model.addAttribute("today", new Date());
     model.addAttribute("pageStart", pageStart);
     model.addAttribute("pageLast", pageLast);
@@ -132,4 +133,8 @@ public class MainController {
     return "redirect:/";
   }
 
+  @GetMapping("/test")
+  public String test() {
+    return "index";
+  }
 }

@@ -30,7 +30,7 @@ public class Item implements Serializable {
   @Column(name = "item_date_updated", nullable = false)
   private String itemDateUpdated;
   @Column(name = "item_single_value", nullable = false)
-  private double iteamSingleValue;
+  private double itemSingleValue;
   @Column(name = "item_status", nullable = false)
   private boolean itemStatus;
 
@@ -71,12 +71,12 @@ public class Item implements Serializable {
     this.itemDateUpdated = itemDateUpdated;
   }
 
-  public double getIteamSingleValue() {
-    return iteamSingleValue;
+  public double getItemSingleValue() {
+    return itemSingleValue;
   }
 
-  public void setIteamSingleValue(double iteamSingleValue) {
-    this.iteamSingleValue = iteamSingleValue;
+  public void setItemSingleValue(double itemSingleValue) {
+    this.itemSingleValue = itemSingleValue;
   }
 
   public Set<Material> getMaterials() {

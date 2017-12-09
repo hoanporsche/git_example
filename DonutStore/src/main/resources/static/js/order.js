@@ -37,6 +37,28 @@ $('#du').change(function(){
 
 $(document).ready(function(){	
 	
+	$("#formTest").submit(function(e){
+		e.preventDefault();
+		var testinput = $("#testInput").val();
+		var submit = $("#submit-test").val();
+		$.ajax({
+			type: "post",
+			dataType : "text",
+			url : "test",
+			data: {
+				nameCreate : testinput,
+				action : submit
+			}, 
+			success : function(data){
+				window.location.href = "item-material";
+			},
+			error : function(e){
+				alert("error" + e);
+				console.log(e);
+			}
+		});
+	});
+	
 	$('.form_datetime').datetimepicker({
         startDate: new Date() ,
         endDate : new Date(new Date().getTime()+1000*60*60*36),//limit 36 hours
@@ -46,90 +68,73 @@ $(document).ready(function(){
         inline: true,
         sideBySide: true
     });
-//	var orderNameCreated = $('#nameCreate').val();
-//	var orderPhoneReceiver = $('#phoneReceiver').val();
-//	var orderDateDone = $('#dateDone').val();
-//	
-//	$('#error-name').hide();
-//	$('#error-phone').hide();
-//	$('#error-date').hide();
-//	var errorName = false;
-//	var errorPhone = false;
-//	var errorDate = false;
-//	var subimt = $('submitOrder').val();
-//	
-//	$('#nameCreate').focusout(function(){
-//		checkName();
-//	});
-//	$('#phoneReceiver').focusout(function(){
-//		checkPhone();
-//	});
-//	$('#dateDone').focusout(function(){
-//		checkDate();
-//	});
-//	
-//	$('#createOrder').submit(function(){
-//		errorName = false;
-//		errorPhone = false;
-//		errorDate = false;
-//		
-//		checkName();
-//		checkPhone();
-//		checkDate();
-//		if(errorName == false && errorPhone == false && errorDate == false){
-//			return true;
-//		} else {
-//			return false;
-//		}
-//		$.ajax({
-//			type: "post",
-//			dataType : "text",
-//			url : "/createOrder",
-//			data: {
-//				orderNameCreated : orderNameCreated,
-//				orderPhoneNumber : orderPhoneReceiver,
-//				orderDateDone : orderDateDone,
-//				action : submit
-//			}, 
-//			success : function(data){
-//				window.location.href = "user";
-//			},
-//			error : function(e){
-//				
-//			}
-//		});
-//	});
-//	
-//	function checkName(){
-//		var nameCreate = $('#nameCreate').val().length;
-//		if(nameCreate == 0){
-//			$('#error-name').html("Hãy nhập tên");
-//			$('#error-name').show();
-//			errorName = true;
-//		} else {
-//			$('#error-name').hide();
-//		}
-//	}
-//	function checkPhone(){
-//		var phoneReceiver = $('#nameCreate').val().length;
-//		if(phoneReceiver == 0){
-//			$('#error-phone').html("Hãy nhập số điện thoại");
-//			$('#error-phone').show();
-//			errorPhone = true;
-//		} else {
-//			$('#error-phone').hide();
-//		}
-//	}
-//	function checkDate(){
-//		var nameCreate = $('#dateDone').val().length;
-//		if(nameCreate == 0){
-//			$('#error-date').html("Hãy nhập thời gian");
-//			$('#error-date').show();
-//			errorDate = true;
-//		} else {
-//			$('#error-date').hide();
-//		}
-//	}
+	var orderNameCreated = $('#nameCreate').val();
+	var orderPhoneReceiver = $('#phoneReceiver').val();
+	var orderDateDone = $('#dateDone').val();
+	
+	$('#error-name').hide();
+	$('#error-phone').hide();
+	$('#error-date').hide();
+	var errorName = false;
+	var errorPhone = false;
+	var errorDate = false;
+	var subimt = $('submitOrder').val();
+	
+	$('#nameCreate').focusout(function(){
+		checkName();
+	});
+	$('#phoneReceiver').focusout(function(){
+		checkPhone();
+	});
+	$('#dateDone').focusout(function(){
+		checkDate();
+	});
+	
+	$('#createOrder').submit(function(){
+		errorName = false;
+		errorPhone = false;
+		errorDate = false;
+		
+		checkName();
+		checkPhone();
+		checkDate();
+		if(errorName == false && errorPhone == false && errorDate == false){
+			return true;
+		} else {
+			return false;
+		}
+	});
+	
+	function checkName(){
+		var nameCreate = $('#nameCreate').val().length;
+		if(nameCreate == 0){
+			$('#error-name').html("Hãy nhập tên");
+			$('#error-name').show();
+			errorName = true;
+		} else {
+			$('#error-name').hide();
+		}
+	}
+	function checkPhone(){
+		var phoneReceiver = $('#nameCreate').val().length;
+		if(phoneReceiver == 0){
+			$('#error-phone').html("Hãy nhập số điện thoại");
+			$('#error-phone').show();
+			errorPhone = true;
+		} else {
+			$('#error-phone').hide();
+		}
+	}
+	function checkDate(){
+		var nameCreate = $('#dateDone').val().length;
+		if(nameCreate == 0){
+			$('#error-date').html("Hãy nhập thời gian");
+			$('#error-date').show();
+			errorDate = true;
+		} else {
+			$('#error-date').hide();
+		}
+	}
 });
 
 $('#isShipping').change(function(){

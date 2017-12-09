@@ -1,6 +1,7 @@
 package ds.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class Material implements Serializable {
   @Column(name = "material_date_updated", nullable = false)
   private Date materialDateUpdated;
   @Column(name = "material_single_value", nullable = false)
-  private double materialSingleValue;
+  private BigDecimal materialSingleValue;
   @Column(name = "material_remain", nullable = false)
   private String materialRemain;
   @Column(name = "material_supply_name", nullable = true)
@@ -72,11 +73,11 @@ public class Material implements Serializable {
     this.materialDateUpdated = materialDateUpdated;
   }
 
-  public double getMaterialSingleValue() {
+  public BigDecimal getMaterialSingleValue() {
     return materialSingleValue;
   }
 
-  public void setMaterialSingleValue(double materialSingleValue) {
+  public void setMaterialSingleValue(BigDecimal materialSingleValue) {
     this.materialSingleValue = materialSingleValue;
   }
 
@@ -96,11 +97,11 @@ public class Material implements Serializable {
     this.materialSupplyName = materialSupplyName;
   }
 
-  public String getMaterialSuppluPhone() {
+  public String getMaterialSupplyPhone() {
     return materialSupplyPhone;
   }
 
-  public void setMaterialSupplePhone(String materialSupplyPhone) {
+  public void setMaterialSupplyPhone(String materialSupplyPhone) {
     this.materialSupplyPhone = materialSupplyPhone;
   }
 

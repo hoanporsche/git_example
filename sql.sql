@@ -28,11 +28,10 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `material_name` NVARCHAR(255) NOT NULL,
   `material_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `material_sangle_value` DECIMAL(10,0) NOT NULL,
+  `material_single_value` DECIMAL(10,0) NOT NULL,
   `material_remain` NVARCHAR(45) NOT NULL,
   `material_supply_name` NVARCHAR(255) NULL DEFAULT NULL,
   `material_supply_phone` NVARCHAR(18) NULL DEFAULT NULL,
-  `material_single_value` DOUBLE NOT NULL,
   PRIMARY KEY (`material_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

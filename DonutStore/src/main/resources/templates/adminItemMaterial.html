@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="admin :: head">
+</head>
+<body>
+	<nav th:replace="admin :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<button class="btn btn-success" data-toggle="modal" data-target="#addItem">Thêm mặt hàng</button>
+				<div class="panel panel-success">
+					<div class="panel-heading"><h3>Các loại mặt hàng</h3></div>
+					<div class="panel-body">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<td>STT</td>
+									<td>Tên mặt hàng</td>
+									<td>Ngày tạo</td>
+									<td>Ngày sửa</td>
+									<td>Đơn giá (/kg)</td>
+									<td>Trạng thái</td>
+									<td>Nguyên liệu</td>
+									<td>Sửa / Xoá</td>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:unless="${#lists.isEmpty(items)}">
+									<tr th:each="ITEM , iterStat : ${items}">
+										<td th:text="${iterStat.count}"></td>
+										<td th:text="${ITEM.itemName}"></td>
+										<td th:text="${ITEM.itemDateCreated}"></td>
+										<td th:text="${ITEM.itemDateUpdated}"></td>
+										<td th:text="${ITEM.itemSingleValue}"></td>
+										<td th:text="${ITEM.itemStatus}"></td>
+										<td th:text="${ITEM.materials}"></td>
+										<td>
+											<button data-toggle="modal" class="btn-edit-item" data-target="#editItem"
+											th:attr="data-id=${ITEM.itemId}, data-name=${ITEM.itemName}, data-singleValue=${ITEM.itemSingleValue},
+											data-status=${ITEM.itemStatus}" ><span>Sửa</span></button>
+											<a th:href="@{/admin/deleteItem(id=${ITEM.itemId})}"><span>Xoá</span></a>
+										</td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-success" data-toggle="modal" data-target="#addMaterial">Thêm nguyên liệu</button>
+				<div class="panel panel-default">
+					<div class="panel-heading"><h3>Các loại nguyên liệu hiện tại</h3></div>
+					<div class="panel-body">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<td>STT</td>
+									<td>Tên</td>
+									<td>Ngày tạo</td>
+									<td>Ngày cập nhật</td>
+									<td>Đơn giá (/kg)</td>
+									<td>Số lượng trong kho (/kg)</td>
+									<td>Tên nhà cung cấp</td>
+									<td>Số điện thoại nhà cung cấp</td>
+									<td>Sửa / Xoá</td>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:unless="${#lists.isEmpty(materials)}">
+									<tr th:each="MATERIAL, iterStat : ${materials}">
+										<td th:text="${iterStat.count}"></td>
+										<td th:text="${MATERIAL.materialName}"></td>
+										<td th:text="${MATERIAL.materialDateCreated}"></td>
+										<td th:text="${MATERIAL.materialDateUpdated}"></td>
+										<td th:text="${MATERIAL.materialSingleValue}"></td>
+										<td th:text="${MATERIAL.materialRemain}"></td>
+										<td th:text="${MATERIAL.materialSupplyName}"></td>
+										<td th:text="${MATERIAL.materialSupplyPhone}"></td>
+										<td>
+											<button class="btn-edit-material" data-toggle="modal" data-target="#editMaterial"
+											th:attr="data-id=${MATERIAL.materialId}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
+											data-singlevalue=${MATERIAL.materialSingleValue}, data-remain=${MATERIAL.materialRemain}, 
+											data-supplyname=${MATERIAL.materialSupplyName}, data-supplyphone=${MATERIAL.materialSupplyPhone}"><span>Sửa</span></button>
+											<a th:href="@{/admin/deleteMaterial(id=${MATERIAL.materialId})}"><span>Xoá</span></a>
+										</td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:if="${itemForm}" id="addItem" class="modal modal-style fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" align="center"><b>Thêm mặt hàng</b></h4>
+				</div>
+				<div class="modal-body form-style">
+					<form action="#" th:action="@{/admin/createItem}" th:object="${itemForm}" method="post">
+						<div class="form-group">
+							<label><b>Tên Mặt hàng</b></label>
+							<input type="text" class="form-control" th:field="*{itemName}" placeholder="Tên nguyên liệu" />
+							<span class="error" id="error-item-name"></span>
+                             <p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></p>
+                             
+                             <label><b>Đơn giá (/kg)</b></label>
+							<input type="text" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
+							<span class="error" id="error-item-single-value"></span>
+                             <p th:if="${#fields.hasErrors('itemSingleValue')}" th:errors="*{itemSingleValue}"></p>
+                             
+                             <label><b>Các nguyên liệu</b></label>
+                             <button class="btn-success" id="btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button>
+                            	<div id="newMaterial" th:unless="${#lists.isEmpty(materials)}">
+                            		<select class="selectpicker">
+                            			<option th:each="MATERIAL,iterStat : ${materials}" th:text="${MATERIAL.materialName}" th:value="${MATERIAL.materialId}"></option>
+                            		</select>
+                            	</div>
+							<button th:unless="${#lists.isEmpty(materials)}" type="submit">Thêm mặt hàng</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<div th:if="${materialForm}" id="addMaterial" class="modal modal-style fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" align="center"><b>Thêm nguyên liệu mới</b></h4>
+				</div>
+				<div class="modal-body form-style">
+					<form id="addMaterialForm" th:action="@{/admin/createMaterial}" th:object="${materialForm}" method="post">
+						<div class="form-group">
+							<label><b>Tên nguyên liệu</b></label>
+							<span class="error" id="error-material-name-add"></span>
+                             <p th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></p>
+							<input type="text" id="add-material-name" class="form-control" th:field="*{materialName}" placeholder="Tên nguyên liệu" />
+							
+                             
+							<label><b>Đơn giá (/kg)</b></label>
+							<span class="error" id="error-single-value-add"></span>
+                             <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
+							<input type="text" id="add-material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
+							
+                             
+							<label><b>Số lượng trong kho (/kg)</b></label>
+							<span class="error" id="error-remain-add"></span>
+                             <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
+							<input type="text" id="add-material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
+							
+                             
+							<label><b>Nhà cung cấp</b></label>
+							<span class="error" id="error-supply-name-add"></span>
+                             <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
+							<input type="text" id="add-material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
+							
+                             
+							<label><b>Số điện thoại nhà cung cấp</b></label>
+							<span class="error" id="error-supply-phone-add"></span>
+                             <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
+							<input type="text" id="add-material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="Số điện thoại nhà cung cấp" />
+							
+                             
+							<button type="submit" id="submit-add-material">Thêm</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<div th:if="${materialForm}" id="editMaterial" class="modal modal-style fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" align="center"><b>Sửa nguyên liệu </b></h4>
+				</div>
+				<div class="modal-body form-style">
+					<form action="#" id="editMaterialForm" th:action="@{/admin/createMaterial}" th:object="${materialForm}" method="post">
+						<div class="form-group">
+							<input type="hidden" id="material-id" th:field="*{materialId}"/>
+							
+							<label><b>Tên nguyên liệu</b></label>
+							<span class="error" id="error-material-name"></span>
+                             <p th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></p>
+							<input type="text" id="material-name" class="form-control" th:field="*{materialName}" placeholder="Tên nguyên liệu" />
+							
+                             
+                             <input type="hidden" id="material-date-created" th:field="*{materialDateCreated}"/>
+                             
+							<label><b>Đơn giá (/kg)</b></label>
+							<span class="error" id="error-single-value"></span>
+                             <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
+							<input type="text" id="material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
+							
+                             
+							<label><b>Số lượng trong kho (/kg)</b></label>
+							<span class="error" id="error-remain"></span>
+                             <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
+							<input type="text" id="material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
+							
+                             
+							<label><b>Nhà cung cấp</b></label>
+							<span class="error" id="error-supply-name"></span>
+                             <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
+							<input type="text" id="material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
+							
+                             
+							<label><b>Số điện thoại nhà cung cấp</b></label>
+							<span class="error" id="error-supply-phone"></span>
+                             <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
+							<input type="text" id="material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="Số điện thoại nhà cung cấp" />
+							
+                             
+							<button type="submit" id="submit-edit-material">Sửa</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<footer th:replace="admin :: footer"></footer>
+	<script src="/js/item-material.js" th:src="@{/js/item-material.js}"></script>
+</body>
+</html>
