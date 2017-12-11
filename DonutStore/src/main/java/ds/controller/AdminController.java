@@ -68,8 +68,6 @@ public class AdminController {
     if (bindingResult.hasErrors()) {
       return "adminItemMaterial";
     }
-    int id = materialForm.getMaterialId();
-    System.out.println(id);
     materialService.createMaterial(materialForm);
     return "redirect:/admin/item-material";
   }

@@ -22,7 +22,7 @@ public class MaterialForm {
   private Integer materialSingleValue;
   
   @NotNull
-  @Min(1)
+  @Min(0)
   @Max(100)
   private Integer materialRemain;
   

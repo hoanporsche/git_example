@@ -9,10 +9,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ItemForm {
   @NotEmpty
   private String itemName;
+  
   @NotNull
   @Min(3000)
   @Max(30000)
   private Integer itemSingleValue;
+  
   public String getItemName() {
     return itemName;
   }
