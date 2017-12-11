@@ -1,10 +1,18 @@
 $(document).ready(function(){
 	$('#addItem').validate({
 		rules : {
-			
+			itemName : "required",
+			itemSingleValue : {
+				required : true,
+				min : 1000,
+				max : 25000,
+			}
 		},
 		messages : {
-			
+			itemName : "Hãy nhập tên của mặt hàng",
+			itemSingleValue : {
+				
+			}
 		}
 	});
 	
