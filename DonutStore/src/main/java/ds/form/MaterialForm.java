@@ -8,8 +8,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class MaterialForm {
-
+  
   private Integer materialId;
+
+  private String materialCode;
   
   @NotEmpty
   private String materialName;
@@ -39,6 +41,14 @@ public class MaterialForm {
 
   public void setMaterialId(Integer materialId) {
     this.materialId = materialId;
+  }
+
+  public String getMaterialCode() {
+    return materialCode;
+  }
+
+  public void setMaterialCode(String materialCode) {
+    this.materialCode = materialCode;
   }
 
   public String getMaterialName() {

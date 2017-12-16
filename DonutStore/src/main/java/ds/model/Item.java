@@ -23,6 +23,8 @@ public class Item implements Serializable {
   @Column(name = "item_id", nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int itemId;
+  @Column(name = "item_code", nullable = false, unique = true)
+  private String itemCode;
   @Column(name = "item_name")
   private String itemName;
   @Column(name = "item_date_created", nullable = false)
@@ -45,6 +47,14 @@ public class Item implements Serializable {
 
   public void setItemId(int itemId) {
     this.itemId = itemId;
+  }
+
+  public String getItemCode() {
+    return itemCode;
+  }
+
+  public void setItemCode(String itemCode) {
+    this.itemCode = itemCode;
   }
 
   public String getItemName() {

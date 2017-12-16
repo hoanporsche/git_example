@@ -32,9 +32,7 @@ img{
 }
 body{
 	background:#F2E2E2;
-}
-body{
-    font-family:Roboto;
+	font-family:Roboto;
 }
 .search-text{
 	margin-top:50px;
@@ -117,4 +115,12 @@ input:disabled {
 }
 .error{
 	color:red;
+}
+.btn {
+	background :red;
+}
+.selectpicker {
+	width : 60%;
+	height : 35px;
+	float : center;
 }

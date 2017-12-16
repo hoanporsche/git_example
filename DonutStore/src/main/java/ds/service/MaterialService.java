@@ -3,16 +3,14 @@ package ds.service;
 import ds.form.MaterialForm;
 import ds.model.Material;
 
+import java.util.List;
+
 public interface MaterialService {
-  Iterable<Material> findAll();
-
-  void save(Material material);
-
-  void delete(int id);
-
-  Material findOne(int id);
+  List<Material> findAll();
   
   void createMaterial(MaterialForm materialForm);
   
-  void hideMaterial(MaterialForm materialForm);
+  void hideMaterial(Material material);
+  
+  Material findOneFromList(List<Material> materials, String materialId);
 }

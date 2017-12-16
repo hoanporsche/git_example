@@ -9,7 +9,7 @@ $(document).ready(function(){
 	function ajaxGet(){
 		$.ajax({
 			type : "GET",
-			url : window.location + "/all",
+			url : "/all",
 			success : function(result){
 				if(result.status == "Done"){
 					$("#getResultDiv ul").empty();

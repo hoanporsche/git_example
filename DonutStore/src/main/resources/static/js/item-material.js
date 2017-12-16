@@ -1,21 +1,51 @@
 $(document).ready(function(){
-	$('#addItem').validate({
+	var step = 0;
+	var id = 2;
+	
+	
+	$('#btn-newMaterial').click(function(){
+		var count = $('.btn_ok[disabled]').length;
+		
+		console.log(count);
+		if($('.btn_ok').is(':disabled')==true ){
+		$.ajax({
+			type : "get",
+			url : "getListMaterial",
+			success : function(result){
+				if(result.status == "getListMaterial"){				
+					$('#newMaterial').append('<select id="select_material'+ id +'" class="selectpicker"><option value="0">Lựa chọn nguyên liệu</option></select>'
+							+ '<button type="button" class="btn" id="btn-ok'+id+'" onClick="saveMaterial('+id+')"><span class="glyphicon glyphicon-ok"></span></button>'
+							+ '<button type="button" class="btn" id="btn-remove'+id+'" onClick="deleteMaterial('+id+')" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>');
+					$.each(result.data, function(i, material){
+						$('#select_material'+id).append('<option value="'+ material.materialCode + '">'+ material.materialName + '</option>');
+					});		
+					id++;
+					console.log("Success: ", result);
+				}
+			},error : function(e) {
+				console.log("Fail : ", e);
+			}
+		});
+		}
+	});
+	$('#addItemForm').validate({
 		rules : {
 			itemName : "required",
 			itemSingleValue : {
 				required : true,
-				min : 1000,
-				max : 25000,
+				min : 3000,
+				max : 30000,
 			}
 		},
 		messages : {
 			itemName : "Hãy nhập tên của mặt hàng",
 			itemSingleValue : {
-				
+				required : "Hãy nhập đơn giá",
+				min : "Phải lớn hơn 3.000",
+				max : "Phải nhỏ hơn 30.000"
 			}
 		}
 	});
-	
 	$("#editMaterialForm").validate({
 		rules : {
 			materialName : "required" ,
@@ -55,8 +85,7 @@ $(document).ready(function(){
 				maxlength : "quá dài"
 			},
 		}
-	});
-	
+	});	
 	$('#addMaterialForm').validate({
 		rules : {
 			materialName : "required" ,
@@ -101,7 +130,7 @@ $(document).ready(function(){
 
 $("#editMaterial").on("show.bs.modal",function(event){
 	var button = $(event.relatedTarget);
-	var id = button.data('id');
+	var code = button.data('code');
 	var name = button.data('name');
 	var dateCreated = button.data('datecreated');
 	var singleValue = button.data('singlevalue');
@@ -110,7 +139,7 @@ $("#editMaterial").on("show.bs.modal",function(event){
 	var supplyPhone = button.data('supplyphone');
 	var modal = $(this);
 	
-	$("#editMaterial").find("#material-id").val(id);
+	$("#editMaterial").find("#material-code").val(code);
 	$("#editMaterial").find("#material-name").val(name);
 	$("#editMaterial").find("#material-date-created").val(dateCreated);
 	$("#editMaterial").find("#material-singleValue").val(singleValue);
@@ -119,3 +148,32 @@ $("#editMaterial").on("show.bs.modal",function(event){
 	$("#editMaterial").find("#material-supplyPhone").val(supplyPhone);
 	
 });
+
+function saveMaterial(id){
+	var materialCode = $('#select_material'+id).val();
+	if (materialCode != 0){
+		$('#btn-ok'+id).attr("disabled","disabled");
+		$('#btn-remove'+id).removeAttr('disabled');
+		
+		console.log(materialCode);
+		$.ajax({
+			type : "post",
+			url : "setListMaterialForItem",
+			contentType : "application/json",
+			dataType : 'json',
+			data : JSON.stringify(materialCode),
+			success : function(){
+				$('#btn-ok'+id).attr("disabled","disabled");
+				$('#btn-remove'+id).removeAttr('disabled');
+			}, error : function(e){
+				console.log("error" + e);
+			}
+		});
+	}
+	
+}
+
+function deleteMaterial(id){
+	$('#btn-remove'+id).attr("disabled","disabled");
+	$('#btn-ok'+id).removeAttr('disabled');
+}

@@ -3,11 +3,12 @@ package ds.util;
 import java.util.Date;
 //import java.util.Scanner;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
 public class OrderUtil {
-  // public static void main(String[] args) {
-  // OrderUtil ou = new OrderUtil();
+//   public static void main(String[] args) {
+//   OrderUtil ou = new OrderUtil();
   // Scanner sc = new Scanner(System.in);
   // do {
   // System.out.println("nhap ki tu");
@@ -18,8 +19,18 @@ public class OrderUtil {
   // System.out.println("String");
   // }
   // } while(true);
-  // }
+//   for (int i = 0;i<10; i++) {
+//   System.out.println(ou.materialCode());
+//   }
+//   }
 
+  public String materialCode() {
+    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        + "0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+    String pwd = RandomStringUtils.random(10, characters);
+    return pwd;
+  }
+  
   public boolean isNumberic(String string) {
     int i = 0;
     if (!StringUtils.isEmpty(string)) {

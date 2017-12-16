@@ -1,5 +1,7 @@
 package ds.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,6 +25,11 @@ public class Material implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "material_id", nullable = false)
   private int materialId;
+  
+  
+  @Column(name = "material_code", nullable = false, unique = true)
+  private String materialCode;
+  
   @Column(name = "material_name", nullable = false)
   private String materialName;
   @Column(name = "material_date_created", nullable = false)
@@ -37,8 +44,11 @@ public class Material implements Serializable {
   private String materialSupplyName;
   @Column(name = "material_supply_phone", nullable = true)
   private String materialSupplyPhone;
+  @Column(name = "material_status", nullable = true)
+  private boolean materialStatus;
 
   @ManyToMany(mappedBy = "materials")
+  @JsonIgnore
   private Set<Item> items;
 
   public int getMaterialId() {
@@ -105,12 +115,28 @@ public class Material implements Serializable {
     this.materialSupplyPhone = materialSupplyPhone;
   }
 
+  public String getMaterialCode() {
+    return materialCode;
+  }
+
+  public void setMaterialCode(String materialCode) {
+    this.materialCode = materialCode;
+  }
+
   public Set<Item> getItems() {
     return items;
   }
 
   public void setItems(Set<Item> items) {
     this.items = items;
+  }
+
+  public boolean isMaterialStatus() {
+    return materialStatus;
+  }
+
+  public void setMaterialStatus(boolean materialStatus) {
+    this.materialStatus = materialStatus;
   }
 
 }

@@ -9,6 +9,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<button class="btn btn-success" data-toggle="modal" data-target="#addItem">Thêm mặt hàng</button>
+				<h3 th:if="${notFoundItem}" th:text="${notFoundItem}"></h3>
 				<div class="panel panel-success">
 					<div class="panel-heading"><h3>Các loại mặt hàng</h3></div>
 					<div class="panel-body">
@@ -50,6 +51,7 @@
 			</div>
 			<div class="col-md-6">
 				<button class="btn btn-success" data-toggle="modal" data-target="#addMaterial">Thêm nguyên liệu</button>
+				<h3 th:if="${notFoundMaterial}" th:text="${notFoundMaterial}"></h3>
 				<div class="panel panel-default">
 					<div class="panel-heading"><h3>Các loại nguyên liệu hiện tại</h3></div>
 					<div class="panel-body">
@@ -80,10 +82,10 @@
 										<td th:text="${MATERIAL.materialSupplyPhone}"></td>
 										<td>
 											<button class="btn-edit-material" data-toggle="modal" data-target="#editMaterial"
-											th:attr="data-id=${MATERIAL.materialId}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
+											th:attr="data-code=${MATERIAL.materialCode}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
 											data-singlevalue=${MATERIAL.materialSingleValue}, data-remain=${MATERIAL.materialRemain}, 
 											data-supplyname=${MATERIAL.materialSupplyName}, data-supplyphone=${MATERIAL.materialSupplyPhone}"><span>Sửa</span></button>
-											<a th:href="@{/admin/deleteMaterial(id=${MATERIAL.materialId})}"><span>Xóa</span></a>
+											<a th:href="@{/admin/deleteMaterial(materialCode=${MATERIAL.materialCode})}"><span>Xóa</span></a>
 										</td>
 									</tr>
 								</th:block>
@@ -103,7 +105,7 @@
 					<h4 class="modal-title" align="center"><b>Thêm mặt hàng</b></h4>
 				</div>
 				<div class="modal-body form-style">
-					<form action="#" th:action="@{/admin/createItem}" th:object="${itemForm}" method="post">
+					<form action="#" id="addItemForm" th:action="@{/admin/createItem}" th:object="${itemForm}" method="post">
 						<div class="form-group">
 							<label><b>Tên mặt hàng</b></label>
 							<input type="text" class="form-control" th:field="*{itemName}" placeholder="Tên mặt hàng" />
@@ -116,12 +118,15 @@
                              <p th:if="${#fields.hasErrors('itemSingleValue')}" th:errors="*{itemSingleValue}"></p>
                              
                              <label><b>Các nguyên liệu</b></label>
-                             <button class="btn-success" id="btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button>
+                             <br/>
+                             <button type="button" class="btn-success" id="btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button>
                             	<div id="newMaterial" th:unless="${#lists.isEmpty(materials)}">
-                            		<select class="selectpicker">
-                            			<option>Lựa chọn nguyên liệu</option>
-                            			<option th:each="MATERIAL,iterStat : ${materials}" th:text="${MATERIAL.materialName}" th:value="${MATERIAL.materialId}"></option>
+                            		<select id="select_material1" class="selectpicker">
+                            			<option value="0">Lựa chọn nguyên liệu</option>
+                            			<option th:each="MATERIAL,iterStat : ${materials}" th:text="${MATERIAL.materialName}" th:value="${MATERIAL.materialCode}"></option>
                             		</select>
+                            		<button type="button" class="btn btn_ok" id="btn-ok1" onClick="saveMaterial(1)"><span class="glyphicon glyphicon-ok"></span></button>
+                            		<button type="button" class="btn btn_remove" id="btn-remove1" onClick="deleteMaterial(1)" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>
                             	</div>
 							<button th:unless="${#lists.isEmpty(materials)}" type="submit">Thêm mặt hàng</button>
 						</div>
@@ -187,7 +192,7 @@
 				<div class="modal-body form-style">
 					<form action="#" id="editMaterialForm" th:action="@{/admin/createMaterial}" th:object="${materialForm}" method="post">
 						<div class="form-group">
-							<input type="hidden" id="material-id" th:field="*{materialId}"/>
+							<input type="hidden" id="material-code" th:field="*{materialCode}"/>
 							
 							<label><b>Tên nguyên liệu</b></label>
 							<span class="error" id="error-material-name"></span>

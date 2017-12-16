@@ -40,6 +40,22 @@ $(document).ready(function(){
 				console.log('ERROR: ' , e);
 			}
 		});
+//		$.ajax({
+//			type : 'POST',
+//			url : "/add",
+//			dataType : 'text',
+//			data : {
+//				firstName : $('#firstname').val(),
+//				lastName : $('#lastname').val()
+//			},
+//			success : function(result){
+//				window.location.href = "home";
+//			},
+//			error : function(e){
+//				alert('Error!');
+//				console.log('ERROR: ' , e);
+//			}
+//		});
 		
 		//Reset FormData after Posting
 		resetData();

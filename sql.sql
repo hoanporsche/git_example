@@ -8,6 +8,7 @@ USE `donutstore` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `item_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `item_code` NVARCHAR(10) NOT NULL UNIQUE, 
   `item_name` NVARCHAR(255) NOT NULL,
   `item_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -25,6 +26,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `material_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `material_code` NVARCHAR(10) NOT NULL UNIQUE,
   `material_name` NVARCHAR(255) NOT NULL,
   `material_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -32,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `material_remain` NVARCHAR(45) NOT NULL,
   `material_supply_name` NVARCHAR(255) NULL DEFAULT NULL,
   `material_supply_phone` NVARCHAR(18) NULL DEFAULT NULL,
+  `material_status` boolean not null,
   PRIMARY KEY (`material_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

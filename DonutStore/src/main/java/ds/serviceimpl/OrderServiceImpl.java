@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
   @Autowired
   private OrderRepository orderRepository;
-  
+
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
@@ -50,16 +50,17 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public Iterable<Order> findByDate(Date myDate) {
-    StringBuilder sql = new StringBuilder("select * from orders where order_date_created = " + myDate);
-    List<Order> list_orders = new ArrayList<>();
-    list_orders = jdbcTemplate.query(sql.toString(), new RowMapper<Order>() {
+    StringBuilder sql = new StringBuilder(
+        "select * from orders where order_date_created = " + myDate);
+    List<Order> listOrder = new ArrayList<>();
+    listOrder = jdbcTemplate.query(sql.toString(), new RowMapper<Order>() {
       public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
         Order o = new Order();
         o.setOrderId(rs.getInt("order_id"));
         return o;
       }
     });
-    return list_orders;
+    return listOrder;
   }
 
 }

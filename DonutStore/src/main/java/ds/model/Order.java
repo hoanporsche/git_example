@@ -22,7 +22,7 @@ public class Order implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "orders_id", nullable = false)
   private int orderId;
-  
+
   @Column(name = "order_date_created", nullable = false)
   private Date orderDateCreated;
 
@@ -41,8 +41,8 @@ public class Order implements Serializable {
   @Column(name = "order_status", nullable = false)
   private int orderStatus;
 
-  @OneToMany(mappedBy="order")
-   private Set<Quantity> quantities;
+  @OneToMany(mappedBy = "order")
+  private Set<Quantity> quantities;
 
   @Column(name = "order_is_shipping", nullable = false)
   private boolean orderIsShipping;

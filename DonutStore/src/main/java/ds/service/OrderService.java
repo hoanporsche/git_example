@@ -1,8 +1,8 @@
 package ds.service;
 
-import java.util.Date;
-
 import ds.model.Order;
+
+import java.util.Date;
 
 public interface OrderService {
   Iterable<Order> findAll();

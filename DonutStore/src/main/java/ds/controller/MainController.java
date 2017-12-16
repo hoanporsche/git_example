@@ -1,5 +1,9 @@
 package ds.controller;
 
+import ds.form.OrderForm;
+import ds.service.OrderService;
+import ds.service.UserService;
+
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import ds.form.OrderForm;
-import ds.service.OrderService;
-import ds.service.UserService;
 
 @Controller
 public class MainController {
