@@ -11,11 +11,14 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class ItemForm {
+  private Integer itemId;
   
   private String itemCode;
   
   @NotEmpty
   private String itemName;
+  
+  private String itemDateCreated;
 
   @NotNull
   @Min(3000)
@@ -23,6 +26,14 @@ public class ItemForm {
   private Integer itemSingleValue;
 
   private Set<Material> materials;
+
+  public Integer getItemId() {
+    return itemId;
+  }
+
+  public void setItemId(Integer itemId) {
+    this.itemId = itemId;
+  }
 
   public String getItemCode() {
     return itemCode;
@@ -38,6 +49,14 @@ public class ItemForm {
 
   public void setItemName(String itemName) {
     this.itemName = itemName;
+  }
+
+  public String getItemDateCreated() {
+    return itemDateCreated;
+  }
+
+  public void setItemDateCreated(String itemDateCreated) {
+    this.itemDateCreated = itemDateCreated;
   }
 
   public Integer getItemSingleValue() {

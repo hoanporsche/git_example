@@ -1,9 +1,19 @@
 package ds.serviceimpl;
 
+import ds.form.ItemForm;
 import ds.model.Item;
 import ds.repository.ItemRepository;
 import ds.service.ItemService;
+import ds.util.Constant;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +23,57 @@ public class ItemServiceImpl implements ItemService {
   private ItemRepository itemRepository;
 
   @Override
-  public Iterable<Item> findAll() {
-    return itemRepository.findAll();
+  public List<Item> findAll() {
+    List<Item> listItem = new ArrayList<>();
+    List<Item> listItemFound = (List<Item>) itemRepository.findAll();
+    for (int i = 0; i < listItemFound.size(); i++) {
+      if (listItemFound.get(i).isItemStatus() == true) {
+        listItem.add(listItemFound.get(i));
+      }
+    }
+    return listItem;
   }
 
   @Override
-  public void save(Item item) {
+  public void saveItem(ItemForm itemForm) {
+    Item item = new Item();
+    if (itemForm.getItemCode() == null) {
+      item.setItemCode(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+      item.setItemDateCreated(new Date());
+    } else {
+      item.setItemId(itemForm.getItemId());
+      item.setItemCode(itemForm.getItemCode());
+      try {
+        item.setItemDateCreated(new SimpleDateFormat(Constant.DATEFORMAT)
+            .parse(itemForm.getItemDateCreated()));
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+    }
+    item.setItemName(itemForm.getItemName());
+    item.setItemDateUpdated(new Date());
+    item.setItemSingleValue(new BigDecimal(itemForm.getItemSingleValue()));
+    item.setItemStatus(true);
+    item.setMaterials(itemForm.getMaterials());
     itemRepository.save(item);
-
   }
 
   @Override
-  public void delete(int id) {
-    itemRepository.delete(id);
-
+  public void hideItem(Item item) {
+    item.setItemStatus(false);
+    itemRepository.save(item);
   }
 
   @Override
-  public Item findOne(int id) {
-    return itemRepository.findOne(id);
+  public Item findOneFromList(List<Item> listItem, String itemCode) {
+    Item item = new Item();
+    for (int i = 0; i < listItem.size(); i++) {
+      if (itemCode.equals(listItem.get(i).getItemCode())) {
+        item = listItem.get(i);
+        return item;
+      }
+    }
+    return null;
   }
 
 }

@@ -29,6 +29,10 @@ public class Quantity implements Serializable {
   @ManyToOne
   @JoinColumn(name = "orders_id", nullable = false)
   private Order order;
+  
+  public String toString() {
+    return this.order.getOrderNameCreated();
+  }
 
   public int getQuantityId() {
     return quantityId;

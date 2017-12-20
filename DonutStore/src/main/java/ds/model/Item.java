@@ -1,6 +1,8 @@
 package ds.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -28,11 +30,11 @@ public class Item implements Serializable {
   @Column(name = "item_name")
   private String itemName;
   @Column(name = "item_date_created", nullable = false)
-  private String itemDateCreated;
+  private Date itemDateCreated;
   @Column(name = "item_date_updated", nullable = false)
-  private String itemDateUpdated;
+  private Date itemDateUpdated;
   @Column(name = "item_single_value", nullable = false)
-  private double itemSingleValue;
+  private BigDecimal itemSingleValue;
   @Column(name = "item_status", nullable = false)
   private boolean itemStatus;
 
@@ -41,6 +43,10 @@ public class Item implements Serializable {
       inverseJoinColumns = @JoinColumn(name = "material_id"))
   private Set<Material> materials;
 
+  public String toString() {
+    return this.itemName;
+  }
+  
   public int getItemId() {
     return itemId;
   }
@@ -65,27 +71,27 @@ public class Item implements Serializable {
     this.itemName = itemName;
   }
 
-  public String getItemDateCreated() {
+  public Date getItemDateCreated() {
     return itemDateCreated;
   }
 
-  public void setItemDateCreated(String itemDateCreated) {
+  public void setItemDateCreated(Date itemDateCreated) {
     this.itemDateCreated = itemDateCreated;
   }
 
-  public String getItemDateUpdated() {
+  public Date getItemDateUpdated() {
     return itemDateUpdated;
   }
 
-  public void setItemDateUpdated(String itemDateUpdated) {
+  public void setItemDateUpdated(Date itemDateUpdated) {
     this.itemDateUpdated = itemDateUpdated;
   }
 
-  public double getItemSingleValue() {
+  public BigDecimal getItemSingleValue() {
     return itemSingleValue;
   }
 
-  public void setItemSingleValue(double itemSingleValue) {
+  public void setItemSingleValue(BigDecimal itemSingleValue) {
     this.itemSingleValue = itemSingleValue;
   }
 

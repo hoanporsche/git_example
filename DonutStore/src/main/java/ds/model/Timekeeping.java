@@ -30,6 +30,10 @@ public class Timekeeping implements Serializable {
   private Date timekeepingOut;
   @Column(name = "timekeeping_status", nullable = false)
   private byte timekeepingStatus;
+  
+  public String toString() {
+    return this.staffId.getStaffName();
+  }
 
   public long getId() {
     return id;

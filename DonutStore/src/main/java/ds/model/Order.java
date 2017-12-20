@@ -56,6 +56,10 @@ public class Order implements Serializable {
   @Column(name = "order_total_price", nullable = false)
   private double orderTotalPrice;
 
+  public String toString() {
+    return this.orderNameCreated;
+  }
+  
   public long getOrderId() {
     return orderId;
   }

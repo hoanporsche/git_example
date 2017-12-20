@@ -8,7 +8,7 @@ import java.util.List;
 public interface MaterialService {
   List<Material> findAll();
   
-  void createMaterial(MaterialForm materialForm);
+  void saveMaterial(MaterialForm materialForm);
   
   void hideMaterial(Material material);
   

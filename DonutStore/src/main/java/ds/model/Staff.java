@@ -41,6 +41,10 @@ public class Staff implements Serializable {
   
   @Column(name = "staff_status", nullable = false)
   private byte staffStatus;
+  
+  public String toString() {
+    return this.staffName;
+  }
 
   public int getStaffId() {
     return staffId;

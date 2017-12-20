@@ -13,7 +13,6 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `item_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_single_value` DECIMAL(10,0) NOT NULL,
-  `iteam_date_updated` NVARCHAR(255) NOT NULL,
 	`item_status` boolean not null,
   PRIMARY KEY (`item_id`),
   UNIQUE INDEX `item_name_UNIQUE` (`item_name` ASC))
@@ -46,17 +45,11 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`item_material` (
   `item_id` INT(11) NOT NULL,
   `material_id` INT(11) NOT NULL,
-  `items_item_id` INT(11) NOT NULL,
-  `materials_material_id` INT(11) NOT NULL,
   PRIMARY KEY (`item_id`, `material_id`),
     FOREIGN KEY (`material_id`)
     REFERENCES `donutstore`.`material` (`material_id`),
-    FOREIGN KEY (`materials_material_id`)
-    REFERENCES `donutstore`.`material` (`material_id`),
     FOREIGN KEY (`item_id`)
     REFERENCES `donutstore`.`item` (`item_id`),
-    FOREIGN KEY (`items_item_id`)
-    REFERENCES `donutstore`.`item` (`item_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

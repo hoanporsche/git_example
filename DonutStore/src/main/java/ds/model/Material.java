@@ -50,6 +50,10 @@ public class Material implements Serializable {
   @ManyToMany(mappedBy = "materials")
   @JsonIgnore
   private Set<Item> items;
+  
+  public String toString() {
+    return this.materialName;
+  }
 
   public int getMaterialId() {
     return materialId;

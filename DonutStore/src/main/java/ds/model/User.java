@@ -59,6 +59,10 @@ public class User implements Serializable {
   private String userLastOrderTime;
   @Column(name = "user_status",nullable = false)
   private boolean userStatus;
+  
+  public String toString() {
+    return this.userName;
+  }
 
   public int getUserId() {
     return userId;

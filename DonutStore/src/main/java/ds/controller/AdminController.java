@@ -1,12 +1,25 @@
 package ds.controller;
 
+import ds.form.ItemForm;
+import ds.form.MaterialForm;
+import ds.message.Message.ConAttr;
+import ds.message.Message.ResponseMess;
+import ds.message.Response;
+import ds.model.Item;
+import ds.model.Material;
+import ds.service.ItemService;
+import ds.service.MaterialService;
+import ds.util.Constant;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,15 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ds.form.ItemForm;
-import ds.form.MaterialForm;
-import ds.message.Message.ConAttr;
-import ds.message.Message.ResponseMess;
-import ds.message.Response;
-import ds.model.Material;
-import ds.service.ItemService;
-import ds.service.MaterialService;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -42,12 +46,12 @@ public class AdminController {
 
   //List material for show on screen when add to item
   private List<Material> listMaterial;
-
   //List Material will use when we call ItemService to create/update item 
   private Set<Material> materials = new HashSet<>();
-  
   //will use to create/update material
-  List<Material> listmaterials;
+  private List<Material> listmaterials;
+  private int listMaterialLength;
+  private List<Item> listItem;
 
   @GetMapping("/user")
   public String adminUser(Model model, Authentication auth) {
@@ -76,28 +80,15 @@ public class AdminController {
   @GetMapping("/item-material")
   public String adminItemMaterial(Model model) {
     listMaterial = materialService.findAll();
-    listmaterials = listMaterial;
+    listmaterials = new ArrayList<>(listMaterial);
     materials.clear();
+    listMaterialLength = 1;
     model.addAttribute(ConAttr.MATERIALS, listMaterial);
-    model.addAttribute(ConAttr.ITEMS, itemService.findAll());
+    listItem = itemService.findAll();
+    model.addAttribute(ConAttr.ITEMS, listItem);
     model.addAttribute(ConAttr.MATERIALFORM, new MaterialForm());
     model.addAttribute(ConAttr.ITEMFORM, new ItemForm());
     return "adminItemMaterial";
-  }
-
-  /**
-   * @description: alter 'listMaterial', the list will be removed all elements that
-   *               was contained in 'materials' and the list will be responsed to screen 
-   *               by method AJAX.
-   * @author: VDHoan
-   * @date_created: Dec 16, 2017
-   * @return Response : with message 'getListMaterial' and a list material.
-   */
-  @GetMapping("/getListMaterial")
-  @ResponseBody
-  public Response getListMaterial() {
-    listMaterial.removeAll(materials);
-    return new Response(ResponseMess.GETLISTMATERIAL, listMaterial);
   }
 
   /**
@@ -111,11 +102,51 @@ public class AdminController {
   @PostMapping("/setListMaterialForItem")
   @ResponseBody
   public Response setListMaterialForItem(@RequestBody String materialCode) {
-    materials.add(materialService.findOneFromList(listMaterial, 
-        materialCode.substring(1, materialCode.length() - 1)));
-    return new Response(ResponseMess.SETLISTOK);
+    Material m = materialService.findOneFromList(listMaterial, 
+        materialCode.substring(1, materialCode.length() - 1));
+    if (m == null) {
+      return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+    }
+    materials.add(m);
+    listMaterial.removeAll(materials);
+    return new Response(ResponseMess.SET_LIST_OK);
+  }
+  
+  /**
+   * @description: alter 'listMaterial', the list will be removed all elements that
+   *               was contained in 'materials' and the list will be responsed to screen 
+   *               by method AJAX.
+   * @author: VDHoan
+   * @date_created: Dec 16, 2017
+   * @return Response : with message 'getListMaterial' and a list material.
+   */
+  @GetMapping("/getListMaterial")
+  @ResponseBody
+  public Response getListMaterial() {
+    //If material is not chosen , we'll not response list
+    if (materials.size() < listMaterialLength || listMaterial.isEmpty()) {
+      return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+    }
+    listMaterialLength++;
+    return new Response(ResponseMess.GET_LIST_MATERIAL, listMaterial);
   }
 
+  @PostMapping("/setOldListMaterial")
+  @ResponseBody
+  public Response setOldListMaterial(@RequestBody String itemCode) {
+    //If material is not chosen , we'll not response list
+    if (itemService.findOneFromList(listItem,
+        itemCode.substring(1, itemCode.length() - 1)) == null) {
+      return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+    }
+    materials = new HashSet<>(itemService.findOneFromList(listItem, itemCode.substring(1,
+        itemCode.length() - 1)).getMaterials());
+    listMaterial = new ArrayList<>(listmaterials);
+    listMaterial.removeAll(materials);
+    listMaterialLength = materials.size() + 1;
+    return new Response(ResponseMess.SET_LIST_OK,materials,listMaterial);
+  }
+  
   /**
    * @description: delete a object Material in 'materials' that will be found by materialCode. 
    * @author: VDHoan
@@ -126,27 +157,54 @@ public class AdminController {
   @PostMapping("/deleteMaterialInListForItem")
   @ResponseBody
   public Response deleteMaterialInListForItem(@RequestBody String materialCode) {
-    materials.remove(materialService.findOneFromList(listMaterial, materialCode));
-    return new Response(ResponseMess.SETLISTOK);
+    Material material = materialService.findOneFromList(listmaterials, 
+        materialCode.substring(1, materialCode.length() - 1));
+    if (material == null || !materials.contains(material)) {
+      return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+    }
+    materials.remove(material);
+    listMaterialLength--;
+    return new Response(ResponseMess.SET_LIST_OK);
   }
 
   /**
-   * @description:
+   * @description: delete all Materials in list when closing modal.
+   * @author: VDHoan
+   * @date_created: Dec 20, 2017
+   */
+  @GetMapping("/deleteAllMaterials")
+  @ResponseBody
+  public void deleteAllMaterialsInList() {
+    listMaterial = materialService.findAll();
+    materials.clear();
+    listMaterialLength = 1;
+  }
+  
+  /**
+   * @description: create a new Item base on ItemForm.
    * @author: VDHoan
    * @date_created: Dec 12, 2017
    * @param itemForm .
    * @param bindingResult .
-   * @param request .
+   * @param redirect .
    * @return adminItemMaterial.
    */
   @PostMapping("/createItem")
   public String createItem(@Valid @ModelAttribute("itemForm") ItemForm itemForm,
-      BindingResult bindingResult, HttpServletRequest request) {
+      BindingResult bindingResult, RedirectAttributes redirect) {
     if (bindingResult.hasErrors()) {
       return "adminItemMaterial";
     }
+    if (materials.isEmpty()) {
+      redirect.addFlashAttribute("notFoundItem", "Please choose materials first");
+      return "redirect:/admin/item-material";
+    }
+    if (itemForm.getItemCode() != null) {
+      itemForm.setItemId(itemService.findOneFromList(listItem, itemForm.getItemCode()).getItemId());
+    }
     itemForm.setMaterials(materials);
-    return "adminItemMaterial";
+    itemService.saveItem(itemForm);
+    return "redirect:/admin/item-material";
   }
 
   /**
@@ -164,19 +222,33 @@ public class AdminController {
     if (bindingResult.hasErrors()) {
       return "adminItemMaterial";
     }
-    Material m = materialService.findOneFromList(listmaterials, materialForm.getMaterialCode());
-    if (m == null) {
-      redirect.addFlashAttribute("notFoundMaterial", "Please don't fix my material code");
-      return "redirect:/admin/item-material";
+    if (!StringUtils.isEmpty(materialForm.getMaterialCode())) {
+      Material m = materialService.findOneFromList(listmaterials, materialForm.getMaterialCode());
+      if (m == null) {
+        redirect.addFlashAttribute("notFoundMaterial", "Please don't fix my material code");
+        return "redirect:/admin/item-material";
+      } 
+      materialForm.setMaterialId(m.getMaterialId());
     } 
-    materialForm.setMaterialId(m.getMaterialId());
-    materialService.createMaterial(materialForm);
+    materialService.saveMaterial(materialForm);
     return "redirect:/admin/item-material";
   }
 
+  /**
+   * @description: delete Item means hidding Item by setting status false.
+   * @author: VDHoan
+   * @date_created: Dec 20, 2017
+   * @param itemCode .
+   * @param redirect .
+   * @return redirect:/admin/item-material.
+   */
   @GetMapping("/deleteItem")
-  public String deleteItem(@RequestParam String itemCode) {
-    System.out.println(itemCode);
+  public String deleteItem(@RequestParam("id") String itemCode, RedirectAttributes redirect) {
+    if (itemService.findOneFromList(listItem, itemCode) == null) {
+      redirect.addFlashAttribute("notFoundItem", "Please don't fix my item code");
+      return "redirect:/admin/item-material";
+    }
+    itemService.hideItem(itemService.findOneFromList(listItem, itemCode));
     return "redirect:/admin/item-material";
   }
 
@@ -190,7 +262,6 @@ public class AdminController {
    */
   @GetMapping("/deleteMaterial")
   public String deleteMaterial(@RequestParam String materialCode, RedirectAttributes redirect) {
-    System.out.println(materialCode);
     Material m = materialService.findOneFromList(listmaterials, materialCode);
     if (m == null) {
       redirect.addFlashAttribute("notFoundMaterial", "Please don't fix my material code");

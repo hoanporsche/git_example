@@ -4,6 +4,11 @@ public class Response {
 
   private String status;
   private Object data;
+  private Object data2;
+  
+  public String toString() {
+    return this.status;
+  }
 
   public Response() {
   }
@@ -15,6 +20,12 @@ public class Response {
   public Response(String status, Object data) {
     this.status = status;
     this.data = data;
+  }
+  
+  public Response(String status, Object data, Object data2) {
+    this.status = status;
+    this.data = data;
+    this.data2 = data2;
   }
 
   public String getStatus() {
@@ -31,6 +42,14 @@ public class Response {
 
   public void setData(Object data) {
     this.data = data;
+  }
+
+  public Object getData2() {
+    return data2;
+  }
+
+  public void setData2(Object data2) {
+    this.data2 = data2;
   }
 
 }

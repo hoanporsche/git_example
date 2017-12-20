@@ -35,7 +35,7 @@ public class MaterialServiceImpl implements MaterialService {
   }
 
   @Override
-  public void createMaterial(MaterialForm materialForm) {
+  public void saveMaterial(MaterialForm materialForm) {
     Material material = new Material();
     
     if (materialForm.getMaterialCode() == null) {

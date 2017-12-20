@@ -6,23 +6,9 @@ import java.util.Date;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.StringUtils;
 
+import ds.model.User;
+
 public class OrderUtil {
-//   public static void main(String[] args) {
-//   OrderUtil ou = new OrderUtil();
-  // Scanner sc = new Scanner(System.in);
-  // do {
-  // System.out.println("nhap ki tu");
-  // String s = sc.nextLine();
-  // if(ou.isNumberic(s)) {
-  // System.out.println("Number");
-  // } else {
-  // System.out.println("String");
-  // }
-  // } while(true);
-//   for (int i = 0;i<10; i++) {
-//   System.out.println(ou.materialCode());
-//   }
-//   }
 
   public String materialCode() {
     String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"

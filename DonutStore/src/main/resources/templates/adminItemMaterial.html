@@ -8,7 +8,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6">
-				<button class="btn btn-success" data-toggle="modal" data-target="#addItem">Thêm mặt hàng</button>
+				<button class="btn btn-success btn-add-edit" data-toggle="modal" data-target="#addItem">Thêm mặt hàng</button>
 				<h3 th:if="${notFoundItem}" th:text="${notFoundItem}"></h3>
 				<div class="panel panel-success">
 					<div class="panel-heading"><h3>Các loại mặt hàng</h3></div>
@@ -37,10 +37,10 @@
 										<td th:text="${ITEM.itemStatus}"></td>
 										<td th:text="${ITEM.materials}"></td>
 										<td>
-											<button data-toggle="modal" class="btn-edit-item" data-target="#editItem"
-											th:attr="data-id=${ITEM.itemId}, data-name=${ITEM.itemName}, data-singleValue=${ITEM.itemSingleValue},
-											data-status=${ITEM.itemStatus}" ><span>Sửa</span></button>
-											<a th:href="@{/admin/deleteItem(id=${ITEM.itemId})}"><span>Xóa</span></a>
+											<button data-toggle="modal" class="btn-add-edit" data-target="#editItem"
+											th:attr="data-code=${ITEM.itemCode}, data-name=${ITEM.itemName}, data-singleValue=${ITEM.itemSingleValue},
+											data-date=${ITEM.itemDateCreated}, data-materials=${ITEM.materials}" ><span>Sửa</span></button>
+											<a th:href="@{/admin/deleteItem(id=${ITEM.itemCode})}"><span>Xóa</span></a>
 										</td>
 									</tr>
 								</th:block>
@@ -81,7 +81,7 @@
 										<td th:text="${MATERIAL.materialSupplyName}"></td>
 										<td th:text="${MATERIAL.materialSupplyPhone}"></td>
 										<td>
-											<button class="btn-edit-material" data-toggle="modal" data-target="#editMaterial"
+											<button data-toggle="modal" data-target="#editMaterial"
 											th:attr="data-code=${MATERIAL.materialCode}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
 											data-singlevalue=${MATERIAL.materialSingleValue}, data-remain=${MATERIAL.materialRemain}, 
 											data-supplyname=${MATERIAL.materialSupplyName}, data-supplyphone=${MATERIAL.materialSupplyPhone}"><span>Sửa</span></button>
@@ -129,6 +129,48 @@
                             		<button type="button" class="btn btn_remove" id="btn-remove1" onClick="deleteMaterial(1)" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>
                             	</div>
 							<button th:unless="${#lists.isEmpty(materials)}" type="submit">Thêm mặt hàng</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<div th:if="${itemForm}" id="editItem" class="modal modal-style fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" align="center"><b>Thêm mặt hàng</b></h4>
+				</div>
+				<div class="modal-body form-style">
+					<form action="#" id="editItemForm" th:action="@{/admin/createItem}" th:object="${itemForm}" method="post">
+						<div class="form-group">
+							<input type="hidden" id="item_code" th:field="*{itemCode}"/>
+							<input type="hidden" id="item_date_created" th:field="*{itemDateCreated}"/>
+							<label><b>Tên mặt hàng</b></label>
+							<input type="text" id="item_name" class="form-control" th:field="*{itemName}" placeholder="Tên mặt hàng" />
+							<span class="error" id="error-item-name"></span>
+                             <p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></p>
+                             
+                             <label><b>Đơn giá (/chiếc)</b></label>
+							<input type="text" id="item_single_value" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
+							<span class="error" id="error-item-single-value"></span>
+                             <p th:if="${#fields.hasErrors('itemSingleValue')}" th:errors="*{itemSingleValue}"></p>
+                             
+                             <label><b>Các nguyên liệu</b></label>
+                             <br/>
+                             <label>Giữ nguyên nguyên liệu cũ </label> <input type="radio" id="keep_old" name="choose_material"/>
+                             <label>Chọn lại toàn bộ nguyên liệu </label> <input type="radio" id="take_new" name="choose_material"/>
+                            	<div id="edit_newMaterial" th:unless="${#lists.isEmpty(materials)}">
+                            		<!-- <button type="button" class="btn-success" id="edit_btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button><br/>
+                            		<select id="edit_select_material1" class="selectpicker">
+                            			<option value="0">Lựa chọn nguyên liệu</option>
+                            			<option th:each="MATERIAL,iterStat : ${materials}" th:text="${MATERIAL.materialName}" th:value="${MATERIAL.materialCode}"></option>
+                            		</select>
+                            		<button type="button" class="btn btn_ok" id="edit_btn-ok1" onClick="saveMaterial2(1)"><span class="glyphicon glyphicon-ok"></span></button>
+                            		<button type="button" class="btn btn_remove" id="edit_btn-remove1" onClick="deleteMaterial2(1)" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button> -->
+                            	</div>
+							<br/><button th:unless="${#lists.isEmpty(materials)}" type="submit">Sửa mặt hàng</button>
 						</div>
 					</form>
 				</div>
