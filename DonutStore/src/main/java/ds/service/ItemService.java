@@ -6,7 +6,9 @@ import ds.model.Item;
 import java.util.List;
 
 public interface ItemService {
-  List<Item> findAll();
+  Iterable<Item> findAll();
+  
+  List<Item> findAllByStatus();
 
   void saveItem(ItemForm itemForm);
   

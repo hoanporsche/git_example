@@ -1,0 +1,128 @@
+package ds.model;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "store")
+public class Store implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "store_id", nullable = false)
+  private int storeId;
+  @Column(name = "store_code", nullable = false, unique = true)
+  private String storeCode;
+  @Column(name = "store_name", nullable = false)
+  private String storeName;
+  @Column(name = "store_phone_number", nullable = false)
+  private String storePhoneNumber;
+  @Column(name = "store_address", nullable = false)
+  private String storeAddress;
+  @Column(name = "store_date_created")
+  private Date storeDateCreated;
+  @Column(name = "store_date_updated")
+  private Date storeDateUpdated;
+  @Column(name = "store_status", nullable = false)
+  private boolean storeStatus;
+
+  @OneToMany(mappedBy = "staffStore")
+  private List<Staff> staffs;
+  
+  public Store() {}
+  
+  public Store(String storeName,Date storeDateCreated, Date storeDateUpdated, boolean status) {
+    this.storeName = storeName;
+    this.storeDateCreated = storeDateCreated;
+    this.storeDateUpdated = storeDateUpdated;
+    this.storeStatus = status;
+  }
+  
+  public String toString() {
+    return this.storeName;
+  }
+  
+  public int getStoreId() {
+    return storeId;
+  }
+
+  public void setStoreId(int storeId) {
+    this.storeId = storeId;
+  }
+
+  public String getStoreCode() {
+    return storeCode;
+  }
+
+  public void setStoreCode(String storeCode) {
+    this.storeCode = storeCode;
+  }
+
+  public String getStoreName() {
+    return storeName;
+  }
+
+  public void setStoreName(String storeName) {
+    this.storeName = storeName;
+  }
+
+  public String getStorePhoneNumber() {
+    return storePhoneNumber;
+  }
+
+  public void setStorePhoneNumber(String storePhoneNumber) {
+    this.storePhoneNumber = storePhoneNumber;
+  }
+
+  public String getStoreAddress() {
+    return storeAddress;
+  }
+
+  public void setStoreAddress(String storeAddress) {
+    this.storeAddress = storeAddress;
+  }
+
+  public Date getStoreDateCreated() {
+    return storeDateCreated;
+  }
+
+  public void setStoreDateCreated(Date storeDateCreated) {
+    this.storeDateCreated = storeDateCreated;
+  }
+
+  public Date getStoreDateUpdated() {
+    return storeDateUpdated;
+  }
+
+  public void setStoreDateUpdated(Date storeDateUpdated) {
+    this.storeDateUpdated = storeDateUpdated;
+  }
+
+  public boolean isStoreStatus() {
+    return storeStatus;
+  }
+
+  public void setStoreStatus(boolean storeStatus) {
+    this.storeStatus = storeStatus;
+  }
+
+  public List<Staff> getStaffs() {
+    return staffs;
+  }
+
+  public void setStaffs(List<Staff> staffs) {
+    this.staffs = staffs;
+  }
+  
+}

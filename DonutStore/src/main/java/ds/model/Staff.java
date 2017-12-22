@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +25,9 @@ public class Staff implements Serializable {
 
   @Column(name = "staff_name", nullable = false)
   private String staffName;
-
+  @ManyToOne
+  @JoinColumn(name = "staff_store", referencedColumnName = "store_id", nullable = false)
+  private Store staffStore;
   @Column(name = "staff_created_time", nullable = false)
   private Date staffCreatedTime;
   @Column(name = "staff_updated_time", nullable = false)
@@ -40,7 +44,7 @@ public class Staff implements Serializable {
   private double staffSalary;
   
   @Column(name = "staff_status", nullable = false)
-  private byte staffStatus;
+  private boolean staffStatus;
   
   public String toString() {
     return this.staffName;
@@ -60,6 +64,14 @@ public class Staff implements Serializable {
 
   public void setStaffName(String staffName) {
     this.staffName = staffName;
+  }
+
+  public Store getStaffStore() {
+    return staffStore;
+  }
+
+  public void setStaffStore(Store staffStore) {
+    this.staffStore = staffStore;
   }
 
   public Date getStaffCreatedTime() {
@@ -118,11 +130,11 @@ public class Staff implements Serializable {
     this.staffSalary = staffSalary;
   }
 
-  public int getStaffStatus() {
+  public boolean getStaffStatus() {
     return staffStatus;
   }
 
-  public void setStaffStatus(byte staffStatus) {
+  public void setStaffStatus(boolean staffStatus) {
     this.staffStatus = staffStatus;
   }
   

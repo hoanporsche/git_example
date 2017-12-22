@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="layout :: head">
+</head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<button class="btn btn-success" data-toggle="modal" data-target="#addUser">Thêm người dùng mới</button>
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3>Quản lý người dùng</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<td>STT</td>
+								<td>Họ Tên</td>
+								<td>Email</td>
+								<td>Số điện thoại</td>
+								<td>Địa chỉ</td>
+								<td>Ngày tạo</td>
+								<td>Ngày cập nhật</td>
+								<td>Ngày order cuối</td>
+								<td>Trạng thái</td>
+								<td>Quyền</td>
+								<td>Reset mk / Sửa quyền</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:unless="${#lists.isEmpty(users)}" th:each="USER,iterStat : ${users}">
+								<td th:text="${iterStat.count}"></td>
+								<td th:text="${USER.userName}"></td>
+								<td th:text="${USER.userEmail}"></td>
+								<td th:text="${USER.userPhoneNumber}"></td>
+								<td th:text="${USER.userAddress}"></td>
+								<td th:text="${USER.userDateCreated}"></td>
+								<td th:text="${USER.userDateUpdated}"></td>
+								<td th:text="${USER.userLastOrderTime}"></td>
+								<td th:text="${USER.userStatus}"></td>
+								<td th:text="${USER.roles}"></td>
+								<td th:text="${USER.userStore}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<button class="btn btn-success" data-toggle="modal" data-target="#addStaff">Thêm nhân viên mới</button>
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3>Quản lý nhân viên</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<td>STT</td>
+								<td>Tên nhân viên</td>
+								<td>Thuộc cửa hàng</td>
+								<td>Ngày vào</td>
+								<td>Ngày chỉnh sửa</td>
+								<td>SĐT</td>
+								<td>Địa chỉ</td>
+								<td>Số CMT</td>
+								<td>Quê quán</td>
+								<td>Lương</td>
+								<td>Trạng thái</td>
+								<td>Sửa / Xoá</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:unless="${#lists.isEmpty(staffs)}" th:each="STAFF,iterStat : ${staffs}">
+								<td th:text="${iterStat.count}"></td>
+								<td th:text="${STAFF.staffName}"></td>
+								<td th:text="${STAFF.staffStore}"></td>
+								<td th:text="${STAFF.staffDateCreated}"></td>
+								<td th:text="${STAFF.staffDateUpdated}"></td>
+								<td th:text="${STAFF.staffPhoneNumber}"></td>
+								<td th:text="${STAFF.staffAddress}"></td>
+								<td th:text="${STAFF.staffIdentityCard}"></td>
+								<td th:text="${STAFF.staffHomeTown}"></td>
+								<td th:text="${STAFF.staffSalary}"></td>
+								<td th:text="${STAFF.staffStatus}"></td>
+								<td>
+									<button>Sửa</button>
+									<a>Xoá</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h3 th:if="${WrongSyntax}" th:text="${WrongSyntax}" style="color: red;"></h3>
+				<button class="btn btn-success" data-toggle="modal" data-target="#addRole">Thêm quyền mới</button>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3>Quản lý quyền</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<td>STT</td>
+									<td>Tên Quyền</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:unless="${#lists.isEmpty(roles)}" th:each="ROLE, iterStat : ${roles}">
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${ROLE.roleName}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-success" data-toggle="modal" data-target="#addStore">Thêm cửa hàng</button>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3>Quản lý cửa hàng</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<td>STT</td>
+									<td>Tên cửa hàng</td>
+									<td>Số điện thoại</td>
+									<td>Địa chỉ</td>
+									<td>Ngày tạo</td>
+									<td>Ngày cập nhật</td>
+									<td>Sửa / Xoá</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:unless="${#lists.isEmpty(stores)}" th:each="STORE, iterStat : ${stores}">
+									<td th:text="${iterStat.count}"></td>
+									<td th:text="${STORE.storeName}"></td>
+									<td th:text="${STORE.storePhoneNumber}"></td>
+									<td th:text="${STORE.storeAddress}"></td>
+									<td th:text="${STORE.storeDateCreated}"></td>
+									<td th:text="${STORE.storeDateUpdated}"></td>
+									<td>
+										<button><span>Sửa</span></button>
+										<a>Xoá</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div th:if="${role}" id="addRole" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Thêm quyền mới</h4>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/admin/createRole}" th:object="${role}"
+						method="post">
+						<label>Tên quyền</label>
+						<h3 style="color: red;">Bắt buộc phải có ROLE_ ở đầu</h3>
+						<input type="text" class="form-control" th:field="*{roleName}" />
+						<span class="error" id="error-item-name"></span>
+						<p th:if="${#fields.hasErrors('roleName')}"
+							th:errors="*{roleName}"></p>
+						<button type="submit">Thêm role</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout :: footer"></footer>
+	<script th:src="@{/js/user-admin.js}"></script>
+</body>
+</html>

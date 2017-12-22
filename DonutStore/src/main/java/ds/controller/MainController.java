@@ -101,7 +101,7 @@ public class MainController {
     model.addAttribute("totalOrder", totalOrder);
     model.addAttribute("totalPage", totalPage);
     model.addAttribute("orders", "123");
-    return "adminOrder";
+    return "admin/order";
   }
 
   @GetMapping("/403")

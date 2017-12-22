@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "role")
 public class Role implements Serializable {
@@ -22,6 +24,10 @@ public class Role implements Serializable {
   @Column(name = "role_id", nullable = false)
   private int roleId;
 
+  @Column(name = "role_code", nullable = false, unique = true)
+  private String roleCode;
+  
+  @NotEmpty
   @Column(name = "role_name", nullable = false)
   private String roleName;
 
@@ -35,8 +41,9 @@ public class Role implements Serializable {
   public Role() {
   }
 
-  public Role(String name) {
+  public Role(String name, String code) {
     this.roleName = name;
+    this.roleCode = code;
   }
 
   public int getRoleId() {
@@ -45,6 +52,14 @@ public class Role implements Serializable {
 
   public void setRoleId(int roleId) {
     this.roleId = roleId;
+  }
+
+  public String getRoleCode() {
+    return roleCode;
+  }
+
+  public void setRoleCode(String roleCode) {
+    this.roleCode = roleCode;
   }
 
   public String getRoleName() {

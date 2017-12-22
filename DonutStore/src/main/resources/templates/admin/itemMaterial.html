@@ -66,6 +66,7 @@
 									<td>Số lượng trong kho (/kg)</td>
 									<td>Tên nhà cung cấp</td>
 									<td>Sđt nhà cung cấp</td>
+									<td>Trạng thái</td>
 									<td>Sửa / Xóa</td>
 								</tr>
 							</thead>
@@ -80,6 +81,7 @@
 										<td th:text="${MATERIAL.materialRemain}"></td>
 										<td th:text="${MATERIAL.materialSupplyName}"></td>
 										<td th:text="${MATERIAL.materialSupplyPhone}"></td>
+										<td th:text="${MATERIAL.materialStatus}"></td>
 										<td>
 											<button data-toggle="modal" data-target="#editMaterial"
 											th:attr="data-code=${MATERIAL.materialCode}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
@@ -159,8 +161,6 @@
                              
                              <label><b>Các nguyên liệu</b></label>
                              <br/>
-                             <label>Giữ nguyên nguyên liệu cũ </label> <input type="radio" id="keep_old" name="choose_material"/>
-                             <label>Chọn lại toàn bộ nguyên liệu </label> <input type="radio" id="take_new" name="choose_material"/>
                             	<div id="edit_newMaterial" th:unless="${#lists.isEmpty(materials)}">
                             		<!-- <button type="button" class="btn-success" id="edit_btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button><br/>
                             		<select id="edit_select_material1" class="selectpicker">

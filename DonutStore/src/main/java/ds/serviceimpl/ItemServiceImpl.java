@@ -23,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
   private ItemRepository itemRepository;
 
   @Override
-  public List<Item> findAll() {
+  public List<Item> findAllByStatus() {
     List<Item> listItem = new ArrayList<>();
     List<Item> listItemFound = (List<Item>) itemRepository.findAll();
     for (int i = 0; i < listItemFound.size(); i++) {
@@ -74,6 +74,11 @@ public class ItemServiceImpl implements ItemService {
       }
     }
     return null;
+  }
+
+  @Override
+  public Iterable<Item> findAll() {
+    return itemRepository.findAll();
   }
 
 }

@@ -12,7 +12,7 @@ public class OrderUtil {
 
   public String materialCode() {
     String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        + "0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+        + "0123456789~`!@#$%^&*()-_=+[{]}\\|;:\\,<.>/?";
     String pwd = RandomStringUtils.random(10, characters);
     return pwd;
   }

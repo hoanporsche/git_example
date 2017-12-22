@@ -203,6 +203,24 @@ $("#editMaterial").on("show.bs.modal",function(event){
 	var supplyPhone = button.data('supplyphone');
 	var modal = $(this);
 	
+	$.ajax({
+		type : "post",
+		url : 'setOldMaterial',
+		contentType : 'application/json',
+		dateType : 'json',
+		data : JSON.stringify(code),
+		success : function(result){
+			if (result.status != "checkOk"){
+				alert("Please dont fix my item code");
+				setTimeout(function(){
+					window.localtion.href="item-material";
+				},2000);
+			}
+		}, error (e){
+			console.log("error" + e);
+		}
+	});
+	
 	$("#editMaterial").find("#material-code").val(code);
 	$("#editMaterial").find("#material-name").val(name);
 	$("#editMaterial").find("#material-date-created").val(dateCreated);

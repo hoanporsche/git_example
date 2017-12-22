@@ -23,7 +23,7 @@ public class MaterialServiceImpl implements MaterialService {
   private MaterialRepository materialRepository;
 
   @Override
-  public List<Material> findAll() {
+  public List<Material> findAllByStatus() {
     List<Material> listMaterial = new ArrayList<>();
     List<Material> listMaterialFound = (List<Material>) materialRepository.findAll();
     for (int i = 0; i < listMaterialFound.size(); i++) {
@@ -76,6 +76,11 @@ public class MaterialServiceImpl implements MaterialService {
       }
     }
     return null;
+  }
+
+  @Override
+  public Iterable<Material> findAll() {
+    return materialRepository.findAll();
   }
 
 }

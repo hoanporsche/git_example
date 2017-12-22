@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
@@ -45,20 +46,29 @@ public class User implements Serializable {
   @Email
   @Column(name = "user_email",nullable = false, unique = true)
   private String userEmail;
-
+  
   @Column(name = "user_phone_number")
   private String userPhoneNumber;
-
   @Column(name = "user_address")
   private String userAddress;
-  @Column(name = "user_created_time")
-  private Date userCreateTime;
-  @Column(name = "user_updated_time")
-  private Date userUpdateTime;
+  @Column(name = "user_date_created")
+  private Date userDateCreated;
+  @Column(name = "user_date_updated")
+  private Date userDateUpdated;
   @Column(name = "user_last_order_time")
   private String userLastOrderTime;
   @Column(name = "user_status",nullable = false)
   private boolean userStatus;
+  @OneToOne
+  @JoinColumn(name = "user_store", referencedColumnName = "store_id")
+  private Store userStore;
+  
+  public User() {}
+
+  public User(Date created, Date updated) {
+    this.userDateCreated = created;
+    this.userDateUpdated = updated;
+  }
   
   public String toString() {
     return this.userName;
@@ -120,20 +130,20 @@ public class User implements Serializable {
     this.userAddress = userAddress;
   }
 
-  public Date getUserCreateTime() {
-    return userCreateTime;
+  public Date getUserDateCreated() {
+    return userDateCreated;
   }
 
-  public void setUserCreateTime(Date userCreateTime) {
-    this.userCreateTime = userCreateTime;
+  public void setUserDateCreated(Date userDateCreated) {
+    this.userDateCreated = userDateCreated;
   }
 
-  public Date getUserUpdateTime() {
-    return userUpdateTime;
+  public Date getUserDateUpdated() {
+    return userDateUpdated;
   }
 
-  public void setUserUpdateTime(Date userUpdateTime) {
-    this.userUpdateTime = userUpdateTime;
+  public void setUserDateUpdated(Date userDateUpdated) {
+    this.userDateUpdated = userDateUpdated;
   }
 
   public String getUserLastOrderTime() {
@@ -150,6 +160,14 @@ public class User implements Serializable {
 
   public void setUserStatus(boolean userStatus) {
     this.userStatus = userStatus;
+  }
+
+  public Store getUserStore() {
+    return userStore;
+  }
+
+  public void setUserStore(Store userStore) {
+    this.userStore = userStore;
   }
   
 }

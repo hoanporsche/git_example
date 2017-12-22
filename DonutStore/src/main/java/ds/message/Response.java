@@ -22,6 +22,14 @@ public class Response {
     this.data = data;
   }
   
+  /**
+   * @description: constructor.
+   * @author: VDHoan
+   * @date_created: Dec 20, 2017
+   * @param status .
+   * @param data .
+   * @param data2 .
+   */
   public Response(String status, Object data, Object data2) {
     this.status = status;
     this.data = data;

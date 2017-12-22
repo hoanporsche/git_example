@@ -6,7 +6,9 @@ import ds.model.Material;
 import java.util.List;
 
 public interface MaterialService {
-  List<Material> findAll();
+  Iterable<Material> findAll();
+  
+  List<Material> findAllByStatus();
   
   void saveMaterial(MaterialForm materialForm);
   

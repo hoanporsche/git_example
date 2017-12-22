@@ -33,7 +33,6 @@
 
     				<ul th:if="${session.loginedAdmin}" class="nav navbar-nav navbar-right">
                         <li><a th:href="@{/admin/user}">Người dùng</a></li>
-                        <li><a th:href="@{/admin/staff}">Nhân viên</a></li>
                         <li><a th:href="@{/admin/income}">Thu nhập</a></li>
                         <li><a th:href="@{/admin/item-material}">Mặt hàng</a></li>
                         <li><a th:href="@{/admin/timekeeping}">Chấm công</a></li>
@@ -96,7 +95,7 @@
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 		<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-    	<script th:src="@{/webjars/jquery-validation/1.17.0/jquery.validate.min.js}" type="text/javascript"></script>
+    		<script th:src="@{/webjars/jquery-validation/1.17.0/jquery.validate.min.js}" type="text/javascript"></script>
 	</footer>
 </body>
 </html>

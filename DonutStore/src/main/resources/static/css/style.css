@@ -116,9 +116,6 @@ input:disabled {
 .error{
 	color:red;
 }
-.btn {
-	background :red;
-}
 .selectpicker {
 	width : 60%;
 	height : 35px;
