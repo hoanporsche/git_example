@@ -9,6 +9,10 @@ import ds.model.Item;
 import ds.model.Material;
 import ds.service.ItemService;
 import ds.service.MaterialService;
+import ds.util.AdminConstant.AdminAttribute;
+import ds.util.AdminConstant.AdminMessage;
+import ds.util.AdminConstant.AdminReturn;
+import ds.util.AdminConstant.AdminUrl;
 import ds.util.Constant;
 
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(AdminUrl.MAIN)
 public class AdminController {
 
   @Autowired
@@ -51,8 +55,6 @@ public class AdminController {
   private List<Material> listmaterials;
   private int listMaterialLength;
   private List<Item> listItem;
-  StringBuilder oldMaterialCode = new StringBuilder();
-  StringBuilder oldItemCode = new StringBuilder();
 
   @GetMapping("/income")
   public String adminIncome(Model model, Authentication auth) {
@@ -67,20 +69,18 @@ public class AdminController {
    * @param model : will be used to add attr to view .
    * @return adminItemMaterial .
    */
-  @GetMapping("/item-material")
+  @GetMapping(AdminUrl.ITEM_MATERIAL)
   public String adminItemMaterial(Model model) {
     listMaterial = materialService.findAllByStatus();
     listmaterials = new ArrayList<>(listMaterial);
     materials.clear();
-    oldMaterialCode.setLength(0);
-    oldItemCode.setLength(0);
     listMaterialLength = 1;
     model.addAttribute(ConAttr.MATERIALS, materialService.findAll());
     listItem = itemService.findAllByStatus();
     model.addAttribute(ConAttr.ITEMS, itemService.findAll());
     model.addAttribute(ConAttr.MATERIALFORM, new MaterialForm());
     model.addAttribute(ConAttr.ITEMFORM, new ItemForm());
-    return "admin/itemMaterial";
+    return AdminReturn.ADMIN_ITEMMATERIAL;
   }
 
   /** .
@@ -91,10 +91,9 @@ public class AdminController {
    * @param materialCode : will be receipt by AJAX.
    * @return Response : with message 'setListOk'.
    */
-  @PostMapping("/setListMaterialForItem")
+  @PostMapping(AdminUrl.SET_LIST_MATERIAL_FOR_ITEM)
   @ResponseBody
   public Response setListMaterialForItem(@RequestBody String materialCode) {
-    System.out.println(materialCode);
     Material m = materialService.findOneFromList(listMaterial, 
         materialCode.substring(1, materialCode.length() - 1));
     if (m == null || materials.contains(m)) {
@@ -113,7 +112,7 @@ public class AdminController {
    * @date_created: Dec 16, 2017
    * @return Response : with message 'getListMaterial' and a list material.
    */
-  @GetMapping("/getListMaterial")
+  @GetMapping(AdminUrl.GET_LIST_MATERIAL)
   @ResponseBody
   public Response getListMaterial() {
     //If material is not chosen , we'll not response list
@@ -131,7 +130,7 @@ public class AdminController {
    * @param itemCode .
    * @return Response.
    */
-  @PostMapping("/setOldListMaterial")
+  @PostMapping(AdminUrl.SET_OLD_LIST_MATERIAL)
   @ResponseBody
   public Response setOldListMaterial(@RequestBody String itemCode) {
     //If material is not chosen , we'll not response list
@@ -139,7 +138,6 @@ public class AdminController {
         itemCode.substring(1, itemCode.length() - 1)) == null) {
       return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
     }
-    oldItemCode.append(itemCode.substring(1, itemCode.length() - 1));
     materials = new HashSet<>(itemService.findOneFromList(listItem, itemCode.substring(1,
         itemCode.length() - 1)).getMaterials());
     listMaterial = new ArrayList<>(listmaterials);
@@ -155,7 +153,7 @@ public class AdminController {
    * @param materialCode : will receipt by AJAX .
    * @return Response : with message 'setListOk'.
    */
-  @PostMapping("/deleteMaterialInListForItem")
+  @PostMapping(AdminUrl.DELETE_MATERIAL_IN_LIST_FOR_ITEM)
   @ResponseBody
   public Response deleteMaterialInListForItem(@RequestBody String materialCode) {
     Material material = materialService.findOneFromList(listmaterials, 
@@ -173,7 +171,7 @@ public class AdminController {
    * @author: VDHoan
    * @date_created: Dec 20, 2017
    */
-  @GetMapping("/deleteAllMaterials")
+  @GetMapping(AdminUrl.DELETE_ALL_MATERIALS)
   @ResponseBody
   public void deleteAllMaterialsInList() {
     listMaterial = materialService.findAllByStatus();
@@ -190,28 +188,23 @@ public class AdminController {
    * @param redirect .
    * @return adminItemMaterial.
    */
-  @PostMapping("/createItem")
-  public String createItem(@Valid @ModelAttribute("itemForm") ItemForm itemForm,
+  @PostMapping(AdminUrl.CREATE_ITEM)
+  public String createItem(@Valid @ModelAttribute(AdminAttribute.ITEM_FORM) ItemForm itemForm,
       BindingResult bindingResult, RedirectAttributes redirect) {
     if (bindingResult.hasErrors()) {
-      return "adminItemMaterial";
+      return AdminReturn.ADMIN_ITEMMATERIAL;
     }
     if (materials.isEmpty()) {
-      redirect.addFlashAttribute("notFoundItem", "Please choose materials first");
-      return "redirect:/admin/item-material";
-    }
-    if (!StringUtils.isEmpty(oldItemCode.toString())) {
-      if (!itemForm.getItemCode().equals(oldItemCode.toString())) {
-        redirect.addFlashAttribute("notFoundItem", "Please dont fix my itemCode");
-        return "redirect:/admin/item-material";
-      }
+      redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_ITEM, 
+          AdminMessage.CHOOSE_MATERIALS_FIRST);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
     }
     if (itemForm.getItemCode() != null) {
       itemForm.setItemId(itemService.findOneFromList(listItem, itemForm.getItemCode()).getItemId());
     }
     itemForm.setMaterials(materials);
     itemService.saveItem(itemForm);
-    return "redirect:/admin/item-material";
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 
   /**.
@@ -223,29 +216,23 @@ public class AdminController {
    * @param bindingResult . 
    * @return adminItemMaterial.
    */
-  @PostMapping("/createMaterial")
-  public String createMaterial(@Valid @ModelAttribute("materialForm") MaterialForm materialForm,
-      BindingResult bindingResult, RedirectAttributes redirect) {
+  @PostMapping(AdminUrl.CREATE_MATERIAL)
+  public String createMaterial(@Valid @ModelAttribute(AdminAttribute.MATERIAL_FORM) 
+      MaterialForm materialForm, BindingResult bindingResult, RedirectAttributes redirect) {
     if (bindingResult.hasErrors()) {
-      return "adminItemMaterial";
-    }
-    //Check oldMaterialCode for edit
-    if (!StringUtils.isEmpty(oldItemCode.toString())) {
-      if (!materialForm.getMaterialCode().equals(oldMaterialCode.toString())) {
-        redirect.addFlashAttribute("notFoundMaterial", "Please don't fix my material code");
-        return "redirect:/admin/item-material";
-      }
+      return AdminReturn.ADMIN_ITEMMATERIAL;
     }
     if (!StringUtils.isEmpty(materialForm.getMaterialCode())) {
       Material m = materialService.findOneFromList(listmaterials, materialForm.getMaterialCode());
       if (m == null) {
-        redirect.addFlashAttribute("notFoundMaterial", "Please don't fix my material code");
-        return "redirect:/admin/item-material";
+        redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_MATERIAL, 
+            AdminMessage.DONT_FIX_MATERIALCODE);
+        return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
       } 
       materialForm.setMaterialId(m.getMaterialId());
     } 
     materialService.saveMaterial(materialForm);
-    return "redirect:/admin/item-material";
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 
   /**.
@@ -256,14 +243,15 @@ public class AdminController {
    * @param redirect .
    * @return redirect:/admin/item-material.
    */
-  @GetMapping("/deleteItem")
-  public String deleteItem(@RequestParam("id") String itemCode, RedirectAttributes redirect) {
+  @GetMapping(AdminUrl.DELETE_ITEM)
+  public String deleteItem(@RequestParam(AdminAttribute.ID) String itemCode, 
+      RedirectAttributes redirect) {
     if (itemService.findOneFromList(listItem, itemCode) == null) {
-      redirect.addFlashAttribute("notFoundItem", "Please don't fix my item code");
-      return "redirect:/admin/item-material";
+      redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_ITEM, AdminMessage.DONT_FIX_ITEMCODE);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
     }
     itemService.hideItem(itemService.findOneFromList(listItem, itemCode));
-    return "redirect:/admin/item-material";
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 
   /**.
@@ -274,34 +262,16 @@ public class AdminController {
    * @param redirect : to redirect FlashAttribute.
    * @return redirect:/admin/item-material.
    */
-  @GetMapping("/deleteMaterial")
+  @GetMapping(AdminUrl.DELETE_MATERIAL)
   public String deleteMaterial(@RequestParam String materialCode, RedirectAttributes redirect) {
     Material m = materialService.findOneFromList(listmaterials, materialCode);
     if (m == null) {
-      redirect.addFlashAttribute("notFoundMaterial", "Please don't fix my material code");
-      return "redirect:/admin/item-material";
+      redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_MATERIAL, 
+          AdminMessage.DONT_FIX_MATERIALCODE);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
     } 
     materialService.hideMaterial(m);
-    return "redirect:/admin/item-material";
-  }
-  
-  /**.
-   * @description: get materialCode when on show modal edit material
-   * @author: VDHoan
-   * @date_created: Dec 22, 2017
-   * @param materialCode .
-   * @return Response.
-   */
-  @PostMapping("/setOldMaterial")
-  @ResponseBody
-  public Response setOldMaterial(@RequestBody String materialCode) {
-    System.out.println(materialCode);
-    if (materialService.findOneFromList(listmaterials, 
-        materialCode.substring(1, materialCode.length() - 1)) != null) {
-      oldItemCode.append(materialCode.substring(1, materialCode.length() - 1));
-      return new Response(ResponseMess.CHECK_OK);
-    }
-    return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 
   @GetMapping("/timekeeping")

@@ -1,5 +1,7 @@
 package ds.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -32,6 +34,7 @@ public class Role implements Serializable {
   private String roleName;
 
   @ManyToMany(mappedBy = "roles")
+  @JsonIgnore
   private Set<User> users;
   
   public String toString() {

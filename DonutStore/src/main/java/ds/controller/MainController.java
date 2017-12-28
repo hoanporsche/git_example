@@ -32,12 +32,12 @@ public class MainController {
   @Autowired
   private OrderService orderService;
 
-  /**
+  /**Main View.
    * @author HoanVD - 31/10/2017.
-   * @param model.
-   * @param auth.
-   * @param redirect.
-   * @param session.
+   * @param model .
+   * @param auth .
+   * @param redirect .
+   * @param session .
    * @return.
    */
   @GetMapping("/")
@@ -48,7 +48,7 @@ public class MainController {
         .anyMatch(r -> r.getAuthority().equals("ROLE_MEMBER"));
     if (userRole0) {
       session.setAttribute("loginedUser", "User has been logined");
-      session.setAttribute("user", userService.findByuserName(auth.getName()));
+      session.setAttribute("user", userService.findByuserEmail(auth.getName()));
     }
     boolean userRole1 = auth.getAuthorities().stream()
         .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
@@ -64,6 +64,15 @@ public class MainController {
     return "order";
   }
 
+  /** .
+   * @description: 
+   * @author: VDHoan
+   * @date_created: Dec 23, 2017
+   * @param orderForm .
+   * @param bindingResult .
+   * @param request .
+   * @return
+   */
   @PostMapping("/createOrder")
   public String createOrder(@Valid OrderForm orderForm, BindingResult bindingResult,
       HttpServletRequest request) {
@@ -77,12 +86,23 @@ public class MainController {
     return "redirect:/";
   }
 
+  /** .
+   * @description: 
+   * @author: VDHoan
+   * @date_created: Dec 23, 2017
+   * @param page .
+   * @param size . 
+   * @param model .
+   * @return
+   */
   @GetMapping("/admin")
   public String admin(@RequestParam(value = "page", defaultValue = "1") int page,
       @RequestParam(value = "size", defaultValue = "10") int size, Model model) {
     long totalOrder = orderService.countAll();
 
-    long pageStart = 0, pageLast = 0, totalPage = 0;
+    long pageStart = 0; 
+    long pageLast = 0;
+    long totalPage = 0;
     if (totalOrder % size == 0) {
       totalPage = totalOrder / size;
     } else {
@@ -114,11 +134,11 @@ public class MainController {
     return "login";
   }
 
-  /**
+  /**.
    * @author HoanVD - 31/10/2017.
-   * @param request.
-   * @param response.
-   * @param session.
+   * @param request .
+   * @param response .
+   * @param session .
    * @return.
    */
   @GetMapping("/logout")

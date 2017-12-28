@@ -5,6 +5,8 @@ import ds.repository.RoleRepository;
 import ds.service.RoleService;
 import ds.util.Constant;
 
+import java.util.List;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,8 @@ public class RoleServiceImpl implements RoleService {
   private RoleRepository roleRepository;
 
   @Override
-  public Iterable<Role> findAll() {
-    return roleRepository.findAll();
+  public List<Role> findAll() {
+    return (List<Role>) roleRepository.findAll();
   }
 
   @Override
@@ -26,13 +28,18 @@ public class RoleServiceImpl implements RoleService {
   }
 
   @Override
-  public void delete(int id) {
-    roleRepository.delete(id);
+  public Role findOne(int id) {
+    return roleRepository.findOne(id);
   }
 
   @Override
-  public Role findOne(int id) {
-    return roleRepository.findOne(id);
+  public Role findOneFromList(List<Role> listRole, String roleCode) {
+    for (int i = 0; i < listRole.size(); i++) {
+      if (roleCode.equals(listRole.get(i).getRoleCode())) {
+        return listRole.get(i);
+      }
+    }
+    return null;
   }
 
 }

@@ -203,24 +203,6 @@ $("#editMaterial").on("show.bs.modal",function(event){
 	var supplyPhone = button.data('supplyphone');
 	var modal = $(this);
 	
-	$.ajax({
-		type : "post",
-		url : 'setOldMaterial',
-		contentType : 'application/json',
-		dateType : 'json',
-		data : JSON.stringify(code),
-		success : function(result){
-			if (result.status != "checkOk"){
-				alert("Please dont fix my item code");
-				setTimeout(function(){
-					window.localtion.href="item-material";
-				},2000);
-			}
-		}, error (e){
-			console.log("error" + e);
-		}
-	});
-	
 	$("#editMaterial").find("#material-code").val(code);
 	$("#editMaterial").find("#material-name").val(name);
 	$("#editMaterial").find("#material-date-created").val(dateCreated);
@@ -275,8 +257,6 @@ function saveMaterial(id){
 function saveMaterial2(id){
 	var materialCode = $('#edit_select_material'+id).val();
 	if (materialCode != 0){
-		
-		console.log(materialCode);
 		$.ajax({
 			type : "post",
 			url : "setListMaterialForItem",
@@ -297,7 +277,6 @@ function saveMaterial2(id){
 			}
 		});
 	}
-	
 }
 
 function deleteMaterial(id){

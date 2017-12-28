@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="layout :: head">
+<head th:replace="admin :: head">
 </head>
 <body>
-	<nav th:replace="layout :: header"></nav>
+	<nav th:replace="admin :: header"></nav>
 
 	<div class="container-fluid">
 		<div class="row">
-			<button class="btn btn-success" data-toggle="modal" data-target="#addUser">Thêm người dùng mới</button>
 			<div class="panel panel-success">
 				<div class="panel-heading">
 					<h3>Quản lý người dùng</h3>
+					<h4 th:if="${newPassword}" th:text="${newPassword}"></h4>
+					<h4 th:if="${UserValidation}" th:text="${UserValidation}"></h4>
 				</div>
 				<div class="panel-body">
 					<table class="table table-bordered table-hover">
@@ -24,14 +25,15 @@
 								<td>Địa chỉ</td>
 								<td>Ngày tạo</td>
 								<td>Ngày cập nhật</td>
-								<td>Ngày order cuối</td>
+								<td>Ngày order cuối / Thuộc cửa hàng</td>
 								<td>Trạng thái</td>
 								<td>Quyền</td>
 								<td>Reset mk / Sửa quyền</td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:unless="${#lists.isEmpty(users)}" th:each="USER,iterStat : ${users}">
+							<tr th:unless="${#lists.isEmpty(users)}"
+								th:each="USER,iterStat : ${users}">
 								<td th:text="${iterStat.count}"></td>
 								<td th:text="${USER.userName}"></td>
 								<td th:text="${USER.userEmail}"></td>
@@ -39,10 +41,19 @@
 								<td th:text="${USER.userAddress}"></td>
 								<td th:text="${USER.userDateCreated}"></td>
 								<td th:text="${USER.userDateUpdated}"></td>
-								<td th:text="${USER.userLastOrderTime}"></td>
+								<td th:if="${USER.userStore != null}"
+									th:text="${USER.userStore}"
+									style="background: green; color: red"></td>
+								<td th:if="${USER.userLastOrderTime != null}"
+									th:text="${USER.userLastOrderTime}"></td>
 								<td th:text="${USER.userStatus}"></td>
 								<td th:text="${USER.roles}"></td>
-								<td th:text="${USER.userStore}"></td>
+								<td><button th:if="${USER.userStore != null}"
+										data-toggle="modal" data-target="#editUser"
+										th:attr="data-email=${USER.userEmail}">Edit Roles And Store</button>
+									<a class="btn"
+									th:href="@{/admin/resetPassword(userEmail=${USER.userEmail})}">Reset
+										Password</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -50,7 +61,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<button class="btn btn-success" data-toggle="modal" data-target="#addStaff">Thêm nhân viên mới</button>
+			<button class="btn btn-success" data-toggle="modal"
+				data-target="#addStaff">Thêm nhân viên mới</button>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<h3>Quản lý nhân viên</h3>
@@ -74,7 +86,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:unless="${#lists.isEmpty(staffs)}" th:each="STAFF,iterStat : ${staffs}">
+							<tr th:unless="${#lists.isEmpty(staffs)}"
+								th:each="STAFF,iterStat : ${staffs}">
 								<td th:text="${iterStat.count}"></td>
 								<td th:text="${STAFF.staffName}"></td>
 								<td th:text="${STAFF.staffStore}"></td>
@@ -87,8 +100,7 @@
 								<td th:text="${STAFF.staffSalary}"></td>
 								<td th:text="${STAFF.staffStatus}"></td>
 								<td>
-									<button>Sửa</button>
-									<a>Xoá</a>
+									<button>Sửa</button> <a>Xoá</a>
 								</td>
 							</tr>
 						</tbody>
@@ -98,8 +110,10 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<h3 th:if="${WrongSyntax}" th:text="${WrongSyntax}" style="color: red;"></h3>
-				<button class="btn btn-success" data-toggle="modal" data-target="#addRole">Thêm quyền mới</button>
+				<h3 th:if="${WrongSyntax}" th:text="${WrongSyntax}"
+					style="color: red;"></h3>
+				<button class="btn btn-success" data-toggle="modal"
+					data-target="#addRole">Thêm quyền mới</button>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3>Quản lý quyền</h3>
@@ -113,7 +127,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${#lists.isEmpty(roles)}" th:each="ROLE, iterStat : ${roles}">
+								<tr th:unless="${#lists.isEmpty(roles)}"
+									th:each="ROLE, iterStat : ${roles}">
 									<td th:text="${iterStat.count}"></td>
 									<td th:text="${ROLE.roleName}"></td>
 								</tr>
@@ -123,10 +138,12 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<button class="btn btn-success" data-toggle="modal" data-target="#addStore">Thêm cửa hàng</button>
+				<button class="btn btn-success" data-toggle="modal"
+					data-target="#addStore">Thêm cửa hàng</button>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3>Quản lý cửa hàng</h3>
+						<h4 th:if="${storeValidation}" th:text="${storeValidation}"></h4>
 					</div>
 					<div class="panel-body">
 						<table class="table table-bordered table-hover">
@@ -142,7 +159,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${#lists.isEmpty(stores)}" th:each="STORE, iterStat : ${stores}">
+								<tr th:unless="${#lists.isEmpty(stores)}"
+									th:each="STORE, iterStat : ${stores}">
 									<td th:text="${iterStat.count}"></td>
 									<td th:text="${STORE.storeName}"></td>
 									<td th:text="${STORE.storePhoneNumber}"></td>
@@ -150,7 +168,8 @@
 									<td th:text="${STORE.storeDateCreated}"></td>
 									<td th:text="${STORE.storeDateUpdated}"></td>
 									<td>
-										<button><span>Sửa</span></button>
+										<button class="btn" data-toggle="modal" data-target="#editStore" th:attr="data-code=${STORE.storeCode},
+										data-name=${STORE.storeName}, data-phoneNumber=${STORE.storePhoneNumber}, data-address=${STORE.storeAddress}"><span>Sửa</span></button>
 										<a>Xoá</a>
 									</td>
 								</tr>
@@ -161,12 +180,37 @@
 			</div>
 		</div>
 	</div>
+	<div id="editUser" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Chỉnh sửa quyền</h4>
+					</div>
+					<div class="modal-body">
+						<form id="editUserForm" th:action="@{/admin/editUserRolesStore}" th:object="${userForm}" method="post">
+							<label>Email</label>
+							<p th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"></p>
+							<input class="form-control" id="user-email" th:field="*{userEmail}"/>
+							<label>Các quyền</label>
+							<div id="edit_roles">
+								
+							</div>
+							<br/>
+							<label>Cửa hàng</label>
+							<div id="edit_store">
+							
+							</div>
+							<br/><button type="submit">Save changes</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<!-- Modal -->
 	<div th:if="${role}" id="addRole" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-
-			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -177,17 +221,67 @@
 						method="post">
 						<label>Tên quyền</label>
 						<h3 style="color: red;">Bắt buộc phải có ROLE_ ở đầu</h3>
-						<input type="text" class="form-control" th:field="*{roleName}" />
-						<span class="error" id="error-item-name"></span>
 						<p th:if="${#fields.hasErrors('roleName')}"
 							th:errors="*{roleName}"></p>
+						<input type="text" class="form-control" th:field="*{roleName}" />
 						<button type="submit">Thêm role</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<footer th:replace="layout :: footer"></footer>
+
+	<div th:if="${storeForm}" id="addStore" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">Thêm cửa hàng mới</h3>
+				</div>
+				<div class="modal-body">
+					<form id="addStoreForm" th:action="@{/admin/createStore}" th:object="${storeForm}" method="post">
+						<label>Tên cửa hàng</label>
+						<p th:if="${#fields.hasErrors('storeName')}" th:errors="*{storeName}"></p>
+						<input class="form-control" th:field="*{storeName}"/>
+						<label>Số điện thoại</label>
+						<p th:if="${#fields.hasErrors('storePhoneNumber')}" th:errors="*{storePhoneNumber}"></p>
+						<input class="form-control" th:field="*{storePhoneNumber}"/>
+						<label>Địa chỉ</label>
+						<p th:if="${#fields.hasErrors('storeAddress')}" th:errors="*{storeAddress}"></p>
+						<input class="form-control" th:field="*{storeAddress}"/>
+						<button type="submit">Thêm mới</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div th:if="${storeForm}" id="editStore" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">Sửa cửa hàng</h3>
+				</div>
+				<div class="modal-body">
+					<form id="editStoreForm" th:action="@{/admin/createStore}" th:object="${storeForm}" method="post">
+						<input type="hidden" id="store_code" th:field="*{storeCode}"/>
+						<label>Tên cửa hàng</label>
+						<p th:if="${#fields.hasErrors('storeName')}" th:errors="*{storeName}"></p>
+						<input class="form-control" id="store_name" th:field="*{storeName}"/>
+						<label>Số điện thoại</label>
+						<p th:if="${#fields.hasErrors('storePhoneNumber')}" th:errors="*{storePhoneNumber}"></p>
+						<input class="form-control" id="store_phone_number" th:field="*{storePhoneNumber}"/>
+						<label>Địa chỉ</label>
+						<p th:if="${#fields.hasErrors('storeAddress')}" th:errors="*{storeAddress}"></p>
+						<input class="form-control" id="store_address" th:field="*{storeAddress}"/>
+						<button type="submit">Sửa</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="admin :: footer"></footer>
 	<script th:src="@{/js/user-admin.js}"></script>
 </body>
 </html>

@@ -1,5 +1,8 @@
 package ds.controller;
 
+import ds.message.Response;
+import ds.model.Customer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import ds.message.Response;
-import ds.model.Customer;
 
 @Controller
 public class MainRestController {
@@ -23,6 +23,13 @@ public class MainRestController {
     return response;
   }
 
+  /** .
+   * @description: 
+   * @author: VDHoan
+   * @date_created: Dec 23, 2017
+   * @param customer .
+   * @return
+   */
   @PostMapping("/save")
   public @ResponseBody Response postCustomer(@RequestBody Customer customer) {
     cust.add(customer);

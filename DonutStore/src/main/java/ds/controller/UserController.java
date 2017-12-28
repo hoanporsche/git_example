@@ -9,19 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
-  @GetMapping("/user")
+  @GetMapping("/")
   public String user() {
     return "user";
   }
 
-  /**
+  /** .
    * @author HoanVD - 31/10/2017.
-   * @param user.
-   * @param bindingResult.
+   * @param user .
+   * @param bindingResult .
    * @return.
    */
   @PostMapping("/create")

@@ -1,5 +1,7 @@
 package ds.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -38,10 +40,24 @@ public class Store implements Serializable {
   private boolean storeStatus;
 
   @OneToMany(mappedBy = "staffStore")
+  @JsonIgnore
   private List<Staff> staffs;
   
   public Store() {}
   
+  public Store(Date storeDateUpdated) {
+    this.storeDateUpdated = storeDateUpdated;
+  }
+  
+  /** Constructor .
+   * @description: 
+   * @author: VDHoan
+   * @date_created: Dec 22, 2017
+   * @param storeName .
+   * @param storeDateCreated .
+   * @param storeDateUpdated .
+   * @param status .
+   */
   public Store(String storeName,Date storeDateCreated, Date storeDateUpdated, boolean status) {
     this.storeName = storeName;
     this.storeDateCreated = storeDateCreated;

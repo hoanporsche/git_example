@@ -110,14 +110,12 @@
 					<form action="#" id="addItemForm" th:action="@{/admin/createItem}" th:object="${itemForm}" method="post">
 						<div class="form-group">
 							<label><b>Tên mặt hàng</b></label>
-							<input type="text" class="form-control" th:field="*{itemName}" placeholder="Tên mặt hàng" />
-							<span class="error" id="error-item-name"></span>
                              <p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></p>
+							<input type="text" class="form-control" th:field="*{itemName}" placeholder="Tên mặt hàng" />
                              
                              <label><b>Đơn giá (/chiếc)</b></label>
-							<input type="text" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
-							<span class="error" id="error-item-single-value"></span>
                              <p th:if="${#fields.hasErrors('itemSingleValue')}" th:errors="*{itemSingleValue}"></p>
+							<input type="text" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
                              
                              <label><b>Các nguyên liệu</b></label>
                              <br/>
@@ -150,25 +148,17 @@
 							<input type="hidden" id="item_code" th:field="*{itemCode}"/>
 							<input type="hidden" id="item_date_created" th:field="*{itemDateCreated}"/>
 							<label><b>Tên mặt hàng</b></label>
+							<p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></p>
 							<input type="text" id="item_name" class="form-control" th:field="*{itemName}" placeholder="Tên mặt hàng" />
-							<span class="error" id="error-item-name"></span>
-                             <p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></p>
                              
                              <label><b>Đơn giá (/chiếc)</b></label>
-							<input type="text" id="item_single_value" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
-							<span class="error" id="error-item-single-value"></span>
                              <p th:if="${#fields.hasErrors('itemSingleValue')}" th:errors="*{itemSingleValue}"></p>
+							<input type="text" id="item_single_value" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
                              
                              <label><b>Các nguyên liệu</b></label>
                              <br/>
                             	<div id="edit_newMaterial" th:unless="${#lists.isEmpty(materials)}">
-                            		<!-- <button type="button" class="btn-success" id="edit_btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button><br/>
-                            		<select id="edit_select_material1" class="selectpicker">
-                            			<option value="0">Lựa chọn nguyên liệu</option>
-                            			<option th:each="MATERIAL,iterStat : ${materials}" th:text="${MATERIAL.materialName}" th:value="${MATERIAL.materialCode}"></option>
-                            		</select>
-                            		<button type="button" class="btn btn_ok" id="edit_btn-ok1" onClick="saveMaterial2(1)"><span class="glyphicon glyphicon-ok"></span></button>
-                            		<button type="button" class="btn btn_remove" id="edit_btn-remove1" onClick="deleteMaterial2(1)" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button> -->
+                         	
                             	</div>
 							<br/><button th:unless="${#lists.isEmpty(materials)}" type="submit">Sửa mặt hàng</button>
 						</div>
@@ -188,33 +178,28 @@
 					<form id="addMaterialForm" th:action="@{/admin/createMaterial}" th:object="${materialForm}" method="post">
 						<div class="form-group">
 							<label><b>Tên nguyên liệu</b></label>
-							<span class="error" id="error-material-name-add"></span>
                              <p th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></p>
-							<input type="text" id="add-material-name" class="form-control" th:field="*{materialName}" name="materialName" placeholder="Tên nguyên liệu" />
+							<input type="text" id="add-material-name" class="form-control" th:field="*{materialName}" placeholder="Tên nguyên liệu" />
 							
                              
 							<label><b>Đơn giá (/kg)</b></label>
-							<span class="error" id="error-single-value-add"></span>
                              <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
-							<input type="text" id="add-material-singleValue" class="form-control" th:field="*{materialSingleValue}" name="materialSingleValue" placeholder="Đơn giá (/kg)" />
+							<input type="text" id="add-material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
 							
                              
 							<label><b>Số lượng trong kho (/kg)</b></label>
-							<span class="error" id="error-remain-add"></span>
                              <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
-							<input type="text" id="add-material-remain" class="form-control" th:field="*{materialRemain}" name="materialRemain" placeholder="Số lượng trong kho (/kg)" />
+							<input type="text" id="add-material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
 							
                              
 							<label><b>Nhà cung cấp</b></label>
-							<span class="error" id="error-supply-name-add"></span>
                              <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
-							<input type="text" id="add-material-supplyName" class="form-control" th:field="*{materialSupplyName}" name="materialSupplyName" placeholder="Nhà cung cấp" />
+							<input type="text" id="add-material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
 							
                              
 							<label><b>Số điện thoại nhà cung cấp</b></label>
-							<span class="error" id="error-supply-phone-add"></span>
                              <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
-							<input type="text" id="add-material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" name="materialSupplyPhone" placeholder="Sđt nhà cung cấp" />
+							<input type="text" id="add-material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="Sđt nhà cung cấp" />
 							
                              
 							<button type="submit" id="submit-add-material">Thêm</button>
@@ -237,36 +222,30 @@
 							<input type="hidden" id="material-code" th:field="*{materialCode}"/>
 							
 							<label><b>Tên nguyên liệu</b></label>
-							<span class="error" id="error-material-name"></span>
                              <p th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></p>
-							<input type="text" id="material-name" class="form-control" th:field="*{materialName}" name="materialName" placeholder="Tên nguyên liệu" />
+							<input type="text" id="material-name" class="form-control" th:field="*{materialName}" placeholder="Tên nguyên liệu" />
 							<br/>
                              
                              <input type="hidden" id="material-date-created" th:field="*{materialDateCreated}"/>
                              
 							<label><b>Đơn giá (/kg)</b></label>
-							<span class="error" id="error-single-value"></span>
                              <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
-							<input type="text" id="material-singleValue" class="form-control" th:field="*{materialSingleValue}" name="materialSingleValue" placeholder="Đơn giá (/kg)" />
+							<input type="text" id="material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
 							<br/>
                              
 							<label><b>Số lượng trong kho (/kg)</b></label>
-							<span class="error" id="error-remain"></span>
                              <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
-							<input type="text" id="material-remain" class="form-control" th:field="*{materialRemain}" name="materialRemain" placeholder="Số lượng trong kho (/kg)" />
+							<input type="text" id="material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
 							<br/>
                              
 							<label><b>Nhà cung cấp</b></label>
-							<span class="error" id="error-supply-name"></span>
                              <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
-							<input type="text" id="material-supplyName" class="form-control" th:field="*{materialSupplyName}" name="materialSupplyName" placeholder="Nhà cung cấp" />
+							<input type="text" id="material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
 							<br/>
                              
 							<label><b>Số điện thoại nhà cung cấp</b></label>
-							<span class="error" id="error-supply-phone"></span>
                              <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
-							<input type="text" id="material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" name="materialSupplyPhone" placeholder="sđt nhà cung cấp" />
-							
+							<input type="text" id="material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="sđt nhà cung cấp" />
                              
 							<button type="submit" id="submit-edit-material">Sửa</button>
 						</div>

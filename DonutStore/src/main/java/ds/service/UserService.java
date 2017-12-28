@@ -1,15 +1,18 @@
 package ds.service;
 
+import ds.form.UserForm;
 import ds.model.User;
+
+import java.util.List;
 
 public interface UserService {
   Iterable<User> findAll();
 
-  void save(User user);
-
-  void delete(int id);
-
-  User findOne(int id);
-
-  User findByuserName(String userName);
+  User findByuserEmail(String userEmail);
+  
+  String resetPassword(String userEmail);
+  
+  User getUserFromList(List<User> listUser, String userEmail);
+  
+  void createUser(UserForm userForm);
 }

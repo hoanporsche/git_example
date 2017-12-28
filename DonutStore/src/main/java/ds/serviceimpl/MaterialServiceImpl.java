@@ -39,7 +39,7 @@ public class MaterialServiceImpl implements MaterialService {
     Material material = new Material();
     
     if (materialForm.getMaterialCode() == null) {
-      material.setMaterialCode(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+      material.setMaterialCode(RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC));
       material.setMaterialDateCreated(new Date());
     } else {
       material.setMaterialId(materialForm.getMaterialId());

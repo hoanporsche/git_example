@@ -34,7 +34,7 @@ public class User implements Serializable {
   private String userName;
 
   @NotEmpty
-  @Column(name = "user_password", nullable = false)
+  @Column(name = "user_password", nullable = false, unique = true)
   private String userPassword;
 
   @ManyToMany
