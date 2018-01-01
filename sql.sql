@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `item_id` INT(11) NOT NULL AUTO_INCREMENT,
   `item_code` NVARCHAR(10) NOT NULL UNIQUE, 
   `item_name` NVARCHAR(255) NOT NULL,
+  `item_picture` NVARCHAR(255),
   `item_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_single_value` DECIMAL(10,0) NOT NULL,
@@ -27,12 +28,13 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `material_id` INT(11) NOT NULL AUTO_INCREMENT,
   `material_code` NVARCHAR(10) NOT NULL UNIQUE,
   `material_name` NVARCHAR(255) NOT NULL,
+  `material_picture` NVARCHAR(255),
   `material_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_single_value` DECIMAL(10,0) NOT NULL,
   `material_remain` NVARCHAR(45) NOT NULL,
   `material_supply_name` NVARCHAR(255) NULL DEFAULT NULL,
-  `material_supply_phone` NVARCHAR(18) NULL DEFAULT NULL,
+  `material_supply_phone` NVARCHAR(20) NULL DEFAULT NULL,
   `material_status` boolean not null,
   PRIMARY KEY (`material_id`))
 ENGINE = InnoDB
@@ -107,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `store_id` INT(11) NOT NULL AUTO_INCREMENT,
  `store_code` NVARCHAR(10) NOT NULL UNIQUE,
  `store_name` NVARCHAR(255) NOT NULL,
+ `store_picture` NVARCHAR(255),
  `store_phone_number` NVARCHAR(20) NOT NULL,
  `store_address` NVARCHAR(255) NOT NULL,
  `store_date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -121,11 +124,13 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `staff_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `staff_name` VARCHAR(255) NOT NULL,
+  `staff_code` NVARCHAR(10) NOT NULL UNIQUE,
+  `staff_name` NVARCHAR(255) NOT NULL,
+  `staff_picture` NVARCHAR(255),
   `staff_store` int NOT NULL,
   `staff_created_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `staff_updated_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `staff_phone_number` NVARCHAR(18) NOT NULL,
+  `staff_phone_number` NVARCHAR(20) NOT NULL,
   `staff_address` NVARCHAR(255) NOT NULL,
   `staff_identity_card` NVARCHAR(12) NOT NULL,
   `staff_home_town` NVARCHAR(45) NOT NULL,
@@ -142,14 +147,15 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `donutstore`.`timekeeping`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping` (
-  `timekeeping_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `staff_id` INT(11) NOT NULL,
   `timekeeping_created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `timekeeping_in` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_out` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_status` tinyint NOT NULL,
   `id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`timekeeping_id`))
+  PRIMARY KEY (`timekeeping_id`),
+  FOREIGN KEY (`staff_id`) REFERENCES `donutstore`.`staff`(`staff_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -161,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `user_id` INT(11) NOT NULL AUTO_INCREMENT,
   `user_name` NVARCHAR(255) NOT NULL,
   `user_password` VARCHAR(60) NOT NULL,
-  `user_email` NVARCHAR(45) NULL DEFAULT NULL,
-  `user_phone_number` VARCHAR(18) NULL DEFAULT NULL,
+  `user_email` NVARCHAR(255) NOT NULL UNIQUE,
+  `user_phone_number` VARCHAR(20) NULL DEFAULT NULL,
   `user_address` NVARCHAR(255) NULL DEFAULT NULL,
   `user_date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

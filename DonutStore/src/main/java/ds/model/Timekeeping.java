@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,8 +22,9 @@ public class Timekeeping implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private long id;
-  @Column(name = "staff_id", nullable = false)
-  private Staff staffId;
+  @ManyToOne
+  @JoinColumn(name = "staff_id",referencedColumnName = "staff_id", nullable = false)
+  private Staff staff;
   @Column(name = "timekeeping_created_date", nullable = false)
   private Date timekeepingCreatedDate;
   @Column(name = "timekeeping_in", nullable = true)
@@ -29,26 +32,26 @@ public class Timekeeping implements Serializable {
   @Column(name = "timekeeping_out", nullable = true)
   private Date timekeepingOut;
   @Column(name = "timekeeping_status", nullable = false)
-  private byte timekeepingStatus;
+  private boolean timekeepingStatus;
   
   public String toString() {
-    return this.staffId.getStaffName();
+    return this.staff.getStaffName();
   }
 
   public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
 
-  public Staff getStaffId() {
-    return staffId;
+  public Staff getStaff() {
+    return staff;
   }
 
-  public void setStaffId(Staff staffId) {
-    this.staffId = staffId;
+  public void setStaff(Staff staff) {
+    this.staff = staff;
   }
 
   public Date getTimekeepingCreatedDate() {
@@ -75,11 +78,11 @@ public class Timekeeping implements Serializable {
     this.timekeepingOut = timekeepingOut;
   }
 
-  public int getTimekeepingStatus() {
+  public boolean getTimekeepingStatus() {
     return timekeepingStatus;
   }
 
-  public void setTimekeepingStatus(byte timekeepingStatus) {
+  public void setTimekeepingStatus(boolean timekeepingStatus) {
     this.timekeepingStatus = timekeepingStatus;
   }
 

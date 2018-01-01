@@ -9,7 +9,6 @@ import ds.util.Constant;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,14 +23,13 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public List<Item> findAllByStatus() {
-    List<Item> listItem = new ArrayList<>();
     List<Item> listItemFound = (List<Item>) itemRepository.findAll();
     for (int i = 0; i < listItemFound.size(); i++) {
-      if (listItemFound.get(i).isItemStatus() == true) {
-        listItem.add(listItemFound.get(i));
+      if (listItemFound.get(i).isItemStatus() == false) {
+        listItemFound.remove(listItemFound.get(i));
       }
     }
-    return listItem;
+    return listItemFound;
   }
 
   @Override
@@ -61,6 +59,7 @@ public class ItemServiceImpl implements ItemService {
   @Override
   public void hideItem(Item item) {
     item.setItemStatus(false);
+    item.setItemDateUpdated(new Date());
     itemRepository.save(item);
   }
 
@@ -79,6 +78,18 @@ public class ItemServiceImpl implements ItemService {
   @Override
   public Iterable<Item> findAll() {
     return itemRepository.findAll();
+  }
+
+  @Override
+  public Item findByitemCode(String itemCode) {
+    return itemRepository.findByitemCode(itemCode);
+  }
+
+  @Override
+  public void showItem(Item item) {
+    item.setItemStatus(true);
+    item.setItemDateUpdated(new Date());
+    itemRepository.save(item);
   }
 
 }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:fragment="head">
+<head th:fragment="head(title)">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bánh rán Bác Thân</title>
+<title th:text="${title}"></title>
 <!-- Bootstrap -->
 <link
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -16,7 +16,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse" th:fragment="header">
+	<nav class="navbar navbar-inverse" th:fragment="header(currentPage)">
 		<div class="container">
 			<div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
@@ -31,13 +31,13 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar">
 
-    				<ul th:if="${session.loginedAdmin}" class="nav navbar-nav navbar-right">
-                        <li><a th:href="@{/admin/user}">Người dùng</a></li>
-                        <li><a th:href="@{/admin/income}">Thu nhập</a></li>
-                        <li><a th:href="@{/admin/item-material}">Mặt hàng</a></li>
-                        <li><a th:href="@{/admin/timekeeping}">Chấm công</a></li>
-                    </ul>
-    				<ul th:if="${session.loginedUser}" class="nav navbar-nav navbar-right">
+    				<ul sec:authorize="hasRole('ROLE_ADMIN')" class="nav navbar-nav navbar-right">
+                        <li th:class="${currentPage == 'user'}? 'active':null"><a th:href="@{/admin/user}">Người dùng</a></li>
+                        <li th:class="${currentPage == 'income'}? 'active':null"><a th:href="@{/admin/income}">Thu nhập</a></li>
+                        <li th:class="${currentPage == 'item-material'}? 'active':null"><a th:href="@{/admin/item-material}">Mặt hàng</a></li>
+                   <li th:class="${currentPage == 'timekeeping'}? 'active':null"><a th:href="@{/admin/timekeeping}">Chấm công</a></li>
+                </ul>
+    				<ul sec:authorize="hasRole('ROLE_ADMIN')" class="nav navbar-nav navbar-right">
     					<li><a sec:authentication="name" style="color:white"></a></li>
     					<li><a th:href="@{/logout}">[Đăng xuất]</a></li>
     				</ul>

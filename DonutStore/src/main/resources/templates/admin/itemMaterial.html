@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="admin :: head">
+<head th:replace="admin :: head('Mặt hàng-Nguyên liệu')">
 </head>
 <body>
-	<nav th:replace="admin :: header"></nav>
+	<nav th:replace="admin :: header('item-material')"></nav>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6">
@@ -40,7 +40,8 @@
 											<button data-toggle="modal" class="btn-add-edit" data-target="#editItem"
 											th:attr="data-code=${ITEM.itemCode}, data-name=${ITEM.itemName}, data-singleValue=${ITEM.itemSingleValue},
 											data-date=${ITEM.itemDateCreated}, data-materials=${ITEM.materials}" ><span>Sửa</span></button>
-											<a th:href="@{/admin/deleteItem(id=${ITEM.itemCode})}"><span>Xóa</span></a>
+											<a th:if="${ITEM.itemStatus == true}" th:href="@{/admin/hideItem(id=${ITEM.itemCode})}"><span>Xóa</span></a>
+											<a th:if="${ITEM.itemStatus == false}" th:href="@{/admin/showItem(id=${ITEM.itemCode})}"><span>Hiện</span></a>
 										</td>
 									</tr>
 								</th:block>
@@ -67,7 +68,7 @@
 									<td>Tên nhà cung cấp</td>
 									<td>Sđt nhà cung cấp</td>
 									<td>Trạng thái</td>
-									<td>Sửa / Xóa</td>
+									<td>Sửa / Xóa / Hiện</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -87,7 +88,8 @@
 											th:attr="data-code=${MATERIAL.materialCode}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
 											data-singlevalue=${MATERIAL.materialSingleValue}, data-remain=${MATERIAL.materialRemain}, 
 											data-supplyname=${MATERIAL.materialSupplyName}, data-supplyphone=${MATERIAL.materialSupplyPhone}"><span>Sửa</span></button>
-											<a th:href="@{/admin/deleteMaterial(materialCode=${MATERIAL.materialCode})}"><span>Xóa</span></a>
+											<a th:if="${MATERIAL.materialStatus == true}" th:href="@{/admin/hideMaterial(materialCode=${MATERIAL.materialCode})}">Xóa</a>
+											<a th:if="${MATERIAL.materialStatus == false}" th:href="@{/admin/showMaterial(materialCode=${MATERIAL.materialCode})}">Hiện</a>
 										</td>
 									</tr>
 								</th:block>

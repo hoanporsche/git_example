@@ -9,7 +9,6 @@ import ds.util.Constant;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,16 +23,20 @@ public class MaterialServiceImpl implements MaterialService {
 
   @Override
   public List<Material> findAllByStatus() {
-    List<Material> listMaterial = new ArrayList<>();
     List<Material> listMaterialFound = (List<Material>) materialRepository.findAll();
     for (int i = 0; i < listMaterialFound.size(); i++) {
-      if (listMaterialFound.get(i).isMaterialStatus() == true) {
-        listMaterial.add(listMaterialFound.get(i));
+      if (listMaterialFound.get(i).isMaterialStatus() == false) {
+        listMaterialFound.remove(listMaterialFound.get(i));
       }
     }
-    return listMaterial;
+    return listMaterialFound;
   }
 
+  @Override
+  public Material findBymaterialCode(String materialCode) {
+    return materialRepository.findBymaterialCode(materialCode);
+  }
+  
   @Override
   public void saveMaterial(MaterialForm materialForm) {
     Material material = new Material();
@@ -65,6 +68,14 @@ public class MaterialServiceImpl implements MaterialService {
   @Override
   public void hideMaterial(Material material) {
     material.setMaterialStatus(false);
+    material.setMaterialDateUpdated(new Date());
+    materialRepository.save(material);
+  }
+  
+  @Override
+  public void showMaterial(Material material) {
+    material.setMaterialStatus(true);
+    material.setMaterialDateUpdated(new Date());
     materialRepository.save(material);
   }
   

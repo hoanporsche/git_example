@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "item")
@@ -25,10 +26,15 @@ public class Item implements Serializable {
   @Column(name = "item_id", nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int itemId;
+  @Size(max = 10)
   @Column(name = "item_code", nullable = false, unique = true)
   private String itemCode;
-  @Column(name = "item_name")
+  @Size(max = 255)
+  @Column(name = "item_name", nullable = false)
   private String itemName;
+  @Size(max = 255)
+  @Column(name = "item_picture")
+  private String itemPicture;
   @Column(name = "item_date_created", nullable = false)
   private Date itemDateCreated;
   @Column(name = "item_date_updated", nullable = false)
@@ -69,6 +75,14 @@ public class Item implements Serializable {
 
   public void setItemName(String itemName) {
     this.itemName = itemName;
+  }
+
+  public String getItemPicture() {
+    return itemPicture;
+  }
+
+  public void setItemPicture(String itemPicture) {
+    this.itemPicture = itemPicture;
   }
 
   public Date getItemDateCreated() {

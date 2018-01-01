@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:fragment="head">
+<head th:fragment="head(title)">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bánh rán Bác Thân</title>
+<title th:text="${title}"></title>
 <!-- Bootstrap -->
 <link
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse" th:fragment="header">
+	<nav class="navbar navbar-inverse" th:fragment="header(currentPage)">
 		<div class="container">
 			<div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
@@ -34,19 +34,19 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar">
             		<ul class="nav navbar-nav" >
-            			<li><a class="active" th:href="@{/order}" style="color:white;">Đặt hàng</a></li>
-      					<li><a th:href="@{/main/reference}" style="color:white;">Hướng dẫn</a></li>
-      					<li><a th:href="@{/main/contact}" style="color:white;">Liên hệ</a></li>
-      					<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
+            			<li th:class="${currentPage == 'order'}? 'active':null"><a th:href="@{/order}" >Đặt hàng</a></li>
+      				<li th:class="${currentPage == 'reference'}? 'active':null" ><a th:href="@{/main/reference}">Hướng dẫn</a></li>
+      				<li th:class="${currentPage == 'contact'}? 'active':null" ><a th:href="@{/main/contact}" >Liên hệ</a></li>
+      				<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
     				</ul>
-    				<ul th:if="${session.loginedAdmin}" class="nav navbar-nav navbar-right">
-                        <li><a th:href="@{/admin}">Admin</a></li>
+    				<ul sec:authorize="hasRole('ROLE_ADMIN')" class="nav navbar-nav navbar-right">
+                        <li th:class="${currentPage == order}? 'active':null" ><a th:href="@{/admin}">Admin</a></li>
                     </ul>
-    				<ul th:if="${session.loginedUser}" class="nav navbar-nav navbar-right">
+    				<ul sec:authorize="hasAnyRole('MEMBER')" class="nav navbar-nav navbar-right">
     					<li><a sec:authentication="name" style="color:white"></a></li>
     					<li><a th:href="@{/logout}">[Đăng xuất]</a></li>
     				</ul>
-    				<div th:unless="${session.loginedUser}" class="navbar-right">
+    				<div th:unless="${#authorization.expression('hasRole(''ROLE_MEMBER'')')}" class="navbar-right">
     					<a class="btn btn-danger navbar-btn" th:href="@{/registry}">Đăng ký</a>
     					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#userLogin">Đăng nhập</button>
     				</div>

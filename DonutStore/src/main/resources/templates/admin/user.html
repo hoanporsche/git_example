@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:replace="admin :: head">
+<head th:replace="admin :: head('Quản lý người dùng')">
 </head>
 <body>
-	<nav th:replace="admin :: header"></nav>
+	<nav th:replace="admin :: header('user')"></nav>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -32,8 +32,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:unless="${#lists.isEmpty(users)}"
-								th:each="USER,iterStat : ${users}">
+							<tr th:unless="${#lists.isEmpty(users)}" th:each="USER,iterStat : ${users}">
 								<td th:text="${iterStat.count}"></td>
 								<td th:text="${USER.userName}"></td>
 								<td th:text="${USER.userEmail}"></td>
@@ -41,15 +40,11 @@
 								<td th:text="${USER.userAddress}"></td>
 								<td th:text="${USER.userDateCreated}"></td>
 								<td th:text="${USER.userDateUpdated}"></td>
-								<td th:if="${USER.userStore != null}"
-									th:text="${USER.userStore}"
-									style="background: green; color: red"></td>
-								<td th:if="${USER.userLastOrderTime != null}"
-									th:text="${USER.userLastOrderTime}"></td>
+								<td th:if="${USER.userStore != null}" th:text="${USER.userStore}" style="background:yellow"></td>
+								<td th:if="${USER.userLastOrderTime != null}" th:text="${USER.userLastOrderTime}"></td>
 								<td th:text="${USER.userStatus}"></td>
 								<td th:text="${USER.roles}"></td>
-								<td><button th:if="${USER.userStore != null}"
-										data-toggle="modal" data-target="#editUser"
+								<td><button th:if="${USER.userStore != null}" data-toggle="modal" data-target="#editUser"
 										th:attr="data-email=${USER.userEmail}">Edit Roles And Store</button>
 									<a class="btn"
 									th:href="@{/admin/resetPassword(userEmail=${USER.userEmail})}">Reset
@@ -61,11 +56,11 @@
 			</div>
 		</div>
 		<div class="row">
-			<button class="btn btn-success" data-toggle="modal"
-				data-target="#addStaff">Thêm nhân viên mới</button>
+			<button class="btn btn-success" data-toggle="modal" data-target="#addStaff">Thêm nhân viên mới</button>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<h3>Quản lý nhân viên</h3>
+					<h4 th:text="${staffValidatation}" style="color:red"></h4>
 				</div>
 				<div class="panel-body">
 					<table class="table table-bordered table-hover">
@@ -91,8 +86,8 @@
 								<td th:text="${iterStat.count}"></td>
 								<td th:text="${STAFF.staffName}"></td>
 								<td th:text="${STAFF.staffStore}"></td>
-								<td th:text="${STAFF.staffDateCreated}"></td>
-								<td th:text="${STAFF.staffDateUpdated}"></td>
+								<td th:text="${STAFF.staffCreatedTime}"></td>
+								<td th:text="${STAFF.staffUpdatedTime}"></td>
 								<td th:text="${STAFF.staffPhoneNumber}"></td>
 								<td th:text="${STAFF.staffAddress}"></td>
 								<td th:text="${STAFF.staffIdentityCard}"></td>
@@ -100,7 +95,11 @@
 								<td th:text="${STAFF.staffSalary}"></td>
 								<td th:text="${STAFF.staffStatus}"></td>
 								<td>
-									<button>Sửa</button> <a>Xoá</a>
+									<button data-toggle="modal" data-target="#editStaff" th:attr="data-code=${STAFF.staffCode},
+									data-name=${STAFF.staffName},data-phonenumber=${STAFF.staffPhoneNumber},data-address=${STAFF.staffAddress},
+									data-identitycard=${STAFF.staffIdentityCard},data-hometown=${STAFF.staffHomeTown},data-salary=${STAFF.staffSalary}">Sửa</button>
+									<a th:if="${STAFF.staffStatus == true}" th:href="@{/admin/hideStaff(staffCode=${STAFF.staffCode})}">Xoá</a>
+									<a th:if="${STAFF.staffStatus == false}" th:href="@{/admin/showStaff(staffCode=${STAFF.staffCode})}">Hiện</a>
 								</td>
 							</tr>
 						</tbody>
@@ -155,7 +154,8 @@
 									<td>Địa chỉ</td>
 									<td>Ngày tạo</td>
 									<td>Ngày cập nhật</td>
-									<td>Sửa / Xoá</td>
+									<td>Trạng thái</td>
+									<td>Sửa / Xoá / Hiện</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -167,10 +167,12 @@
 									<td th:text="${STORE.storeAddress}"></td>
 									<td th:text="${STORE.storeDateCreated}"></td>
 									<td th:text="${STORE.storeDateUpdated}"></td>
+									<td th:text="${STORE.storeStatus}"></td>
 									<td>
 										<button class="btn" data-toggle="modal" data-target="#editStore" th:attr="data-code=${STORE.storeCode},
 										data-name=${STORE.storeName}, data-phoneNumber=${STORE.storePhoneNumber}, data-address=${STORE.storeAddress}"><span>Sửa</span></button>
-										<a>Xoá</a>
+										<a th:if="${STORE.storeStatus == true}" th:href="@{/admin/hideStore(storeCode=${STORE.storeCode})}">Xoá</a>
+										<a th:if="${STORE.storeStatus == false}" th:href="@{/admin/showStore(storeCode=${STORE.storeCode})}">Hiện</a>
 									</td>
 								</tr>
 							</tbody>
@@ -280,6 +282,84 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<div th:if="staffForm" id="addStaff" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+    			<div class="modal-content">
+      			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h3 class="modal-title">Thêm nhân viên mới</h3>
+      			</div>
+      			<div class="modal-body">
+        				<form id="addStaffForm" th:action="@{/admin/createStaff}" th:object="${staffForm}" method="post">
+        					<label>Tên nhân viên</label>
+        					<p th:if="${#fields.hasErrors('staffName')}" th:errors="${staffName}"></p>
+        					<input class="form-control" th:field="*{staffName}"/>
+        					<label>Số diện thoại</label>
+        					<p th:if="${#fields.hasErrors('staffPhoneNumber')}" th:errors="${staffPhoneNumber}"></p>
+        					<input class="form-control" th:field="*{staffPhoneNumber}"/>
+        					<label>Địa chỉ Hiện tại</label>
+        					<p th:if="${#fields.hasErrors('staffAddress')}" th:errors="${staffAddress}"></p>
+        					<input class="form-control" th:field="*{staffAddress}"/>
+        					<label>Số chứng minh thư</label>
+        					<p th:if="${#fields.hasErrors('staffIdentityCard')}" th:errors="${staffIdentityCard}"></p>
+        					<input class="form-control" th:field="*{staffIdentityCard}"/>
+        					<label>Quê quán</label>
+        					<p th:if="${#fields.hasErrors('staffHomeTown')}" th:errors="${staffHomeTown}"></p>
+        					<input class="form-control" th:field="*{staffHomeTown}"/>
+        					<label>Lương</label>
+        					<p th:if="${#fields.hasErrors('staffSalary')}" th:errors="${staffSalary}"></p>
+        					<input class="form-control" th:field="*{staffSalary}"/>
+        					<label>Thuộc cửa hàng</label><br/>
+        					<p th:if="${#fields.hasErrors('staffSalary')}" th:errors="${staffSalary}"></p>
+        					<select class="selectpicker" th:field="*{storeCode}">
+        						<option th:each="STORE : ${stores}" th:text="${STORE.storeName}" th:value="${STORE.storeCode}"></option>
+        					</select><br/>
+        					<button type="submit">Thêm nhân viên</button>
+        				</form>
+      			</div>
+    			</div>
+  		</div>
+	</div>
+	<div th:if="staffForm" id="editStaff" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+    			<div class="modal-content">
+      			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h3 class="modal-title">Thêm nhân viên mới</h3>
+      			</div>
+      			<div class="modal-body">
+        				<form id="editStaffForm" th:action="@{/admin/createStaff}" th:object="${staffForm}" method="post">
+        					<input type="hidden" id="staff_code" th:field="*{staffCode}" />
+        					<label>Tên nhân viên</label>
+        					<p th:if="${#fields.hasErrors('staffName')}" th:errors="${staffName}"></p>
+        					<input class="form-control" id="staff_name" th:field="*{staffName}"/>
+        					<label>Số diện thoại</label>
+        					<p th:if="${#fields.hasErrors('staffPhoneNumber')}" th:errors="${staffPhoneNumber}"></p>
+        					<input class="form-control" id="staff_phone_number" th:field="*{staffPhoneNumber}"/>
+        					<label>Địa chỉ Hiện tại</label>
+        					<p th:if="${#fields.hasErrors('staffAddress')}" th:errors="${staffAddress}"></p>
+        					<input class="form-control" id="staff_address" th:field="*{staffAddress}"/>
+        					<label>Số chứng minh thư</label>
+        					<p th:if="${#fields.hasErrors('staffIdentityCard')}" th:errors="${staffIdentityCard}"></p>
+        					<input class="form-control" id="staff_identity_card" th:field="*{staffIdentityCard}"/>
+        					<label>Quê quán</label>
+        					<p th:if="${#fields.hasErrors('staffHomeTown')}" th:errors="${staffHomeTown}"></p>
+        					<input class="form-control" id="staff_home_town" th:field="*{staffHomeTown}"/>
+        					<label>Lương</label>
+        					<p th:if="${#fields.hasErrors('staffSalary')}" th:errors="${staffSalary}"></p>
+        					<input class="form-control" id="staff_salary" th:field="*{staffSalary}"/>
+        					<label>Thuộc cửa hàng</label><br/>
+        					<p th:if="${#fields.hasErrors('storeCode')}" th:errors="${storeCode}"></p>
+        					<select class="selectpicker" th:field="*{storeCode}">
+        						<option th:each="STORE : ${stores}" th:text="${STORE.storeName}" th:value="${STORE.storeCode}"></option>
+        					</select><br/>
+        					<button type="submit">Thêm nhân viên</button>
+        				</form>
+      			</div>
+    			</div>
+  		</div>
 	</div>
 	<footer th:replace="admin :: footer"></footer>
 	<script th:src="@{/js/user-admin.js}"></script>

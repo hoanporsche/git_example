@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -26,10 +27,12 @@ public class Role implements Serializable {
   @Column(name = "role_id", nullable = false)
   private int roleId;
 
+  @Size(max = 10)
   @Column(name = "role_code", nullable = false, unique = true)
   private String roleCode;
   
   @NotEmpty
+  @Size(max = 255)
   @Column(name = "role_name", nullable = false)
   private String roleName;
 

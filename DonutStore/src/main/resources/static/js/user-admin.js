@@ -106,6 +106,84 @@ $(document).ready(function(){
 			storeAddress : "Hãy nhập địa chỉ"
 		}
 	});
+	
+	$('#addStaffForm').validate({
+		rules : {
+			staffName : "required",
+			staffPhoneNumber : {
+				required : true,
+				maxlength : 20,
+				minlength : 10
+			}, staffAddress : "required",
+			staffIdentityCard : {
+				required : true,
+				maxlength : 16,
+				minlength : 9
+			},staffHomeTown : "required",
+			staffSalary : {
+				required : true,
+				min : 1800000,
+				max : 5000000
+			}
+		},
+		messages : {
+			staffName : "Hãy nhập tên",
+			staffPhoneNumber : {
+				required : "Hãy nhập sđt",
+				maxlength : "Quá dài",
+				minlength : "Quá ngắn"
+			}, staffAddress : "Hãy nhập địa chỉ",
+			staffIdentityCard : {
+				required : "Hãy nhập số cmt",
+				maxlength : "Quá dài",
+				minlength : "Quá ngắn"
+			},staffHomeTown : "Hãy nhập quê quán",
+			staffSalary : {
+				required : "Hãy nhập lương",
+				min : "Quá ít",
+				max : "Quá nhiều"
+			}
+		}
+	});
+	
+	$('#editStaffForm').validate({
+		rules : {
+			staffName : "required",
+			staffPhoneNumber : {
+				required : true,
+				maxlength : 20,
+				minlength : 10
+			}, staffAddress : "required",
+			staffIdentityCard : {
+				required : true,
+				maxlength : 16,
+				minlength : 9
+			},staffHomeTown : "required",
+			staffSalary : {
+				required : true,
+				min : 1800000,
+				max : 5000000
+			}
+		},
+		messages : {
+			staffName : "Hãy nhập tên",
+			staffPhoneNumber : {
+				required : "Hãy nhập sđt",
+				maxlength : "Quá dài",
+				minlength : "Quá ngắn"
+			}, staffAddress : "Hãy nhập địa chỉ",
+			staffIdentityCard : {
+				required : "Hãy nhập số cmt",
+				maxlength : "Quá dài",
+				minlength : "Quá ngắn"
+			},staffHomeTown : "Hãy nhập quê quán",
+			staffSalary : {
+				required : "Hãy nhập lương",
+				min : "Quá ít",
+				max : "Quá nhiều"
+			}
+		}
+	});
 });
 
 function getRemainRoles(id){
@@ -201,4 +279,23 @@ $('#editStore').on('show.bs.modal', function(event){
 	$("#editStore").find("#store_name").val(name);
 	$("#editStore").find("#store_phone_number").val(phoneNumber);
 	$("#editStore").find("#store_address").val(address);
+});
+
+$('#editStaff').on('show.bs.modal', function(event){
+	var button = $(event.relatedTarget);
+	var code = button.data('code');
+	var name = button.data('name');
+	var phoneNumber = button.data('phonenumber');
+	var address = button.data('address');
+	var identityCard = button.data('identitycard');
+	var homeTown = button.data('hometown');
+	var salary = button.data('salary');
+	
+	$("#editStaff").find("#staff_code").val(code);
+	$("#editStaff").find("#staff_name").val(name);
+	$("#editStaff").find("#staff_phone_number").val(phoneNumber);
+	$("#editStaff").find("#staff_address").val(address);
+	$("#editStaff").find("#staff_identity_card").val(identityCard);
+	$("#editStaff").find("#staff_home_town").val(homeTown);
+	$("#editStaff").find("#staff_salary").val(salary);
 });

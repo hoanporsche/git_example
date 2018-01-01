@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "material")
@@ -26,22 +27,28 @@ public class Material implements Serializable {
   @Column(name = "material_id", nullable = false)
   private int materialId;
   
-  
+  @Size(max = 10)
   @Column(name = "material_code", nullable = false, unique = true)
   private String materialCode;
-  
+  @Size(max = 255)
   @Column(name = "material_name", nullable = false)
   private String materialName;
+  @Size(max = 255)
+  @Column(name = "material_picture")
+  private String materialPicture;
   @Column(name = "material_date_created", nullable = false)
   private Date materialDateCreated;
   @Column(name = "material_date_updated", nullable = false)
   private Date materialDateUpdated;
   @Column(name = "material_single_value", nullable = false)
   private BigDecimal materialSingleValue;
+  @Size(max = 45)
   @Column(name = "material_remain", nullable = false)
   private String materialRemain;
+  @Size(max = 255)
   @Column(name = "material_supply_name", nullable = true)
   private String materialSupplyName;
+  @Size(max = 20)
   @Column(name = "material_supply_phone", nullable = true)
   private String materialSupplyPhone;
   @Column(name = "material_status", nullable = true)
@@ -69,6 +76,14 @@ public class Material implements Serializable {
 
   public void setMaterialName(String materialName) {
     this.materialName = materialName;
+  }
+
+  public String getMaterialPicture() {
+    return materialPicture;
+  }
+
+  public void setMaterialPicture(String materialPicture) {
+    this.materialPicture = materialPicture;
   }
 
   public Date getMaterialDateCreated() {

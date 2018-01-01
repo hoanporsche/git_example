@@ -236,24 +236,45 @@ public class AdminController {
   }
 
   /**.
-   * @description: delete Item means hidding Item by setting status false.
+   * @description: hidding Item by setting status false.
    * @author: VDHoan
    * @date_created: Dec 20, 2017
    * @param itemCode .
    * @param redirect .
    * @return redirect:/admin/item-material.
    */
-  @GetMapping(AdminUrl.DELETE_ITEM)
-  public String deleteItem(@RequestParam(AdminAttribute.ID) String itemCode, 
+  @GetMapping(AdminUrl.HIDE_ITEM)
+  public String hideItem(@RequestParam(AdminAttribute.ID) String itemCode, 
       RedirectAttributes redirect) {
-    if (itemService.findOneFromList(listItem, itemCode) == null) {
+    Item item = itemService.findByitemCode(itemCode);
+    if (item == null) {
       redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_ITEM, AdminMessage.DONT_FIX_ITEMCODE);
       return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
     }
-    itemService.hideItem(itemService.findOneFromList(listItem, itemCode));
+    itemService.hideItem(item);
     return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 
+  /**.
+   * @description: showing Item by setting status false.
+   * @author: VDHoan
+   * @date_created: Dec 20, 2017
+   * @param itemCode .
+   * @param redirect .
+   * @return redirect:/admin/item-material.
+   */
+  @GetMapping(AdminUrl.SHOW_ITEM)
+  public String showItem(@RequestParam(AdminAttribute.ID) String itemCode, 
+      RedirectAttributes redirect) {
+    Item item = itemService.findByitemCode(itemCode);
+    if (item == null) {
+      redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_ITEM, AdminMessage.DONT_FIX_ITEMCODE);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    itemService.showItem(item);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
   /**.
    * @description: hide 'material'.
    * @author: VDHoan
@@ -262,15 +283,35 @@ public class AdminController {
    * @param redirect : to redirect FlashAttribute.
    * @return redirect:/admin/item-material.
    */
-  @GetMapping(AdminUrl.DELETE_MATERIAL)
-  public String deleteMaterial(@RequestParam String materialCode, RedirectAttributes redirect) {
-    Material m = materialService.findOneFromList(listmaterials, materialCode);
+  @GetMapping(AdminUrl.HIDE_MATERIAL)
+  public String hideMaterial(@RequestParam String materialCode, RedirectAttributes redirect) {
+    Material m = materialService.findBymaterialCode(materialCode);
     if (m == null) {
       redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_MATERIAL, 
           AdminMessage.DONT_FIX_MATERIALCODE);
       return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
     } 
     materialService.hideMaterial(m);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /**.
+   * @description: show 'material'.
+   * @author: VDHoan
+   * @date_created: Dec 16, 2017
+   * @param materialCode : will be receipt . 
+   * @param redirect : to redirect FlashAttribute.
+   * @return redirect:/admin/item-material.
+   */
+  @GetMapping(AdminUrl.SHOW_MATERIAL)
+  public String showMaterial(@RequestParam String materialCode, RedirectAttributes redirect) {
+    Material m = materialService.findBymaterialCode(materialCode);
+    if (m == null) {
+      redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_MATERIAL, 
+          AdminMessage.DONT_FIX_MATERIALCODE);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    } 
+    materialService.showMaterial(m);
     return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 

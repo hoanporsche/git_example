@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -30,10 +31,18 @@ public class User implements Serializable {
   private int userId;
 
   @NotEmpty
+  @Size(max = 255)
   @Column(name = "user_name", nullable = false)
   private String userName;
+  
+  @NotEmpty
+  @Size(max = 255)
+  @Email
+  @Column(name = "user_email",nullable = false, unique = true)
+  private String userEmail;
 
   @NotEmpty
+  @Size(max = 60)
   @Column(name = "user_password", nullable = false, unique = true)
   private String userPassword;
 
@@ -41,14 +50,11 @@ public class User implements Serializable {
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
-
-  @NotEmpty
-  @Email
-  @Column(name = "user_email",nullable = false, unique = true)
-  private String userEmail;
   
+  @Size(max = 20)
   @Column(name = "user_phone_number")
   private String userPhoneNumber;
+  @Size(max = 255)
   @Column(name = "user_address")
   private String userAddress;
   @Column(name = "user_date_created")
@@ -56,7 +62,7 @@ public class User implements Serializable {
   @Column(name = "user_date_updated")
   private Date userDateUpdated;
   @Column(name = "user_last_order_time")
-  private String userLastOrderTime;
+  private Date userLastOrderTime;
   @Column(name = "user_status",nullable = false)
   private boolean userStatus;
   @OneToOne
@@ -146,11 +152,11 @@ public class User implements Serializable {
     this.userDateUpdated = userDateUpdated;
   }
 
-  public String getUserLastOrderTime() {
+  public Date getUserLastOrderTime() {
     return userLastOrderTime;
   }
 
-  public void setUserLastOrderTime(String userLastOrderTime) {
+  public void setUserLastOrderTime(Date userLastOrderTime) {
     this.userLastOrderTime = userLastOrderTime;
   }
 

@@ -1,13 +1,20 @@
 package ds.service;
 
+import ds.form.StaffForm;
 import ds.model.Staff;
+
+import java.util.List;
 
 public interface StaffService {
   Iterable<Staff> findAll();
+  
+  List<Staff> findAllByStatus();
 
-  void save(Staff staff);
+  void save(StaffForm staffForm);
+  
+  void hideStaff(Staff staff);
+  
+  void showStaff(Staff staff);
 
-  void delete(int id);
-
-  Staff findOne(int id);
+  Staff findBystaffCode(String staffCode);
 }

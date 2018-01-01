@@ -9,6 +9,7 @@ public class AdminUserConstant {
     public static final String USER_VALIDATION = "Email not found or wrong syntax";
     public static final String SET_LIST_OK = "setListOk";
     public static final String STORE_VALIDATION = "Wrong syntax or null some fields";
+    public static final String STAFF_VALIDATION = "Wrong syntax or null some fields";
   }
   
   public class AdminUserAttribute {
@@ -23,6 +24,9 @@ public class AdminUserConstant {
     public static final String USER_VALIDATION = "UserValidation";
     public static final String STORE_FORM = "storeForm";
     public static final String STORE_VALIDATION = "storeValidation";
+    public static final String STAFF_FORM = "staffForm";
+    public static final String STAFF_VALIDATION = "staffValidatation";
+    
   }
   
   public class AdminUserParam {
@@ -41,6 +45,11 @@ public class AdminUserConstant {
     public static final String GET_REMAIN_ROLES = "/getRemainRoles";
     public static final String SAVE_STORE = "/saveStore";
     public static final String CREATE_STORE = "/createStore";
+    public static final String HIDE_STORE = "/hideStore";
+    public static final String SHOW_STORE = "/showStore";
+    public static final String CREATE_STAFF = "/createStaff";
+    public static final String HIDE_STAFF = "/hideStaff";
+    public static final String SHOW_STAFF = "/showStaff";
   }
   
   public class AdminUserReturn {

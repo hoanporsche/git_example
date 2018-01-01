@@ -6,7 +6,6 @@ import ds.repository.StoreRepository;
 import ds.service.StoreService;
 import ds.util.Constant;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,15 +20,19 @@ public class StoreServiceImpl implements StoreService {
   private StoreRepository storeRepository;
 
   @Override
-  public List<Store> findAll() {
-    List<Store> listStore = new ArrayList<>();
+  public List<Store> findAllByStatus() {
     List<Store> listStoreFound = (List<Store>) storeRepository.findAll();
     for (int i = 0; i < listStoreFound.size(); i++) {
-      if (listStoreFound.get(i).isStoreStatus() == true) {
-        listStore.add(listStoreFound.get(i));
+      if (listStoreFound.get(i).isStoreStatus() == false) {
+        listStoreFound.remove(listStoreFound.get(i));
       }
     }
-    return listStore;
+    return listStoreFound;
+  }
+  
+  @Override
+  public Iterable<Store> findAll() {
+    return storeRepository.findAll();
   }
 
   @Override
@@ -56,4 +59,19 @@ public class StoreServiceImpl implements StoreService {
     
     storeRepository.save(store);
   }
+
+  @Override
+  public void hideStore(Store store) {
+    store.setStoreStatus(false);
+    store.setStoreDateUpdated(new Date());
+    storeRepository.save(store);
+  }
+
+  @Override
+  public void showStore(Store store) {
+    store.setStoreStatus(true);
+    store.setStoreDateUpdated(new Date());
+    storeRepository.save(store);
+  }
+
 }

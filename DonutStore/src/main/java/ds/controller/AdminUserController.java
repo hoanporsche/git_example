@@ -1,9 +1,11 @@
 package ds.controller;
 
+import ds.form.StaffForm;
 import ds.form.StoreForm;
 import ds.form.UserForm;
 import ds.message.Response;
 import ds.model.Role;
+import ds.model.Staff;
 import ds.model.Store;
 import ds.model.User;
 import ds.service.RoleService;
@@ -84,12 +86,13 @@ public class AdminUserController {
     listUser = (List<User>) userService.findAll();
     model.addAttribute(AdminUserAttribute.USERS, listUser);
     model.addAttribute(AdminUserAttribute.STAFFS, staffService.findAll());
-    listStore = storeService.findAll();
+    listStore = storeService.findAllByStatus();
     store = new Store();
-    model.addAttribute(AdminUserAttribute.STORES, listStore);
+    model.addAttribute(AdminUserAttribute.STORES, storeService.findAll());
     model.addAttribute(AdminUserAttribute.USER_FORM, new UserForm());
     model.addAttribute(AdminUserAttribute.ROLE, new Role());
     model.addAttribute(AdminUserAttribute.STORE_FORM, new StoreForm());
+    model.addAttribute(AdminUserAttribute.STAFF_FORM, new StaffForm());
     sizeOfCurrentRole = 1;
     return AdminUserReturn.ADMIN_USER;
   }
@@ -112,6 +115,46 @@ public class AdminUserController {
       return AdminUserReturn.REDIRECT_ADMIN_USER;
     }
     storeService.save(storeForm);
+    return AdminUserReturn.REDIRECT_ADMIN_USER;
+  }
+  
+  /** .
+   * @description: Hide store.
+   * @author: VDHoan
+   * @date_created: Dec 28, 2017
+   * @param storeCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUserUrl.HIDE_STORE)
+  public String hideStore(@RequestParam String storeCode, RedirectAttributes redirect) {
+    Store store = storeService.findBystoreCode(storeCode);
+    if (store == null) {
+      redirect.addFlashAttribute(AdminUserAttribute.STORE_VALIDATION, 
+          AdminUserMessage.STORE_VALIDATION);
+      return AdminUserReturn.REDIRECT_ADMIN_USER;
+    }
+    storeService.hideStore(store);
+    return AdminUserReturn.REDIRECT_ADMIN_USER;
+  }
+  
+  /** .
+   * @description: Show Store.
+   * @author: VDHoan
+   * @date_created: Dec 28, 2017
+   * @param storeCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUserUrl.SHOW_STORE)
+  public String showStore(@RequestParam String storeCode, RedirectAttributes redirect) {
+    Store store = storeService.findBystoreCode(storeCode);
+    if (store == null) {
+      redirect.addFlashAttribute(AdminUserAttribute.STORE_VALIDATION, 
+          AdminUserMessage.STORE_VALIDATION);
+      return AdminUserReturn.REDIRECT_ADMIN_USER;
+    }
+    storeService.showStore(store);
     return AdminUserReturn.REDIRECT_ADMIN_USER;
   }
   
@@ -264,5 +307,68 @@ public class AdminUserController {
       return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC));
     }
     return new Response(AdminUserMessage.SET_LIST_OK);
+  }
+  
+  /** .
+   * @description: create new Staff or edit old Staff 
+   * @author: VDHoan
+   * @date_created: Jan 1, 2018
+   * @param staffForm .
+   * @param result .
+   * @param redirect .
+   * @return
+   */
+  @PostMapping(AdminUserUrl.CREATE_STAFF)
+  public String createStaff(@Valid @ModelAttribute() StaffForm staffForm, BindingResult result,
+      RedirectAttributes redirect) {
+    if (result.hasErrors()) {
+      redirect.addFlashAttribute(AdminUserAttribute.STAFF_VALIDATION, 
+          AdminUserMessage.STAFF_VALIDATION);
+      return AdminUserReturn.REDIRECT_ADMIN_USER;
+    }
+    staffService.save(staffForm);
+    return AdminUserReturn.REDIRECT_ADMIN_USER;
+  }
+  
+  /** .
+   * @description: Hide staff. 
+   * @author: VDHoan
+   * @date_created: Jan 1, 2018
+   * @param staffCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUserUrl.HIDE_STAFF)
+  public String hideStaff(@RequestParam("staffCode") String staffCode, 
+      RedirectAttributes redirect) {
+    Staff staff = staffService.findBystaffCode(staffCode);
+    if (staff == null) {
+      redirect.addFlashAttribute(AdminUserAttribute.STAFF_VALIDATION, 
+          AdminUserMessage.STAFF_VALIDATION);
+      return AdminUserReturn.REDIRECT_ADMIN_USER;
+    }
+    staffService.hideStaff(staff);
+    return AdminUserReturn.REDIRECT_ADMIN_USER;
+  }
+  
+  /** .
+   * @description: Show staff.
+   * @author: VDHoan
+   * @date_created: Jan 1, 2018
+   * @param staffCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUserUrl.SHOW_STAFF)
+  public String showStaff(@RequestParam("staffCode") String staffCode, 
+      RedirectAttributes redirect) {
+    Staff staff = staffService.findBystaffCode(staffCode);
+    if (staff == null) {
+      redirect.addFlashAttribute(AdminUserAttribute.STAFF_VALIDATION, 
+          AdminUserMessage.STAFF_VALIDATION);
+      return AdminUserReturn.REDIRECT_ADMIN_USER;
+    }
+    staffService.showStaff(staff);
+    return AdminUserReturn.REDIRECT_ADMIN_USER;
   }
 }

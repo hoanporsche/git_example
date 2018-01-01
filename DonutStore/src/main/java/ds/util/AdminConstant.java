@@ -11,8 +11,10 @@ public class AdminConstant {
     public static final String DELETE_ALL_MATERIALS = "/deleteAllMaterials";
     public static final String CREATE_ITEM = "/createItem";
     public static final String CREATE_MATERIAL = "/createMaterial";
-    public static final String DELETE_ITEM = "/deleteItem";
-    public static final String DELETE_MATERIAL = "/deleteMaterial";
+    public static final String HIDE_ITEM = "/hideItem";
+    public static final String SHOW_ITEM = "/showItem";
+    public static final String HIDE_MATERIAL = "/hideMaterial";
+    public static final String SHOW_MATERIAL = "/showMaterial";
     public static final String SET_OLD_MATERIAL = "/setOldMaterial";
   }
   

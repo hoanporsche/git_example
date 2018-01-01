@@ -7,9 +7,15 @@ import java.util.List;
 
 public interface StoreService {
 
-  List<Store> findAll();
+  List<Store> findAllByStatus();
+  
+  Iterable<Store> findAll();
   
   Store findBystoreCode(String storeCode);
   
   void save(StoreForm storeForm);
+  
+  void hideStore(Store store);
+  
+  void showStore(Store store);
 }

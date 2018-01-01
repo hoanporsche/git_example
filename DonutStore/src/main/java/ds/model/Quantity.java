@@ -27,7 +27,7 @@ public class Quantity implements Serializable {
   private int quantityItemQuantity;
 
   @ManyToOne
-  @JoinColumn(name = "orders_id", nullable = false)
+  @JoinColumn(name = "orders_id", referencedColumnName = "orders_id", nullable = false)
   private Order order;
   
   public String toString() {

@@ -10,9 +10,13 @@ public interface MaterialService {
   
   List<Material> findAllByStatus();
   
+  Material findBymaterialCode(String materialCode);
+  
   void saveMaterial(MaterialForm materialForm);
   
   void hideMaterial(Material material);
+  
+  void showMaterial(Material material);
   
   Material findOneFromList(List<Material> materials, String materialId);
 }

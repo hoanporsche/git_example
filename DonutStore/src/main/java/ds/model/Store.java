@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "store")
@@ -24,12 +25,19 @@ public class Store implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "store_id", nullable = false)
   private int storeId;
+  @Size(max = 10)
   @Column(name = "store_code", nullable = false, unique = true)
   private String storeCode;
+  @Size(max = 255)
   @Column(name = "store_name", nullable = false)
   private String storeName;
+  @Size(max = 255)
+  @Column(name = "store_picture")
+  private String storePicture;
+  @Size(max = 20)
   @Column(name = "store_phone_number", nullable = false)
   private String storePhoneNumber;
+  @Size(max = 255)
   @Column(name = "store_address", nullable = false)
   private String storeAddress;
   @Column(name = "store_date_created")
@@ -139,6 +147,14 @@ public class Store implements Serializable {
 
   public void setStaffs(List<Staff> staffs) {
     this.staffs = staffs;
+  }
+
+  public String getStorePicture() {
+    return storePicture;
+  }
+
+  public void setStorePicture(String storePicture) {
+    this.storePicture = storePicture;
   }
   
 }
