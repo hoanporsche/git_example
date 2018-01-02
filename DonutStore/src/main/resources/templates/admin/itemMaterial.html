@@ -39,7 +39,7 @@
 										<td>
 											<button data-toggle="modal" class="btn-add-edit" data-target="#editItem"
 											th:attr="data-code=${ITEM.itemCode}, data-name=${ITEM.itemName}, data-singleValue=${ITEM.itemSingleValue},
-											data-date=${ITEM.itemDateCreated}, data-materials=${ITEM.materials}" ><span>Sửa</span></button>
+											data-date=${ITEM.itemDateCreated}" ><span>Sửa</span></button>
 											<a th:if="${ITEM.itemStatus == true}" th:href="@{/admin/hideItem(id=${ITEM.itemCode})}"><span>Xóa</span></a>
 											<a th:if="${ITEM.itemStatus == false}" th:href="@{/admin/showItem(id=${ITEM.itemCode})}"><span>Hiện</span></a>
 										</td>
@@ -65,8 +65,6 @@
 									<td>Ngày cập nhật</td>
 									<td>Đơn giá (/kg)</td>
 									<td>Số lượng trong kho (/kg)</td>
-									<td>Tên nhà cung cấp</td>
-									<td>Sđt nhà cung cấp</td>
 									<td>Trạng thái</td>
 									<td>Sửa / Xóa / Hiện</td>
 								</tr>
@@ -79,15 +77,11 @@
 										<td th:text="${MATERIAL.materialDateCreated}"></td>
 										<td th:text="${MATERIAL.materialDateUpdated}"></td>
 										<td th:text="${MATERIAL.materialSingleValue}"></td>
-										<td th:text="${MATERIAL.materialRemain}"></td>
-										<td th:text="${MATERIAL.materialSupplyName}"></td>
-										<td th:text="${MATERIAL.materialSupplyPhone}"></td>
 										<td th:text="${MATERIAL.materialStatus}"></td>
 										<td>
 											<button data-toggle="modal" data-target="#editMaterial"
 											th:attr="data-code=${MATERIAL.materialCode}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
-											data-singlevalue=${MATERIAL.materialSingleValue}, data-remain=${MATERIAL.materialRemain}, 
-											data-supplyname=${MATERIAL.materialSupplyName}, data-supplyphone=${MATERIAL.materialSupplyPhone}"><span>Sửa</span></button>
+											data-singlevalue=${MATERIAL.materialSingleValue}"><span>Sửa</span></button>
 											<a th:if="${MATERIAL.materialStatus == true}" th:href="@{/admin/hideMaterial(materialCode=${MATERIAL.materialCode})}">Xóa</a>
 											<a th:if="${MATERIAL.materialStatus == false}" th:href="@{/admin/showMaterial(materialCode=${MATERIAL.materialCode})}">Hiện</a>
 										</td>
@@ -188,22 +182,6 @@
                              <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
 							<input type="text" id="add-material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
 							
-                             
-							<label><b>Số lượng trong kho (/kg)</b></label>
-                             <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
-							<input type="text" id="add-material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
-							
-                             
-							<label><b>Nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
-							<input type="text" id="add-material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
-							
-                             
-							<label><b>Số điện thoại nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
-							<input type="text" id="add-material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="Sđt nhà cung cấp" />
-							
-                             
 							<button type="submit" id="submit-add-material">Thêm</button>
 						</div>
 					</form>
@@ -234,20 +212,6 @@
                              <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
 							<input type="text" id="material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
 							<br/>
-                             
-							<label><b>Số lượng trong kho (/kg)</b></label>
-                             <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
-							<input type="text" id="material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
-							<br/>
-                             
-							<label><b>Nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
-							<input type="text" id="material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
-							<br/>
-                             
-							<label><b>Số điện thoại nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
-							<input type="text" id="material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="sđt nhà cung cấp" />
                              
 							<button type="submit" id="submit-edit-material">Sửa</button>
 						</div>

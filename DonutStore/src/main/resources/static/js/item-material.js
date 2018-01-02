@@ -8,9 +8,9 @@ $(document).ready(function(){
 	$('#btn-newMaterial').click(function(){
 		$.ajax({
 			type : "get",
-			url : "getListMaterial",
+			url : "getRemainMaterial",
 			success : function(result){
-				if(result.status == "getListMaterial"){				
+				if(result.status == "getRemainMaterial"){				
 					$('#newMaterial').append('<select id="select_material'+ id +'" class="selectpicker"><option value="0">Lựa chọn nguyên liệu</option></select>'
 							+ '<button type="button" class="btn" id="btn-ok'+id+'" onClick="saveMaterial('+id+')"><span class="glyphicon glyphicon-ok"></span></button>'
 							+ '<button type="button" class="btn" id="btn-remove'+id+'" onClick="deleteMaterial('+id+')" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>');
@@ -71,37 +71,14 @@ $(document).ready(function(){
 				required : true,
 				min : 1000,
 				max : 1000000
-			},
-			materialRemain : {
-				required : true,
-				min : 0,
-				max : 100
-			},
-			materialSupplyName : "required",
-			materialSupplyPhone : {
-				required : true,
-				minlength : 10,
-				maxlength : 20
-			},
-		},
+			}
 		messages : {
 			materialName : "Hãy nhập tên nguyên liệu" ,
 			materialSingleValue : {
 				required : "Hãy nhập đơn giá",
 				min : "phải lớn hơn 1.000",
 				max : "phải nhỏ hơn 1.000.000"
-			},
-			materialRemain : {
-				required : "Hãy nhập số lượng trong kho",
-				min : "không được âm",
-				max : "phải nhỏ hơn 100"
-			},
-			materialSupplyName : "Hãy nhập tên nhà cung cấp",
-			materialSupplyPhone : {
-				required : "Hãy nhập số điện thoại nhà cung cấp",
-				minlength : "quá ngắn",
-				maxlength : "quá dài"
-			},
+			}
 		}
 	});	
 	$('#addMaterialForm').validate({
@@ -111,18 +88,7 @@ $(document).ready(function(){
 				required : true,
 				min : 1000,
 				max : 1000000
-			},
-			materialRemain : {
-				required : true,
-				min : 0,
-				max : 100
-			},
-			materialSupplyName : "required",
-			materialSupplyPhone : {
-				required : true,
-				minlength : 10,
-				maxlength : 20
-			},
+			}
 		},
 		messages : {
 			materialName : "Hãy nhập tên nguyên liệu" ,
@@ -130,18 +96,7 @@ $(document).ready(function(){
 				required : "Hãy nhập đơn giá",
 				min : "phải lớn hơn 1.000",
 				max : "phải nhỏ hơn 1.000.000"
-			},
-			materialRemain : {
-				required : "Hãy nhập số lượng trong kho",
-				min : "không được âm",
-				max : "phải nhỏ hơn 100"
-			},
-			materialSupplyName : "Hãy nhập tên nhà cung cấp",
-			materialSupplyPhone : {
-				required : "Hãy nhập số điện thoại nhà cung cấp",
-				minlength : "quá ngắn",
-				maxlength : "quá dài"
-			},
+			}
 		}	
 	});
 	$("#editItem").on("show.bs.modal",function(event){
@@ -150,7 +105,6 @@ $(document).ready(function(){
 		var name = button.data('name');
 		var singleValue = button.data('singlevalue');
 		var date = button.data('date');
-		var materials = button.data('materials');
 		var modal = $(this);
 		
 		$.ajax({
@@ -198,18 +152,12 @@ $("#editMaterial").on("show.bs.modal",function(event){
 	var name = button.data('name');
 	var dateCreated = button.data('datecreated');
 	var singleValue = button.data('singlevalue');
-	var remain = button.data('remain');
-	var supplyName = button.data('supplyname');
-	var supplyPhone = button.data('supplyphone');
 	var modal = $(this);
 	
 	$("#editMaterial").find("#material-code").val(code);
 	$("#editMaterial").find("#material-name").val(name);
 	$("#editMaterial").find("#material-date-created").val(dateCreated);
 	$("#editMaterial").find("#material-singleValue").val(singleValue);
-	$("#editMaterial").find("#material-remain").val(remain);
-	$("#editMaterial").find("#material-supplyName").val(supplyName);
-	$("#editMaterial").find("#material-supplyPhone").val(supplyPhone);	
 });
 
 
@@ -234,7 +182,7 @@ function saveMaterial(id){
 		console.log(materialCode);
 		$.ajax({
 			type : "post",
-			url : "setListMaterialForItem",
+			url : "saveOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -259,7 +207,7 @@ function saveMaterial2(id){
 	if (materialCode != 0){
 		$.ajax({
 			type : "post",
-			url : "setListMaterialForItem",
+			url : "saveOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -284,7 +232,7 @@ function deleteMaterial(id){
 	if (materialCode != 0){
 		$.ajax({
 			type : "post",
-			url : "deleteMaterialInListForItem",
+			url : "deleteOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -308,7 +256,7 @@ function deleteMaterial2(id){
 	if (materialCode != 0){
 		$.ajax({
 			type : "post",
-			url : "deleteMaterialInListForItem",
+			url : "deleteOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -331,9 +279,9 @@ function getListForEdit(id){
 	$('#edit_btn-newMaterial').click(function(){
 		$.ajax({
 			type : "get",
-			url : "getListMaterial",
+			url : "getRemainMaterial",
 			success : function(result){
-				if(result.status == "getListMaterial"){				
+				if(result.status == "getRemainMaterial"){				
 					$('#edit_newMaterial').append('<select id="edit_select_material'+ id +'" class="selectpicker"><option value="0">Lựa chọn nguyên liệu</option></select>'
 							+ '<button type="button" class="btn" id="edit_btn-ok'+id+'" onClick="saveMaterial2('+id+')"><span class="glyphicon glyphicon-ok"></span></button>'
 							+ '<button type="button" class="btn" id="edit_btn-remove'+id+'" onClick="deleteMaterial2('+id+')" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>');

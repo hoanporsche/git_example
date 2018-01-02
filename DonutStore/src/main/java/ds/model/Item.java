@@ -1,5 +1,7 @@
 package ds.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -35,6 +38,10 @@ public class Item implements Serializable {
   @Size(max = 255)
   @Column(name = "item_picture")
   private String itemPicture;
+  @ManyToOne
+  @JoinColumn(name = "category_id", referencedColumnName = "category_id",nullable = false)
+  @JsonIgnore
+  private Category itemCategory;
   @Column(name = "item_date_created", nullable = false)
   private Date itemDateCreated;
   @Column(name = "item_date_updated", nullable = false)
@@ -47,7 +54,14 @@ public class Item implements Serializable {
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"),
       inverseJoinColumns = @JoinColumn(name = "material_id"))
+  @JsonIgnore
   private Set<Material> materials;
+  
+  @ManyToMany
+  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "item_id"),
+      inverseJoinColumns = @JoinColumn(name = "store_id"))
+  @JsonIgnore
+  private Set<Store> stores;
 
   public String toString() {
     return this.itemName;

@@ -48,12 +48,12 @@ public class AdminController {
   private MaterialService materialService;
 
   //List material for show on screen when add to item
-  private List<Material> listMaterial;
+  private List<Material> remainMaterial;
   //List Material will use when we call ItemService to create/update item 
-  private Set<Material> materials = new HashSet<>();
+  private Set<Material> currentMaterials = new HashSet<>();
   //will use to create/update material
-  private List<Material> listmaterials;
-  private int listMaterialLength;
+  private List<Material> materialsFound;
+  private int sizeOfCurrentMaterials;
   private List<Item> listItem;
 
   @GetMapping("/income")
@@ -71,10 +71,10 @@ public class AdminController {
    */
   @GetMapping(AdminUrl.ITEM_MATERIAL)
   public String adminItemMaterial(Model model) {
-    listMaterial = materialService.findAllByStatus();
-    listmaterials = new ArrayList<>(listMaterial);
-    materials.clear();
-    listMaterialLength = 1;
+    remainMaterial = materialService.findAllByStatus();
+    materialsFound = new ArrayList<>(remainMaterial);
+    currentMaterials.clear();
+    sizeOfCurrentMaterials = 1;
     model.addAttribute(ConAttr.MATERIALS, materialService.findAll());
     listItem = itemService.findAllByStatus();
     model.addAttribute(ConAttr.ITEMS, itemService.findAll());
@@ -91,16 +91,16 @@ public class AdminController {
    * @param materialCode : will be receipt by AJAX.
    * @return Response : with message 'setListOk'.
    */
-  @PostMapping(AdminUrl.SET_LIST_MATERIAL_FOR_ITEM)
+  @PostMapping(AdminUrl.SAVE_ONE_MATERIAL)
   @ResponseBody
   public Response setListMaterialForItem(@RequestBody String materialCode) {
-    Material m = materialService.findOneFromList(listMaterial, 
+    Material m = materialService.findOneFromList(remainMaterial, 
         materialCode.substring(1, materialCode.length() - 1));
-    if (m == null || materials.contains(m)) {
+    if (m == null || currentMaterials.contains(m)) {
       return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
     }
-    materials.add(m);
-    listMaterial.removeAll(materials);
+    currentMaterials.add(m);
+    remainMaterial.removeAll(currentMaterials);
     return new Response(ResponseMess.SET_LIST_OK);
   }
   
@@ -112,15 +112,15 @@ public class AdminController {
    * @date_created: Dec 16, 2017
    * @return Response : with message 'getListMaterial' and a list material.
    */
-  @GetMapping(AdminUrl.GET_LIST_MATERIAL)
+  @GetMapping(AdminUrl.GET_REMAIN_MATERIAL)
   @ResponseBody
   public Response getListMaterial() {
     //If material is not chosen , we'll not response list
-    if (materials.size() < listMaterialLength || listMaterial.isEmpty()) {
+    if (currentMaterials.size() < sizeOfCurrentMaterials || remainMaterial.isEmpty()) {
       return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
     }
-    listMaterialLength++;
-    return new Response(ResponseMess.GET_LIST_MATERIAL, listMaterial);
+    sizeOfCurrentMaterials++;
+    return new Response(ResponseMess.GET_REMAIN_MATERIAL, remainMaterial);
   }
 
   /**.
@@ -138,12 +138,12 @@ public class AdminController {
         itemCode.substring(1, itemCode.length() - 1)) == null) {
       return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
     }
-    materials = new HashSet<>(itemService.findOneFromList(listItem, itemCode.substring(1,
+    currentMaterials = new HashSet<>(itemService.findOneFromList(listItem, itemCode.substring(1,
         itemCode.length() - 1)).getMaterials());
-    listMaterial = new ArrayList<>(listmaterials);
-    listMaterial.removeAll(materials);
-    listMaterialLength = materials.size() + 1;
-    return new Response(ResponseMess.SET_LIST_OK,materials,listMaterial);
+    remainMaterial = new ArrayList<>(materialsFound);
+    remainMaterial.removeAll(currentMaterials);
+    sizeOfCurrentMaterials = currentMaterials.size() + 1;
+    return new Response(ResponseMess.SET_LIST_OK,currentMaterials,remainMaterial);
   }
   
   /**.
@@ -153,16 +153,17 @@ public class AdminController {
    * @param materialCode : will receipt by AJAX .
    * @return Response : with message 'setListOk'.
    */
-  @PostMapping(AdminUrl.DELETE_MATERIAL_IN_LIST_FOR_ITEM)
+  @PostMapping(AdminUrl.DELETE_ONE_MATERIAL)
   @ResponseBody
   public Response deleteMaterialInListForItem(@RequestBody String materialCode) {
-    Material material = materialService.findOneFromList(listmaterials, 
+    Material material = materialService.findOneFromList(materialsFound, 
         materialCode.substring(1, materialCode.length() - 1));
-    if (material == null || !materials.contains(material)) {
+    if (material == null || !currentMaterials.contains(material)) {
       return new Response(RandomStringUtils.random(10, Constant.RANDOM_STRING));
     }
-    materials.remove(material);
-    listMaterialLength--;
+    currentMaterials.remove(material);
+    remainMaterial.add(material);
+    sizeOfCurrentMaterials--;
     return new Response(ResponseMess.SET_LIST_OK);
   }
 
@@ -174,9 +175,9 @@ public class AdminController {
   @GetMapping(AdminUrl.DELETE_ALL_MATERIALS)
   @ResponseBody
   public void deleteAllMaterialsInList() {
-    listMaterial = materialService.findAllByStatus();
-    materials.clear();
-    listMaterialLength = 1;
+    remainMaterial = materialService.findAllByStatus();
+    currentMaterials.clear();
+    sizeOfCurrentMaterials = 1;
   }
   
   /**.
@@ -194,7 +195,7 @@ public class AdminController {
     if (bindingResult.hasErrors()) {
       return AdminReturn.ADMIN_ITEMMATERIAL;
     }
-    if (materials.isEmpty()) {
+    if (currentMaterials.isEmpty()) {
       redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_ITEM, 
           AdminMessage.CHOOSE_MATERIALS_FIRST);
       return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
@@ -202,7 +203,7 @@ public class AdminController {
     if (itemForm.getItemCode() != null) {
       itemForm.setItemId(itemService.findOneFromList(listItem, itemForm.getItemCode()).getItemId());
     }
-    itemForm.setMaterials(materials);
+    itemForm.setMaterials(currentMaterials);
     itemService.saveItem(itemForm);
     return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
@@ -223,7 +224,7 @@ public class AdminController {
       return AdminReturn.ADMIN_ITEMMATERIAL;
     }
     if (!StringUtils.isEmpty(materialForm.getMaterialCode())) {
-      Material m = materialService.findOneFromList(listmaterials, materialForm.getMaterialCode());
+      Material m = materialService.findOneFromList(materialsFound, materialForm.getMaterialCode());
       if (m == null) {
         redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_MATERIAL, 
             AdminMessage.DONT_FIX_MATERIALCODE);

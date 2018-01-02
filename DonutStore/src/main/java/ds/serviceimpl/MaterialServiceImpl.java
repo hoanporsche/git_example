@@ -58,9 +58,6 @@ public class MaterialServiceImpl implements MaterialService {
     material.setMaterialName(materialForm.getMaterialName());
     material.setMaterialDateUpdated(new Date());
     material.setMaterialSingleValue(new BigDecimal(materialForm.getMaterialSingleValue()));
-    material.setMaterialRemain(materialForm.getMaterialRemain().toString());
-    material.setMaterialSupplyName(materialForm.getMaterialSupplyName());
-    material.setMaterialSupplyPhone(materialForm.getMaterialSupplyPhone());
     material.setMaterialStatus(true);
     materialRepository.save(material);
   }

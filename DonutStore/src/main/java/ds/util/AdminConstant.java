@@ -4,10 +4,10 @@ public class AdminConstant {
   public class AdminUrl {
     public static final String MAIN = "/admin";
     public static final String ITEM_MATERIAL = "item-material";
-    public static final String SET_LIST_MATERIAL_FOR_ITEM = "/setListMaterialForItem";
-    public static final String GET_LIST_MATERIAL = "/getListMaterial";
+    public static final String SAVE_ONE_MATERIAL = "/saveOneMaterial";
+    public static final String GET_REMAIN_MATERIAL = "/getRemainMaterial";
     public static final String SET_OLD_LIST_MATERIAL = "/setOldListMaterial";
-    public static final String DELETE_MATERIAL_IN_LIST_FOR_ITEM = "/deleteMaterialInListForItem";
+    public static final String DELETE_ONE_MATERIAL = "/deleteOneMaterial";
     public static final String DELETE_ALL_MATERIALS = "/deleteAllMaterials";
     public static final String CREATE_ITEM = "/createItem";
     public static final String CREATE_MATERIAL = "/createMaterial";

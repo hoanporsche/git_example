@@ -54,6 +54,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
       admin.setUserName("hoan");
       admin.setUserStatus(true);
       admin.setUserPhoneNumber("094 345 1794");
+      admin.setUserAddress("Núi trúc, Giảng Võ");
       Store store = new Store("Giảng Võ", new Date(), new Date(), true);
       store.setStoreAddress("113 D6 Trần Huy Liệu");
       store.setStorePhoneNumber("094 345 1794");
