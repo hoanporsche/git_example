@@ -9,7 +9,7 @@ public class Message {
   }
   
   public class ResponseMess {
-    public static final String GET_LIST_MATERIAL = "getListMaterial";
+    public static final String GET_REMAIN_MATERIAL = "getRemainMaterial";
     public static final String SET_LIST_OK = "setListOk";
     public static final String CHECK_OK = "checkOk";
   }

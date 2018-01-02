@@ -8,9 +8,9 @@ $(document).ready(function(){
 	$('#btn-newMaterial').click(function(){
 		$.ajax({
 			type : "get",
-			url : "getListMaterial",
+			url : "getRemainMaterial",
 			success : function(result){
-				if(result.status == "getListMaterial"){				
+				if(result.status == "getRemainMaterial"){				
 					$('#newMaterial').append('<select id="select_material'+ id +'" class="selectpicker"><option value="0">Lựa chọn nguyên liệu</option></select>'
 							+ '<button type="button" class="btn" id="btn-ok'+id+'" onClick="saveMaterial('+id+')"><span class="glyphicon glyphicon-ok"></span></button>'
 							+ '<button type="button" class="btn" id="btn-remove'+id+'" onClick="deleteMaterial('+id+')" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>');
@@ -234,7 +234,7 @@ function saveMaterial(id){
 		console.log(materialCode);
 		$.ajax({
 			type : "post",
-			url : "setListMaterialForItem",
+			url : "saveOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -259,7 +259,7 @@ function saveMaterial2(id){
 	if (materialCode != 0){
 		$.ajax({
 			type : "post",
-			url : "setListMaterialForItem",
+			url : "saveOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -284,7 +284,7 @@ function deleteMaterial(id){
 	if (materialCode != 0){
 		$.ajax({
 			type : "post",
-			url : "deleteMaterialInListForItem",
+			url : "deleteOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -308,7 +308,7 @@ function deleteMaterial2(id){
 	if (materialCode != 0){
 		$.ajax({
 			type : "post",
-			url : "deleteMaterialInListForItem",
+			url : "deleteOneMaterial",
 			contentType : "application/json",
 			dataType : 'json',
 			data : JSON.stringify(materialCode),
@@ -331,9 +331,9 @@ function getListForEdit(id){
 	$('#edit_btn-newMaterial').click(function(){
 		$.ajax({
 			type : "get",
-			url : "getListMaterial",
+			url : "getRemainMaterial",
 			success : function(result){
-				if(result.status == "getListMaterial"){				
+				if(result.status == "getRemainMaterial"){				
 					$('#edit_newMaterial').append('<select id="edit_select_material'+ id +'" class="selectpicker"><option value="0">Lựa chọn nguyên liệu</option></select>'
 							+ '<button type="button" class="btn" id="edit_btn-ok'+id+'" onClick="saveMaterial2('+id+')"><span class="glyphicon glyphicon-ok"></span></button>'
 							+ '<button type="button" class="btn" id="edit_btn-remove'+id+'" onClick="deleteMaterial2('+id+')" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>');

@@ -153,8 +153,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping` (
   `timekeeping_in` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_out` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_status` tinyint NOT NULL,
-  `id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`timekeeping_id`),
+  PRIMARY KEY (`id`),
   FOREIGN KEY (`staff_id`) REFERENCES `donutstore`.`staff`(`staff_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

@@ -81,7 +81,7 @@ public class AdminUserController {
   public String adminUser(Model model, Authentication auth) {
     currentRoles.clear();
     remainRoles = roleSerivce.findAll();
-    rolesFound = roleSerivce.findAll();
+    rolesFound = new ArrayList<>(remainRoles);
     model.addAttribute(AdminUserAttribute.ROLES, rolesFound);
     listUser = (List<User>) userService.findAll();
     model.addAttribute(AdminUserAttribute.USERS, listUser);
