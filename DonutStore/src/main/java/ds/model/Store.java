@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -53,7 +55,10 @@ public class Store implements Serializable {
   @JsonIgnore
   private List<Staff> staffs;
   
-  @ManyToMany(mappedBy = "stores")
+
+  @ManyToMany
+  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "store_id"),
+      inverseJoinColumns = @JoinColumn(name = "item_id"))
   @JsonIgnore
   private Set<Item> items;
   
@@ -161,6 +166,14 @@ public class Store implements Serializable {
 
   public void setStorePicture(String storePicture) {
     this.storePicture = storePicture;
+  }
+
+  public Set<Item> getItems() {
+    return items;
+  }
+
+  public void setItems(Set<Item> items) {
+    this.items = items;
   }
   
 }

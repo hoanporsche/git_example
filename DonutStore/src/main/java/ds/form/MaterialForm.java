@@ -21,6 +21,9 @@ public class MaterialForm {
   @Min(1000)
   @Max(1000000)
   private Integer materialSingleValue;
+  
+  @NotEmpty
+  private String supplyCode;
 
   public Integer getMaterialId() {
     return materialId;
@@ -60,6 +63,14 @@ public class MaterialForm {
 
   public void setMaterialDateCreated(String materialDateCreated) {
     this.materialDateCreated = materialDateCreated;
+  }
+
+  public String getSupplyCode() {
+    return supplyCode;
+  }
+
+  public void setSupplyCode(String supplyCode) {
+    this.supplyCode = supplyCode;
   }
 
 }

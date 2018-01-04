@@ -82,6 +82,14 @@ public class Material implements Serializable {
     this.materialPicture = materialPicture;
   }
 
+  public Supply getMaterialSupply() {
+    return materialSupply;
+  }
+
+  public void setMaterialSupply(Supply materialSupply) {
+    this.materialSupply = materialSupply;
+  }
+
   public Date getMaterialDateCreated() {
     return materialDateCreated;
   }

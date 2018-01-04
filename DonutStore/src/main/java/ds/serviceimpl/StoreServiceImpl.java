@@ -56,7 +56,7 @@ public class StoreServiceImpl implements StoreService {
     store.setStorePhoneNumber(storeForm.getStorePhoneNumber());
     store.setStoreAddress(storeForm.getStoreAddress());
     store.setStoreStatus(true);
-    
+    store.setItems(storeForm.getItems());
     storeRepository.save(store);
   }
 
@@ -72,6 +72,16 @@ public class StoreServiceImpl implements StoreService {
     store.setStoreStatus(true);
     store.setStoreDateUpdated(new Date());
     storeRepository.save(store);
+  }
+
+  @Override
+  public Store findOneInList(List<Store> listStore, String storeCode) {
+    for (int i = 0; i < listStore.size(); i++) {
+      if (storeCode.equals(listStore.get(i).getStoreCode())) {
+        return listStore.get(i);
+      }
+    }
+    return null;
   }
 
 }

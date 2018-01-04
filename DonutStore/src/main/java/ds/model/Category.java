@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "category")
 public class Category implements Serializable {
@@ -28,7 +30,8 @@ public class Category implements Serializable {
   @Size(max = 10)
   @Column(name = "category_code", nullable = false)
   private String categoryCode;
-  @Size(max = 255)
+  @NotEmpty
+  @Size(min = 10,max = 255)
   @Column(name = "category_name", nullable = false)
   private String categoryName;
   @Column(name = "category_date_created", nullable = false)

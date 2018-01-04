@@ -72,6 +72,7 @@ $(document).ready(function(){
 				min : 1000,
 				max : 1000000
 			}
+		},
 		messages : {
 			materialName : "Hãy nhập tên nguyên liệu" ,
 			materialSingleValue : {
@@ -299,3 +300,125 @@ function getListForEdit(id){
 		});
 	});
 }
+
+$(document).ready(function(){
+	$('#addCategoryForm').validate({
+		rules : {
+			categoryName : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}
+		},
+		messages : {
+			categoryName : {
+				required : "Hãy nhập tên nhãn",
+				maxlength : "Qúa dài",
+				minlength : "Qúa ngắn"
+			}
+		}
+	});
+	$('#editCategoryForm').validate({
+		rules : {
+			categoryName : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}
+		},
+		messages : {
+			categoryName : {
+				required : "Hãy nhập tên nhãn",
+				maxlength : "Qúa dài",
+				minlength : "Qúa ngắn"
+			}
+		}
+	});
+	$('#addSupplyForm').validate({
+		rules : {
+			supplyName : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}, supplyPhone : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}, supplyAddress : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}
+		},
+		messages : {
+			supplyName : {
+				required : "Yêu cầu nhập",
+				maxlength : "QUá dài",
+				minlength : "QUá ngắn"
+			}, supplyPhone : {
+				required : "Yêu cầu nhập",
+				maxlength : "QUá dài",
+				minlength : "QUá ngắn"
+			}, supplyAddress : {
+				required : "Yêu cầu nhập",
+				maxlength : "QUá dài",
+				minlength : "QUá ngắn"
+			}
+		}
+	});
+	$('#editSupplyForm').validate({
+		rules : {
+			supplyName : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}, supplyPhone : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}, supplyAddress : {
+				required : true,
+				maxlength : 255,
+				minlength : 10
+			}
+		},
+		messages : {
+			supplyName : {
+				required : "Yêu cầu nhập",
+				maxlength : "QUá dài",
+				minlength : "QUá ngắn"
+			}, supplyPhone : {
+				required : "Yêu cầu nhập",
+				maxlength : "QUá dài",
+				minlength : "QUá ngắn"
+			}, supplyAddress : {
+				required : "Yêu cầu nhập",
+				maxlength : "QUá dài",
+				minlength : "QUá ngắn"
+			}
+		}
+	});
+	
+	$('#editCategory').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget);
+		var code = button.data('code');
+		var name = button.data('name');
+		
+		$('#editCategory').find('#category_code').val(code);
+		$('#editCategory').find('#category_name').val(name);
+	})
+	
+	$('#editSupply').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget);
+		
+		var code = button.data('code');
+		var name = button.data('name');
+		var phone = button.data('phone');
+		var address = button.data('address');
+		
+		$('#editSupply').find('#supply_code').val(code);
+		$('#editSupply').find('#supply_name').val(name);
+		$('#editSupply').find('#supply_phone').val(phone);
+		$('#editSupply').find('#supply_address').val(address);
+	})
+});

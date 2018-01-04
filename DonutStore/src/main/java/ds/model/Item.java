@@ -57,9 +57,7 @@ public class Item implements Serializable {
   @JsonIgnore
   private Set<Material> materials;
   
-  @ManyToMany
-  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "item_id"),
-      inverseJoinColumns = @JoinColumn(name = "store_id"))
+  @ManyToMany(mappedBy = "items")
   @JsonIgnore
   private Set<Store> stores;
 
@@ -97,6 +95,22 @@ public class Item implements Serializable {
 
   public void setItemPicture(String itemPicture) {
     this.itemPicture = itemPicture;
+  }
+
+  public Category getItemCategory() {
+    return itemCategory;
+  }
+
+  public void setItemCategory(Category itemCategory) {
+    this.itemCategory = itemCategory;
+  }
+
+  public Set<Store> getStores() {
+    return stores;
+  }
+
+  public void setStores(Set<Store> stores) {
+    this.stores = stores;
   }
 
   public Date getItemDateCreated() {

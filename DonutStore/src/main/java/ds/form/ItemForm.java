@@ -26,6 +26,9 @@ public class ItemForm {
   private Integer itemSingleValue;
 
   private Set<Material> materials;
+  
+  @NotEmpty
+  private String categoryCode;
 
   public Integer getItemId() {
     return itemId;
@@ -73,6 +76,14 @@ public class ItemForm {
 
   public void setMaterials(Set<Material> materials) {
     this.materials = materials;
+  }
+
+  public String getCategoryCode() {
+    return categoryCode;
+  }
+
+  public void setCategoryCode(String categoryCode) {
+    this.categoryCode = categoryCode;
   }
 
 }

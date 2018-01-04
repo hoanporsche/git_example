@@ -2,6 +2,7 @@ package ds.serviceimpl;
 
 import ds.form.UserForm;
 import ds.model.User;
+import ds.repository.StoreRepository;
 import ds.repository.UserRepository;
 import ds.service.UserService;
 import ds.util.AdminUserConstant.AdminUserMessage;
@@ -21,7 +22,8 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserRepository userRepository;
-  
+  @Autowired
+  private StoreRepository storeRepository;
   @Autowired
   private PasswordEncoder passwordEncoder;
 
@@ -66,7 +68,7 @@ public class UserServiceImpl implements UserService {
       user = userRepository.findByuserEmail(userForm.getUserEmail());
       user.setRoles(userForm.getRoles());
       user.setUserDateUpdated(new Date());
-      user.setUserStore(userForm.getStore());
+      user.setUserStore(storeRepository.findBystoreCode(userForm.getStoreCode()));
     }
     userRepository.save(user);
   }

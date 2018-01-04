@@ -2,6 +2,7 @@ package ds.serviceimpl;
 
 import ds.form.ItemForm;
 import ds.model.Item;
+import ds.repository.CategoryRepository;
 import ds.repository.ItemRepository;
 import ds.service.ItemService;
 import ds.util.Constant;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class ItemServiceImpl implements ItemService {
   @Autowired
   private ItemRepository itemRepository;
+  @Autowired
+  private CategoryRepository categoryRepository;
 
   @Override
   public List<Item> findAllByStatus() {
@@ -36,7 +39,7 @@ public class ItemServiceImpl implements ItemService {
   public void saveItem(ItemForm itemForm) {
     Item item = new Item();
     if (itemForm.getItemCode() == null) {
-      item.setItemCode(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+      item.setItemCode(RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC));
       item.setItemDateCreated(new Date());
     } else {
       item.setItemId(itemForm.getItemId());
@@ -48,6 +51,7 @@ public class ItemServiceImpl implements ItemService {
         e.printStackTrace();
       }
     }
+    item.setItemCategory(categoryRepository.findBycategoryCode(itemForm.getCategoryCode()));
     item.setItemName(itemForm.getItemName());
     item.setItemDateUpdated(new Date());
     item.setItemSingleValue(new BigDecimal(itemForm.getItemSingleValue()));

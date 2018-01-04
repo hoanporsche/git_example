@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS `donutstore` DEFAULT CHARACTER SET utf8 ;
 USE `donutstore` ;
 
 CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
-  `category_id` INT(11) NOT NULL,
+  `category_id` INT(11) NOT NULL AUTO_INCREMENT,
   `category_code` NVARCHAR(10) NOT NULL,
   `category_name` NVARCHAR(255) NOT NULL,
   `category_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -233,13 +233,4 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item_store` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `donutstore`.`supply` (
-  `supply_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `supply_name` NVARCHAR(255) NOT NULL,
-  `supply_phone` NVARCHAR(20) NOT NULL,
-  `supply_address` NVARCHAR(255) NOT NULL,
-  `supply_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `supply_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `supply_status` BIT NOT NULL,
-  PRIMARY KEY (`supply_id`)
-)
+

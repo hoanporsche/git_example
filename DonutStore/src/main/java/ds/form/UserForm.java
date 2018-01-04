@@ -1,7 +1,6 @@
 package ds.form;
 
 import ds.model.Role;
-import ds.model.Store;
 
 import java.util.Set;
 
@@ -18,7 +17,7 @@ public class UserForm {
   private String userPhoneNumber;
   private boolean userStatus;
   private Set<Role> roles;
-  private Store store;
+  private String storeCode;
 
   public String getUserName() {
     return userName;
@@ -68,12 +67,11 @@ public class UserForm {
     this.roles = roles;
   }
 
-  public Store getStore() {
-    return store;
+  public String getStoreCode() {
+    return storeCode;
   }
 
-  public void setStore(Store store) {
-    this.store = store;
+  public void setStoreCode(String storeCode) {
+    this.storeCode = storeCode;
   }
-
 }

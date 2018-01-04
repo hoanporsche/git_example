@@ -23,7 +23,7 @@ public class RoleServiceImpl implements RoleService {
 
   @Override
   public void save(Role role) {
-    role.setRoleCode(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+    role.setRoleCode(RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC));
     roleRepository.save(role);
   }
 

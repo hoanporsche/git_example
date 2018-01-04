@@ -18,4 +18,6 @@ public interface StoreService {
   void hideStore(Store store);
   
   void showStore(Store store);
+  
+  Store findOneInList(List<Store> listStore, String storeCode);
 }
