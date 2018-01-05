@@ -7,7 +7,7 @@
 	<nav th:replace="admin :: header('item-material')"></nav>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<button class="btn btn-success btn-add-edit" data-toggle="modal" data-target="#addItem">Thêm mặt hàng</button>
 				<h3 th:if="${notFoundItem}" th:text="${notFoundItem}"></h3>
 				<div class="panel panel-success">
@@ -17,12 +17,14 @@
 							<thead>
 								<tr>
 									<td>STT</td>
+									<td>Nhãn(Category)</td>
 									<td>Tên mặt hàng</td>
+									<td>Thuộc cửa hàng</td>
 									<td>Ngày tạo</td>
 									<td>Ngày sửa</td>
 									<td>Đơn giá (/chiếc)</td>
-									<td>Trạng thái</td>
 									<td>Nguyên liệu</td>
+									<td>Trạng thái</td>
 									<td>Sửa / Xóa</td>
 								</tr>
 							</thead>
@@ -30,16 +32,18 @@
 								<th:block th:unless="${#lists.isEmpty(items)}">
 									<tr th:each="ITEM , iterStat : ${items}">
 										<td th:text="${iterStat.count}"></td>
+										<td th:text="${ITEM.itemCategory}"></td>
 										<td th:text="${ITEM.itemName}"></td>
+										<td th:text="${ITEM.stores}"></td>
 										<td th:text="${ITEM.itemDateCreated}"></td>
 										<td th:text="${ITEM.itemDateUpdated}"></td>
 										<td th:text="${ITEM.itemSingleValue}"></td>
-										<td th:text="${ITEM.itemStatus}"></td>
 										<td th:text="${ITEM.materials}"></td>
+										<td th:text="${ITEM.itemStatus}"></td>
 										<td>
 											<button data-toggle="modal" class="btn-add-edit" data-target="#editItem"
 											th:attr="data-code=${ITEM.itemCode}, data-name=${ITEM.itemName}, data-singleValue=${ITEM.itemSingleValue},
-											data-date=${ITEM.itemDateCreated}, data-materials=${ITEM.materials}" ><span>Sửa</span></button>
+											data-date=${ITEM.itemDateCreated}" ><span>Sửa</span></button>
 											<a th:if="${ITEM.itemStatus == true}" th:href="@{/admin/hideItem(id=${ITEM.itemCode})}"><span>Xóa</span></a>
 											<a th:if="${ITEM.itemStatus == false}" th:href="@{/admin/showItem(id=${ITEM.itemCode})}"><span>Hiện</span></a>
 										</td>
@@ -50,7 +54,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-5">
 				<button class="btn btn-success" data-toggle="modal" data-target="#addMaterial">Thêm nguyên liệu</button>
 				<h3 th:if="${notFoundMaterial}" th:text="${notFoundMaterial}"></h3>
 				<div class="panel panel-default">
@@ -64,9 +68,7 @@
 									<td>Ngày tạo</td>
 									<td>Ngày cập nhật</td>
 									<td>Đơn giá (/kg)</td>
-									<td>Số lượng trong kho (/kg)</td>
-									<td>Tên nhà cung cấp</td>
-									<td>Sđt nhà cung cấp</td>
+									<td>Nhà cung cấp</td>
 									<td>Trạng thái</td>
 									<td>Sửa / Xóa / Hiện</td>
 								</tr>
@@ -79,15 +81,12 @@
 										<td th:text="${MATERIAL.materialDateCreated}"></td>
 										<td th:text="${MATERIAL.materialDateUpdated}"></td>
 										<td th:text="${MATERIAL.materialSingleValue}"></td>
-										<td th:text="${MATERIAL.materialRemain}"></td>
-										<td th:text="${MATERIAL.materialSupplyName}"></td>
-										<td th:text="${MATERIAL.materialSupplyPhone}"></td>
+										<td th:text="${MATERIAL.materialSupply}"></td>
 										<td th:text="${MATERIAL.materialStatus}"></td>
 										<td>
 											<button data-toggle="modal" data-target="#editMaterial"
 											th:attr="data-code=${MATERIAL.materialCode}, data-name=${MATERIAL.materialName}, data-datecreated=${MATERIAL.materialDateCreated},
-											data-singlevalue=${MATERIAL.materialSingleValue}, data-remain=${MATERIAL.materialRemain}, 
-											data-supplyname=${MATERIAL.materialSupplyName}, data-supplyphone=${MATERIAL.materialSupplyPhone}"><span>Sửa</span></button>
+											data-singlevalue=${MATERIAL.materialSingleValue}"><span>Sửa</span></button>
 											<a th:if="${MATERIAL.materialStatus == true}" th:href="@{/admin/hideMaterial(materialCode=${MATERIAL.materialCode})}">Xóa</a>
 											<a th:if="${MATERIAL.materialStatus == false}" th:href="@{/admin/showMaterial(materialCode=${MATERIAL.materialCode})}">Hiện</a>
 										</td>
@@ -121,6 +120,12 @@
                              
                              <label><b>Các nguyên liệu</b></label>
                              <br/>
+                             
+                             <label>Lựa chọn Nhãn</label><br/>
+							<select class="selectpicker" th:unless="${#lists.isEmpty(allAvailableCategories)}" th:field="*{categoryCode}">
+								<option th:each="CATEGORY: ${allAvailableCategories}" th:text="${CATEGORY.categoryName}" th:value="${CATEGORY.categoryCode}"></option>
+							</select><br/>
+							
                              <button type="button" class="btn-success" id="btn-newMaterial"><span class="glyphicon glyphicon-plus-sign">Thêm nguyên liệu</span></button>
                             	<div id="newMaterial" th:unless="${#lists.isEmpty(materials)}">
                             		<select id="select_material1" class="selectpicker">
@@ -156,6 +161,11 @@
                              <label><b>Đơn giá (/chiếc)</b></label>
                              <p th:if="${#fields.hasErrors('itemSingleValue')}" th:errors="*{itemSingleValue}"></p>
 							<input type="text" id="item_single_value" class="form-control" th:field="*{itemSingleValue}" placeholder="Đơn giá" />
+							
+							<label>Lựa chọn Nhãn</label><br/>
+							<select class="selectpicker" th:unless="${#lists.isEmpty(allAvailableCategories)}" th:field="*{categoryCode}">
+								<option th:each="CATEGORY: ${allAvailableCategories}" th:text="${CATEGORY.categoryName}" th:value="${CATEGORY.categoryCode}"></option>
+							</select><br/>
                              
                              <label><b>Các nguyên liệu</b></label>
                              <br/>
@@ -183,27 +193,15 @@
                              <p th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></p>
 							<input type="text" id="add-material-name" class="form-control" th:field="*{materialName}" placeholder="Tên nguyên liệu" />
 							
-                             
 							<label><b>Đơn giá (/kg)</b></label>
                              <p th:if="${#fields.hasErrors('materialSingleValue')}" th:errors="*{materialSingleValue}"></p>
 							<input type="text" id="add-material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
 							
-                             
-							<label><b>Số lượng trong kho (/kg)</b></label>
-                             <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
-							<input type="text" id="add-material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
+							<label>Lựa chọn nhà cung cấp</label><br/>
+							<select class="selectpicker" th:unless="${#lists.isEmpty(allAvailableSupplies)}" th:field="*{supplyCode}">
+								<option th:each="SUPPLY: ${allAvailableSupplies}" th:text="${SUPPLY.supplyName}" th:value="${SUPPLY.supplyCode}"></option>
+							</select><br/>
 							
-                             
-							<label><b>Nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
-							<input type="text" id="add-material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
-							
-                             
-							<label><b>Số điện thoại nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
-							<input type="text" id="add-material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="Sđt nhà cung cấp" />
-							
-                             
 							<button type="submit" id="submit-add-material">Thêm</button>
 						</div>
 					</form>
@@ -235,26 +233,206 @@
 							<input type="text" id="material-singleValue" class="form-control" th:field="*{materialSingleValue}" placeholder="Đơn giá (/kg)" />
 							<br/>
                              
-							<label><b>Số lượng trong kho (/kg)</b></label>
-                             <p th:if="${#fields.hasErrors('materialRemain')}" th:errors="*{materialRemain}"></p>
-							<input type="text" id="material-remain" class="form-control" th:field="*{materialRemain}" placeholder="Số lượng trong kho (/kg)" />
+                             <label>Lựa chọn nhà cung cấp</label><br/>
+							<select class="selectpicker" th:unless="${#lists.isEmpty(allAvailableSupplies)}" th:field="*{supplyCode}">
+								<option th:each="SUPPLY:${allAvailableSupplies}" th:text="${SUPPLY.supplyName}" th:value="${SUPPLY.supplyCode}"></option>
+							</select>
 							<br/>
-                             
-							<label><b>Nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyName')}" th:errors="*{materialSupplyName}"></p>
-							<input type="text" id="material-supplyName" class="form-control" th:field="*{materialSupplyName}" placeholder="Nhà cung cấp" />
-							<br/>
-                             
-							<label><b>Số điện thoại nhà cung cấp</b></label>
-                             <p th:if="${#fields.hasErrors('materialSupplyPhone')}" th:errors="*{materialSupplyPhone}"></p>
-							<input type="text" id="material-supplyPhone" class="form-control" th:field="*{materialSupplyPhone}" placeholder="sđt nhà cung cấp" />
-                             
+							
 							<button type="submit" id="submit-edit-material">Sửa</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>		
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<button class="btn btn-warning" data-toggle="modal" data-target="#addCategory">Thêm nhãn mới (Category)</button>
+				<h3 th:if="${categoryValidation}" th:text="${categoryValidation}"></h3>
+				<div class="panel panel-warning">
+  					<div class="panel-heading">
+  						<h3>Category (Nhãn)</h3>
+  					</div>
+  					<div class="panel-body">
+  						<table class="table table-bordered table-hover">
+  							<thead>
+  								<tr>
+  									<td>STT</td>
+  									<td>Tên nhãn cung cấp</td>
+  									<td>Ngày tạo</td>
+  									<td>Ngày cập nhât</td>
+  									<td>Trạng thái</td>
+  									<td>Sửa / Xoá / Hiện</td>
+  								</tr>
+  							</thead>
+  							<tbody>
+  								<th:block th:unless="${#lists.isEmpty(allCategories)}">
+  									<tr th:each="CATEGORY,iterStat:${allCategories}">
+  										<td th:text="${iterStat.count}"></td>
+  										<td th:text="${CATEGORY.categoryName}"></td>
+  										<td th:text="${CATEGORY.categoryDateCreated}"></td>
+  										<td th:text="${CATEGORY.categoryDateUpdated}"></td>
+  										<td th:text="${CATEGORY.categoryStatus}"></td>
+  										<td>
+  											<button data-toggle="modal" data-target="#editCategory" th:attr="data-code=${CATEGORY.categoryCode}, data-name=${CATEGORY.categoryName}">Sửa</button>
+  											<a th:if="${CATEGORY.categoryStatus == true}" th:href="@{/admin/hideCategory(categoryCode=${CATEGORY.categoryCode})}">Xoá</a>
+  											<a th:if="${CATEGORY.categoryStatus == false}" th:href="@{/admin/showCategory(categoryCode=${CATEGORY.categoryCode})}">Hiện</a>
+  										</td>
+  									</tr>
+  								</th:block>
+  							</tbody>
+  						</table>
+  					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-danger" data-toggle="modal" data-target="#addSupply">Thêm Nhà cung cấp (Supply)</button>
+				<h3 th:if="${supplyValidation}" th:text="${supplyValidation}"></h3>
+				<div class="panel panel-danger ">
+  					<div class="panel-heading">
+  						<h3>Supply (Nhà cung cấp)</h3>
+  					</div>
+  					<div class="panel-body">
+  						<table class="table table-bordered table-hover">
+  							<thead>
+  								<tr>
+  									<td>STT</td>
+  									<td>Tên nhà cung cấp</td>
+  									<td>Số điện thoại</td>
+  									<td>Địa chỉ</td>
+  									<td>Ngày tạo</td>
+  									<td>Ngày cập nhât</td>
+  									<td>Trạng thái</td>
+  									<td>Sửa / Xoá / Hiện</td>
+  								</tr>
+  							</thead>
+  							<tbody>
+  								<th:block th:unless="${#lists.isEmpty(allSupplies)}">
+  									<tr th:each="SUPPLY,iterStat:${allSupplies}">
+  										<td th:text="${iterStat.count}"></td>
+  										<td th:text="${SUPPLY.supplyName}"></td>
+  										<td th:text="${SUPPLY.supplyPhone}"></td>
+  										<td th:text="${SUPPLY.supplyAddress}"></td>
+  										<td th:text="${SUPPLY.supplyDateCreated}"></td>
+  										<td th:text="${SUPPLY.supplyDateUpdated}"></td>
+  										<td th:text="${SUPPLY.supplyStatus}"></td>
+  										<td>
+  											<button data-toggle="modal" data-target="#editSupply" th:attr="data-code=${SUPPLY.supplyCode},
+  											data-name=${SUPPLY.supplyName}, data-phone=${SUPPLY.supplyPhone}, data-address=${SUPPLY.supplyAddress}">Sửa</button>
+  											<a th:if="${SUPPLY.supplyStatus == true}" th:href="@{/admin/hideSupply(supplyCode=${SUPPLY.supplyCode})}">Xoá</a>
+  											<a th:if="${SUPPLY.supplyStatus == false}" th:href="@{/admin/showSupply(supplyCode=${SUPPLY.supplyCode})}">Hiện</a>
+  										</td>
+  									</tr>
+  								</th:block>
+  							</tbody>
+  						</table>
+  					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:if="${category}" id="addCategory" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+			<div class="modal-content">
+      			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h4 class="modal-title">Thêm nhãn</h4>
+      			</div>
+      			<div class="modal-body">
+        				<form id="addCategoryForm" th:action="@{/admin/saveCategory}" th:object="${category}"  method="post">
+        					<label><b>Tên nhãn</b></label>
+                        	<p th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></p>
+						<input type="text" class="form-control" th:field="*{categoryName}" placeholder="Tên nhãn" />
+						<br/>
+						
+        					<button type="submit">Thêm nhãn</button>
+        				</form>
+      			</div>
+    			</div>
+  		</div>
+	</div>
+	<div th:if="${supply}" id="addSupply" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+			<div class="modal-content">
+      			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h4 class="modal-title">Thêm nhà cung cấp</h4>
+      			</div>
+      			<div class="modal-body">
+        				<form id="addSupplyForm" method="post" th:action="@{/admin/saveSupply}" th:object="${supply}">
+        					<label><b>Tên nhà cung cấp</b></label>
+                        	<p th:if="${#fields.hasErrors('supplyName')}" th:errors="*{supplyName}"></p>
+						<input type="text" class="form-control" th:field="*{supplyName}" placeholder="Tên nguyên liệu" />
+						<br/>
+						
+						<label><b>Số điện thoại</b></label>
+                        	<p th:if="${#fields.hasErrors('supplyPhone')}" th:errors="*{supplyPhone}"></p>
+						<input type="text" class="form-control" th:field="*{supplyPhone}" placeholder="Số điện thoại" />
+						<br/>
+						
+						<label><b>Địa chỉ</b></label>
+                        	<p th:if="${#fields.hasErrors('supplyAddress')}" th:errors="*{supplyAddress}"></p>
+						<input type="text" class="form-control" th:field="*{supplyAddress}" placeholder="Địa chỉ" />
+						<br/>
+        					<button type="submit">Thêm nhà cung cấp</button>
+        				</form>
+      			</div>
+    			</div>
+  		</div>
+	</div>
+	<div th:if="${category}" id="editCategory" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+			<div class="modal-content">
+      			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h4 class="modal-title">Thêm nhãn</h4>
+      			</div>
+      			<div class="modal-body">
+        				<form id="editCategoryForm" th:action="@{/admin/saveCategory}" th:object="${category}"  method="post">
+        					<input type="hidden" id="category_code" />
+        					<label><b>Tên nhãn</b></label>
+                        	<p th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></p>
+						<input type="text" id="category_name" class="form-control" th:field="*{categoryName}" placeholder="Tên nhãn" />
+						<br/>
+						
+        					<button type="submit">Thêm nhãn</button>
+        				</form>
+      			</div>
+    			</div>
+  		</div>
+	</div>
+	<div th:if="${supply}" id="editSupply" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+			<div class="modal-content">
+      			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">&times;</button>
+        				<h4 class="modal-title">Thêm nhà cung cấp</h4>
+      			</div>
+      			<div class="modal-body">
+        				<form id="editSupplyForm" method="post" th:action="@{/admin/saveSupply}" th:object="${supply}">
+        					<input type="hidden" id="supply_code" />
+        					<label><b>Tên nhà cung cấp</b></label>
+                        	<p th:if="${#fields.hasErrors('supplyName')}" th:errors="*{supplyName}"></p>
+						<input type="text" id="supply_name" class="form-control" th:field="*{supplyName}" placeholder="Tên nguyên liệu" />
+						<br/>
+						
+						<label><b>Số điện thoại</b></label>
+                        	<p th:if="${#fields.hasErrors('supplyPhone')}" th:errors="*{supplyPhone}"></p>
+						<input type="text" id="supply_phone" class="form-control" th:field="*{supplyPhone}" placeholder="Số điện thoại" />
+						<br/>
+						
+						<label><b>Địa chỉ</b></label>
+                        	<p th:if="${#fields.hasErrors('supplyAddress')}" th:errors="*{supplyAddress}"></p>
+						<input type="text" id="supply_address" class="form-control" th:field="*{supplyAddress}" placeholder="Địa chỉ" />
+						<br/>
+        					<button type="submit">Thêm nhà cung cấp</button>
+        				</form>
+      			</div>
+    			</div>
+  		</div>
 	</div>
 	<footer th:replace="admin :: footer"></footer>
 	<script src="/js/item-material.js" th:src="@{/js/item-material.js}"></script>

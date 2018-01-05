@@ -3,7 +3,6 @@ package ds.form;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,17 +22,8 @@ public class MaterialForm {
   @Max(1000000)
   private Integer materialSingleValue;
   
-  @NotNull
-  @Min(0)
-  @Max(100)
-  private Integer materialRemain;
-  
   @NotEmpty
-  private String materialSupplyName;
-  
-  @NotEmpty
-  @Size(min = 10, max = 20)
-  private String materialSupplyPhone;
+  private String supplyCode;
 
   public Integer getMaterialId() {
     return materialId;
@@ -67,36 +57,20 @@ public class MaterialForm {
     this.materialSingleValue = materialSingleValue;
   }
 
-  public Integer getMaterialRemain() {
-    return materialRemain;
-  }
-
-  public void setMaterialRemain(Integer materialRemain) {
-    this.materialRemain = materialRemain;
-  }
-
-  public String getMaterialSupplyName() {
-    return materialSupplyName;
-  }
-
-  public void setMaterialSupplyName(String materialSupplyName) {
-    this.materialSupplyName = materialSupplyName;
-  }
-
-  public String getMaterialSupplyPhone() {
-    return materialSupplyPhone;
-  }
-
-  public void setMaterialSupplyPhone(String materialSupplyPhone) {
-    this.materialSupplyPhone = materialSupplyPhone;
-  }
-
   public String getMaterialDateCreated() {
     return materialDateCreated;
   }
 
   public void setMaterialDateCreated(String materialDateCreated) {
     this.materialDateCreated = materialDateCreated;
+  }
+
+  public String getSupplyCode() {
+    return supplyCode;
+  }
+
+  public void setSupplyCode(String supplyCode) {
+    this.supplyCode = supplyCode;
   }
 
 }

@@ -1,41 +1,35 @@
 $(document).ready(function(){
 	var id = 1;
+	var idItem = 2;
 	$("#editUser").on("show.bs.modal",function(event){
 		var button = $(event.relatedTarget);
 		var email = button.data('email');
-		console.log(email);
 		var modal = $(this);
 		
 		$.ajax({
 			type : 'post',
-			url : 'getRolesAndStore',
+			url : 'getOldRoles',
 			contentType : 'application/json',
 			dateType : 'json',
 			data : JSON.stringify({userEmail : email}),
 			success : function(result){
-				console.log(result.data3);
 				if(result.status == "setListOk"){
-					$('#edit_roles').html('<button type="button" class="btn-success" id="getRemainRoles"><span class="glyphicon glyphicon-plus-sign">Thêm role mới</span></button><br/>');
+					$('#edit_roles').html('<button type="button" class="btn-success" id="getRemainRoles"><span class="glyphicon glyphicon-plus-sign"></span> Thêm role mới</button><br/>');
 					$.each(result.data, function(i, role){
 						$('#edit_roles').append('<select id="select_role'+id+'" class="selectpicker"></select>'
 								+'<button type="button" class="btn" id="delete_role'+id+'" onClick="deleteRole('+id+')"><span class="glyphicon glyphicon-remove"></span></button>');
 						$('#select_role'+id).append('<option value="'+role.roleCode+'">'+role.roleName+'</option>');
 						id++;
 					});
-					if(result.data3.length != 0){
+					if(result.data2.length != 0){
 						$('#edit_roles').append('<select id="select_role'+id+'" class="selectpicker"></select>'
 								+'<button type="button" class="btn" id="save_role'+id+'" onClick="saveRole('+id+')"><span class="glyphicon glyphicon-ok"></span></button>'
 								+'<button type="button" class="btn" id="delete_role'+id+'" onClick="deleteRole('+id+')" disabled="disabled"><span class="glyphicon glyphicon-remove"></span></button>');
-						$.each(result.data3, function(i, role){
+						$.each(result.data2, function(i, role){
 							$('#select_role'+id).append('<option value="'+role.roleCode+'">'+role.roleName+'</option>');
 						});
 						id++;
 					}
-					$('#edit_store').append('<select id="select_store" class="selectpicker"></select>'
-							+'<button type="button" class="btn" id="save_store" onClick="saveStore()"><span class="glyphicon glyphicon-ok"></span></button>');
-					$.each(result.data2, function(i, store){
-						$('#select_store').append('<option value="'+store.storeCode+'">'+store.storeName+'</>')
-					});
 					getRemainRoles(id);
 				} else {
 					alert("Not found user email");
@@ -48,6 +42,93 @@ $(document).ready(function(){
 			}
 		});
 		$("#editUser").find("#user-email").val(email);
+	});
+	
+	$('#get_remain_items').click(function(){
+		$.ajax({
+			type : 'post',
+			url : 'getRemainItems',
+			success : function(result){
+				if (result.status == "setListOk"){
+					$('#edit_items').append('<select class="selectpicker" id="select_item'+idItem+'"></select>'
+							+'<button type="button" class="btn" id="save_item'+idItem+'" onClick="saveItem('+idItem+')">'
+							+'<span class="glyphicon glyphicon-ok"></span></button>');
+					$.each(result.data, function(i, item){
+						$('#select_item'+idItem).append('<option value="'+item.itemCode+'">'+item.itemName+'</option>');
+					});
+					idItem++;
+				} else {
+					alert("Click ok button first");
+				}
+			}, error : function(e){
+				console.log('error'+e);
+			}
+		});
+	});
+	
+	$('#editStore').on('show.bs.modal', function(event){
+		var button = $(event.relatedTarget);
+		idItem = 2;
+		var code = button.data('code');
+		var name = button.data('name');
+		var phoneNumber = button.data('phonenumber');
+		var address = button.data('address');
+		
+		$.ajax({
+			type : 'post',
+			url : 'getOldItems',
+			contentType : 'application/json',
+			dataType : 'json',
+			data : JSON.stringify(code),
+			success : function(result){
+				if (result.status == "setListOk"){
+					$.each(result.data, function(i, item){
+						$('#edit2_items').append('<select class="selectpicker" id="select2_item'+idItem+'">'
+								+'<option value="'+item.itemCode+'">'+item.itemName+'</option></select>'
+								+'<button type="button" class="btn" id="delete2_item'+idItem+'" onClick="delete2Item('+idItem+')">'
+								+'<span class="glyphicon glyphicon-remove"></span></button>');
+						idItem++;
+					});
+					if (result.data2.length != 0){
+						$('#edit2_items').append('<select class="selectpicker" id="select2_item'+idItem+'"></select>'
+								+'<button type="button" class="btn" id="save2_item'+idItem+'" onClick="save2Item('+idItem+')"><span class="glyphicon glyphicon-ok"></span></button>');
+						$.each(result.data2, function(i, item){
+							$('#select2_item'+idItem).append('<option value="'+item.itemCode+'">'+item.itemName+'</option>');
+						});
+						idItem++;
+					}
+				}
+			}, error : function(e){
+				console.log('error'+e);
+			}
+		});
+		
+		$('#get2_remain_items').click(function(){
+			$.ajax({
+				type : 'post',
+				url : 'getRemainItems',
+				success : function(result){
+					if (result.status == "setListOk"){
+						$('#edit2_items').append('<select class="selectpicker" id="select2_item'+idItem+'"></select>'
+								+'<button type="button" class="btn" id="save2_item'+idItem+'" onClick="save2Item('+idItem+')">'
+								+'<span class="glyphicon glyphicon-ok"></span></button>');
+						$.each(result.data, function(i, item){
+							$('#select2_item'+idItem).append('<option value="'+item.itemCode+'">'+item.itemName+'</option>');
+						});
+						idItem++;
+					} else {
+						alert("Click ok button first");
+					}
+				}, error : function(e){
+					console.log('error'+e);
+				}
+			});
+		});
+		
+		$("#editStore").find("#store_code").val(code);
+		$("#editStore").find("#store_name").val(name);
+		$("#editStore").find("#store_phone_number").val(phoneNumber);
+		$("#editStore").find("#store_address").val(address);
 	});
 	
 	$('#editUserForm').validate({
@@ -249,18 +330,19 @@ function deleteRole(id){
 	});
 }
 
-function saveStore(){
-	var storeCode = $('#select_store').val();
+function saveItem(id){
+	var itemCode = $('#select_item'+id).val();
 	
 	$.ajax({
 		type : 'post',
-		url : 'saveStore',
+		url : 'saveOneItem',
 		contentType : 'application/json',
 		dataType : 'json',
-		data : JSON.stringify(storeCode),
+		data : JSON.stringify(itemCode),
 		success : function(result){
 			if (result.status = "setListOk"){
-				$('#save_store').remove();
+				$('#save_item'+id).remove();
+				$('#edit_items').append('<button type="button" class="btn" id="delete_item'+id+'" onClick="deleteItem('+id+')"><span class="glyphicon glyphicon-remove"></span></button>');
 			}
 		}, error : function(e){
 			console.log("Error" + e);
@@ -268,18 +350,63 @@ function saveStore(){
 	});
 }
 
-$('#editStore').on('show.bs.modal', function(event){
-	var button = $(event.relatedTarget);
-	var code = button.data('code');
-	var name = button.data('name');
-	var phoneNumber = button.data('phonenumber');
-	var address = button.data('address');
+function deleteItem(id){
+	var itemCode = $('#select_item'+id).val();
 	
-	$("#editStore").find("#store_code").val(code);
-	$("#editStore").find("#store_name").val(name);
-	$("#editStore").find("#store_phone_number").val(phoneNumber);
-	$("#editStore").find("#store_address").val(address);
-});
+	$.ajax({
+		type : 'post',
+		url : 'deleteOneItem',
+		contentType : 'application/json',
+		dataType : 'json',
+		data : JSON.stringify(itemCode),
+		success : function(result){
+			if (result.status = "setListOk"){
+				$('#delete_item'+id).remove();
+				$('#select_item'+id).remove();
+			}
+		}, error : function(e){
+			console.log("Error" + e);
+		}
+	});
+}
+
+function save2Item(id){
+	var itemCode = $('#select2_item'+id).val();
+	$.ajax({
+		type : 'post',
+		url : 'saveOneItem',
+		contentType : 'application/json',
+		dataType : 'json',
+		data : JSON.stringify(itemCode),
+		success : function(result){
+			if (result.status = "setListOk"){
+				$('#save2_item'+id).remove();
+				$('#edit2_items').append('<button type="button" class="btn" id="delete2_item'+id+'" onClick="delete2Item('+id+')"><span class="glyphicon glyphicon-remove"></span></button>');
+			}
+		}, error : function(e){
+			console.log("Error" + e);
+		}
+	});
+}
+
+function delete2Item(id){
+	var itemCode = $('#select2_item'+id).val();
+	$.ajax({
+		type : 'post',
+		url : 'deleteOneItem',
+		contentType : 'application/json',
+		dataType : 'json',
+		data : JSON.stringify(itemCode),
+		success : function(result){
+			if (result.status = "setListOk"){
+				$('#delete2_item'+id).remove();
+				$('#select2_item'+id).remove();
+			}
+		}, error : function(e){
+			console.log("Error" + e);
+		}
+	});
+}
 
 $('#editStaff').on('show.bs.modal', function(event){
 	var button = $(event.relatedTarget);

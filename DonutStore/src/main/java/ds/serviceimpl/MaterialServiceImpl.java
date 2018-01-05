@@ -3,6 +3,7 @@ package ds.serviceimpl;
 import ds.form.MaterialForm;
 import ds.model.Material;
 import ds.repository.MaterialRepository;
+import ds.repository.SupplyRepository;
 import ds.service.MaterialService;
 import ds.util.Constant;
 
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class MaterialServiceImpl implements MaterialService {
   @Autowired
   private MaterialRepository materialRepository;
+  @Autowired
+  private SupplyRepository supplyRepository;
 
   @Override
   public List<Material> findAllByStatus() {
@@ -55,12 +58,10 @@ public class MaterialServiceImpl implements MaterialService {
       }
     }
     
+    material.setMaterialSupply(supplyRepository.findBysupplyCode(materialForm.getSupplyCode()));
     material.setMaterialName(materialForm.getMaterialName());
     material.setMaterialDateUpdated(new Date());
     material.setMaterialSingleValue(new BigDecimal(materialForm.getMaterialSingleValue()));
-    material.setMaterialRemain(materialForm.getMaterialRemain().toString());
-    material.setMaterialSupplyName(materialForm.getMaterialSupplyName());
-    material.setMaterialSupplyPhone(materialForm.getMaterialSupplyPhone());
     material.setMaterialStatus(true);
     materialRepository.save(material);
   }

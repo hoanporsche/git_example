@@ -1,5 +1,9 @@
 package ds.form;
 
+import ds.model.Item;
+
+import java.util.Set;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class StoreForm {
@@ -11,6 +15,8 @@ public class StoreForm {
   private String storePhoneNumber;
   @NotEmpty
   private String storeAddress;
+  
+  private Set<Item> items;
 
   public String getStoreCode() {
     return storeCode;
@@ -42,6 +48,14 @@ public class StoreForm {
 
   public void setStoreAddress(String storeAddress) {
     this.storeAddress = storeAddress;
+  }
+
+  public Set<Item> getItems() {
+    return items;
+  }
+
+  public void setItems(Set<Item> items) {
+    this.items = items;
   }
 
 }

@@ -5,7 +5,6 @@ public class Response {
   private String status;
   private Object data;
   private Object data2;
-  private Object data3;
   
   public String toString() {
     return this.status;
@@ -36,22 +35,6 @@ public class Response {
     this.data = data;
     this.data2 = data2;
   }
-  
-  /** .
-   * @description: Constructor 
-   * @author: VDHoan
-   * @date_created: Dec 28, 2017
-   * @param status . 
-   * @param data .
-   * @param data2 . 
-   * @param data3 .
-   */
-  public Response(String status, Object data, Object data2,Object data3) {
-    this.status = status;
-    this.data = data;
-    this.data2 = data2;
-    this.data3 = data3;
-  }
 
   public String getStatus() {
     return status;
@@ -75,14 +58,6 @@ public class Response {
 
   public void setData2(Object data2) {
     this.data2 = data2;
-  }
-
-  public Object getData3() {
-    return data3;
-  }
-
-  public void setData3(Object data3) {
-    this.data3 = data3;
   }
 
 }

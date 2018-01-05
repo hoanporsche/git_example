@@ -41,7 +41,7 @@
 								<td th:text="${USER.userDateCreated}"></td>
 								<td th:text="${USER.userDateUpdated}"></td>
 								<td th:if="${USER.userStore != null}" th:text="${USER.userStore}" style="background:yellow"></td>
-								<td th:if="${USER.userLastOrderTime != null}" th:text="${USER.userLastOrderTime}"></td>
+								<td th:if="${USER.userStore == null}" th:text="${USER.userLastOrderTime}"></td>
 								<td th:text="${USER.userStatus}"></td>
 								<td th:text="${USER.roles}"></td>
 								<td><button th:if="${USER.userStore != null}" data-toggle="modal" data-target="#editUser"
@@ -108,7 +108,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-3">
 				<h3 th:if="${WrongSyntax}" th:text="${WrongSyntax}"
 					style="color: red;"></h3>
 				<button class="btn btn-success" data-toggle="modal"
@@ -136,7 +136,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-9">
 				<button class="btn btn-success" data-toggle="modal"
 					data-target="#addStore">Thêm cửa hàng</button>
 				<div class="panel panel-primary">
@@ -154,6 +154,7 @@
 									<td>Địa chỉ</td>
 									<td>Ngày tạo</td>
 									<td>Ngày cập nhật</td>
+									<td>Các loại nguyên liệu</td>
 									<td>Trạng thái</td>
 									<td>Sửa / Xoá / Hiện</td>
 								</tr>
@@ -167,6 +168,7 @@
 									<td th:text="${STORE.storeAddress}"></td>
 									<td th:text="${STORE.storeDateCreated}"></td>
 									<td th:text="${STORE.storeDateUpdated}"></td>
+									<td th:text="${STORE.items}"></td>
 									<td th:text="${STORE.storeStatus}"></td>
 									<td>
 										<button class="btn" data-toggle="modal" data-target="#editStore" th:attr="data-code=${STORE.storeCode},
@@ -200,8 +202,10 @@
 							</div>
 							<br/>
 							<label>Cửa hàng</label>
-							<div id="edit_store">
-							
+							<div>
+								<select class="selectpicker" th:unless="${#lists.isEmpty('availableStores')}" th:field="*{storeCode}">
+									<option th:each="STORE:${availableStores}" th:text="${STORE.storeName}" th:value="${STORE.storeCode}"></option>
+								</select>
 							</div>
 							<br/><button type="submit">Save changes</button>
 						</form>
@@ -251,6 +255,16 @@
 						<label>Địa chỉ</label>
 						<p th:if="${#fields.hasErrors('storeAddress')}" th:errors="*{storeAddress}"></p>
 						<input class="form-control" th:field="*{storeAddress}"/>
+						
+						<label>Mặt hàng thuộc cửa hàng</label><br/>
+						<button type="button" id="get_remain_items" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Thêm mặt hàng</button>
+						<div id="edit_items">
+							<select id="select_item1" class="selectpicker" th:unless="${#lists.isEmpty('availableItems')}">
+								<option th:each="ITEM:${availableItems}" th:text="${ITEM.itemName}" th:value="${ITEM.itemCode}"></option>
+							</select>
+							<button type="button" class="btn" id="save_item1" onClick="saveItem(1)"><span class="glyphicon glyphicon-ok"></span></button>
+						</div>
+						
 						<button type="submit">Thêm mới</button>
 					</form>
 				</div>
@@ -277,6 +291,13 @@
 						<label>Địa chỉ</label>
 						<p th:if="${#fields.hasErrors('storeAddress')}" th:errors="*{storeAddress}"></p>
 						<input class="form-control" id="store_address" th:field="*{storeAddress}"/>
+						
+						<label>Mặt hàng thuộc cửa hàng</label><br/>
+						<button type="button" id="get2_remain_items" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Thêm mặt hàng</button>
+						<div id="edit2_items">
+							
+						</div>
+						
 						<button type="submit">Sửa</button>
 					</form>
 				</div>

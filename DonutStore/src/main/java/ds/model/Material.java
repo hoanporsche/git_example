@@ -12,7 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -36,21 +38,15 @@ public class Material implements Serializable {
   @Size(max = 255)
   @Column(name = "material_picture")
   private String materialPicture;
+  @ManyToOne
+  @JoinColumn(name = "supply_id", referencedColumnName = "supply_id", nullable = false)
+  private Supply materialSupply;
   @Column(name = "material_date_created", nullable = false)
   private Date materialDateCreated;
   @Column(name = "material_date_updated", nullable = false)
   private Date materialDateUpdated;
   @Column(name = "material_single_value", nullable = false)
   private BigDecimal materialSingleValue;
-  @Size(max = 45)
-  @Column(name = "material_remain", nullable = false)
-  private String materialRemain;
-  @Size(max = 255)
-  @Column(name = "material_supply_name", nullable = true)
-  private String materialSupplyName;
-  @Size(max = 20)
-  @Column(name = "material_supply_phone", nullable = true)
-  private String materialSupplyPhone;
   @Column(name = "material_status", nullable = true)
   private boolean materialStatus;
 
@@ -86,6 +82,14 @@ public class Material implements Serializable {
     this.materialPicture = materialPicture;
   }
 
+  public Supply getMaterialSupply() {
+    return materialSupply;
+  }
+
+  public void setMaterialSupply(Supply materialSupply) {
+    this.materialSupply = materialSupply;
+  }
+
   public Date getMaterialDateCreated() {
     return materialDateCreated;
   }
@@ -108,30 +112,6 @@ public class Material implements Serializable {
 
   public void setMaterialSingleValue(BigDecimal materialSingleValue) {
     this.materialSingleValue = materialSingleValue;
-  }
-
-  public String getMaterialRemain() {
-    return materialRemain;
-  }
-
-  public void setMaterialRemain(String materialRemain) {
-    this.materialRemain = materialRemain;
-  }
-
-  public String getMaterialSupplyName() {
-    return materialSupplyName;
-  }
-
-  public void setMaterialSupplyName(String materialSupplyName) {
-    this.materialSupplyName = materialSupplyName;
-  }
-
-  public String getMaterialSupplyPhone() {
-    return materialSupplyPhone;
-  }
-
-  public void setMaterialSupplyPhone(String materialSupplyPhone) {
-    this.materialSupplyPhone = materialSupplyPhone;
   }
 
   public String getMaterialCode() {

@@ -3,6 +3,18 @@
 CREATE SCHEMA IF NOT EXISTS `donutstore` DEFAULT CHARACTER SET utf8 ;
 USE `donutstore` ;
 
+CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
+  `category_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `category_code` NVARCHAR(10) NOT NULL,
+  `category_name` NVARCHAR(255) NOT NULL,
+  `category_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `category_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `category_status` BIT NOT NULL,
+  PRIMARY KEY (`category_id`)
+  )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 -- -----------------------------------------------------
 -- Table `donutstore`.`item`
 -- -----------------------------------------------------
@@ -11,15 +23,30 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `item_code` NVARCHAR(10) NOT NULL UNIQUE, 
   `item_name` NVARCHAR(255) NOT NULL,
   `item_picture` NVARCHAR(255),
+  `category_id` INT(11) NOT NULL,
   `item_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `item_single_value` DECIMAL(10,0) NOT NULL,
 	`item_status` boolean not null,
   PRIMARY KEY (`item_id`),
-  UNIQUE INDEX `item_name_UNIQUE` (`item_name` ASC))
+  UNIQUE INDEX `item_name_UNIQUE` (`item_name` ASC),
+  FOREIGN KEY (`category_id`)
+  REFERENCES `donutstore`.`category`(`category_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+CREATE TABLE IF NOT EXISTS `donutstore`.`supply` (
+  `supply_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `supply_code` NVARCHAR(10) NOT NULL,
+  `supply_name` NVARCHAR(255) NOT NULL,
+  `supply_phone` NVARCHAR(20) NOT NULL,
+  `supply_address` NVARCHAR(255) NOT NULL,
+  `supply_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `supply_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `supply_status` BIT NOT NULL,
+  PRIMARY KEY (`supply_id`)
+)ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`material`
@@ -29,14 +56,14 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `material_code` NVARCHAR(10) NOT NULL UNIQUE,
   `material_name` NVARCHAR(255) NOT NULL,
   `material_picture` NVARCHAR(255),
+  `supply_id` INT(11) NOT NULL,
   `material_date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `material_single_value` DECIMAL(10,0) NOT NULL,
-  `material_remain` NVARCHAR(45) NOT NULL,
-  `material_supply_name` NVARCHAR(255) NULL DEFAULT NULL,
-  `material_supply_phone` NVARCHAR(20) NULL DEFAULT NULL,
   `material_status` boolean not null,
-  PRIMARY KEY (`material_id`))
+  PRIMARY KEY (`material_id`),
+  FOREIGN KEY(`supply_id`)
+  REFERENCES `donutstore`.`supply`(`supply_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -152,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping` (
   `timekeeping_created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `timekeeping_in` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_out` TIMESTAMP NULL DEFAULT NULL,
-  `timekeeping_status` tinyint NOT NULL,
+  `timekeeping_status` BIT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`staff_id`) REFERENCES `donutstore`.`staff`(`staff_id`))
 ENGINE = InnoDB
@@ -194,3 +221,16 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user_role` (
     REFERENCES `donutstore`.`role` (`role_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `donutstore`.`item_store` (
+  `item_id` INT(11) NOT NULL,
+  `store_id` INT(11) NOT NULL,
+  PRIMARY KEY(`item_id`,`store_id`),
+	FOREIGN KEY (`item_id`)
+    REFERENCES `donutstore`.`item`(`item_id`),
+    FOREIGN KEY (`store_id`)
+    REFERENCES `donutstore`.`store`(`store_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+

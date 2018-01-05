@@ -38,12 +38,12 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
     // Roles
     if (roleRepository.findByroleName("ROLE_ADMIN") == null) {
       roleRepository.save(new Role("ROLE_ADMIN", 
-          RandomStringUtils.random(10, Constant.RANDOM_STRING)));
+          RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC)));
     }
 
     if (roleRepository.findByroleName("ROLE_MEMBER") == null) {
       roleRepository.save(new Role("ROLE_MEMBER",
-          RandomStringUtils.random(10, Constant.RANDOM_STRING)));
+          RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC)));
     }
 
     // Admin account
@@ -54,10 +54,11 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
       admin.setUserName("hoan");
       admin.setUserStatus(true);
       admin.setUserPhoneNumber("094 345 1794");
+      admin.setUserAddress("Núi trúc, Giảng Võ");
       Store store = new Store("Giảng Võ", new Date(), new Date(), true);
       store.setStoreAddress("113 D6 Trần Huy Liệu");
       store.setStorePhoneNumber("094 345 1794");
-      store.setStoreCode(RandomStringUtils.random(10, Constant.RANDOM_STRING));
+      store.setStoreCode(RandomStringUtils.random(10, Constant.RANDOM_STRING_BASIC));
       storeRepository.save(store);
       HashSet<Role> roles = new HashSet<>();
       roles.add(roleRepository.findByroleName("ROLE_ADMIN"));

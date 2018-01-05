@@ -5,12 +5,17 @@ import ds.form.MaterialForm;
 import ds.message.Message.ConAttr;
 import ds.message.Message.ResponseMess;
 import ds.message.Response;
+import ds.model.Category;
 import ds.model.Item;
 import ds.model.Material;
+import ds.model.Supply;
+import ds.service.CategoryService;
 import ds.service.ItemService;
 import ds.service.MaterialService;
+import ds.service.SupplyService;
 import ds.util.AdminConstant.AdminAttribute;
 import ds.util.AdminConstant.AdminMessage;
+import ds.util.AdminConstant.AdminParam;
 import ds.util.AdminConstant.AdminReturn;
 import ds.util.AdminConstant.AdminUrl;
 import ds.util.Constant;
@@ -46,6 +51,10 @@ public class AdminController {
   private ItemService itemService;
   @Autowired
   private MaterialService materialService;
+  @Autowired
+  private SupplyService supplyService;
+  @Autowired
+  private CategoryService categoryService;
 
   //List material for show on screen when add to item
   private List<Material> remainMaterial;
@@ -80,6 +89,13 @@ public class AdminController {
     model.addAttribute(ConAttr.ITEMS, itemService.findAll());
     model.addAttribute(ConAttr.MATERIALFORM, new MaterialForm());
     model.addAttribute(ConAttr.ITEMFORM, new ItemForm());
+    
+    model.addAttribute(AdminAttribute.ALL_SUPPLIES, supplyService.findAll());
+    model.addAttribute(AdminAttribute.ALL_AVAILABLE_SUPPLIES, supplyService.findAllByStatus());
+    model.addAttribute(AdminAttribute.SUPPLY, new Supply());
+    model.addAttribute(AdminAttribute.ALL_CATEGORIES, categoryService.findAll());
+    model.addAttribute(AdminAttribute.ALL_AVAILABLE_CATEGORIES, categoryService.findAllByStatus());
+    model.addAttribute(AdminAttribute.CATEGORY, new Category());
     return AdminReturn.ADMIN_ITEMMATERIAL;
   }
 
@@ -192,10 +208,8 @@ public class AdminController {
   @PostMapping(AdminUrl.CREATE_ITEM)
   public String createItem(@Valid @ModelAttribute(AdminAttribute.ITEM_FORM) ItemForm itemForm,
       BindingResult bindingResult, RedirectAttributes redirect) {
-    if (bindingResult.hasErrors()) {
-      return AdminReturn.ADMIN_ITEMMATERIAL;
-    }
-    if (currentMaterials.isEmpty()) {
+    if (bindingResult.hasErrors() || currentMaterials.isEmpty()
+        || StringUtils.isEmpty(itemForm.getCategoryCode())) {
       redirect.addFlashAttribute(AdminAttribute.NOT_FOUND_ITEM, 
           AdminMessage.CHOOSE_MATERIALS_FIRST);
       return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
@@ -220,7 +234,7 @@ public class AdminController {
   @PostMapping(AdminUrl.CREATE_MATERIAL)
   public String createMaterial(@Valid @ModelAttribute(AdminAttribute.MATERIAL_FORM) 
       MaterialForm materialForm, BindingResult bindingResult, RedirectAttributes redirect) {
-    if (bindingResult.hasErrors()) {
+    if (bindingResult.hasErrors() || StringUtils.isEmpty(materialForm.getSupplyCode())) {
       return AdminReturn.ADMIN_ITEMMATERIAL;
     }
     if (!StringUtils.isEmpty(materialForm.getMaterialCode())) {
@@ -313,6 +327,126 @@ public class AdminController {
       return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
     } 
     materialService.showMaterial(m);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /** .
+   * @description: create/update Supply .
+   * @author: VDHoan
+   * @date_created: Jan 4, 2018
+   * @param supply .
+   * @param result .
+   * @param redirect .
+   * @return
+   */
+  @PostMapping(AdminUrl.SAVE_SUPPLY)
+  public String saveSupply(@Valid @ModelAttribute(AdminAttribute.SUPPLY) Supply supply, 
+      BindingResult result, RedirectAttributes redirect) {
+    if (result.hasErrors()) {
+      redirect.addAttribute(AdminAttribute.SUPPLY_VALIDATION, AdminMessage.SUPPLY_VALIDATION);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    supplyService.save(supply);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /** .
+   * @description: Hide Suppy.
+   * @author: VDHoan
+   * @date_created: Jan 4, 2018
+   * @param supplyCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUrl.HIDE_SUPPLY)
+  public String hideSupply(@RequestParam(AdminParam.SUPPLY_CODE) String supplyCode,
+      RedirectAttributes redirect) {
+    Supply supply = supplyService.findBysupplyCode(supplyCode);
+    if (supply == null) {
+      redirect.addAttribute(AdminAttribute.SUPPLY_VALIDATION, AdminMessage.SUPPLY_VALIDATION);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    supplyService.hide(supply);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /** .
+   * @description: Show supply .
+   * @author: VDHoan
+   * @date_created: Jan 4, 2018
+   * @param supplyCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUrl.SHOW_SUPPLY)
+  public String showCategory(@RequestParam(AdminParam.SUPPLY_CODE) String supplyCode,
+      RedirectAttributes redirect) {
+    Supply supply = supplyService.findBysupplyCode(supplyCode);
+    if (supply == null) {
+      redirect.addAttribute(AdminAttribute.SUPPLY_VALIDATION, AdminMessage.SUPPLY_VALIDATION);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    supplyService.show(supply);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /** .
+   * @description: create/update Category
+   * @author: VDHoan
+   * @date_created: Jan 4, 2018
+   * @param category .
+   * @param result .
+   * @param redirect .
+   * @return
+   */
+  @PostMapping(AdminUrl.SAVE_CATEGORY)
+  public String saveCategory(@Valid @ModelAttribute(AdminAttribute.CATEGORY) Category category, 
+      BindingResult result, RedirectAttributes redirect) {
+    if (result.hasErrors()) {
+      redirect.addAttribute(AdminAttribute.CATEGORY_VALIDATION, AdminMessage.CATEGORY_VALIDATION);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    categoryService.save(category);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /** .
+   * @description: hide Category
+   * @author: VDHoan
+   * @date_created: Jan 4, 2018
+   * @param categoryCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUrl.HIDE_CATEGORY)
+  public String hideCategory(@RequestParam(AdminParam.CATEGORY_CODE) String categoryCode,
+      RedirectAttributes redirect) {
+    Category category = categoryService.findBycategoryCode(categoryCode);
+    if (category == null) {
+      redirect.addAttribute(AdminAttribute.CATEGORY_VALIDATION, AdminMessage.CATEGORY_VALIDATION);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    categoryService.hide(category);
+    return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+  }
+  
+  /** .
+   * @description: Show Category .
+   * @author: VDHoan
+   * @date_created: Jan 4, 2018
+   * @param categoryCode .
+   * @param redirect .
+   * @return
+   */
+  @GetMapping(AdminUrl.SHOW_CATEGORY)
+  public String showSupply(@RequestParam(AdminParam.CATEGORY_CODE) String categoryCode,
+      RedirectAttributes redirect) {
+    Category category = categoryService.findBycategoryCode(categoryCode);
+    if (category == null) {
+      redirect.addAttribute(AdminAttribute.CATEGORY_VALIDATION, AdminMessage.CATEGORY_VALIDATION);
+      return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
+    }
+    categoryService.show(category);
     return AdminReturn.REDIRECT_ADMIN_ITEMMATERIAL;
   }
 
