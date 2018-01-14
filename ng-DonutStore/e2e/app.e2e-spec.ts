@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('donut-store App', () => {
+describe('ng-donut-store App', () => {
   let page: AppPage;
 
   beforeEach(() => {
