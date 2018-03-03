@@ -1,4 +1,4 @@
-package ds.serviceimpl;
+package ds.service.impl;
 
 import ds.model.Timekeeping;
 import ds.repository.TimekeepingRepository;

@@ -28,10 +28,6 @@ public class Material implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "material_id", nullable = false)
   private int materialId;
-  
-  @Size(max = 10)
-  @Column(name = "material_code", nullable = false, unique = true)
-  private String materialCode;
   @Size(max = 255)
   @Column(name = "material_name", nullable = false)
   private String materialName;
@@ -112,14 +108,6 @@ public class Material implements Serializable {
 
   public void setMaterialSingleValue(BigDecimal materialSingleValue) {
     this.materialSingleValue = materialSingleValue;
-  }
-
-  public String getMaterialCode() {
-    return materialCode;
-  }
-
-  public void setMaterialCode(String materialCode) {
-    this.materialCode = materialCode;
   }
 
   public Set<Item> getItems() {

@@ -27,9 +27,6 @@ public class Supply implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "supply_id", nullable = false)
   private int supplyId;
-  @Column(name = "supply_code", nullable = false)
-  @Size(max = 10)
-  private String supplyCode;
   @Column(name = "supply_name", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 255)
@@ -63,14 +60,6 @@ public class Supply implements Serializable {
 
   public void setSupplyId(int supplyId) {
     this.supplyId = supplyId;
-  }
-
-  public String getSupplyCode() {
-    return supplyCode;
-  }
-
-  public void setSupplyCode(String supplyCode) {
-    this.supplyCode = supplyCode;
   }
 
   public String getSupplyName() {
