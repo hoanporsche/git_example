@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Admin Page</title>
+</head>
+<body>
+	<h2>Welcome, Admin</h2>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<td>No</td>
+				<td>Email</td>
+				<td>Password</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="SONGS, iterStat : ${users}">
+				<td th:text="${iterStat.count}"></td>
+				<td th:text="${SONGS.email}"></td>
+				<td th:text="${SONGS.password}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
