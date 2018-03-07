@@ -54,7 +54,9 @@ public class Staff implements Serializable {
   private String staffHomeTown;
   @Column(name = "staff_salary", nullable = false)
   private BigDecimal staffSalary;
-  
+  @ManyToOne
+  @JoinColumn(name = "working_calender_id", referencedColumnName = "id", nullable = false)
+  private WorkingCalender workingCalenderId;
   @Column(name = "staff_enabled", nullable = false)
   private boolean staffEnabled;
   
@@ -173,6 +175,14 @@ public class Staff implements Serializable {
 
   public void setTimekeepings(List<Timekeeping> timekeepings) {
     this.timekeepings = timekeepings;
+  }
+
+  public WorkingCalender getWorkingCalenderId() {
+    return workingCalenderId;
+  }
+
+  public void setWorkingCalenderId(WorkingCalender workingCalenderId) {
+    this.workingCalenderId = workingCalenderId;
   }
   
 }

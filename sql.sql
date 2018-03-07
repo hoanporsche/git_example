@@ -159,6 +159,17 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
+-- Table `donutstore`.`working_calender`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+    `title` NVARCHAR(255) NOT NULL,
+    `description` NVARCHAR(1000) NOT NULL,
+    PRIMARY KEY(`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
 -- Table `donutstore`.`staff`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
@@ -173,13 +184,25 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `staff_identity_card` NVARCHAR(12) NOT NULL,
   `staff_home_town` NVARCHAR(45) NOT NULL,
   `staff_salary` decimal(10,0) not null,
+  `working_calender_id` BIGINT NOT NULL,
   `staff_enabled` BIT NOT NULL,
   PRIMARY KEY (`staff_id`),
   FOREIGN KEY (`staff_store`)
-  REFERENCES `donutstore`.`store` (`store_id`))
+  REFERENCES `donutstore`.`store` (`store_id`),
+  FOREIGN KEY (`working_calender_id`) REFERENCES `donutstore`.`working_calender` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- -----------------------------------------------------
+-- Table `donutstore`.`timekeeping_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+    `title` NVARCHAR(255) NOT NULL,
+    `description` NVARCHAR(1000) NOT NULL,
+    PRIMARY KEY(`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`timekeeping`
@@ -190,9 +213,10 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping` (
   `timekeeping_created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `timekeeping_in` TIMESTAMP NULL DEFAULT NULL,
   `timekeeping_out` TIMESTAMP NULL DEFAULT NULL,
-  `timekeeping_status` BIT NOT NULL,
+  `timekeeping_status_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`staff_id`) REFERENCES `donutstore`.`staff`(`staff_id`))
+  FOREIGN KEY (`staff_id`) REFERENCES `donutstore`.`staff`(`staff_id`),
+  FOREIGN KEY (`timekeeping_status_id`) REFERENCES `donutstore`.`timekeeping_status`(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -216,7 +240,6 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `locked` BIT not null,
   `user_store` BIGINT,
   PRIMARY KEY (`user_id`),
-  UNIQUE INDEX `user_email_UNIQUE` (`user_name` ASC),
   FOREIGN KEY(`user_store`) references `donutstore`.`store`(`store_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

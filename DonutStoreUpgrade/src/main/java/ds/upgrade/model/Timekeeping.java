@@ -31,8 +31,9 @@ public class Timekeeping implements Serializable {
   private Date timekeepingIn;
   @Column(name = "timekeeping_out", nullable = true)
   private Date timekeepingOut;
-  @Column(name = "timekeeping_status", nullable = false)
-  private boolean timekeepingStatus;
+  @ManyToOne
+  @JoinColumn(name = "timekeeping_status_id", referencedColumnName = "id", nullable = false)
+  private TimekeepingStatus timekeepingStatus;
   
   public String toString() {
     return this.staff.getStaffName();
@@ -78,11 +79,11 @@ public class Timekeeping implements Serializable {
     this.timekeepingOut = timekeepingOut;
   }
 
-  public boolean getTimekeepingStatus() {
+  public TimekeepingStatus getTimekeepingStatus() {
     return timekeepingStatus;
   }
 
-  public void setTimekeepingStatus(boolean timekeepingStatus) {
+  public void setTimekeepingStatus(TimekeepingStatus timekeepingStatus) {
     this.timekeepingStatus = timekeepingStatus;
   }
 

@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @description: .
  * @author: VDHoan
@@ -47,12 +49,17 @@ public class OrderStatus implements Serializable {
   private String description;
   
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderStatus")
+  @JsonIgnore
   private List<Order> orders;
   
   public OrderStatus() {}
   
   public OrderStatus(Long id) {
     this.id = id;
+  }
+  
+  public String toString() {
+    return this.title;
   }
 
   public Long getId() {
