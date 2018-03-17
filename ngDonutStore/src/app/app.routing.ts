@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     canActivate: ,
-    loadChildren: 
+    loadChildren: ádas
   },
   {
     path: '',
