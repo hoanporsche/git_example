@@ -21,8 +21,9 @@ public class Quantity implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "quantity_id", nullable = false)
   private Long quantityId;
-  @Column(name = "quantity_item_id", nullable = false)
-  private Long quantityItemId;
+  @ManyToOne
+  @JoinColumn(name = "item_id", referencedColumnName = "item_id", nullable = false)
+  private Item itemId;
   @Column(name = "quantity_item_quantity", nullable = false)
   private int quantityItemQuantity;
 
@@ -42,15 +43,15 @@ public class Quantity implements Serializable {
     this.quantityId = quantityId;
   }
 
-  public Long getQuantityItemId() {
-    return quantityItemId;
-  }
+  public Item getItemId() {
+	return itemId;
+}
 
-  public void setQuantityItemId(Long quantityItemId) {
-    this.quantityItemId = quantityItemId;
-  }
+public void setItemId(Item itemId) {
+	this.itemId = itemId;
+}
 
-  public int getQuantityItemQuantity() {
+public int getQuantityItemQuantity() {
     return quantityItemQuantity;
   }
 

@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @description: 
  * @author: VDHoan
@@ -37,11 +39,12 @@ public class TimekeepingStatus implements Serializable {
   @Size(max = 255)
   @Column(name = "tilte")
   private String title;
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "desciption")
   private String description;
   
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "timekeepingStatus")
+  @JsonIgnore
   private List<Timekeeping> timekeepings;
   
   public TimekeepingStatus() {}

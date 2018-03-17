@@ -44,7 +44,7 @@ public class OrderStatus implements Serializable {
   @Size(max = 255)
   @Column(name = "tilte")
   private String title;
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "desciption")
   private String description;
   

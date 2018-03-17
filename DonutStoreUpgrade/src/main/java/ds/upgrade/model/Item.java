@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -29,37 +32,48 @@ public class Item implements Serializable {
   @Column(name = "item_id", nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long itemId;
+
   @Size(max = 255)
   @Column(name = "item_name", nullable = false)
   private String itemName;
+
   @Size(max = 1000)
   @Column(name = "item_picture")
   private String itemPicture;
+
   @ManyToOne
-  @JoinColumn(name = "category_id", referencedColumnName = "category_id",nullable = false)
+  @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
   @JsonIgnore
   private Category itemCategory;
+
   @Column(name = "item_date_created", nullable = false)
   private Date itemDateCreated;
+
   @Column(name = "item_date_updated", nullable = false)
   private Date itemDateUpdated;
+
   @Column(name = "item_single_value", nullable = false)
   private BigDecimal itemSingleValue;
+
   @Column(name = "item_enabled", nullable = false)
   private boolean itemEnabled;
 
   @ManyToMany
-  @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"),
-      inverseJoinColumns = @JoinColumn(name = "material_id"))
+  @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
   @JsonIgnore
   private Set<Material> materials;
-  
+
   @ManyToMany(mappedBy = "items")
   @JsonIgnore
   private Set<Store> stores;
-  
-  public Item() {}
-  
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
+  @JsonIgnore
+  private List<Quantity> quantites;
+
+  public Item() {
+  }
+
   public Item(Long id) {
     this.itemId = id;
   }
@@ -67,7 +81,7 @@ public class Item implements Serializable {
   public String toString() {
     return this.itemName;
   }
-  
+
   public Long getItemId() {
     return itemId;
   }
@@ -147,5 +161,13 @@ public class Item implements Serializable {
   public void setItemEnabled(boolean itemEnabled) {
     this.itemEnabled = itemEnabled;
   }
-  
+
+  public List<Quantity> getQuantites() {
+    return quantites;
+  }
+
+  public void setQuantites(List<Quantity> quantites) {
+    this.quantites = quantites;
+  }
+
 }

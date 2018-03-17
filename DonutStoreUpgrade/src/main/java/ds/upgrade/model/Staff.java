@@ -27,36 +27,48 @@ public class Staff implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "staff_id", nullable = false)
   private Long staffId;
+  
   @Size(max = 255)
   @Column(name = "staff_name", nullable = false)
   private String staffName;
-  @Size(max = 255)
+  
+  @Size(max = 1000)
   @Column(name = "staff_picture")
   private String staffPicture;
+  
   @ManyToOne
   @JoinColumn(name = "staff_store", referencedColumnName = "store_id", nullable = false)
   private Store staffStore;
+  
   @Column(name = "staff_created_time", nullable = false)
   private Date staffCreatedTime;
+  
   @Column(name = "staff_updated_time", nullable = false)
   private Date staffUpdatedTime;
+  
   @Size(max = 20)
   @Column(name = "staff_phone_number", nullable = false)
   private String staffPhoneNumber;
+  
   @Size(max = 255)
   @Column(name = "staff_address", nullable = false)
   private String staffAddress;
+  
   @Size(max = 12)
   @Column(name = "staff_identity_card", nullable = false)
   private String staffIdentityCard;
+  
   @Size(max = 255)
   @Column(name = "staff_home_town", nullable = false)
   private String staffHomeTown;
+  
   @Column(name = "staff_salary", nullable = false)
   private BigDecimal staffSalary;
+  
   @ManyToOne
   @JoinColumn(name = "working_calender_id", referencedColumnName = "id", nullable = false)
   private WorkingCalender workingCalenderId;
+  
   @Column(name = "staff_enabled", nullable = false)
   private boolean staffEnabled;
   

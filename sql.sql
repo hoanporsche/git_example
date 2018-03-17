@@ -90,7 +90,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` NVARCHAR(255) NOT NULL,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -139,11 +139,11 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   `quantity_id` BIGINT NOT NULL AUTO_INCREMENT,
   `orders_id` BIGINT NOT NULL,
-  `quantity_item_id` BIGINT NOT NULL,
-  `quantity_item_quantity` INT(11) NOT NULL,
+  `item_id` BIGINT NOT NULL,
+  `quantity` INT(11) NOT NULL,
   PRIMARY KEY (`quantity_id`),
-KEY `orders_id` (`orders_id`),
-  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`orders_id`))
+  FOREIGN KEY (`orders_id`) REFERENCES `donutstore`.`orders`(`orders_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `donutstore`.`item`(`item_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -164,7 +164,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` NVARCHAR(255) NOT NULL,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -199,7 +199,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` NVARCHAR(255) NOT NULL,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

@@ -28,22 +28,28 @@ public class Supply implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "supply_id", nullable = false)
   private Long supplyId;
+  
   @Column(name = "supply_name", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 255)
   private String supplyName;
+  
   @Column(name = "supply_phone", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 20)
   private String supplyPhone;
+  
   @Column(name = "supply_address", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 255)
   private String supplyAddress;
+  
   @Column(name = "supply_date_created", nullable = false)
   private Date supplyDateCreated;
+  
   @Column(name = "supply_date_updated", nullable = false)
   private Date supplyDateUpdated;
+  
   @Column(name = "supply_enabled", nullable = false)
   private boolean supplyEnabled;
   
