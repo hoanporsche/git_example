@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "staff")
 public class Staff implements Serializable {
@@ -73,6 +75,7 @@ public class Staff implements Serializable {
   private boolean staffEnabled;
   
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "staff")
+  @JsonIgnore
   private List<Timekeeping> timekeepings;
   
   public Staff() {}

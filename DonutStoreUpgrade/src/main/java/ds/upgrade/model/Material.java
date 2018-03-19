@@ -31,21 +31,28 @@ public class Material implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "material_id", nullable = false)
   private Long materialId;
+  
   @Size(max = 255)
   @Column(name = "material_name", nullable = false)
   private String materialName;
+  
   @Size(max = 255)
   @Column(name = "material_picture")
   private String materialPicture;
+  
   @ManyToOne
   @JoinColumn(name = "supply_id", referencedColumnName = "supply_id", nullable = false)
   private Supply materialSupply;
+  
   @Column(name = "material_date_created", nullable = false)
   private Date materialDateCreated;
+  
   @Column(name = "material_date_updated", nullable = false)
   private Date materialDateUpdated;
+  
   @Column(name = "material_single_value", nullable = false)
   private BigDecimal materialSingleValue;
+  
   @Column(name = "material_enabled", nullable = true)
   private boolean materialEnabled;
 
