@@ -1,4 +1,5 @@
 import { Store } from "../store/store";
+import { Role } from "../role/role";
 
 export class User {
   constructor(
@@ -16,5 +17,6 @@ export class User {
     public expired?: boolean,
     public locked?: boolean,
     public userStore?: Store,
+    public roles?: Role[],
   ) {}
 }

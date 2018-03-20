@@ -1,11 +1,11 @@
 import { LocalStorageService } from './../../core/services/local-storage.service';
-import { User } from './../../model/user.class';
 import { IdentityService } from '../../core/services/identity.service';
 import { LOCAL_STORAGE } from './../../shared/constants/local-storage.constant';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptLoaderService } from '../../core/services/script-loader.service';
 import { NavigationService } from '../../core/services/navigation.service';
+import { User } from '../../model/user/user';
 
 declare let mLayout: any;
 @Component({
@@ -29,8 +29,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   logout() {
     // clear token remove user from local storage to log user out
-    this.localStorageService.removeItem(LOCAL_STORAGE.CURRENT_USER);
-    this.localStorageService.removeItem(LOCAL_STORAGE.TOKENS);
+    this.localStorageService.removeItem(LOCAL_STORAGE.TOKEN);
 
     this.navigationService.navLogin();
 }

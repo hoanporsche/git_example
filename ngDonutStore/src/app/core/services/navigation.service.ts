@@ -11,32 +11,52 @@ export class NavigationService {
   ) { }
 
   public getRoleSegment(): string {
-    if (this.identityService.isDuLead()) {
-      return '/du-lead';
-    } else if (this.identityService.isDuMember()) {
-      return '/du-member';      
-    } else if (this.identityService.isHrManager()) {
-      return '/hr-manager';      
-    } else if (this.identityService.isHrMember()) {
-      return '/hr-member';      
-    } else if (this.identityService.isAdmin()) {
+    // if (this.identityService.isDuLead()) {
+    //   return '/du-lead';
+    // } else if (this.identityService.isDuMember()) {
+    //   return '/du-member';      
+    // } else if (this.identityService.isHrManager()) {
+    //   return '/hr-manager';      
+    // } else if (this.identityService.isHrMember()) {
+    //   return '/hr-member';      
+    // } else if (this.identityService.isAdmin()) {
+    //   return '/admin';
+    // } else {
+    //   this.navLogin();
+    // } 
+    if (this.identityService.isAdmin()) {
       return '/admin';
+    } else if (this.identityService.isStaff()) {
+      return '/staff';      
+    } else if (this.identityService.isStore()) {
+      return '/store';      
     } else {
       this.navLogin();
     } 
   }
 
   navHomepage() {
+    // if(this.identityService.isAdmin()) {
+    //   this.navUserList();
+    // } else if (this.identityService.isDuLead()) {
+    //   this.navRequestList();
+    // } else if (this.identityService.isDuMember()) {
+    //   this.navRequestList();      
+    // } else if (this.identityService.isHrManager()) {
+    //   this.navRequestHomeHrManager();      
+    // } else if (this.identityService.isHrMember()) {
+    //   this.navRequestHomeHrManager();  
+    // } else {
+    //   this.navLogin();
+    // } 
     if(this.identityService.isAdmin()) {
       this.navUserList();
-    } else if (this.identityService.isDuLead()) {
+    } else if (this.identityService.isAdmin()) {
       this.navRequestList();
-    } else if (this.identityService.isDuMember()) {
+    } else if (this.identityService.isStaff()) {
       this.navRequestList();      
-    } else if (this.identityService.isHrManager()) {
-      this.navRequestHomeHrManager();      
-    } else if (this.identityService.isHrMember()) {
-      this.navRequestHomeHrManager();  
+    } else if (this.identityService.isStore()) {
+      this.navRequestHomeHrManager();       
     } else {
       this.navLogin();
     } 

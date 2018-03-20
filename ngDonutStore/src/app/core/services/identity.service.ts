@@ -3,13 +3,16 @@ import { API_URL } from './../../shared/constants/api.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs/Observable';
-import { Token } from './../../model/token.class';
-import { User } from './../../model/user.class';
+// import { Token } from './../../model/token.class';
+// import { User } from './../../model/user.class';
 import { LOCAL_STORAGE } from '../../shared/constants/local-storage.constant';
 import { ROLES } from '../../shared/constants/role.constant';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { User } from '../../model/user/user';
+import { Token } from '@angular/compiler';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt'; 
 
 @Injectable()
 export class IdentityService {
@@ -18,7 +21,7 @@ export class IdentityService {
   private token: Token;
 
   // url to get currently logged in user form API
-  private currentUserUrl = environment.baseUrl + API_URL.GET_CURRENT_USER;
+  // private currentUserUrl = environment.baseUrl + API_URL.GET_CURRENT_USER;
 
   constructor(
     private httpClient: HttpClient,
@@ -37,7 +40,7 @@ export class IdentityService {
   */
   initializeToken() {
     try {
-      this.token = <Token> JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKENS));
+      this.token = <Token> JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));
     } catch (err) {
       this.token = null;
       console.log('>>> Error parse token from localStorage:', err);
@@ -54,16 +57,22 @@ export class IdentityService {
   */
   initializeCurrentUser() {
     try {
-      this.currentUser = <User>JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
+      // this.currentUser = <User>JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
+      const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
+      if (token){
+        const jwt = new JwtHelper();
+        this.currentUser = <User>jwt.decodeToken(token);
+      }
+      console.log(this.currentUser);
     } catch (err) {
       this.currentUser = null;
       console.log('>>> Error parse token from localStorage:', err);
     }
   }
 
-  getCurrentUserFromApiServer(): Observable<any> {
-    return this.httpClient.get(this.currentUserUrl, { headers: this.createHeaders() });
-  }
+  // getCurrentUserFromApiServer(): Observable<any> {
+  //   return this.httpClient.get(this.currentUserUrl, { headers: this.createHeaders() });
+  // }
 
   getToken() {
     return this.token;
@@ -79,13 +88,16 @@ export class IdentityService {
   setToken(token: Token) {
     this.token = token;
   }
+  // private createHeaders() {
+  //   return new HttpHeaders().set('Authorization', 'Bearer ' + this.token.access_token);
+  // }
   private createHeaders() {
-    return new HttpHeaders().set('Authorization', 'Bearer ' + this.token.access_token);
+    return new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
   }
 
-  saveCurrentUserToLocalStorage(currentUser: User) {
-    localStorage.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(currentUser));
-  }
+  // saveCurrentUserToLocalStorage(currentUser: User) {
+  //   localStorage.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(currentUser));
+  // }
 
   isLoggedIn() {
     return this.currentUser !== null && this.token !== null;
@@ -93,39 +105,51 @@ export class IdentityService {
   isAdmin() {
     return this.getStringRoles().includes(ROLES.ADMIN);
   }
-  isDuLead() {
-    return this.getStringRoles().includes(ROLES.DU_LEAD);
+  isStaff() {
+    return this.getStringRoles().includes(ROLES.STAFF);
   }
-  isDuMember() {
-    return this.getStringRoles().includes(ROLES.DU_MEMBER);
+  isStore() {
+    return this.getStringRoles().includes(ROLES.STORE);
   }
-  isHrManager() {
-    return this.getStringRoles().includes(ROLES.HR_MANAGER);
-  }
-  isHrMember() {
-    return this.getStringRoles().includes(ROLES.HR_MEMBER);
-  }
+  // isDuLead() {
+  //   return this.getStringRoles().includes(ROLES.DU_LEAD);
+  // }
+  // isDuMember() {
+  //   return this.getStringRoles().includes(ROLES.DU_MEMBER);
+  // }
+  // isHrManager() {
+  //   return this.getStringRoles().includes(ROLES.HR_MANAGER);
+  // }
+  // isHrMember() {
+  //   return this.getStringRoles().includes(ROLES.HR_MEMBER);
+  // }
   getTopRole() {
     if (this.getStringRoles().includes(ROLES.ADMIN)) {
       return ROLES.ADMIN;
     }
-    if (this.getStringRoles().includes(ROLES.DU_LEAD)) {
-      return ROLES.DU_LEAD;
+    // if (this.getStringRoles().includes(ROLES.DU_LEAD)) {
+    //   return ROLES.DU_LEAD;
+    // }
+    // if (this.getStringRoles().includes(ROLES.DU_MEMBER)) {
+    //   return ROLES.DU_MEMBER;
+    // }
+    // if (this.getStringRoles().includes(ROLES.HR_MANAGER)) {
+    //   return ROLES.HR_MANAGER;
+    // }
+    // if (this.getStringRoles().includes(ROLES.HR_MEMBER)) {
+    //   return ROLES.HR_MEMBER;
+    // }
+    if (this.getStringRoles().includes(ROLES.STAFF)) {
+      return ROLES.STAFF;
     }
-    if (this.getStringRoles().includes(ROLES.DU_MEMBER)) {
-      return ROLES.DU_MEMBER;
-    }
-    if (this.getStringRoles().includes(ROLES.HR_MANAGER)) {
-      return ROLES.HR_MANAGER;
-    }
-    if (this.getStringRoles().includes(ROLES.HR_MEMBER)) {
-      return ROLES.HR_MEMBER;
+    if (this.getStringRoles().includes(ROLES.STORE)) {
+      return ROLES.STORE;
     }
   }
   getStringRoles(): string[] {
     const roles = [];
     if (this.currentUser) {
-      for (const role of this.currentUser.roleCollection) {
+      for (const role of this.currentUser.roles) {
         roles.push(role.roleName);
       }
       return roles;

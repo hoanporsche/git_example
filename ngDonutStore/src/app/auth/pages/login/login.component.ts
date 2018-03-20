@@ -1,18 +1,15 @@
 import { LocalStorageService } from './../../../core/services/local-storage.service';
-import { IdentityService } from '../../../core/services/identity.service';
+// import { IdentityService } from '../../../core/services/identity.service';
 import { LOCAL_STORAGE } from './../../../shared/constants/local-storage.constant';
 import { ResetPasswordService } from './../../services/reset-password.service';
 import { LoginService } from './../../services/login.service';
 import { NavigationService } from '../../../core/services/navigation.service';
-import { Role } from '../../../model/role.class';
 import { Response } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
-import { User } from '../../../model/user.class';
-import { Token } from '../../../model/token.class';
-
+import { User } from '../../../model/user/user';
 declare var $: any;
 
 @Component({
@@ -40,12 +37,12 @@ export class LoginComponent implements OnInit {
     private navigationService: NavigationService,
     private loginService: LoginService,
     private resetService: ResetPasswordService,
-    private identityService: IdentityService,
+    // private identityService: IdentityService,
     private localStorageService: LocalStorageService
   ) {
-    if (this.identityService.isLoggedIn()) {
-      this.navigationService.navHomepage();
-    }
+    // if (this.identityService.isLoggedIn()) {
+    //   this.navigationService.navHomepage();
+    // }
   }
 
   loginForm = (new FormBuilder()).group({
@@ -65,37 +62,51 @@ export class LoginComponent implements OnInit {
     
     const autoLogin = query.get("auto_login") === "true" ? true : false;
   }
+  // login(auto?: boolean) {
+  //   this.loading = true;
+  //   this.message = '';
+  //   const query = this.route.snapshot.queryParamMap;
+  //   const userInput = this.loginForm.value;
+  //   const user = new User();
+  //   user.userName = userInput.username;
+  //   user.userPassword = this.password.value;
+
+  //   this.loginService.login(user).switchMap((token: Response) => {
+  //     this.localStorageService.setItem(LOCAL_STORAGE.TOKEN, JSON.stringify(token.json()));
+
+  //     return this.loginService.getCurrentUser();
+  //   }).subscribe((users: User[]) => {
+  //     this.localStorageService.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(users[0]));
+  //     // Hide the loading icon
+  //     this.loading = false;
+  //     // Reset currentUser in IdentityService
+  //     this.identityService.initializeCurrentUser();
+  //     // navigate to homepage of current user
+  //     this.navigationService.navHomepage();
+  //   }, (e: Response) => {
+  //     this.loading = false;
+  //     if (e.status === 400) {
+  //       this.message = 'Wrong username or password';
+  //     } else {
+  //       this.message = 'Problem occurs. Please try again later';
+  //     }
+  //     console.log('>>> login message: ', this.message);
+  //   });
+  // }
   login(auto?: boolean) {
     this.loading = true;
     this.message = '';
-    const query = this.route.snapshot.queryParamMap;
-    const userInput = this.loginForm.value;
     const user = new User();
-    user.username = userInput.username;
-    user.password = this.password.value;
-
-    this.loginService.login(user).switchMap((tokens: Response) => {
-      this.localStorageService.setItem(LOCAL_STORAGE.TOKENS, JSON.stringify(tokens.json()));
-
-      return this.loginService.getCurrentUser();
-    }).subscribe((users: User[]) => {
-      this.localStorageService.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(users[0]));
-      // Hide the loading icon
-      this.loading = false;
-      // Reset currentUser in IdentityService
-      this.identityService.initializeCurrentUser();
-      // navigate to homepage of current user
-      this.navigationService.navHomepage();
-    }, (e: Response) => {
-      this.loading = false;
-      if (e.status === 400) {
-        this.message = 'Wrong username or password';
-      } else {
-        this.message = 'Problem occurs. Please try again later';
-      }
-      console.log('>>> login message: ', this.message);
-    });
+    user.userEmail = this.username.value;
+    user.userPassword = this.password.value;
+    this.loginService.login(user)
+      .subscribe(token => {
+        console.log(token);
+      }, error => {
+        console.log(error);
+      })
   }
+
   navForgotPassword() {
     this.navigationService.navForgotPassword();
   }
@@ -105,11 +116,6 @@ export class LoginComponent implements OnInit {
     const login = $('#m_login');
     login.removeClass('m-login--forget-password');
     login.removeClass('m-login--signup');
-    // try {
-    //     $('form').data('validator').resetForm();
-    // } catch (e) {
-    // }
-
     login.addClass('m-login--signin');
     (<any>login.find('.m-login__signin')).animateClass('flipInX animated');
 }

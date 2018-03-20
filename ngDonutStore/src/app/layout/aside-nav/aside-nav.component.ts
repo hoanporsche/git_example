@@ -13,6 +13,8 @@ declare let mLayout: any;
 })
 export class AsideNavComponent implements OnInit, AfterViewInit {
   isAdmin = false;
+  isStaff = false;
+  isStore = false;
   isDuLead = false;
   isDuMember = false;
   isHrManager = false;
@@ -22,10 +24,12 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
     private identityService: IdentityService
   ) { 
     this.isAdmin = this.identityService.isAdmin();
-    this.isDuLead = this.identityService.isDuLead();
-    this.isDuMember = this.identityService.isDuMember();
-    this.isHrManager = this.identityService.isHrManager();
-    this.isHrMember = this.identityService.isHrMember();
+    // this.isDuLead = this.identityService.isDuLead();
+    // this.isDuMember = this.identityService.isDuMember();
+    // this.isHrManager = this.identityService.isHrManager();
+    // this.isHrMember = this.identityService.isHrMember();
+    this.isStaff = this.identityService.isStaff();
+    this.isStore = this.identityService.isStore();
   }
 
   ngOnInit() {

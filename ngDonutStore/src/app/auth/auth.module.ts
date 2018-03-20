@@ -8,7 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavigationService } from '../core/services/navigation.service';
 import { LoginService } from './services/login.service';
 import { ResetPasswordService } from './services/reset-password.service';
-import { SharedModule } from '../shared/shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
