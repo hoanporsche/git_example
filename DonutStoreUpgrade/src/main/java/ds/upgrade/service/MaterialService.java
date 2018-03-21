@@ -1,5 +1,12 @@
 package ds.upgrade.service;
 
-public interface MaterialService {
+import java.util.List;
 
+import ds.upgrade.model.Material;
+
+public interface MaterialService {
+  
+  List<Material> findAll();
+
+  Material findOne(Long id);
 }
