@@ -100,8 +100,11 @@ export class LoginComponent implements OnInit {
     user.userEmail = this.username.value;
     user.userPassword = this.password.value;
     this.loginService.login(user)
-      .subscribe(token => {
+      .subscribe((token: Response) => {
         console.log(token);
+        console.log(JSON.stringify(token.json()))
+        this.localStorageService.setItem(LOCAL_STORAGE.TOKEN,JSON.stringify(token.json().access_token));
+        // console.log
       }, error => {
         console.log(error);
       })

@@ -44,7 +44,7 @@ public class User implements Serializable {
 
   @NotEmpty
   @Size(max = 60)
-  @Column(name = "user_password", nullable = false, unique = true)
+  @Column(name = "user_password", nullable = false)
   private String userPassword;
 
   @ManyToMany

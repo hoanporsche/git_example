@@ -17,7 +17,7 @@ import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 @Injectable()
 export class IdentityService {
   // These 02 properties will be set right in AppComponent -> ngOnInit()
-  private currentUser: User;
+  private currentUser;
   private token: Token;
 
   // url to get currently logged in user form API
@@ -61,7 +61,7 @@ export class IdentityService {
       const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
       if (token){
         const jwt = new JwtHelper();
-        this.currentUser = <User>jwt.decodeToken(token);
+        this.currentUser = jwt.decodeToken(token);
       }
       console.log(this.currentUser);
     } catch (err) {

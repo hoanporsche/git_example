@@ -42,4 +42,14 @@ public class UserServiceImpl implements UserService {
     return userRepository.findOne(id);
   }
 
+
+  @Override
+  public void delete(Long id) {
+    userRepository.delete(id);
+  }
+
+  @Override
+  public void save(User user) {
+    userRepository.save(user);
+  }
 }

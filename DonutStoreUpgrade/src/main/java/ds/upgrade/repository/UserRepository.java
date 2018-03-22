@@ -7,6 +7,6 @@ import ds.upgrade.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
   
-  User findByUserEmail(String userEmail);
+  User findByuserEmail(String userEmail);
 
 }

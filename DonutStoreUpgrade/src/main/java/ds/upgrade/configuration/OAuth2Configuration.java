@@ -37,11 +37,6 @@ public class OAuth2Configuration {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-      // @formatter:off
-//      http
-//        .csrf().disable()
-//        .authorizeRequests()
-//          .antMatchers("/user/**").authenticated();
       http
       .csrf().disable()
       .anonymous().disable()
@@ -56,8 +51,6 @@ public class OAuth2Configuration {
         .and()
       .exceptionHandling()
         .accessDeniedHandler(new OAuth2AccessDeniedHandler());
-
-      // @formatter:on
     }
   }
 
