@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @description: 
  * @author: VDHoan
@@ -35,13 +37,16 @@ public class TimekeepingStatus implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "tilte")
+  @Column(name = "tilte", nullable = false)
   private String title;
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "desciption")
   private String description;
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
   
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "timekeepingStatus")
+  @JsonIgnore
   private List<Timekeeping> timekeepings;
   
   public TimekeepingStatus() {}
@@ -76,6 +81,14 @@ public class TimekeepingStatus implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Timekeeping> getTimekeepings() {

@@ -30,22 +30,29 @@ public class Store implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "store_id", nullable = false)
   private Long storeId;
+  
   @Size(max = 255)
   @Column(name = "store_name", nullable = false)
   private String storeName;
+  
   @Size(max = 1000)
   @Column(name = "store_picture")
   private String storePicture;
+  
   @Size(max = 20)
   @Column(name = "store_phone_number", nullable = false)
   private String storePhoneNumber;
+  
   @Size(max = 255)
   @Column(name = "store_address", nullable = false)
   private String storeAddress;
+  
   @Column(name = "store_date_created")
   private Date storeDateCreated;
+  
   @Column(name = "store_date_updated")
   private Date storeDateUpdated;
+  
   @Column(name = "store_enabled", nullable = false)
   private boolean storeEnabled;
 

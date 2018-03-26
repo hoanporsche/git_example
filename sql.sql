@@ -90,7 +90,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` NVARCHAR(255) NOT NULL,
+    `enabled` boolean not null,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -139,11 +140,11 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   `quantity_id` BIGINT NOT NULL AUTO_INCREMENT,
   `orders_id` BIGINT NOT NULL,
-  `quantity_item_id` BIGINT NOT NULL,
-  `quantity_item_quantity` INT(11) NOT NULL,
+  `item_id` BIGINT NOT NULL,
+  `quantity` INT(11) NOT NULL,
   PRIMARY KEY (`quantity_id`),
-KEY `orders_id` (`orders_id`),
-  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`orders_id`))
+  FOREIGN KEY (`orders_id`) REFERENCES `donutstore`.`orders`(`orders_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `donutstore`.`item`(`item_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -154,6 +155,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`role` (
   `role_id` BIGINT NOT NULL AUTO_INCREMENT,
   `role_name` NVARCHAR(255) NOT NULL,
+  `role_enabled` boolean not null,
   PRIMARY KEY (`role_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -164,7 +166,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` NVARCHAR(255) NOT NULL,
+    `enabled` boolean not null,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -199,7 +202,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` NVARCHAR(255) NOT NULL,
+    `enabled` boolean not null,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -234,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `user_date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_last_order_time` TIMESTAMP NULL DEFAULT NULL,
-  `user_enabled` BIT not null,
+  `enabled` BIT not null,
   `credentialsexpired` BIT not null,
   `expired` BIT not null,
   `locked` BIT not null,

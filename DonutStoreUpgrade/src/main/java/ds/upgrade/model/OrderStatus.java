@@ -44,9 +44,11 @@ public class OrderStatus implements Serializable {
   @Size(max = 255)
   @Column(name = "tilte")
   private String title;
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "desciption")
   private String description;
+  @Column(name = "enabled")
+  private boolean enabled;
   
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderStatus")
   @JsonIgnore
@@ -84,6 +86,14 @@ public class OrderStatus implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Order> getOrders() {

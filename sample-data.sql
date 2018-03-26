@@ -53,11 +53,11 @@ INSERT INTO `donutstore`.`item_material` VALUES
 ('2','7');
 
 INSERT INTO `donutstore`.`order_status` VALUES 
-('1','Assigning','Đang tìm'),
-('2','Accepted','Đã nhận'),
-('3','In process','Đang thực hiện'),
-('4','Completed','Đã hoàn thành'),
-('5','Cancel','Hủy');
+('1','Assigning','Đang tìm',b'1'),
+('2','Accepted','Đã nhận',b'1'),
+('3','In process','Đang thực hiện',b'1'),
+('4','Completed','Đã hoàn thành',b'1'),
+('5','Cancel','Hủy',b'1');
 
 INSERT INTO `donutstore`.`store` VALUES 
 ('1','Giảng Võ','','0943451794','D6 Giảng Võ','2018-01-02', '2018-02-03', b'1'),
@@ -77,36 +77,36 @@ INSERT INTO `donutstore`.`quantity` VALUES
 ('6','3','2','10');
 
 INSERT INTO `donutstore`.`role` VALUES 
-('1','ROLE_ADMIN'),
-('2','ROLE_STORE'),
-('3','ROLE_STAFF');
+('1','ROLE_ADMIN',b'1'),
+('2','ROLE_STORE',b'1'),
+('3','ROLE_STAFF',b'1');
 
 INSERT INTO `donutstore`.`working_calender` VALUES 
-('1','Weekday Morning','Buổi sáng ngày thường'),
-('2','Every day Morning','Các buổi sáng'),
-('3','Weekday Afternoon','Buổi chiều ngày thường'),
-('4','Every day Afternoon','Các buổi chiều'),
-('5','Full day Weekday','Cả ngày ngày thường'),
-('6','Full day Every day','Cả ngày mọi ngày');
+('1','Weekday Morning','Buổi sáng ngày thường',b'1'),
+('2','Every day Morning','Các buổi sáng',b'1'),
+('3','Weekday Afternoon','Buổi chiều ngày thường',b'1'),
+('4','Every day Afternoon','Các buổi chiều',b'1'),
+('5','Full day Weekday','Cả ngày ngày thường',b'1'),
+('6','Full day Every day','Cả ngày mọi ngày',b'1');
 
 INSERT INTO `donutstore`.`staff` VALUES 
 ('1','Phùng Xuân Hoàng','','1','2018-03-06','2018-03-06','0974404620','Cầu Giấy','012345678','Ba Vì','320000',6,b'1'),
 ('2','Lê Cao Nguyên','','2','2018-03-06','2018-03-06','01638189359','Hà Đông','987654321','Mỹ Đức','320000',6,b'1');
 
 INSERT INTO `donutstore`.`timekeeping_status` VALUES 
-('1','Late Come','Đến muộn'),
-('2','Leave Early','Về sớm'),
-('3','Absent Morning','Vắng sáng'),
-('4','Absent Afternoon','Vắng chiều'),
-('5','Full Work','Đủ công');
+('1','Late Come','Đến muộn',b'1'),
+('2','Leave Early','Về sớm',b'1'),
+('3','Absent Morning','Vắng sáng',b'1'),
+('4','Absent Afternoon','Vắng chiều',b'1'),
+('5','Full Work','Đủ công',b'1');
 
 INSERT INTO `donutstore`.`timekeeping` VALUES 
 ('1','1','2018-03-06','2018-03-06 08:20:00','2018-03-06 17:30:00', b'1');
 
 INSERT INTO `donutstore`.`user` VALUES 
-('1','Vũ Đình Hoàn','2352','admin@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1),
-('2','Vũ Đình Hoàn','2352','giangvo@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1),
-('3','Vũ Đình Hoàn','2352','nuitruc@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1);
+('1','Vũ Đình Hoàn','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','admin@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1),
+('2','Vũ Đình Hoàn','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','giangvo@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1),
+('3','Vũ Đình Hoàn','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','nuitruc@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1);
 
 INSERT INTO `donutstore`.`user_role` VALUES 
 ('1','1'),('1','2'),('1','3'),
@@ -116,4 +116,3 @@ INSERT INTO `donutstore`.`user_role` VALUES
 INSERT INTO `donutstore`.`item_store` VALUES 
 ('1','1'),('2','1'),('3','1'),('4','1'),('5','1'),('6','1'),('7','1'),('8','1'),
 ('1','2'),('2','2'),('3','2'),('4','2'),('5','2'),('6','2'),('7','2'),('8','2');
-l

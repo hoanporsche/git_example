@@ -38,16 +38,21 @@ public class MaterialDailyReport implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
   private Long id;
+  
   @ManyToOne
   @JoinColumn(name = "store_id", referencedColumnName = "store_id",nullable = false)
   private Store storeId;
+  
   @ManyToOne
   @JoinColumn(name = "material_id", referencedColumnName = "material_id",nullable = false)
   private Material materialId;
+  
   @Column(name = "material_remain")
   private int materialRemain;
+  
   @Column(name = "material_import")
   private int materialImport;
+  
   @Column(name = "description")
   private String description;
   

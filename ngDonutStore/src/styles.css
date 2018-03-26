@@ -1,0 +1,159 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+/* @import '~bootstrap/dist/css/bootstrap.min.css'; */
+
+html body {
+    height: 100%;
+}
+
+body {
+    /* font-family: Roboto, Arial, sans-serif; */
+    margin: 0;
+    overflow: auto;
+}
+
+table {
+    /* min-height: 150px !important; */
+}
+
+#m_aside_left {
+    /* min-height: 100%; */
+}
+
+app-aside-nav {
+    height: 100%;
+}
+
+#m_ver_menu {
+    height: 100%;
+}
+
+#m_ver_menu>ul {
+    height: 100%;
+}
+
+.brand-name {
+    color: rgb(213, 214, 224);
+    text-align: center;
+    font-family: Poppins !important;
+    font-weight: 300;
+}
+
+.version-info {
+    font-size: 8pt;
+    float: right;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+
+/* END OF THIEN STYLES */
+
+
+/* LOGIN PAGE */
+
+.login-logo {
+    /* height: 65px; */
+}
+
+
+/* END::LOGIN PAGE */
+
+.pagination__page-number {
+    display: inline-flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: bottom;
+}
+
+.pagination__page-number>p {
+    margin-bottom: 0.25rem !important;
+}
+
+.float-right {
+    float: right
+}
+
+.align-center {
+    display: flex;
+    padding-top: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* REQUEST LIST */
+
+.skill-list {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 80px;
+    display: block;
+}
+
+ul.skill-list li {
+    display: inline-block;
+}
+
+ul.skill-list li:not(:first-child)::before {
+    content: ' ,';
+}
+
+
+/* END:: REQUEST LIST */
+
+.error {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  font-size: 0.8rem;
+  color: indianred;
+  padding-left: 15px;
+}
+.error-no-padding {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    font-size: 0.8rem;
+    color: indianred;
+}
+
+.no-border-left {
+    border-left: 0px;
+}
+
+
+/* END::REQUEST LIST */
+
+
+/* FOR ALL THE TABLE */
+
+th:hover {
+    cursor: pointer;
+}
+/* END::ALL THE TABLE */
+
+/* Align time picker text to center */
+ngb-timepicker  input {
+  padding-left: 1.2rem !important;
+}
+/* END: align time picker text to center */
+
+
+/* END::ALL THE TABLE */
+.required::after {
+    content: '*';
+    color: red;
+}

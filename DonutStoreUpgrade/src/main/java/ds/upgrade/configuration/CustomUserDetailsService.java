@@ -1,7 +1,9 @@
 package ds.upgrade.configuration;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,9 +28,10 @@ public class CustomUserDetailsService implements UserDetailsService {
   }
 
   @Override
+  @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-    User user = userRepository.findByUserEmail(email);
+    User user = userRepository.findByuserEmail(email);
 
     if (user == null) {
       // Not found...
@@ -40,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
       throw new UsernameNotFoundException("User not authorized.");
     }
 
-    Collection<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+    Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
     for (Role role : user.getRoles()) {
       grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
     }

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -22,7 +23,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  private CustomUserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
 
   @Autowired
   private UserAuthenticatoinProvider accountAuthenticationProvider;
@@ -49,8 +50,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
       .formLogin()
         .loginPage("/login")
-        .usernameParameter("email")
-        .passwordParameter("password")
+        .usernameParameter("userEmail")
+        .passwordParameter("userPassword")
         .defaultSuccessUrl("/")
         .failureUrl("/login?error")
         .and()
