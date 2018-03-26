@@ -1,4 +1,4 @@
-import { TimekeepingStatus } from './../timekeeping-stauts/timekeeping-status';
+import { TimekeepingStatus } from './../timekeeping-status/timekeeping-status';
 import { Staff } from "../staff/staff";
 
 export class Timekeeping {

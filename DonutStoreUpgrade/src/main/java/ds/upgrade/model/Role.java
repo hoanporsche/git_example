@@ -31,7 +31,10 @@ public class Role implements Serializable {
   @Size(max = 255)
   @Column(name = "role_name", nullable = false)
   private String roleName;
-
+  
+  @Column(name = "role_enabled", nullable = false)
+  private boolean roleEnabled;
+  
   @ManyToMany(mappedBy = "roles")
   @JsonIgnore
   private Set<User> users;
@@ -64,6 +67,14 @@ public class Role implements Serializable {
 
   public void setRoleName(String roleName) {
     this.roleName = roleName;
+  }
+
+  public boolean isRoleEnabled() {
+    return roleEnabled;
+  }
+
+  public void setRoleEnabled(boolean roleEnabled) {
+    this.roleEnabled = roleEnabled;
   }
 
   public Set<User> getUsers() {

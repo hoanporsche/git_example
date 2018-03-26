@@ -37,11 +37,13 @@ public class TimekeepingStatus implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "tilte")
+  @Column(name = "tilte", nullable = false)
   private String title;
   @Size(max = 255)
   @Column(name = "desciption")
   private String description;
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
   
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "timekeepingStatus")
   @JsonIgnore
@@ -79,6 +81,14 @@ public class TimekeepingStatus implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Timekeeping> getTimekeepings() {

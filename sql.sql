@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
+    `enabled` boolean not null,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -154,6 +155,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `donutstore`.`role` (
   `role_id` BIGINT NOT NULL AUTO_INCREMENT,
   `role_name` NVARCHAR(255) NOT NULL,
+  `role_enabled` boolean not null,
   PRIMARY KEY (`role_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -165,6 +167,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
+    `enabled` boolean not null,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -200,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `title` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
+    `enabled` boolean not null,
     PRIMARY KEY(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -234,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `user_date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_last_order_time` TIMESTAMP NULL DEFAULT NULL,
-  `user_enabled` BIT not null,
+  `enabled` BIT not null,
   `credentialsexpired` BIT not null,
   `expired` BIT not null,
   `locked` BIT not null,

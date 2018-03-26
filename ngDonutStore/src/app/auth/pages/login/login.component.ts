@@ -1,5 +1,5 @@
 import { LocalStorageService } from './../../../core/services/local-storage.service';
-// import { IdentityService } from '../../../core/services/identity.service';
+import { IdentityService } from '../../../core/services/identity.service';
 import { LOCAL_STORAGE } from './../../../shared/constants/local-storage.constant';
 import { ResetPasswordService } from './../../services/reset-password.service';
 import { LoginService } from './../../services/login.service';
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     private navigationService: NavigationService,
     private loginService: LoginService,
     private resetService: ResetPasswordService,
-    // private identityService: IdentityService,
+    private identityService: IdentityService,
     private localStorageService: LocalStorageService
   ) {
     // if (this.identityService.isLoggedIn()) {
@@ -101,12 +101,21 @@ export class LoginComponent implements OnInit {
     user.userPassword = this.password.value;
     this.loginService.login(user)
       .subscribe((token: Response) => {
-        console.log(token);
-        console.log(JSON.stringify(token.json()))
-        this.localStorageService.setItem(LOCAL_STORAGE.TOKEN,JSON.stringify(token.json().access_token));
-        // console.log
-      }, error => {
-        console.log(error);
+        // console.log(token);
+        if (token.status === 200) {
+          this.localStorageService.setItem(LOCAL_STORAGE.TOKEN,JSON.stringify(token.json().access_token));
+          this.loading = false;
+          this.identityService.initializeCurrentUser();
+          this.navigationService.navHomepage();
+        } 
+      }, (error: Response) => {
+        console.log(error.status)
+        this.loading = false;
+        if (error.status === 400){
+          this.message = 'Wrong password or username';
+        } else {
+          this.message = 'Problem occurs. Please try again later';
+        }
       })
   }
 

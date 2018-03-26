@@ -3,8 +3,6 @@ import { API_URL } from './../../shared/constants/api.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs/Observable';
-// import { Token } from './../../model/token.class';
-// import { User } from './../../model/user.class';
 import { LOCAL_STORAGE } from '../../shared/constants/local-storage.constant';
 import { ROLES } from '../../shared/constants/role.constant';
 import { Injectable } from '@angular/core';
@@ -19,9 +17,6 @@ export class IdentityService {
   // These 02 properties will be set right in AppComponent -> ngOnInit()
   private currentUser;
   private token: Token;
-
-  // url to get currently logged in user form API
-  // private currentUserUrl = environment.baseUrl + API_URL.GET_CURRENT_USER;
 
   constructor(
     private httpClient: HttpClient,
@@ -63,16 +58,11 @@ export class IdentityService {
         const jwt = new JwtHelper();
         this.currentUser = jwt.decodeToken(token);
       }
-      console.log(this.currentUser);
     } catch (err) {
       this.currentUser = null;
       console.log('>>> Error parse token from localStorage:', err);
     }
   }
-
-  // getCurrentUserFromApiServer(): Observable<any> {
-  //   return this.httpClient.get(this.currentUserUrl, { headers: this.createHeaders() });
-  // }
 
   getToken() {
     return this.token;
@@ -88,19 +78,9 @@ export class IdentityService {
   setToken(token: Token) {
     this.token = token;
   }
-  // private createHeaders() {
-  //   return new HttpHeaders().set('Authorization', 'Bearer ' + this.token.access_token);
-  // }
-  private createHeaders() {
-    return new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
-  }
-
-  // saveCurrentUserToLocalStorage(currentUser: User) {
-  //   localStorage.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(currentUser));
-  // }
 
   isLoggedIn() {
-    return this.currentUser !== null && this.token !== null;
+    return this.token !== null;
   }
   isAdmin() {
     return this.getStringRoles().includes(ROLES.ADMIN);
@@ -111,34 +91,10 @@ export class IdentityService {
   isStore() {
     return this.getStringRoles().includes(ROLES.STORE);
   }
-  // isDuLead() {
-  //   return this.getStringRoles().includes(ROLES.DU_LEAD);
-  // }
-  // isDuMember() {
-  //   return this.getStringRoles().includes(ROLES.DU_MEMBER);
-  // }
-  // isHrManager() {
-  //   return this.getStringRoles().includes(ROLES.HR_MANAGER);
-  // }
-  // isHrMember() {
-  //   return this.getStringRoles().includes(ROLES.HR_MEMBER);
-  // }
   getTopRole() {
     if (this.getStringRoles().includes(ROLES.ADMIN)) {
       return ROLES.ADMIN;
     }
-    // if (this.getStringRoles().includes(ROLES.DU_LEAD)) {
-    //   return ROLES.DU_LEAD;
-    // }
-    // if (this.getStringRoles().includes(ROLES.DU_MEMBER)) {
-    //   return ROLES.DU_MEMBER;
-    // }
-    // if (this.getStringRoles().includes(ROLES.HR_MANAGER)) {
-    //   return ROLES.HR_MANAGER;
-    // }
-    // if (this.getStringRoles().includes(ROLES.HR_MEMBER)) {
-    //   return ROLES.HR_MEMBER;
-    // }
     if (this.getStringRoles().includes(ROLES.STAFF)) {
       return ROLES.STAFF;
     }
@@ -147,12 +103,8 @@ export class IdentityService {
     }
   }
   getStringRoles(): string[] {
-    const roles = [];
     if (this.currentUser) {
-      for (const role of this.currentUser.roles) {
-        roles.push(role.roleName);
-      }
-      return roles;
+      return this.currentUser.authorities;
     }
     return [];
   }

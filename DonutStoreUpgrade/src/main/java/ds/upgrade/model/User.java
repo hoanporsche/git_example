@@ -65,7 +65,7 @@ public class User implements Serializable {
   @Column(name = "user_last_order_time")
   private Date userLastOrderTime;
   @NotNull
-  @Column(name = "user_enabled")
+  @Column(name = "enabled")
   private boolean enabled = true;
   @NotNull
   @Column(name = "credentialsexpired")
