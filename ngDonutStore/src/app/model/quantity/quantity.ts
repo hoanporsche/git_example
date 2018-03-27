@@ -3,9 +3,9 @@ import { Item } from '../item/item';
 
 export class Quantity {
   constructor(
-    public quantityItemQuantity: number,
-    public orderId: Order,
-    public itemId: Item,
-    public quantityId?: number,
+    public id?: number,
+    public itemId?: Item,
+    public quantity?: number,
+    public orderId?: Order,
   ) {}
 }

@@ -40,11 +40,11 @@ public class MaterialDailyReport implements Serializable {
   private Long id;
   
   @ManyToOne
-  @JoinColumn(name = "store_id", referencedColumnName = "store_id",nullable = false)
+  @JoinColumn(name = "store_id", referencedColumnName = "id",nullable = false)
   private Store storeId;
   
   @ManyToOne
-  @JoinColumn(name = "material_id", referencedColumnName = "material_id",nullable = false)
+  @JoinColumn(name = "material_id", referencedColumnName = "id",nullable = false)
   private Material materialId;
   
   @Column(name = "material_remain")

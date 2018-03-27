@@ -1,12 +1,12 @@
 
 export class Supply {
   constructor(
-    public supplyName: string,
-    public supplyPhone: string,
-    public supplyAddress: string,
-    public supplyEnabled: boolean,
-    public supplyId?: number,
-    public supplyDateCreated?: Date,
-    public supplyDateUpdated?: Date,
+    public id?: number,
+    public name?: string,
+    public phone?: string,
+    public address?: string,
+    public dateCreated?: Date,
+    public dateUpdated?: Date,
+    public enabled?: boolean,
   ) {}
 }

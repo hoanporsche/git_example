@@ -1,13 +1,13 @@
 
 export class Store {
   constructor(
-    public storeName: string,
-    public storePicture: string,
-    public storePhoneNumber: string,
-    public storeAddress: string,
-    public storeEnbale: boolean,
-    public storeId?: number,
-    public storeDateCreated?: Date,
-    public storeDateUpdated?: Date,
+    public id?: number,
+    public name?: string,
+    public picture?: string,
+    public phone?: string,
+    public address?: string,
+    public dateCreated?: Date,
+    public dateUpdated?: Date,
+    public enabled?: boolean,
   ) {}
 }

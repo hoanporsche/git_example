@@ -27,63 +27,68 @@ public class Category implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "category_id", nullable = false)
-  private Long categoryId;
+  @Column(name = "id", nullable = false)
+  private Long id;
   @NotEmpty
-  @Size(min = 10,max = 255)
-  @Column(name = "category_name", nullable = false)
-  private String categoryName;
-  @Column(name = "category_date_created", nullable = false)
-  private Date categoryDateCreated;
-  @Column(name = "category_date_updated", nullable = false)
-  private Date categoryDateUpdated;
-  @Column(name = "category_enabled", nullable = false)
-  private boolean categoryEnabled;
+  @Size(min = 10, max = 255)
+  @Column(name = "name", nullable = false)
+  private String name;
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
+  @Column(name = "date_updated", nullable = false)
+  private Date dateUpdated;
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
 
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "itemCategory")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
   @JsonIgnore
   private List<Item> items;
-  
-  public Category() {}
-  
-  public Category(Long id) {
-    this.categoryId = id;
+
+  public Category() {
   }
-  
+
   public String toString() {
-    return this.categoryName;
+    return this.name;
   }
 
-  public Long getCategoryId() {
-    return categoryId;
+  public Long getId() {
+    return id;
   }
 
-  public void setCategoryId(Long categoryId) {
-    this.categoryId = categoryId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public String getCategoryName() {
-    return categoryName;
+  public String getName() {
+    return name;
   }
 
-  public void setCategoryName(String categoryName) {
-    this.categoryName = categoryName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Date getCategoryDateCreated() {
-    return categoryDateCreated;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public void setCategoryDateCreated(Date categoryDateCreated) {
-    this.categoryDateCreated = categoryDateCreated;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public Date getCategoryDateUpdated() {
-    return categoryDateUpdated;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public void setCategoryDateUpdated(Date categoryDateUpdated) {
-    this.categoryDateUpdated = categoryDateUpdated;
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Item> getItems() {
@@ -94,11 +99,4 @@ public class Category implements Serializable {
     this.items = items;
   }
 
-  public boolean isCategoryEnabled() {
-    return categoryEnabled;
-  }
-
-  public void setCategoryEnabled(boolean categoryEnabled) {
-    this.categoryEnabled = categoryEnabled;
-  }
 }

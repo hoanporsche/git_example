@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import ds.upgrade.model.Store;
 
 public interface StoreRepository extends JpaRepository<Store, Long>, JpaSpecificationExecutor<Store> {
-  Store findBystoreName(String storeName);
+  Store findByname(String name);
   
-  @Query("SELECT s FROM Store s WHERE s.storeEnabled = true")
+  @Query("SELECT s FROM Store s WHERE s.enabled = true")
   List<Store> findAll();
 }

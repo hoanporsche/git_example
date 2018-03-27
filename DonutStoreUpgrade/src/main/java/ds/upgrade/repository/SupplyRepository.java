@@ -10,6 +10,6 @@ import ds.upgrade.model.Supply;
 
 public interface SupplyRepository extends JpaRepository<Supply, Long>, JpaSpecificationExecutor<Supply> {
 
-  @Query("SELECT s FROM Supply s WHERE s.supplyEnabled = true")
+  @Query("SELECT s FROM Supply s WHERE s.enabled = true")
   List<Supply> findAll();
 }

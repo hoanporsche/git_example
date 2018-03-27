@@ -10,7 +10,7 @@ import ds.upgrade.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
   
-  User findByuserEmail(String userEmail);
+  User findByemail(String email);
   
   @Query("SELECt u FROM User u WHERE u.enabled = true")
   List<User> findAll();

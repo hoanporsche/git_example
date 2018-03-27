@@ -14,4 +14,8 @@ public interface CategoryService {
   Category findOne(Long id);
   
   Page<Category> findList(Pageable pageable, Boolean enabled);
+  
+  Category save(Category category);
+  
+  Category enabledOrNot(Long id);
 }

@@ -4,6 +4,8 @@ export const API_URL = Object.freeze({
     FIND_ALL: '/find-all',
     FIND_ONE: '/find-one',
     FIND_LIST: '/find-list',
+    SAVE: '/save',
+    ENABLED_OR_NOT: '/enabled-or-not',
 });
 
 export const MODEL_URL= Object.freeze({

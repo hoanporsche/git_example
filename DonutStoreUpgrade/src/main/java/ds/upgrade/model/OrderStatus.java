@@ -50,7 +50,7 @@ public class OrderStatus implements Serializable {
   @Column(name = "enabled")
   private boolean enabled;
   
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderStatus")
+  @OneToMany(cascade = CascadeType.ALL,mappedBy = "statusId")
   @JsonIgnore
   private List<Order> orders;
   

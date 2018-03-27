@@ -19,6 +19,7 @@ public class Constants {
     public static final String WRONG_INPUT = "Wrong input";
     public static final String NOT_RETRIVE_DATA = "Not retrive data";
     public static final String SERVER_ERROR = "Internal Server Error";
+    public static final String NOT_SAVE = "Saving content has error";
   }
   
   public static class PARAM {
@@ -31,6 +32,8 @@ public class Constants {
     public static final String FIND_ALL = "/find-all";
     public static final String FIND_ONE = "/find-one";
     public static final String FIND_LIST = "/find-list";
+    public static final String SAVE = "/save";
+    public static final String ENABLED_OR_NOT = "/enabled-or-not";
   }
   
   public static class MODEL {

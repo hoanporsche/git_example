@@ -19,52 +19,52 @@ public class Quantity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "quantity_id", nullable = false)
-  private Long quantityId;
+  @Column(name = "id", nullable = false)
+  private Long id;
   @ManyToOne
-  @JoinColumn(name = "item_id", referencedColumnName = "item_id", nullable = false)
+  @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
   private Item itemId;
-  @Column(name = "quantity_item_quantity", nullable = false)
-  private int quantityItemQuantity;
+  @Column(name = "quantity", nullable = false)
+  private int quantity;
 
   @ManyToOne
-  @JoinColumn(name = "orders_id", referencedColumnName = "orders_id", nullable = false)
+  @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
   private Order orderId;
   
   public String toString() {
-    return this.orderId.getOrderNameCreated();
+    return this.orderId.getNameCreated();
   }
 
-  public Long getQuantityId() {
-    return quantityId;
+  public Long getId() {
+    return id;
   }
 
-  public void setQuantityId(Long quantityId) {
-    this.quantityId = quantityId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public Item getItemId() {
-	return itemId;
-}
-
-public void setItemId(Item itemId) {
-	this.itemId = itemId;
-}
-
-public int getQuantityItemQuantity() {
-    return quantityItemQuantity;
+    return itemId;
   }
 
-  public void setQuantityItemQuantity(int quantityItemQuantity) {
-    this.quantityItemQuantity = quantityItemQuantity;
+  public void setItemId(Item itemId) {
+    this.itemId = itemId;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
   }
 
   public Order getOrderId() {
     return orderId;
   }
 
-  public void setOrderId(Order order) {
-    this.orderId = order;
+  public void setOrderId(Order orderId) {
+    this.orderId = orderId;
   }
 
 }

@@ -23,84 +23,88 @@ public class Order implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "orders_id", nullable = false)
-  private Long orderId;
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-  @Column(name = "order_date_created", nullable = false)
-  private Date orderDateCreated;
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
 
-  @Column(name = "order_date_done")
-  private Date orderDateDone;
+  @Column(name = "date_done")
+  private Date dateDone;
 
-  @Column(name = "order_name_created", nullable = false)
-  private String orderNameCreated;
+  @Column(name = "name_created", nullable = false)
+  private String nameCreated;
 
-  @Column(name = "order_phone_number", nullable = false)
-  private String orderPhoneNumber;
+  @Column(name = "phone", nullable = false)
+  private String phone;
 
   @ManyToOne
-  @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
+  @JoinColumn(name = "store_id", referencedColumnName = "id", nullable = false)
   private Store storeId;
 
   @ManyToOne
-  @JoinColumn(name = "order_status_id", referencedColumnName = "id", nullable = false)
-  private OrderStatus orderStatus;
+  @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+  private OrderStatus statusId;
 
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderId")
   private Set<Quantity> quantities;
 
-  @Column(name = "order_is_shipping", nullable = false)
-  private boolean orderIsShipping;
+  @Column(name = "is_shipping", nullable = false)
+  private boolean isShipping;
 
-  @Column(name = "order_address_shipping")
-  private String orderAddressShipping;
+  @Column(name = "address_shipping")
+  private String addressShipping;
 
-  @Column(name = "order_shipping_price")
-  private double orderShippingPrice;
+  @Column(name = "shipping_price")
+  private double shippingPrice;
 
-  @Column(name = "order_total_price", nullable = false)
-  private double orderTotalPrice;
+  @Column(name = "total_price", nullable = false)
+  private double totalPrice;
   
   public Order() {}
-  
-  public Order(Long id) {
-    this.orderId = id;
-  }
 
   public String toString() {
-    return this.orderNameCreated;
-  }
-  
-  public Long getOrderId() {
-    return orderId;
+    return this.nameCreated;
   }
 
-  public void setOrderId(Long orderId) {
-    this.orderId = orderId;
+  public Long getId() {
+    return id;
   }
 
-  public Date getOrderDateCreated() {
-    return orderDateCreated;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public void setOrderDateCreated(Date orderDateCreated) {
-    this.orderDateCreated = orderDateCreated;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public Date getOrderDateDone() {
-    return orderDateDone;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public void setOrderDateDone(Date orderDateDone) {
-    this.orderDateDone = orderDateDone;
+  public Date getDateDone() {
+    return dateDone;
   }
 
-  public String getOrderNameCreated() {
-    return orderNameCreated;
+  public void setDateDone(Date dateDone) {
+    this.dateDone = dateDone;
   }
 
-  public void setOrderNameCreated(String orderNameCreated) {
-    this.orderNameCreated = orderNameCreated;
+  public String getNameCreated() {
+    return nameCreated;
+  }
+
+  public void setNameCreated(String nameCreated) {
+    this.nameCreated = nameCreated;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
   public Store getStoreId() {
@@ -111,52 +115,12 @@ public class Order implements Serializable {
     this.storeId = storeId;
   }
 
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
+  public OrderStatus getStatusId() {
+    return statusId;
   }
 
-  public void setOrderStatus(OrderStatus orderStatus) {
-    this.orderStatus = orderStatus;
-  }
-
-  public boolean getOrderIsShipping() {
-    return orderIsShipping;
-  }
-
-  public void setOrderIsShipping(boolean orderIsShipping) {
-    this.orderIsShipping = orderIsShipping;
-  }
-
-  public String getOrderAddressShipping() {
-    return orderAddressShipping;
-  }
-
-  public void setOrderAddressShipping(String orderAddressShipping) {
-    this.orderAddressShipping = orderAddressShipping;
-  }
-
-  public double getOrderShippingPrice() {
-    return orderShippingPrice;
-  }
-
-  public void setOrderShippingPrice(double orderShippingPrice) {
-    this.orderShippingPrice = orderShippingPrice;
-  }
-
-  public double getOrderTotalPrice() {
-    return orderTotalPrice;
-  }
-
-  public void setOrderTotalPrice(double orderTotalPrice) {
-    this.orderTotalPrice = orderTotalPrice;
-  }
-
-  public String getOrderPhoneNumber() {
-    return orderPhoneNumber;
-  }
-
-  public void setOrderPhoneNumber(String orderPhoneNumber) {
-    this.orderPhoneNumber = orderPhoneNumber;
+  public void setStatusId(OrderStatus statusId) {
+    this.statusId = statusId;
   }
 
   public Set<Quantity> getQuantities() {
@@ -165,6 +129,38 @@ public class Order implements Serializable {
 
   public void setQuantities(Set<Quantity> quantities) {
     this.quantities = quantities;
+  }
+
+  public boolean isShipping() {
+    return isShipping;
+  }
+
+  public void setShipping(boolean isShipping) {
+    this.isShipping = isShipping;
+  }
+
+  public String getAddressShipping() {
+    return addressShipping;
+  }
+
+  public void setAddressShipping(String addressShipping) {
+    this.addressShipping = addressShipping;
+  }
+
+  public double getShippingPrice() {
+    return shippingPrice;
+  }
+
+  public void setShippingPrice(double shippingPrice) {
+    this.shippingPrice = shippingPrice;
+  }
+
+  public double getTotalPrice() {
+    return totalPrice;
+  }
+
+  public void setTotalPrice(double totalPrice) {
+    this.totalPrice = totalPrice;
   }
 
 }

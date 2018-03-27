@@ -11,7 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -97,6 +101,38 @@ public class CategoryRestController {
       Page<Category> list = categoryService.findList(pageable, newEnabled);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Category>>(list, HttpStatus.OK);
+    } catch (NumberFormatException e) {
+      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+
+  @PostMapping(Constants.API_URL.SAVE)
+  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Category category,
+      BindingResult result) {
+    try {
+      if (result.hasErrors()) 
+        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      category = categoryService.save(category);
+      if (category != null)
+        return new ResponseEntity<Category>(category, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
+  public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+    try {
+      Long newId = Long.parseLong(id);
+      Category category = categoryService.enabledOrNot(newId);
+      if (category != null)
+        return new ResponseEntity<Category>(category, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {

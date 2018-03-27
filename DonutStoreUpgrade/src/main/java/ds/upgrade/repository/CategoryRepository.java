@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import ds.upgrade.model.Category;
 
-public interface CategoryRepository extends JpaRepository<Category, Long>, JpaSpecificationExecutor<Category> {
+public interface CategoryRepository
+    extends JpaRepository<Category, Long>, JpaSpecificationExecutor<Category> {
 
-  @Query("SELECT c FROM Category c WHERE c.categoryEnabled = true")
+  @Query("SELECT c FROM Category c WHERE c.enabled = true")
   List<Category> findAll();
 }

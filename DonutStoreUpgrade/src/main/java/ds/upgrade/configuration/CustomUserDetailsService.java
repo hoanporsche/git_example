@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-    User user = userRepository.findByuserEmail(email);
+    User user = userRepository.findByemail(email);
 
     if (user == null) {
       // Not found...
@@ -45,12 +45,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
     for (Role role : user.getRoles()) {
-      grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+      grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
     }
 
     org.springframework.security.core.userdetails.User userDetails = new 
         org.springframework.security.core.userdetails.User(
-        user.getUserEmail(), user.getUserPassword(), user.isEnabled(), !user.isExpired(),
+        user.getEmail(), user.getPassword(), user.isEnabled(), !user.isExpired(),
         !user.isCredentialsexpired(), !user.isLocked(), grantedAuthorities);
 
     return userDetails;

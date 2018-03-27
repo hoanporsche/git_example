@@ -26,93 +26,97 @@ public class Supply implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "supply_id", nullable = false)
-  private Long supplyId;
-  
-  @Column(name = "supply_name", nullable = false)
+  @Column(name = "id", nullable = false)
+  private Long id;
+
+  @Column(name = "name", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 255)
-  private String supplyName;
-  
-  @Column(name = "supply_phone", nullable = false)
+  private String name;
+
+  @Column(name = "phone", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 20)
-  private String supplyPhone;
-  
-  @Column(name = "supply_address", nullable = false)
+  private String phone;
+
+  @Column(name = "address", nullable = false)
   @NotEmpty
   @Size(min = 10, max = 255)
-  private String supplyAddress;
-  
-  @Column(name = "supply_date_created", nullable = false)
-  private Date supplyDateCreated;
-  
-  @Column(name = "supply_date_updated", nullable = false)
-  private Date supplyDateUpdated;
-  
-  @Column(name = "supply_enabled", nullable = false)
-  private boolean supplyEnabled;
-  
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "materialSupply")
+  private String address;
+
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
+
+  @Column(name = "date_updated", nullable = false)
+  private Date dateUpdated;
+
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplyId")
   @JsonIgnore
   private List<Material> materials;
-  
-  public Supply() {}
-  
-  public Supply(Long id) {
-    this.supplyId = id;
+
+  public Supply() {
   }
-  
+
   public String toString() {
-    return this.supplyName + "," + this.supplyAddress;
+    return this.name;
+  }
+  public Long getId() {
+    return id;
   }
 
-  public Long getSupplyId() {
-    return supplyId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public void setSupplyId(Long supplyId) {
-    this.supplyId = supplyId;
+  public String getName() {
+    return name;
   }
 
-  public String getSupplyName() {
-    return supplyName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public void setSupplyName(String supplyName) {
-    this.supplyName = supplyName;
+  public String getPhone() {
+    return phone;
   }
 
-  public String getSupplyPhone() {
-    return supplyPhone;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-  public void setSupplyPhone(String supplyPhone) {
-    this.supplyPhone = supplyPhone;
+  public String getAddress() {
+    return address;
   }
 
-  public String getSupplyAddress() {
-    return supplyAddress;
+  public void setAddress(String address) {
+    this.address = address;
   }
 
-  public void setSupplyAddress(String supplyAddress) {
-    this.supplyAddress = supplyAddress;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public Date getSupplyDateCreated() {
-    return supplyDateCreated;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public void setSupplyDateCreated(Date supplyDateCreated) {
-    this.supplyDateCreated = supplyDateCreated;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public Date getSupplyDateUpdated() {
-    return supplyDateUpdated;
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
-  public void setSupplyDateUpdated(Date supplyDateUpdated) {
-    this.supplyDateUpdated = supplyDateUpdated;
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Material> getMaterials() {
@@ -123,12 +127,4 @@ public class Supply implements Serializable {
     this.materials = materials;
   }
 
-  public boolean isSupplyEnabled() {
-    return supplyEnabled;
-  }
-
-  public void setSupplyEnabled(boolean supplyEnabled) {
-    this.supplyEnabled = supplyEnabled;
-  }
-  
 }

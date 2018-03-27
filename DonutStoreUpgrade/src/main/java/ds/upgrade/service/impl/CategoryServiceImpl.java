@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Autowired
   private CategoryRepository categoryRepository;
-  
+
   /**
    * @description: .
    * @author: VDHoan
@@ -59,6 +60,30 @@ public class CategoryServiceImpl implements CategoryService {
   public Page<Category> findList(Pageable pageable, Boolean enabled) {
     Specification<Category> spec = new CategorySpecification(enabled);
     return categoryRepository.findAll(spec, pageable);
+  }
+
+  @Override
+  public Category save(Category category) {
+    if (category.getId() == null) {
+      category.setDateCreated(new Date());
+    } else {
+      Category foundCategory = categoryRepository.findOne(category.getId());
+      if (foundCategory == null)
+        return null;
+      category.setDateCreated(foundCategory.getDateCreated());
+    }
+    category.setDateUpdated(new Date());
+    category.setEnabled(true);
+    return categoryRepository.save(category);
+  }
+
+  @Override
+  public Category enabledOrNot(Long id) {
+    Category foundCategory = categoryRepository.findOne(id);
+    if (foundCategory == null)
+      return null;
+    foundCategory.setEnabled(!foundCategory.isEnabled());
+    return foundCategory;
   }
 
 }

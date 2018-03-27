@@ -10,8 +10,8 @@ import ds.upgrade.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 
-  Role findByroleName(String roleName);
+  Role findByname(String name);
   
-  @Query("SELECT r FROM Role r WHERE r.roleEnabled = true")
+  @Query("SELECT r FROM Role r WHERE r.enabled = true")
   List<Role> findAll();
 }

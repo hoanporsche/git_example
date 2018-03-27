@@ -27,161 +27,165 @@ public class Staff implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "staff_id", nullable = false)
-  private Long staffId;
+  @Column(name = "id", nullable = false)
+  private Long id;
   
   @Size(max = 255)
-  @Column(name = "staff_name", nullable = false)
-  private String staffName;
+  @Column(name = "name", nullable = false)
+  private String name;
   
   @Size(max = 1000)
-  @Column(name = "staff_picture")
-  private String staffPicture;
+  @Column(name = "picture")
+  private String picture;
   
   @ManyToOne
-  @JoinColumn(name = "staff_store", referencedColumnName = "store_id", nullable = false)
-  private Store staffStore;
+  @JoinColumn(name = "store_id", referencedColumnName = "id", nullable = false)
+  private Store storeId;
   
-  @Column(name = "staff_created_time", nullable = false)
-  private Date staffCreatedTime;
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
   
-  @Column(name = "staff_updated_time", nullable = false)
-  private Date staffUpdatedTime;
+  @Column(name = "date_updated", nullable = false)
+  private Date dateUpdated;
   
   @Size(max = 20)
-  @Column(name = "staff_phone_number", nullable = false)
-  private String staffPhoneNumber;
+  @Column(name = "phone", nullable = false)
+  private String phone;
   
   @Size(max = 255)
-  @Column(name = "staff_address", nullable = false)
-  private String staffAddress;
+  @Column(name = "address", nullable = false)
+  private String address;
   
   @Size(max = 12)
-  @Column(name = "staff_identity_card", nullable = false)
-  private String staffIdentityCard;
+  @Column(name = "identity_card", nullable = false)
+  private String identityCard;
   
   @Size(max = 255)
-  @Column(name = "staff_home_town", nullable = false)
-  private String staffHomeTown;
+  @Column(name = "home_town", nullable = false)
+  private String homeTown;
   
-  @Column(name = "staff_salary", nullable = false)
-  private BigDecimal staffSalary;
+  @Column(name = "salary", nullable = false)
+  private BigDecimal salary;
   
   @ManyToOne
   @JoinColumn(name = "working_calender_id", referencedColumnName = "id", nullable = false)
   private WorkingCalender workingCalenderId;
   
-  @Column(name = "staff_enabled", nullable = false)
-  private boolean staffEnabled;
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
   
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "staff")
+  @OneToMany(cascade = CascadeType.ALL,mappedBy = "staffId")
   @JsonIgnore
   private List<Timekeeping> timekeepings;
   
   public Staff() {}
   
-  public Staff(Long id) {
-    this.staffId = id;
-  }
-  
   public String toString() {
-    return this.staffName;
+    return this.name;
   }
 
-  public Long getStaffId() {
-    return staffId;
+  public Long getId() {
+    return id;
   }
 
-  public void setStaffId(Long staffId) {
-    this.staffId = staffId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public String getStaffName() {
-    return staffName;
+  public String getName() {
+    return name;
   }
 
-  public void setStaffName(String staffName) {
-    this.staffName = staffName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getStaffPicture() {
-    return staffPicture;
+  public String getPicture() {
+    return picture;
   }
 
-  public void setStaffPicture(String staffPicture) {
-    this.staffPicture = staffPicture;
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
-  public Store getStaffStore() {
-    return staffStore;
+  public Store getStoreId() {
+    return storeId;
   }
 
-  public void setStaffStore(Store staffStore) {
-    this.staffStore = staffStore;
+  public void setStoreId(Store storeId) {
+    this.storeId = storeId;
   }
 
-  public Date getStaffCreatedTime() {
-    return staffCreatedTime;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public void setStaffCreatedTime(Date staffCreatedTime) {
-    this.staffCreatedTime = staffCreatedTime;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public Date getStaffUpdatedTime() {
-    return staffUpdatedTime;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public void setStaffUpdatedTime(Date staffUpdatedTime) {
-    this.staffUpdatedTime = staffUpdatedTime;
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
-  public String getStaffPhoneNumber() {
-    return staffPhoneNumber;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setStaffPhoneNumber(String staffPhoneNumber) {
-    this.staffPhoneNumber = staffPhoneNumber;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-  public String getStaffAddress() {
-    return staffAddress;
+  public String getAddress() {
+    return address;
   }
 
-  public void setStaffAddress(String staffAddress) {
-    this.staffAddress = staffAddress;
+  public void setAddress(String address) {
+    this.address = address;
   }
 
-  public String getStaffIdentityCard() {
-    return staffIdentityCard;
+  public String getIdentityCard() {
+    return identityCard;
   }
 
-  public void setStaffIdentityCard(String staffIdentityCard) {
-    this.staffIdentityCard = staffIdentityCard;
+  public void setIdentityCard(String identityCard) {
+    this.identityCard = identityCard;
   }
 
-  public String getStaffHomeTown() {
-    return staffHomeTown;
+  public String getHomeTown() {
+    return homeTown;
   }
 
-  public void setStaffHomeTown(String staffHomeTown) {
-    this.staffHomeTown = staffHomeTown;
-  }
-  
-  public BigDecimal getStaffSalary() {
-    return staffSalary;
+  public void setHomeTown(String homeTown) {
+    this.homeTown = homeTown;
   }
 
-  public void setStaffSalary(BigDecimal staffSalary) {
-    this.staffSalary = staffSalary;
+  public BigDecimal getSalary() {
+    return salary;
   }
 
-  public boolean isStaffEnabled() {
-    return staffEnabled;
+  public void setSalary(BigDecimal salary) {
+    this.salary = salary;
   }
 
-  public void setStaffEnabled(boolean staffEnabled) {
-    this.staffEnabled = staffEnabled;
+  public WorkingCalender getWorkingCalenderId() {
+    return workingCalenderId;
+  }
+
+  public void setWorkingCalenderId(WorkingCalender workingCalenderId) {
+    this.workingCalenderId = workingCalenderId;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Timekeeping> getTimekeepings() {
@@ -192,12 +196,4 @@ public class Staff implements Serializable {
     this.timekeepings = timekeepings;
   }
 
-  public WorkingCalender getWorkingCalenderId() {
-    return workingCalenderId;
-  }
-
-  public void setWorkingCalenderId(WorkingCalender workingCalenderId) {
-    this.workingCalenderId = workingCalenderId;
-  }
-  
 }
