@@ -83,6 +83,6 @@ public class ItemServiceImpl implements ItemService {
     if (foundItem == null)
       return null;
     foundItem.setEnabled(!foundItem.isEnabled());
-    return foundItem;
+    return itemRepository.save(foundItem);
   }
 }

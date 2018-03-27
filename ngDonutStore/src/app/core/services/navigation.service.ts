@@ -71,8 +71,7 @@ export class NavigationService {
 
   //Category nav
   navCategoryList() {
-    console.log(this.getRoleSegment() + '/category');
-    // this.router.navigateByUrl(this.getRoleSegment() + '/category');
+    this.router.navigateByUrl(this.getRoleSegment() + '/category');
   }
 
   //Item nav

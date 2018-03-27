@@ -30,7 +30,7 @@ public class Category implements Serializable {
   @Column(name = "id", nullable = false)
   private Long id;
   @NotEmpty
-  @Size(min = 10, max = 255)
+  @Size(max = 255)
   @Column(name = "name", nullable = false)
   private String name;
   @Column(name = "date_created", nullable = false)

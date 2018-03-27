@@ -13,4 +13,6 @@ public interface CategoryRepository
 
   @Query("SELECT c FROM Category c WHERE c.enabled = true")
   List<Category> findAll();
+  
+  Category findByName(String name);
 }

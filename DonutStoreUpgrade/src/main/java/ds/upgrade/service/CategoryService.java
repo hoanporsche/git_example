@@ -18,4 +18,6 @@ public interface CategoryService {
   Category save(Category category);
   
   Category enabledOrNot(Long id);
+  
+  Category findByName(String name);
 }

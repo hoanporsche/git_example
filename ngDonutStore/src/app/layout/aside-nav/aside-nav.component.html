@@ -17,7 +17,7 @@
       <!-- USER MENU FOR ADMIN ONLY -->
       <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
         aria-haspopup="true" data-menu-submenu-toggle="hover">
-        <a href="#" class="m-menu__link m-menu__toggle">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
           <i class="m-menu__link-icon flaticon-file"></i>
           <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
           <span class="m-menu__link-text">
@@ -37,7 +37,7 @@
               </a>
             </li>
             <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-              <a href="#" class="m-menu__link" (click)="navCategoryList()">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navCategoryList()">
                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                   <span></span>
                 </i>

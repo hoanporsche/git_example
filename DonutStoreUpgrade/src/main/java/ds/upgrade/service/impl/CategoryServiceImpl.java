@@ -83,7 +83,21 @@ public class CategoryServiceImpl implements CategoryService {
     if (foundCategory == null)
       return null;
     foundCategory.setEnabled(!foundCategory.isEnabled());
-    return foundCategory;
+    return categoryRepository.save(foundCategory);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Mar 27, 2018
+   * @modifier: hoan
+   * @modifier_date: Mar 27, 2018
+   * @param name
+   * @return
+   */
+  @Override
+  public Category findByName(String name) {
+    return categoryRepository.findByName(name);
   }
 
 }

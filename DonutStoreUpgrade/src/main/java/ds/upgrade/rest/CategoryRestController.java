@@ -110,11 +110,21 @@ public class CategoryRestController {
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
+  /**
+   * @description: /save.
+   * @author: VDHoan
+   * @created_date: Mar 27, 2018
+   * @modifier: hoan
+   * @modifier_date: Mar 27, 2018
+   * @param category
+   * @param result
+   * @return
+   */
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Category category,
       BindingResult result) {
     try {
-      if (result.hasErrors()) 
+      if (result.hasErrors())
         return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       category = categoryService.save(category);
       if (category != null)
@@ -125,7 +135,16 @@ public class CategoryRestController {
     }
     return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
-  
+
+  /**
+   * @description: /enabled-or-not.
+   * @author: VDHoan
+   * @created_date: Mar 27, 2018
+   * @modifier: hoan
+   * @modifier_date: Mar 27, 2018
+   * @param id
+   * @return
+   */
   @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -135,6 +154,28 @@ public class CategoryRestController {
         return new ResponseEntity<Category>(category, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+
+  /**
+   * @description: /find-by-name.
+   * @author: VDHoan
+   * @created_date: Mar 27, 2018
+   * @modifier: hoan
+   * @modifier_date: Mar 27, 2018
+   * @param name
+   * @return
+   */
+  @GetMapping(Constants.API_URL.FIND_BY_NAME)
+  public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
+    try {
+      Category category = categoryService.findByName(name);
+      if (category != null)
+        return new ResponseEntity<Category>(category, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);

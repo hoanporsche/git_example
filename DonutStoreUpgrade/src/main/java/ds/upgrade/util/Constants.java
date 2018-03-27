@@ -25,6 +25,7 @@ public class Constants {
   public static class PARAM {
     public static final String ID_PARAM = "id";
     public static final String ENABLED_PARAM = "enabled";
+    public static final String NAME_PARAM = "name";
   }
   
   public static class API_URL {
@@ -32,6 +33,7 @@ public class Constants {
     public static final String FIND_ALL = "/find-all";
     public static final String FIND_ONE = "/find-one";
     public static final String FIND_LIST = "/find-list";
+    public static final String FIND_BY_NAME = "/find-by-name";
     public static final String SAVE = "/save";
     public static final String ENABLED_OR_NOT = "/enabled-or-not";
   }
