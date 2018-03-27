@@ -18,28 +18,28 @@ import ds.upgrade.service.WorkingCalenderService;
 import ds.upgrade.util.Constants;
 
 /**
- * @description: .
+ * @description: /api/working-calender.
  * @author: VDHoan
  * @created_date: Mar 21, 2018
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping("/api/working-calender")
+@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.WORKING_CALENDER_MODEL)
 public class WorkingCalenderRestController {
 
   @Autowired
   private WorkingCalenderService workingCalenderService;
 
   /**
-   * @description: .
+   * @description: /find-all.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping("/find-all")
+  @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<WorkingCalender> list = workingCalenderService.findAll();
@@ -53,7 +53,7 @@ public class WorkingCalenderRestController {
   }
 
   /**
-   * @description: .
+   * @description: "/find-one".
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
@@ -61,7 +61,7 @@ public class WorkingCalenderRestController {
    * @param id
    * @return
    */
-  @GetMapping("/find-one")
+  @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);

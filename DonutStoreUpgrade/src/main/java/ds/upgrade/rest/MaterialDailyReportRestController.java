@@ -18,28 +18,28 @@ import ds.upgrade.service.MaterialDailyReportService;
 import ds.upgrade.util.Constants;
 
 /**
- * @description: .
+ * @description: /api/material-daily-report.
  * @author: VDHoan
  * @created_date: Mar 21, 2018
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping("/api/material-daily-report")
+@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.MATERIAL_DAILY_REPORT_MODEL)
 public class MaterialDailyReportRestController {
 
   @Autowired
   private MaterialDailyReportService materialDailyReportService;
 
   /**
-   * @description: .
+   * @description: /find-all.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping("/find-all")
+  @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<MaterialDailyReport> list = materialDailyReportService.findAll();
@@ -53,7 +53,7 @@ public class MaterialDailyReportRestController {
   }
 
   /**
-   * @description: .
+   * @description: /find-one.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
@@ -61,7 +61,7 @@ public class MaterialDailyReportRestController {
    * @param id
    * @return
    */
-  @GetMapping("/find-one")
+  @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);

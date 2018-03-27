@@ -3,10 +3,14 @@ package ds.upgrade.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Category;
 import ds.upgrade.repository.CategoryRepository;
+import ds.upgrade.repository.specification.CategorySpecification;
 import ds.upgrade.service.CategoryService;
 
 @Service
@@ -40,6 +44,21 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public Category findOne(Long id) {
     return categoryRepository.findOne(id);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Mar 26, 2018
+   * @modifier: hoan
+   * @modifier_date: Mar 26, 2018
+   * @param pageable
+   * @return
+   */
+  @Override
+  public Page<Category> findList(Pageable pageable, Boolean enabled) {
+    Specification<Category> spec = new CategorySpecification(enabled);
+    return categoryRepository.findAll(spec, pageable);
   }
 
 }

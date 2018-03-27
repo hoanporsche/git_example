@@ -18,28 +18,28 @@ import ds.upgrade.service.TimekeepingStatusService;
 import ds.upgrade.util.Constants;
 
 /**
- * @description: .
+ * @description: /api/timekeeping-status.
  * @author: VDHoan
  * @created_date: Mar 21, 2018
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping("/api/timekeeping-status")
+@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.TIMEKEEPING_STATUS_MODEL)
 public class TimekeepingStatusRestController {
 
   @Autowired
   private TimekeepingStatusService timekeepingStatusService;
 
   /**
-   * @description: .
+   * @description: /find-all.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping("/find-all")
+  @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<TimekeepingStatus> list = timekeepingStatusService.findAll();
@@ -53,7 +53,7 @@ public class TimekeepingStatusRestController {
   }
 
   /**
-   * @description: .
+   * @description: /find-one.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
@@ -61,7 +61,7 @@ public class TimekeepingStatusRestController {
    * @param id
    * @return
    */
-  @GetMapping("/find-one")
+  @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
