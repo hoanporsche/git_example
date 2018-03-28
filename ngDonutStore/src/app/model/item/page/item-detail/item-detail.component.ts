@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Item } from '../../item';
 import { ItemService } from '../../service/item.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { Material } from '../../../material/material';
 
 @Component({
   selector: 'app-item-detail',
@@ -19,6 +20,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   @Input() listCategory: Category[];
 
+  @Input() listMaterial: Material[];
+
   formItem: FormGroup;
 
   private subItem: Subscription;
@@ -32,8 +35,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       picture: ['', Validators.required],
       singleValue: ['', Validators.required],
-      categoryId: ['', Validators.required]
-    })
+      categoryId: ['', Validators.required],
+      materials: [''],
+    });
+    this.materials.setValue(this.itemService.getItem().materials);
   }
 
   ngOnInit() {
@@ -55,13 +60,15 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       });
   }
   onSubmit() {
+    console.log(this.formItem.value);
     if (this.formItem.valid) {
       const item = {
         id: this.oldItem.id,
         name: this.name.value,
         picture: this.picture.value,
         singleValue: this.singleValue.value,
-        categoryId: this.categoryId.value
+        categoryId: this.categoryId.value,
+        materials: this.materials.value,
       }
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
@@ -72,6 +79,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
           this.submitted.emit('fail');
         });
     }
+  }
+
+  onChangeItem() {
+    this.materials.setValue(this.itemService.getItem().materials);
+    this.categoryId.setValue(this.itemService.getItem().categoryId);
   }
 
   get name() {
@@ -88,5 +100,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   get categoryId() {
     return this.formItem.get('categoryId');
+  }
+
+  get materials() {
+    return this.formItem.get('materials');
   }
 }

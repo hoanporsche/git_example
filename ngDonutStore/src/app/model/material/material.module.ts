@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialComponent } from './material.component';
 import { SharedModule } from './../../shared/shared.module';
 import { MaterialRoutingModule } from './material.routing';
@@ -7,12 +8,14 @@ import { MaterialCreateComponent } from './page/material-create/material-create.
 import { MaterialDetailComponent } from './page/material-detail/material-detail.component';
 import { MaterialListComponent } from './page/material-list/material-list.component';
 import { MaterialService } from './service/material.service';
+import { SupplyService } from '../supply/service/supply.service';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialRoutingModule,
     SharedModule,
+    NgbModule
   ],
   declarations: [
     MaterialComponent,
@@ -21,7 +24,8 @@ import { MaterialService } from './service/material.service';
     MaterialListComponent
   ],
   providers: [
-    MaterialService
+    MaterialService,
+    SupplyService
   ]
 })
 export class MaterialModule { }

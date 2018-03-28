@@ -1,3 +1,4 @@
+import { Material } from './../../../material/material';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -21,6 +22,8 @@ export class ItemCreateComponent implements OnInit, OnDestroy {
 
   @Input() listCategory: Category[];
 
+  @Input() listMaterial: Material[];
+
   formItem: FormGroup;
 
   private subItem: Subscription;
@@ -33,7 +36,8 @@ export class ItemCreateComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required], [ItemValidator.shouldBeUnique(this.itemService)]],
       picture: ['', Validators.required],
       singleValue: ['', Validators.required],
-      categoryId: ['', Validators.required]
+      categoryId: ['', Validators.required],
+      materials: [''],
     })
   }
 
@@ -50,7 +54,8 @@ export class ItemCreateComponent implements OnInit, OnDestroy {
         name: this.name.value,
         picture: this.picture.value,
         singleValue: this.singleValue.value,
-        categoryId: this.categoryId.value
+        categoryId: this.categoryId.value,
+        materials: this.materials.value
       }
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
@@ -78,6 +83,10 @@ export class ItemCreateComponent implements OnInit, OnDestroy {
 
   get categoryId() {
     return this.formItem.get('categoryId');
+  }
+
+  get materials() {
+    return this.formItem.get('materials');
   }
 
 }

@@ -10,8 +10,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.model.Material;
+import ds.upgrade.model.Store;
 import ds.upgrade.repository.ItemRepository;
+import ds.upgrade.repository.MaterialRepository;
+import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.ItemSpecification;
+import ds.upgrade.repository.specification.MaterialSpecification;
+import ds.upgrade.repository.specification.StoreSpecification;
 import ds.upgrade.service.ItemService;
 
 @Service
@@ -19,7 +25,10 @@ public class ItemServiceImpl implements ItemService {
 
   @Autowired
   private ItemRepository itemRepository;
-  
+  @Autowired
+  private MaterialRepository materialRepository;
+  @Autowired
+  private StoreRepository storeRepository;
   /**
    * @description: .
    * @author: VDHoan
@@ -58,7 +67,7 @@ public class ItemServiceImpl implements ItemService {
    */
   @Override
   public Page<Item> findList(Pageable pageable, Boolean enabled) {
-    Specification<Item> spec = new ItemSpecification(enabled);
+    Specification<Item> spec = new ItemSpecification(enabled, null);
     return itemRepository.findAll(spec, pageable);
   }
 
@@ -82,6 +91,12 @@ public class ItemServiceImpl implements ItemService {
     Item foundItem = itemRepository.findOne(id);
     if (foundItem == null)
       return null;
+    if (foundItem.isEnabled()) {
+      List<Material> listMaterial = materialRepository.findAll(new MaterialSpecification(true, id));
+      List<Store> listStore = storeRepository.findAll(new StoreSpecification(true, id));
+      if (listMaterial.size() > 0 || listStore.size() > 0)
+        return null;
+    }
     foundItem.setDateUpdated(new Date());
     foundItem.setEnabled(!foundItem.isEnabled());
     return itemRepository.save(foundItem);

@@ -1,3 +1,5 @@
+import { MaterialService } from './../../../material/service/material.service';
+import { Material } from './../../../material/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CONFIG } from '../../../../shared/constants/configuration.constant';
 import { Item } from '../../item';
@@ -20,6 +22,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   listItem: Item[];
   oldItem: Item;
   listCategory: Category[];
+  listMaterial: Material[];
 
   requestPage;
   notFoundMessage = '';
@@ -32,18 +35,25 @@ export class ItemListComponent implements OnInit, OnDestroy {
   currentSortProperty = '';
 
   private params = {
+    enabled: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
   }
+  enabled = [
+    { view: 'true' },
+    { view: 'false' }
+  ]
 
   private subListItem: Subscription;
   private subSortService: Subscription;
   private subItem: Subscription;
   private subListCategory: Subscription;
+  private subListMaterial: Subscription;
 
   constructor(private itemService: ItemService,
     private categoryService: CategoryService,
+    private materialService: MaterialService,
     private navigationService: NavigationService,
     private sortService: SortService
   ) {
@@ -57,6 +67,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.subListCategory = this.categoryService.findAll()
       .subscribe(response => {
         this.listCategory = response;
+      });
+    this.subListMaterial = this.materialService.findAll()
+      .subscribe(response => {
+        this.listMaterial = response;
       })
   }
 
@@ -69,6 +83,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
       this.subItem.unsubscribe();
     if (this.subListCategory)
       this.subListCategory.unsubscribe();
+    if (this.subListMaterial)
+      this.subListMaterial.unsubscribe();
   }
 
   findList() {
@@ -76,6 +92,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.listItem = response.content;
+        console.log(this.listItem)
         if (this.listItem.length === 0) {
           this.notFoundMessage = "We're not found any contents";
         } else {

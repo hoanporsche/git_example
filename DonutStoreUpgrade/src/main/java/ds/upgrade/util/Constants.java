@@ -20,12 +20,18 @@ public class Constants {
     public static final String NOT_RETRIVE_DATA = "Not retrive data";
     public static final String SERVER_ERROR = "Internal Server Error";
     public static final String NOT_SAVE = "Saving content has error";
+    public static final String NOT_DISABLED = "Please Make sure you have a replacement";
   }
   
   public static class PARAM {
     public static final String ID_PARAM = "id";
     public static final String ENABLED_PARAM = "enabled";
     public static final String NAME_PARAM = "name";
+  }
+  
+  public static class PROPERTY {
+    public static final String ITEMS_PROPERTY = "items";
+    public static final String MATERIALS_PROPERTY = "materials";
   }
   
   public static class API_URL {

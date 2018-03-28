@@ -29,10 +29,15 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   currentSortProperty = '';
 
   private params = {
+    enabled: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
   }
+  enabled = [
+    { view: 'true' },
+    { view: 'false' }
+  ]
 
   private subListCategory: Subscription;
   private subSortService: Subscription;

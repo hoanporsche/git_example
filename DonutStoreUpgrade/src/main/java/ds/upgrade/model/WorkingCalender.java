@@ -32,8 +32,8 @@ public class WorkingCalender implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "tilte", nullable = false)
-  private String title;
+  @Column(name = "name", nullable = false)
+  private String name;
   @Size(max = 255)
   @Column(name = "desciption")
   private String description;
@@ -51,7 +51,7 @@ public class WorkingCalender implements Serializable {
   }
   
   public String toString() {
-    return this.title;
+    return this.name;
   }
 
   public Long getId() {
@@ -62,12 +62,12 @@ public class WorkingCalender implements Serializable {
     this.id = id;
   }
 
-  public String getTitle() {
-    return title;
+  public String getName() {
+    return name;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getDescription() {

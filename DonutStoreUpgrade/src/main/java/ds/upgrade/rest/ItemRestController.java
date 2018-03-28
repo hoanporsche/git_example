@@ -159,7 +159,7 @@ public class ItemRestController {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(Constants.REPONSE.NOT_DISABLED, HttpStatus.BAD_REQUEST);
   }
   
   /**

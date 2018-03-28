@@ -1,12 +1,12 @@
 <form [formGroup]="formItem" (ngSubmit)="onSubmit()">
   <div class="form-group m-form__group row">
     <label class="col-form-label col-lg-3 col-sm-12 required">
-      Title
+      Name
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter item's title" [(ngModel)]="itemService.getItem().name"
-          (blur)="validateName()">
+        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter item's name" [(ngModel)]="itemService.getItem().name"
+          (blur)="validateName()" (ngModelChange)="onChangeItem()">
         <div class="error-no-padding" *ngIf="name.touched && name.invalid">
           <div *ngIf="name.hasError('required')">
             Name is required.
@@ -39,7 +39,8 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5" placeholder="Enter item's single value" [(ngModel)]="itemService.getItem().singleValue">
+        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5"
+        OnlyNumber placeholder="Enter item's single value" [(ngModel)]="itemService.getItem().singleValue">
         <div class="error-no-padding" *ngIf="singleValue.touched && singleValue.invalid">
           <div *ngIf="singleValue.hasError('required')">
             Single Value is required.
@@ -48,7 +49,6 @@
       </div>
     </div>
   </div>
-
   <div class="form-group m-form__group row">
     <label class="col-form-label col-lg-3 col-sm-12 required">
       Category
@@ -65,6 +65,20 @@
             Category is required.
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12">
+      Material
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <select class="form-control m-input" formControlName="materials" multiple>
+          <option *ngFor="let material of listMaterial" [ngValue]="material" >
+            {{ material?.name }}
+          </option>
+        </select>
       </div>
     </div>
   </div>

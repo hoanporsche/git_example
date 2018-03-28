@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Material;
+import ds.upgrade.util.Constants;
 
 /**
  * @description: .
@@ -20,6 +21,17 @@ import ds.upgrade.model.Material;
  * @modifier_date: Mar 6, 2018
  */
 public class MaterialSpecification implements Specification<Material> {
+
+  private Boolean enabled;
+  
+  private Long itemId;
+
+  public MaterialSpecification() {}
+  
+  public MaterialSpecification(Boolean enabled, Long itemId) {
+    this.enabled = enabled;
+    this.itemId = itemId;
+  }
 
   /**
    * @description: .
@@ -33,9 +45,17 @@ public class MaterialSpecification implements Specification<Material> {
    * @return
    */
   @Override
-  public Predicate toPredicate(Root<Material> arg0, CriteriaQuery<?> arg1, CriteriaBuilder arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public Predicate toPredicate(Root<Material> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    Predicate predicate = cb.conjunction();
+    if (enabled != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    if (itemId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.join(Constants.PROPERTY.ITEMS_PROPERTY).<Long>get(Constants.PARAM.ID_PARAM), itemId));
+    }
+    return predicate;
   }
 
 }

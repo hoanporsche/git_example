@@ -89,7 +89,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `title` NVARCHAR(255) NOT NULL,
+    `name` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`))
@@ -165,7 +165,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `title` NVARCHAR(255) NOT NULL,
+    `name` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`))
@@ -201,7 +201,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `title` NVARCHAR(255) NOT NULL,
+    `name` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`))

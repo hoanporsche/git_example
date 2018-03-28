@@ -12,4 +12,6 @@ public interface TimekeepingStatusRepository extends JpaRepository<TimekeepingSt
 
   @Query("SELECT ts FROM TimekeepingStatus ts WHERE ts.enabled = true")
   List<TimekeepingStatus> findAll();
+  
+  TimekeepingStatus findByName(String name);
 }

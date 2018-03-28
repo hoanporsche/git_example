@@ -85,6 +85,7 @@
                         <th sortable-column="singleValue">Single Value</th>
                         <th sortable-column="picture">Picture</th>
                         <th sortable-column="categoryId.name">Category</th>
+                        <th>Material</th>
                         <th sortable-column="dateCreated">Date Created</th>
                         <th sortable-column="dateUpdated">Date Updated</th>
                         <th sortable-column="enabled">Enabled</th>
@@ -102,11 +103,13 @@
                           <span placement="top" ngbTooltip="{{ item?.singleValue }}">{{ item?.singleValue }}</span>
                         </td>
                         <td>
-                          <img width="200" src="https://lh3.googleusercontent.com/JWCh2Ff8Bx6Wmszf1hTRdwWZx9BGA3diHHuqZzbONEc5UmigCR7oP9bvvnnA-owhzJehnzOEUOPEhgHXi2amGHrllhqYnTTxbTSaB3gkaTt-unsKmNvF5AqA_BccvelNg9HKlKp9uY_U4Vc5Y-pKzoHi0X5DJ0YUivFrCSP_t3osE1rNMWZzEQkaREWt4yVsAV6KQolwyNLofjncpwFqTp3wMJ-UR5DXUcgDJYmjXc_oNTJ9PNFCb2l0L1c9tv37aMXxPuRBhEtCbA6pTHzfvPSkEJdaGpqDGtFwKPHt_-lQZ969H-yCjwZU_1RvZ1rQIU6z_m7du6eAvQNG6u3OXs0SU6GBQFVkIIp4nOOXbxzteYVLXuz2y9UbeXKem_rO64PGbYbmnvToqDZoOR-PPBjMAWYZscu8EcdFdFCPnItAi8Iz7kVqRsCi55rXGuKr3E6RsYwAqoMJ3RGbg8s0z_MIgBBpALBDoqvOY1kc8UNKEZmUTszY6SjiSBvEOIQA-YYMLmMDBFNKopDZf9kJq1Uatr0_NFvYIEnBjGJGDxIeHOTrRKQNnwtmYtar9g-qP3bY-pNmqGRDXN2GeGnd1wY78ZKB0oDF=s660-no"/>
-                          <span>{{ item?.picture | summary: 50}}</span>
+                          <img width="200" [src]="item?.picture"/>
                         </td>
                         <td>
                           <span placement="top" ngbTooltip="{{ item?.categoryId.name }}">{{ item?.categoryId.name | summary: 20 }}</span>
+                        </td>
+                        <td>
+                          <p *ngFor="let material of item?.materials">{{ material.name}}</p>
                         </td>
                         <td>
                           <span placement="top" ngbTooltip="{{ item?.dateCreated }}">{{ item?.dateCreated | date }}</span>
@@ -115,8 +118,8 @@
                           <span placement="top" ngbTooltip="{{ item?.dateUpdated }}">{{ item?.dateUpdated | date }}</span>
                         </td>
                         <td>
-                          <span *ngIf="item?.enabled">Active</span>
-                          <span *ngIf="!item?.enabled">In-Active</span>
+                          <span *ngIf="item?.enabled" style="color: red">Active</span>
+                          <span *ngIf="!item?.enabled" style="color: black">In-Active</span>
                         </td>
                         <td>
                           <i class="la la-edit" (click)="onDetail(item)" placement="top" ngbTooltip="View detail">
@@ -175,7 +178,7 @@
           </h5>
         </div>
         <div class="modal-body">
-          <app-item-create [listCategory]="listCategory" (submitted)="itemSubmitted($event)"></app-item-create>
+          <app-item-create [listCategory]="listCategory" [listMaterial]="listMaterial" (submitted)="itemSubmitted($event)"></app-item-create>
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -194,7 +197,7 @@
           </h5>
         </div>
         <div class="modal-body">
-          <app-item-detail [oldItem]="oldItem" [listCategory]="listCategory" (submitted)="itemUpdated($event)"></app-item-detail>
+          <app-item-detail [oldItem]="oldItem" [listCategory]="listCategory" [listMaterial]="listMaterial" (submitted)="itemUpdated($event)"></app-item-detail>
         </div>
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">

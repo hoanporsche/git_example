@@ -59,7 +59,6 @@ public class Item implements Serializable {
 
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
-  @JsonIgnore
   private Set<Material> materials;
 
   @ManyToMany(mappedBy = "items")

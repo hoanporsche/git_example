@@ -7,12 +7,14 @@ import { SupplyListComponent } from './page/supply-list/supply-list.component';
 import { SupplyRoutingModule } from './supply.routing';
 import { SupplyService } from './service/supply.service';
 import { SupplyComponent } from './supply.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     SupplyRoutingModule,
     SharedModule,
+    NgbModule
   ],
   declarations: [
     SupplyComponent,

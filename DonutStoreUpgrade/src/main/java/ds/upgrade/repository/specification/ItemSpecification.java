@@ -24,10 +24,13 @@ public class ItemSpecification implements Specification<Item> {
 
   private Boolean enabled;
   
+  private Long materialId;
+  
   public ItemSpecification() {}
   
-  public ItemSpecification(Boolean enabled ) {
+  public ItemSpecification(Boolean enabled, Long materialId) {
     this.enabled = enabled;
+    this.materialId = materialId;
   }
   /**
    * @description: .
@@ -46,6 +49,10 @@ public class ItemSpecification implements Specification<Item> {
     if (enabled != null) {
       predicate = cb.and(predicate,
           cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    if (materialId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.join(Constants.PROPERTY.MATERIALS_PROPERTY).<Long>get(Constants.PARAM.ID_PARAM), materialId));
     }
     return predicate;
   }

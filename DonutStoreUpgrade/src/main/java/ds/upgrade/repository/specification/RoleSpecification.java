@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Role;
+import ds.upgrade.util.Constants;
 
 /**
  * @description: .
@@ -21,21 +22,22 @@ import ds.upgrade.model.Role;
  */
 public class RoleSpecification implements Specification<Role> {
 
-  /**
-   * @description: .
-   * @author: VDHoan
-   * @created_date: Mar 6, 2018
-   * @modifier: User
-   * @modifier_date: Mar 6, 2018
-   * @param arg0
-   * @param arg1
-   * @param arg2
-   * @return
-   */
+  private Boolean enabled;
+
+  public RoleSpecification() {}
+
+  public RoleSpecification(Boolean enabled) {
+    this.enabled = enabled;
+  }
+
   @Override
-  public Predicate toPredicate(Root<Role> arg0, CriteriaQuery<?> arg1, CriteriaBuilder arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public Predicate toPredicate(Root<Role> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    Predicate predicate = cb.conjunction();
+    if (enabled != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    return predicate;
   }
 
 }
