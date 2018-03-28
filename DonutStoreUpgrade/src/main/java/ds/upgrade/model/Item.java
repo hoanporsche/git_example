@@ -43,7 +43,6 @@ public class Item implements Serializable {
 
   @ManyToOne
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-  @JsonIgnore
   private Category categoryId;
 
   @Column(name = "date_created", nullable = false)

@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs/Subscription';
 import { NavigationService } from './../../../../core/services/navigation.service';
 import { CategoryService } from './../../service/category.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryValidator } from '../../../../shared/custom-validator/category.validator';
 
@@ -9,12 +10,18 @@ import { CategoryValidator } from '../../../../shared/custom-validator/category.
   templateUrl: './category-create.component.html',
   styleUrls: ['./category-create.component.css']
 })
-export class CategoryCreateComponent implements OnInit {
+export class CategoryCreateComponent implements OnInit, OnDestroy {
 
+  ngOnDestroy(): void {
+    if (this.subCategory)
+      this.subCategory.unsubscribe();
+  }
   // To inform parent when the department is created successfully.
   @Output() submitted = new EventEmitter<string>();
 
   formCategory: FormGroup;
+
+  private subCategory: Subscription;
   constructor(
     private categoryService: CategoryService,
     private navigationService: NavigationService,
@@ -36,7 +43,7 @@ export class CategoryCreateComponent implements OnInit {
       const category = {
         name: this.name.value
       }
-      this.categoryService.save(category)
+      this.subCategory = this.categoryService.save(category)
         .subscribe(response => {
           if (response.name === this.name.value) {
             this.submitted.emit('success');

@@ -6,6 +6,8 @@ import { NavigationService } from '../../../../core/services/navigation.service'
 import { SortService } from '../../../../core/services/sort.service';
 import { ItemService } from '../../service/item.service';
 import { sortByProperty } from '../../../../shared/helpers/data.helper';
+import { Category } from '../../../category/category';
+import { CategoryService } from '../../../category/service/category.service';
 
 declare var $: any;
 @Component({
@@ -17,6 +19,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   listItem: Item[];
   oldItem: Item;
+  listCategory: Category[];
 
   requestPage;
   notFoundMessage = '';
@@ -37,14 +40,25 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private subListItem: Subscription;
   private subSortService: Subscription;
   private subItem: Subscription;
+  private subListCategory: Subscription;
 
   constructor(private itemService: ItemService,
+    private categoryService: CategoryService,
     private navigationService: NavigationService,
     private sortService: SortService
-  ) { }
+  ) {
+    this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
+      this.sort(colName);
+    });
+  }
 
   ngOnInit() {
-  }  
+    this.findList();
+    this.subListCategory = this.categoryService.findAll()
+      .subscribe(response => {
+        this.listCategory = response;
+      })
+  }
 
   ngOnDestroy(): void {
     if (this.subListItem)
@@ -53,6 +67,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
       this.subSortService.unsubscribe();
     if (this.subItem)
       this.subItem.unsubscribe();
+    if (this.subListCategory)
+      this.subListCategory.unsubscribe();
   }
 
   findList() {
@@ -60,7 +76,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.listItem = response.content;
-        if (this.listItem.length === 0){
+        if (this.listItem.length === 0) {
           this.notFoundMessage = "We're not found any contents";
         } else {
           this.notFoundMessage = "";
@@ -108,13 +124,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   last() {
     if (!this.requestPage.last) {
-      this.params.page = this.requestPage.totalPages - 1;      
+      this.params.page = this.requestPage.totalPages - 1;
       this.findList();
     }
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({show: true, backdrop: 'static'});
+    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   itemSubmitted(event) {
@@ -140,15 +156,15 @@ export class ItemListComponent implements OnInit, OnDestroy {
   onDetail(item) {
     this.oldItem = item;
     this.itemService.setItem(JSON.parse(JSON.stringify(item)));
-    $('#modal_update').appendTo("body").modal('show');  
+    $('#modal_update').appendTo("body").modal('show');
   }
 
   onEnabledOrNot(id) {
-    this.subItem = this.itemService.enabledOrNot({id: id})
+    this.subItem = this.itemService.enabledOrNot({ id: id })
       .subscribe(response => {
         this.error.isError = false;
         this.findList();
-      },(error: Error) => {
+      }, (error: Error) => {
         this.error.isError = true;
         this.error.message = error.message;
       })

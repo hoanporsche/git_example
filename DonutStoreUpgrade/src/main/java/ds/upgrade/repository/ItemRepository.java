@@ -12,4 +12,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
 
   @Query("SELECT i FROM Item i WHERE i.enabled = true")
   List<Item> findAll();
+  
+  Item findByName(String name);
 }

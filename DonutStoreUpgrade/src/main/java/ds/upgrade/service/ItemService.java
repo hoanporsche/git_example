@@ -18,4 +18,6 @@ public interface ItemService {
   Item save(Item item);
   
   Item enabledOrNot(Long id);
+
+  Item findByName(String name);
 }

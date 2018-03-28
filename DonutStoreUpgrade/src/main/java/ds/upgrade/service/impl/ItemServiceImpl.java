@@ -82,7 +82,22 @@ public class ItemServiceImpl implements ItemService {
     Item foundItem = itemRepository.findOne(id);
     if (foundItem == null)
       return null;
+    foundItem.setDateUpdated(new Date());
     foundItem.setEnabled(!foundItem.isEnabled());
     return itemRepository.save(foundItem);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Mar 28, 2018
+   * @modifier: User
+   * @modifier_date: Mar 28, 2018
+   * @param name
+   * @return
+   */
+  @Override
+  public Item findByName(String name) {
+    return itemRepository.findByName(name);
   }
 }

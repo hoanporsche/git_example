@@ -5,7 +5,7 @@
       </label>
       <div class="col-lg-9 col-md-9 col-sm-12">
         <div class="input-group">
-          <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter department's title"
+          <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter category's title"
           [(ngModel)]="categoryService.getCategory().name" (blur)="validateName()">
           <div class="error-no-padding" *ngIf="name.touched && name.invalid">
             <div *ngIf="name.hasError('required')">

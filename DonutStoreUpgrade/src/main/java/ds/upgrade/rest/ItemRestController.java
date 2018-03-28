@@ -111,6 +111,16 @@ public class ItemRestController {
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
+  /**
+   * @description: /save.
+   * @author: VDHoan
+   * @created_date: Mar 28, 2018
+   * @modifier: User
+   * @modifier_date: Mar 28, 2018
+   * @param item
+   * @param result
+   * @return
+   */
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Item item,
       BindingResult result) {
@@ -127,6 +137,15 @@ public class ItemRestController {
     return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
   
+  /**
+   * @description: /enabled-or-not.
+   * @author: VDHoan
+   * @created_date: Mar 28, 2018
+   * @modifier: User
+   * @modifier_date: Mar 28, 2018
+   * @param id
+   * @return
+   */
   @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -136,6 +155,28 @@ public class ItemRestController {
         return new ResponseEntity<Item>(item, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+  
+  /**
+   * @description: /find-by-name.
+   * @author: VDHoan
+   * @created_date: Mar 27, 2018
+   * @modifier: hoan
+   * @modifier_date: Mar 27, 2018
+   * @param name
+   * @return
+   */
+  @GetMapping(Constants.API_URL.FIND_BY_NAME)
+  public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
+    try {
+      Item item = itemService.findByName(name);
+      if (item != null)
+        return new ResponseEntity<Item>(item, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
