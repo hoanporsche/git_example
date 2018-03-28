@@ -2,13 +2,13 @@ import { Supply } from './../supply/supply';
 
 export class Material {
   constructor(
-    public materialName: string,
-    public materialPicture: string,
-    public materialSupply: Supply,
-    public materialSingleValue: number,
-    public materialId?: number,
-    public materialEnbled?: boolean,
-    public materialDateCreated?: Date,
-    public materialDateUpdated?: Date,
+    public id?: number,
+    public name?: string,
+    public picture?: string,
+    public supplyId?: Supply,
+    public dateCreated?: Date,
+    public dateUpdated?: Date,
+    public singleValue?: number,
+    public enbled?: boolean,
   ) {}
 }

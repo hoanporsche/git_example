@@ -10,6 +10,6 @@ import ds.upgrade.model.Staff;
 
 public interface StaffRepository extends JpaRepository<Staff, Long>, JpaSpecificationExecutor<Staff> {
  
-  @Query("SELECT s FROM Staff s WHERE s.staffEnabled = true")
+  @Query("SELECT s FROM Staff s WHERE s.enabled = true")
   List<Staff> findAll();
 }

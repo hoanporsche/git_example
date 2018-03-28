@@ -43,18 +43,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   }
 
-  navRequestCreate() {
-    this.navigationService.navRequestCreate();
-  }
-  navCandidateCreate() {
-    this.navigationService.navCandidateCreate();
-  }
-  navCvCreate() {
-    this.navigationService.navCvCreate();
-  }
-  navInterviewCreate() {
-    this.navigationService.navInterviewCreate();
-  }
+  // navRequestCreate() {
+  //   this.navigationService.navRequestCreate();
+  // }
+  // navCandidateCreate() {
+  //   this.navigationService.navCandidateCreate();
+  // }
+  // navCvCreate() {
+  //   this.navigationService.navCvCreate();
+  // }
+  // navInterviewCreate() {
+  //   this.navigationService.navInterviewCreate();
+  // }
   navMyProfile() {
     this.navigationService.navMyProfile();
   }

@@ -45,7 +45,7 @@ public class TimekeepingStatus implements Serializable {
   @Column(name = "enabled", nullable = false)
   private boolean enabled;
   
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "timekeepingStatus")
+  @OneToMany(cascade = CascadeType.ALL,mappedBy = "statusId")
   @JsonIgnore
   private List<Timekeeping> timekeepings;
   

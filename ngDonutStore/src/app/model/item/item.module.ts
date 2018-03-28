@@ -1,3 +1,6 @@
+import { CategoryService } from './../category/service/category.service';
+import { CoreModule } from './../../core/core.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemComponent } from './item.component';
 import { SharedModule } from './../../shared/shared.module';
 import { ItemService } from './service/item.service';
@@ -10,9 +13,10 @@ import { ItemListComponent } from './page/item-list/item-list.component';
 
 @NgModule({
   imports: [
-    CommonModule,
     ItemRoutingModule,
     SharedModule,
+    NgbModule,
+    CoreModule
   ],
   declarations: [
     ItemComponent,
@@ -21,7 +25,8 @@ import { ItemListComponent } from './page/item-list/item-list.component';
     ItemListComponent
   ],
   providers: [
-    ItemService
+    ItemService,
+    CategoryService
   ]
 })
 export class ItemModule { }

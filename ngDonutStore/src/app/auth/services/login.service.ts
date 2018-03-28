@@ -22,7 +22,7 @@ export class LoginService extends BaseService {
   }
 
   login(user: User): Observable<Response> {
-    const body = `username=${encodeURIComponent(user.userEmail)}&password=${encodeURIComponent(user.userPassword)}&grant_type=password`;
+    const body = `username=${encodeURIComponent(user.email)}&password=${encodeURIComponent(user.password)}&grant_type=password`;
 
     // add authorize header with jwt token
     const headers = new Headers();

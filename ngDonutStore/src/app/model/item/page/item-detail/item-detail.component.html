@@ -1,3 +1,79 @@
-<p>
-  item-detail works!
-</p>
+<form [formGroup]="formItem" (ngSubmit)="onSubmit()">
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Title
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter item's title" [(ngModel)]="itemService.getItem().name"
+          (blur)="validateName()">
+        <div class="error-no-padding" *ngIf="name.touched && name.invalid">
+          <div *ngIf="name.hasError('required')">
+            Name is required.
+          </div>
+          <div *ngIf="name.hasError('shouldBeUnique')">
+            Name should be unique.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Picture
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter item's picutre" [(ngModel)]="itemService.getItem().picture">
+        <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
+          <div *ngIf="picture.hasError('required')">
+            Picture is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Single Value
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5" placeholder="Enter item's single value" [(ngModel)]="itemService.getItem().singleValue">
+        <div class="error-no-padding" *ngIf="singleValue.touched && singleValue.invalid">
+          <div *ngIf="singleValue.hasError('required')">
+            Single Value is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Category
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <select class="form-control m-input" formControlName="categoryId">
+          <option *ngFor="let category of listCategory" [ngValue]="category" [selected]="itemService.getItem().categoryId?.id === category?.id">
+            {{ category?.name }}
+          </option>
+        </select>
+        <div class="error-no-padding" *ngIf="categoryId.invalid">
+          <div *ngIf="categoryId.hasError('required')">
+            Category is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary">
+      Update
+    </button>
+    <button type="button" class="btn" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

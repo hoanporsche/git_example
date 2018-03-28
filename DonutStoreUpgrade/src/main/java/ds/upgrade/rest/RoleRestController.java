@@ -18,28 +18,28 @@ import ds.upgrade.service.RoleService;
 import ds.upgrade.util.Constants;
 
 /**
- * @description: .
+ * @description: /api/role.
  * @author: VDHoan
  * @created_date: Mar 21, 2018
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping("/api/role")
+@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.ROLE_MODEL)
 public class RoleRestController {
 
   @Autowired
   private RoleService roleService;
 
   /**
-   * @description: .
+   * @description: /find-all.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping("/find-all")
+  @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<Role> list = roleService.findAll();
@@ -53,7 +53,7 @@ public class RoleRestController {
   }
 
   /**
-   * @description: .
+   * @description: /find-one.
    * @author: VDHoan
    * @created_date: Mar 21, 2018
    * @modifier: User
@@ -61,7 +61,7 @@ public class RoleRestController {
    * @param id
    * @return
    */
-  @GetMapping("/find-one")
+  @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);

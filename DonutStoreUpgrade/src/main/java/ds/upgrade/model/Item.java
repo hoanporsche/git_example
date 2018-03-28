@@ -29,34 +29,33 @@ public class Item implements Serializable {
   private static final long serialVersionUID = 4197942078910386097L;
 
   @Id
-  @Column(name = "item_id", nullable = false)
+  @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long itemId;
+  private Long id;
 
   @Size(max = 255)
-  @Column(name = "item_name", nullable = false)
-  private String itemName;
+  @Column(name = "name", nullable = false)
+  private String name;
 
   @Size(max = 1000)
-  @Column(name = "item_picture")
-  private String itemPicture;
+  @Column(name = "picture")
+  private String picture;
 
   @ManyToOne
-  @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
-  @JsonIgnore
-  private Category itemCategory;
+  @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+  private Category categoryId;
 
-  @Column(name = "item_date_created", nullable = false)
-  private Date itemDateCreated;
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
 
-  @Column(name = "item_date_updated", nullable = false)
-  private Date itemDateUpdated;
+  @Column(name = "date_updated", nullable = false)
+  private Date dateUpdated;
 
-  @Column(name = "item_single_value", nullable = false)
-  private BigDecimal itemSingleValue;
+  @Column(name = "single_value", nullable = false)
+  private BigDecimal singleValue;
 
-  @Column(name = "item_enabled", nullable = false)
-  private boolean itemEnabled;
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
 
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
@@ -74,76 +73,71 @@ public class Item implements Serializable {
   public Item() {
   }
 
-  public Item(Long id) {
-    this.itemId = id;
-  }
-
   public String toString() {
-    return this.itemName;
+    return this.name;
+  }
+  public Long getId() {
+    return id;
   }
 
-  public Long getItemId() {
-    return itemId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public void setItemId(Long itemId) {
-    this.itemId = itemId;
+  public String getName() {
+    return name;
   }
 
-  public String getItemName() {
-    return itemName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public void setItemName(String itemName) {
-    this.itemName = itemName;
+  public String getPicture() {
+    return picture;
   }
 
-  public String getItemPicture() {
-    return itemPicture;
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
-  public void setItemPicture(String itemPicture) {
-    this.itemPicture = itemPicture;
+  public Category getCategoryId() {
+    return categoryId;
   }
 
-  public Category getItemCategory() {
-    return itemCategory;
+  public void setCategoryId(Category categoryId) {
+    this.categoryId = categoryId;
   }
 
-  public void setItemCategory(Category itemCategory) {
-    this.itemCategory = itemCategory;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public Set<Store> getStores() {
-    return stores;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public void setStores(Set<Store> stores) {
-    this.stores = stores;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public Date getItemDateCreated() {
-    return itemDateCreated;
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
-  public void setItemDateCreated(Date itemDateCreated) {
-    this.itemDateCreated = itemDateCreated;
+  public BigDecimal getSingleValue() {
+    return singleValue;
   }
 
-  public Date getItemDateUpdated() {
-    return itemDateUpdated;
+  public void setSingleValue(BigDecimal singleValue) {
+    this.singleValue = singleValue;
   }
 
-  public void setItemDateUpdated(Date itemDateUpdated) {
-    this.itemDateUpdated = itemDateUpdated;
+  public boolean isEnabled() {
+    return enabled;
   }
 
-  public BigDecimal getItemSingleValue() {
-    return itemSingleValue;
-  }
-
-  public void setItemSingleValue(BigDecimal itemSingleValue) {
-    this.itemSingleValue = itemSingleValue;
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public Set<Material> getMaterials() {
@@ -154,12 +148,12 @@ public class Item implements Serializable {
     this.materials = materials;
   }
 
-  public boolean isItemEnabled() {
-    return itemEnabled;
+  public Set<Store> getStores() {
+    return stores;
   }
 
-  public void setItemEnabled(boolean itemEnabled) {
-    this.itemEnabled = itemEnabled;
+  public void setStores(Set<Store> stores) {
+    this.stores = stores;
   }
 
   public List<Quantity> getQuantites() {

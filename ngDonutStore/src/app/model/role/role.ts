@@ -1,7 +1,8 @@
 
 export class Role {
   constructor(
-    public roleName: string,
-    public roleId?: number,
+    public id?: number,
+    public name?: string,
+    public enabled?: boolean,
   ) {}
 }

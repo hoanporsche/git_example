@@ -11,6 +11,6 @@ import ds.upgrade.model.Material;
 public interface MaterialRepository
     extends JpaRepository<Material, Long>, JpaSpecificationExecutor<Material> {
   
-  @Query("SELECT m FROM Material m WHERE m.materialEnabled = true")
+  @Query("SELECT m FROM Material m WHERE m.enabled = true")
   List<Material> findAll();
 }

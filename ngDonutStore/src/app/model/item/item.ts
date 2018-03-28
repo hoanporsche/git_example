@@ -2,13 +2,13 @@ import { Category } from './../category/category';
 
 export class Item{
   constructor(
-    public itemName: number,
-    public itemPicture: string,
-    public itemCategory: Category,
-    public itemSingleValue: number,
-    public itemId?: number,
-    public itemEnbled?: boolean,
-    public itemDateCreated?: Date,
-    public itemDateUpdated?: Date,
+    public id?: number,
+    public name?: number,
+    public picture?: string,
+    public categoryId?: Category,
+    public dateCreated?: Date,
+    public dateUpdated?: Date,
+    public singleValue?: number,
+    public enbled?: boolean,
   ) {}
 }

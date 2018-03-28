@@ -3,18 +3,18 @@ import { Store } from "../store/store";
 
 export class Staff {
   constructor(
-    public staffName: string,
-    public staffPicture: string,
-    public staffStore: Store,
-    public staffPhoneNumber: string,
-    public staffAddress: string,
-    public staffIdentityCard: string,
-    public staffHomeTown: string,
-    public staffSalary: number,
-    public workingCalender: WorkingCalender,
-    public staffEnbled: boolean,
-    public staffId?: number,
-    public staffCreatedTime?: Date,
-    public staffUpdatedTime?: Date,
+    public id?: number,
+    public name?: string,
+    public picture?: string,
+    public storeId?: Store,
+    public dateCreated?: Date,
+    public dateUpdated?: Date,
+    public phone?: string,
+    public address?: string,
+    public identityCard?: string,
+    public homeTown?: string,
+    public salary?: number,
+    public workingCalenderId?: WorkingCalender,
+    public enabled?: boolean,
   ) {}
 }

@@ -28,24 +28,24 @@ public class User implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id", nullable = false)
-  private Long userId;
+  @Column(name = "id", nullable = false)
+  private Long id;
 
   @NotEmpty
   @Size(max = 255)
-  @Column(name = "user_name", nullable = false)
-  private String userName;
+  @Column(name = "username", nullable = false)
+  private String username;
   
   @NotEmpty
   @Size(max = 255)
   @Email
-  @Column(name = "user_email",nullable = false, unique = true)
-  private String userEmail;
+  @Column(name = "email",nullable = false, unique = true)
+  private String email;
 
   @NotEmpty
   @Size(max = 60)
-  @Column(name = "user_password", nullable = false)
-  private String userPassword;
+  @Column(name = "password", nullable = false)
+  private String password;
 
   @ManyToMany
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
@@ -53,17 +53,17 @@ public class User implements Serializable {
   private Set<Role> roles;
   
   @Size(max = 20)
-  @Column(name = "user_phone_number")
-  private String userPhoneNumber;
+  @Column(name = "phone")
+  private String phone;
   @Size(max = 255)
-  @Column(name = "user_address")
-  private String userAddress;
-  @Column(name = "user_date_created")
-  private Date userDateCreated;
-  @Column(name = "user_date_updated")
-  private Date userDateUpdated;
-  @Column(name = "user_last_order_time")
-  private Date userLastOrderTime;
+  @Column(name = "address")
+  private String address;
+  @Column(name = "date_created")
+  private Date dateCreated;
+  @Column(name = "date_updated")
+  private Date dateUpdated;
+  @Column(name = "last_order_time")
+  private Date lastOrderTime;
   @NotNull
   @Column(name = "enabled")
   private boolean enabled = true;
@@ -77,57 +77,45 @@ public class User implements Serializable {
   @Column(name = "locked")
   private boolean locked = false;
   @OneToOne
-  @JoinColumn(name = "user_store", referencedColumnName = "store_id")
-  private Store userStore;
+  @JoinColumn(name = "storeId", referencedColumnName = "id")
+  private Store storeId;
   
   public User() {}
-
-  public User(Long id) {
-    this.userId = id;
-  }
-  
-  /** .
-   * @description: 
-   * @author: VDHoan
-   * @date_created: Mar 5, 2018
-   * @param user .
-   */
-  public User(User user) {
-    this.userId = user.getUserId();
-    this.userEmail = user.getUserEmail();
-    this.userPassword = user.getUserPassword();
-    this.enabled = user.isEnabled();
-    this.credentialsexpired = user.isCredentialsexpired();
-    this.locked = user.isExpired();
-    this.roles = user.getRoles();
-  }
   
   public String toString() {
-    return this.userName;
+    return this.username;
   }
 
-  public Long getUserId() {
-    return userId;
+  public Long getId() {
+    return id;
   }
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public String getUserName() {
-    return userName;
+  public String getUsername() {
+    return username;
   }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public String getUserPassword() {
-    return userPassword;
+  public String getEmail() {
+    return email;
   }
 
-  public void setUserPassword(String userPassword) {
-    this.userPassword = userPassword;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public Set<Role> getRoles() {
@@ -138,60 +126,44 @@ public class User implements Serializable {
     this.roles = roles;
   }
 
-  public String getUserEmail() {
-    return userEmail;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setUserEmail(String userEmail) {
-    this.userEmail = userEmail;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-  public String getUserPhoneNumber() {
-    return userPhoneNumber;
+  public String getAddress() {
+    return address;
   }
 
-  public void setUserPhoneNumber(String userPhoneNumber) {
-    this.userPhoneNumber = userPhoneNumber;
+  public void setAddress(String address) {
+    this.address = address;
   }
 
-  public String getUserAddress() {
-    return userAddress;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public void setUserAddress(String userAddress) {
-    this.userAddress = userAddress;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public Date getUserDateCreated() {
-    return userDateCreated;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public void setUserDateCreated(Date userDateCreated) {
-    this.userDateCreated = userDateCreated;
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
-  public Date getUserDateUpdated() {
-    return userDateUpdated;
+  public Date getLastOrderTime() {
+    return lastOrderTime;
   }
 
-  public void setUserDateUpdated(Date userDateUpdated) {
-    this.userDateUpdated = userDateUpdated;
-  }
-
-  public Date getUserLastOrderTime() {
-    return userLastOrderTime;
-  }
-
-  public void setUserLastOrderTime(Date userLastOrderTime) {
-    this.userLastOrderTime = userLastOrderTime;
-  }
-
-  public Store getUserStore() {
-    return userStore;
-  }
-
-  public void setUserStore(Store userStore) {
-    this.userStore = userStore;
+  public void setLastOrderTime(Date lastOrderTime) {
+    this.lastOrderTime = lastOrderTime;
   }
 
   public boolean isEnabled() {
@@ -225,5 +197,12 @@ public class User implements Serializable {
   public void setLocked(boolean locked) {
     this.locked = locked;
   }
-  
+
+  public Store getStoreId() {
+    return storeId;
+  }
+
+  public void setStoreId(Store storeId) {
+    this.storeId = storeId;
+  }
 }

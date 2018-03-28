@@ -1,3 +1,206 @@
-<p>
-  item-list works!
-</p>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader">
+      <div class="d-flex align-items-center">
+        <div class="mr-auto">
+          <h3 class="m-subheader__title m-subheader__title--separator">
+            Item
+          </h3>
+          <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+              <a href="#" class="m-nav__link m-nav__link--icon">
+                <i class="m-nav__link-icon la la-home"></i>
+              </a>
+            </li>
+            <li class="m-nav__separator">
+              -
+            </li>
+            <li class="m-nav__item">
+              <a href="javascript: void(0);" class="m-nav__link">
+                <span class="m-nav__link-text">
+                  List Item
+                </span>
+              </a>
+            </li>
+            <li class="m-nav__separator">
+              -
+            </li>
+            <li class="m-nav__item">
+              <a href="javascript: void(0);" class="m-nav__link">
+                <span class="m-nav__link-text">
+                  List
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- END: Subheader -->
+    <div class="m-content">
+      <div class="row">
+        <div class="col-12">
+          <div class="m-portlet">
+            <div class="m-form__content">
+              <div class="m-alert m-alert--icon alert alert-danger" *ngIf="error.isError" role="alert">
+                <div class="m-alert__icon">
+                  <i class="la la-warning"></i>
+                </div>
+                <div class="m-alert__text">
+                  {{ error.message }}
+                </div>
+                <div class="m-alert__close">
+                  <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+            <div class="m-portlet__head">
+              <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    <span *ngIf="listItem"> List Item </span>
+                  </h3>
+                </div>
+              </div>
+              <div class="m-portlet__head-tools">
+                <button _ngcontent-c7="" class="btn btn-success m-btn--icon m-btn--air" type="button" (click)="openModal()">
+                  <span _ngcontent-c7="">
+                    <i _ngcontent-c7="" class="la la-plus"></i>
+                    <span _ngcontent-c7="">
+                      New Item
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="m-portlet__body">
+              <div class="m-section">
+                <div class="m-section__content">
+                  <!-- TABLE -->
+                  <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th sortable-column="name">Name</th>
+                        <th sortable-column="singleValue">Single Value</th>
+                        <th sortable-column="picture">Picture</th>
+                        <th sortable-column="categoryId.name">Category</th>
+                        <th sortable-column="dateCreated">Date Created</th>
+                        <th sortable-column="dateUpdated">Date Updated</th>
+                        <th sortable-column="enabled">Enabled</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <!-- END::SHOW MESSAGE -->
+                    <tbody *ngIf="listItem && listItem?.length > 0">
+                      <tr *ngFor="let item of listItem; let i = index;">
+                        <th scope="row">{{ requestPage.size * requestPage.number + i + 1 }}</th>
+                        <td>
+                          <span placement="top" ngbTooltip="{{ item?.name }}">{{ item?.name | summary: 20}}</span>
+                        </td>
+                        <td>
+                          <span placement="top" ngbTooltip="{{ item?.singleValue }}">{{ item?.singleValue }}</span>
+                        </td>
+                        <td>
+                          <img width="200" src="https://lh3.googleusercontent.com/JWCh2Ff8Bx6Wmszf1hTRdwWZx9BGA3diHHuqZzbONEc5UmigCR7oP9bvvnnA-owhzJehnzOEUOPEhgHXi2amGHrllhqYnTTxbTSaB3gkaTt-unsKmNvF5AqA_BccvelNg9HKlKp9uY_U4Vc5Y-pKzoHi0X5DJ0YUivFrCSP_t3osE1rNMWZzEQkaREWt4yVsAV6KQolwyNLofjncpwFqTp3wMJ-UR5DXUcgDJYmjXc_oNTJ9PNFCb2l0L1c9tv37aMXxPuRBhEtCbA6pTHzfvPSkEJdaGpqDGtFwKPHt_-lQZ969H-yCjwZU_1RvZ1rQIU6z_m7du6eAvQNG6u3OXs0SU6GBQFVkIIp4nOOXbxzteYVLXuz2y9UbeXKem_rO64PGbYbmnvToqDZoOR-PPBjMAWYZscu8EcdFdFCPnItAi8Iz7kVqRsCi55rXGuKr3E6RsYwAqoMJ3RGbg8s0z_MIgBBpALBDoqvOY1kc8UNKEZmUTszY6SjiSBvEOIQA-YYMLmMDBFNKopDZf9kJq1Uatr0_NFvYIEnBjGJGDxIeHOTrRKQNnwtmYtar9g-qP3bY-pNmqGRDXN2GeGnd1wY78ZKB0oDF=s660-no"/>
+                          <span>{{ item?.picture | summary: 50}}</span>
+                        </td>
+                        <td>
+                          <span placement="top" ngbTooltip="{{ item?.categoryId.name }}">{{ item?.categoryId.name | summary: 20 }}</span>
+                        </td>
+                        <td>
+                          <span placement="top" ngbTooltip="{{ item?.dateCreated }}">{{ item?.dateCreated | date }}</span>
+                        </td>
+                        <td>
+                          <span placement="top" ngbTooltip="{{ item?.dateUpdated }}">{{ item?.dateUpdated | date }}</span>
+                        </td>
+                        <td>
+                          <span *ngIf="item?.enabled">Active</span>
+                          <span *ngIf="!item?.enabled">In-Active</span>
+                        </td>
+                        <td>
+                          <i class="la la-edit" (click)="onDetail(item)" placement="top" ngbTooltip="View detail">
+                          </i>
+                          <i class="la la-magic" (click)="onEnabledOrNot(item?.id)" placement="top" ngbTooltip="Enabled or Disabled">
+                            </i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- END::TABLE -->
+  
+                  <!-- PAGINATION -->
+                  <div class="row align-items-end" *ngIf="requestPage?.totalElements > 0">
+                    <div class="col-12">
+                      <div class="float-right">
+                        <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                          <button class="btn btn-outline-info" type="button" (click)="first()" [disabled]="requestPage?.first">
+                            <i class="la la-angle-double-left"></i>
+                          </button>
+                          <button class="m-btn btn btn-outline-info no-border-left" type="button" (click)="prev()" [disabled]="requestPage?.first">
+                            <i class="la la-angle-left"></i>
+                          </button>
+                        </div>
+                        <div class="pagination__page-number">
+                          <p>Page {{ (requestPage?.totalPages === 0)? 0 : requestPage?.number + 1 }} of {{ requestPage?.totalPages
+                            }}
+                          </p>
+                        </div>
+                        <div aria-label="Next buttons" class="btn-group btn-group-sm" role="group">
+                          <button class="m-btn btn btn-outline-info" type="button" (click)="next()" [disabled]="requestPage?.last">
+                            <i class="la la-angle-right"></i>
+                          </button>
+                          <button class="btn btn-outline-info no-border-left" type="button" (click)="last()" [disabled]="requestPage?.last">
+                            <i class="la la-angle-double-right"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END::PAGINATION -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Create new Item
+          </h5>
+        </div>
+        <div class="modal-body">
+          <app-item-create [listCategory]="listCategory" (submitted)="itemSubmitted($event)"></app-item-create>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Done
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Update Item
+          </h5>
+        </div>
+        <div class="modal-body">
+          <app-item-detail [oldItem]="oldItem" [listCategory]="listCategory" (submitted)="itemUpdated($event)"></app-item-detail>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Done
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>

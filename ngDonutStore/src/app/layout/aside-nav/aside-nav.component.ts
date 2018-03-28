@@ -24,10 +24,6 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
     private identityService: IdentityService
   ) { 
     this.isAdmin = this.identityService.isAdmin();
-    // this.isDuLead = this.identityService.isDuLead();
-    // this.isDuMember = this.identityService.isDuMember();
-    // this.isHrManager = this.identityService.isHrManager();
-    // this.isHrMember = this.identityService.isHrMember();
     this.isStaff = this.identityService.isStaff();
     this.isStore = this.identityService.isStore();
   }
@@ -44,66 +40,7 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
     (<any>$(menu).data('menu')).setActiveItem(item);
   }
 
-  navRequestList() {
-    this.navigationService.navRequestList();
-  }
-  navRequestCreate() {
-    this.navigationService.navRequestCreate();
-  }
-
-  navUserList() {
-    this.navigationService.navUserList();
-  }
-  navUserCreate() {
-    this.navigationService.navUserCreate();
-  }
-
-  navCvList() {
-    this.navigationService.navCvList();
-  }
-  navCvCreate() {
-    this.navigationService.navCvCreate();
-  }
-
-  navInterviewList() {
-    this.navigationService.navInterviewList();
-  }
-  navInterviewCreate() {
-    this.navigationService.navInterviewCreate();
-  }
-
-  navReportList() {
-    this.navigationService.navReportList();
-  }
-  navReportCreate() {
-    this.navigationService.navReportCreate();
-  }
-
-  navDepartmentList() {
-    this.navigationService.navDepartmentList();
-  }
-  navDepartmentCreate() {
-    this.navigationService.navDepartmentCreate();
-  }
-
-  navPositionList() {
-    this.navigationService.navPositionList();
-  }
-  navPositionCreate() {
-    this.navigationService.navPositionCreate();
-  }
-
-  navSkillList() {
-    this.navigationService.navSkillList();
-  }
-  navSkillCreate() {
-    this.navigationService.navSkillCreate();
-  }
-
-  navCandidateList() {
-    this.navigationService.navCandidateList();
-  }
-  navCandidateCreate() {
-    this.navigationService.navCandidateCreate();
+  navCategoryList() {
+    this.navigationService.navCategoryList();
   }
 }

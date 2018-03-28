@@ -11,55 +11,27 @@ export class NavigationService {
   ) { }
 
   public getRoleSegment(): string {
-    // if (this.identityService.isDuLead()) {
-    //   return '/du-lead';
-    // } else if (this.identityService.isDuMember()) {
-    //   return '/du-member';      
-    // } else if (this.identityService.isHrManager()) {
-    //   return '/hr-manager';      
-    // } else if (this.identityService.isHrMember()) {
-    //   return '/hr-member';      
-    // } else if (this.identityService.isAdmin()) {
-    //   return '/admin';
-    // } else {
-    //   this.navLogin();
-    // } 
     if (this.identityService.isAdmin()) {
       return '/admin';
     } else if (this.identityService.isStaff()) {
-      return '/staff';      
+      return '/staff';
     } else if (this.identityService.isStore()) {
-      return '/store';      
+      return '/store';
     } else {
       this.navLogin();
-    } 
+    }
   }
 
   navHomepage() {
-    // if(this.identityService.isAdmin()) {
-    //   this.navUserList();
-    // } else if (this.identityService.isDuLead()) {
-    //   this.navRequestList();
-    // } else if (this.identityService.isDuMember()) {
-    //   this.navRequestList();      
-    // } else if (this.identityService.isHrManager()) {
-    //   this.navRequestHomeHrManager();      
-    // } else if (this.identityService.isHrMember()) {
-    //   this.navRequestHomeHrManager();  
-    // } else {
-    //   this.navLogin();
-    // } 
-    if(this.identityService.isAdmin()) {
+    if (this.identityService.isAdmin()) {
       this.navUserList();
-    } else if (this.identityService.isAdmin()) {
-      this.navRequestList();
     } else if (this.identityService.isStaff()) {
-      this.navRequestList();      
+      this.navStaffList();
     } else if (this.identityService.isStore()) {
-      this.navRequestHomeHrManager();       
+      this.navMaterialDailyReportList();
     } else {
       this.navLogin();
-    } 
+    }
   }
 
   navLogin() {
@@ -70,19 +42,6 @@ export class NavigationService {
     this.router.navigateByUrl(this.getRoleSegment() + '/user/detail');
   }
 
-  // Request page navigations
-  navRequestHomeHrManager() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/request/approved');
-  }
-  navRequestList() {
-      this.router.navigateByUrl(this.getRoleSegment() + '/request');
-  }
-  navRequestCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/request/create');
-  }
-  navRequestDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/request/' + id);    
-  }
   navForgotPassword() {
     this.router.navigateByUrl('/auth/forgot-password');
   }
@@ -102,120 +61,83 @@ export class NavigationService {
       console.log('You are not authorized');
     }
   }
-  navUserUpdate(id: number) {
-    if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/' + id + '/update');
-    } else {
-      console.log('You are not authorized');
-    }
-  }
   navUserDetail(id: number) {
     if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/' + id);
+      this.router.navigateByUrl('/admin/user/detail/' + id);
     } else {
       console.log('You are not authorized');
     }
   }
 
-  // Cv page navigations
-  navCvList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/cv');    
-  }
-  navCvDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/cv/' + id);        
-  }
-  navCvCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/cv/create');        
-  }
-  navCvUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/cv/' + id + '/update');        
+  //Category nav
+  navCategoryList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/category');
   }
 
-  // Candidate page navigation
-  navCandidateList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/candidate');
-  }
-  navCandidateCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/candidate/create');
-  }
-  navCandidateDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/candidate/detail/' + id);
-  }
-  navCandidateUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/candidate/' + id + '/update');
+  //Item nav
+  navItemList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/item');
   }
 
-  // Inteview page navigation
-  navInterviewList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/interview');        
-  }
-  navInterviewCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/interview/create');        
-  }
-  navInterviewDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/interview/detail/' + id);        
-  }
-  navInterviewUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/interview/' + id + '/update');        
-  }
-  navInterviewCreateWithCandidate(id) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/interview/create?candidateId=' + id);        
+  //Material
+  navMaterialList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/material');
   }
 
-  // Report page navigation
-  navReportList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/report');            
-  }
-  navReportCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/report/create');            
-  }
-  navReportDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/report/' + id);
-  }
-  navReportUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/report/' + id + '/update');
+  //Material-daily-report
+  navMaterialDailyReportList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/material-daily-report');
   }
 
-  // Department page navigation
-  navDepartmentList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/department');
+  //Order
+  navOrderList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/order');
   }
-  navDepartmentCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/department/create');
+  navOrderCreate() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/order/create');
   }
-  navDepartmentDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/department/' + id);
-  }
-  navDepartmentUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/department/' + id + '/update');
+  navOrderDetail(id: number) {
+    this.router.navigateByUrl(this.getRoleSegment() + '/order/detail/' + id);
   }
 
-  // Position page navigation
-  navPositionList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/position');
-  }
-  navPositionCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/position/create');
-  }
-  navPositionDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/position/' + id);
-  }
-  navPositionUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/position/' + id + '/update');
+  //Order-status
+  navOrderStatusList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/order-status');
   }
 
-  // Skill page navigation
-  navSkillList() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/skill');    
+  //role
+  navRoleList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/role');
   }
-  navSkillCreate() {
-    this.router.navigateByUrl(this.getRoleSegment() + '/skill/create');    
+
+  //staff
+  navStaffList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/staff');
   }
-  navSkillDetail(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/skill/' +id);
+
+  //store
+  navStoreList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/store');
   }
-  navSkillUpdate(id: number) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/skill/' +id + '/update');
+
+  //supply
+  navSupplyList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/supply');
+  }
+
+  //timekeeping
+  navTimekeepingList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/timekeeping');
+  }
+
+  //timekeeping-status
+  navTimekeepingStatusList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/timekeeping-status');
+  }
+
+  //working-calender
+  navWorkingCalenderList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/working-calender');
   }
 
   navErrorNotFound() {
@@ -226,13 +148,5 @@ export class NavigationService {
   }
   navErrorGeneral() {
     this.router.navigateByUrl('/error/general');
-  }
-  
-  navListCandidateByRequestId(id) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/candidate/list/request/'+id);
-  }
-
-  navListCandidateByRequestIdAndStatusId(requestId, statusId) {
-    this.router.navigateByUrl(this.getRoleSegment() + '/candidate/list/request/'+ requestId + '/' + statusId);
   }
 }

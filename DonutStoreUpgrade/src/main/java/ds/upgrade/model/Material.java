@@ -29,105 +29,110 @@ public class Material implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "material_id", nullable = false)
-  private Long materialId;
-  
+  @Column(name = "id", nullable = false)
+  private Long id;
+
   @Size(max = 255)
-  @Column(name = "material_name", nullable = false)
-  private String materialName;
-  
+  @Column(name = "name", nullable = false)
+  private String name;
+
   @Size(max = 255)
-  @Column(name = "material_picture")
-  private String materialPicture;
-  
+  @Column(name = "picture")
+  private String picture;
+
   @ManyToOne
-  @JoinColumn(name = "supply_id", referencedColumnName = "supply_id", nullable = false)
-  private Supply materialSupply;
-  
-  @Column(name = "material_date_created", nullable = false)
-  private Date materialDateCreated;
-  
-  @Column(name = "material_date_updated", nullable = false)
-  private Date materialDateUpdated;
-  
-  @Column(name = "material_single_value", nullable = false)
-  private BigDecimal materialSingleValue;
-  
-  @Column(name = "material_enabled", nullable = true)
-  private boolean materialEnabled;
+  @JoinColumn(name = "supply_id", referencedColumnName = "id", nullable = false)
+  private Supply supplyId;
+
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
+
+  @Column(name = "date_updated", nullable = false)
+  private Date dateUpdated;
+
+  @Column(name = "single_value", nullable = false)
+  private BigDecimal singleValue;
+
+  @Column(name = "enabled", nullable = true)
+  private boolean enabled;
 
   @ManyToMany(mappedBy = "materials")
   @JsonIgnore
   private Set<Item> items;
-  
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "materialId")
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "materialId")
   @JsonIgnore
   private List<MaterialDailyReport> reports;
-  
-  public Material() {}
-  
-  public Material(Long id) {
-    this.materialId = id;
+
+  public Material() {
   }
   
   public String toString() {
-    return this.materialName;
+    return this.name;
   }
 
-  public Long getMaterialId() {
-    return materialId;
+  public Long getId() {
+    return id;
   }
 
-  public void setMaterialId(Long materialId) {
-    this.materialId = materialId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public String getMaterialName() {
-    return materialName;
+  public String getName() {
+    return name;
   }
 
-  public void setMaterialName(String materialName) {
-    this.materialName = materialName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getMaterialPicture() {
-    return materialPicture;
+  public String getPicture() {
+    return picture;
   }
 
-  public void setMaterialPicture(String materialPicture) {
-    this.materialPicture = materialPicture;
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
-  public Supply getMaterialSupply() {
-    return materialSupply;
+  public Supply getSupplyId() {
+    return supplyId;
   }
 
-  public void setMaterialSupply(Supply materialSupply) {
-    this.materialSupply = materialSupply;
+  public void setSupplyId(Supply supplyId) {
+    this.supplyId = supplyId;
   }
 
-  public Date getMaterialDateCreated() {
-    return materialDateCreated;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public void setMaterialDateCreated(Date materialDateCreated) {
-    this.materialDateCreated = materialDateCreated;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public Date getMaterialDateUpdated() {
-    return materialDateUpdated;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public void setMaterialDateUpdated(Date materialDateUpdated) {
-    this.materialDateUpdated = materialDateUpdated;
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
-  public BigDecimal getMaterialSingleValue() {
-    return materialSingleValue;
+  public BigDecimal getSingleValue() {
+    return singleValue;
   }
 
-  public void setMaterialSingleValue(BigDecimal materialSingleValue) {
-    this.materialSingleValue = materialSingleValue;
+  public void setSingleValue(BigDecimal singleValue) {
+    this.singleValue = singleValue;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public Set<Item> getItems() {
@@ -136,14 +141,6 @@ public class Material implements Serializable {
 
   public void setItems(Set<Item> items) {
     this.items = items;
-  }
-
-  public boolean isMaterialEnabled() {
-    return materialEnabled;
-  }
-
-  public void setMaterialEnabled(boolean materialEnabled) {
-    this.materialEnabled = materialEnabled;
   }
 
   public List<MaterialDailyReport> getReports() {

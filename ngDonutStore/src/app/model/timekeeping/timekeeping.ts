@@ -3,11 +3,11 @@ import { Staff } from "../staff/staff";
 
 export class Timekeeping {
   constructor(
-    public staff: Staff,
-    public timekeepingCreatedDate: Date,
-    public timekeepingIn: Date,
-    public timekeepingOut: Date,
-    public timekeepingStatus: TimekeepingStatus,
     public id?: number,
+    public staffId?: Staff,
+    public dateCreated?: Date,
+    public timeIn?: Date,
+    public timeOut?: Date,
+    public statusId?: TimekeepingStatus,
   ) {}
 }

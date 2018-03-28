@@ -23,20 +23,20 @@ public class Timekeeping implements Serializable {
   @Column(name = "id", nullable = false)
   private Long id;
   @ManyToOne
-  @JoinColumn(name = "staff_id",referencedColumnName = "staff_id", nullable = false)
-  private Staff staff;
-  @Column(name = "timekeeping_created_date", nullable = false)
-  private Date timekeepingCreatedDate;
-  @Column(name = "timekeeping_in", nullable = true)
-  private Date timekeepingIn;
-  @Column(name = "timekeeping_out", nullable = true)
-  private Date timekeepingOut;
+  @JoinColumn(name = "staff_id",referencedColumnName = "id", nullable = false)
+  private Staff staffId;
+  @Column(name = "date_created", nullable = false)
+  private Date dateCreated;
+  @Column(name = "time_in", nullable = true)
+  private Date timeIn;
+  @Column(name = "time_out", nullable = true)
+  private Date timeOut;
   @ManyToOne
-  @JoinColumn(name = "timekeeping_status_id", referencedColumnName = "id", nullable = false)
-  private TimekeepingStatus timekeepingStatus;
+  @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+  private TimekeepingStatus statusId;
   
   public String toString() {
-    return this.staff.getStaffName();
+    return this.staffId.getName();
   }
 
   public Long getId() {
@@ -47,44 +47,44 @@ public class Timekeeping implements Serializable {
     this.id = id;
   }
 
-  public Staff getStaff() {
-    return staff;
+  public Staff getStaffId() {
+    return staffId;
   }
 
-  public void setStaff(Staff staff) {
-    this.staff = staff;
+  public void setStaffId(Staff staffId) {
+    this.staffId = staffId;
   }
 
-  public Date getTimekeepingCreatedDate() {
-    return timekeepingCreatedDate;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public void setTimekeepingCreatedDate(Date timekeepingCreatedDate) {
-    this.timekeepingCreatedDate = timekeepingCreatedDate;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
-  public Date getTimekeepingIn() {
-    return timekeepingIn;
+  public Date getTimeIn() {
+    return timeIn;
   }
 
-  public void setTimekeepingIn(Date timekeepingIn) {
-    this.timekeepingIn = timekeepingIn;
+  public void setTimeIn(Date timeIn) {
+    this.timeIn = timeIn;
   }
 
-  public Date getTimekeepingOut() {
-    return timekeepingOut;
+  public Date getTimeOut() {
+    return timeOut;
   }
 
-  public void setTimekeepingOut(Date timekeepingOut) {
-    this.timekeepingOut = timekeepingOut;
+  public void setTimeOut(Date timeOut) {
+    this.timeOut = timeOut;
   }
 
-  public TimekeepingStatus getTimekeepingStatus() {
-    return timekeepingStatus;
+  public TimekeepingStatus getStatusId() {
+    return statusId;
   }
 
-  public void setTimekeepingStatus(TimekeepingStatus timekeepingStatus) {
-    this.timekeepingStatus = timekeepingStatus;
+  public void setStatusId(TimekeepingStatus statusId) {
+    this.statusId = statusId;
   }
 
 }

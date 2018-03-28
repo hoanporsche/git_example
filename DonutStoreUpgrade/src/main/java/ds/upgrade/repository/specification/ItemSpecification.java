@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.util.Constants;
 
 /**
  * @description: .
@@ -21,6 +22,13 @@ import ds.upgrade.model.Item;
  */
 public class ItemSpecification implements Specification<Item> {
 
+  private Boolean enabled;
+  
+  public ItemSpecification() {}
+  
+  public ItemSpecification(Boolean enabled ) {
+    this.enabled = enabled;
+  }
   /**
    * @description: .
    * @author: VDHoan
@@ -33,9 +41,13 @@ public class ItemSpecification implements Specification<Item> {
    * @return
    */
   @Override
-  public Predicate toPredicate(Root<Item> arg0, CriteriaQuery<?> arg1, CriteriaBuilder arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public Predicate toPredicate(Root<Item> root, CriteriaQuery<?> arg1, CriteriaBuilder cb) {
+    Predicate predicate = cb.conjunction();
+    if (enabled != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    return predicate;
   }
 
 }

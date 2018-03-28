@@ -4,16 +4,17 @@ import { OrderStatus } from '../order-status/order-status';
 
 export class Order {
   constructor(
-    public orderNameCreated: string,
-    public orderPhoneNumber: string,
-    public storeId: Store,
-    public orderStatus: OrderStatus,
-    public quantites: Quantity[],
-    public orderIsShipping: boolean,
-    public orderShippingPrice: number,
-    public orderTotalPrice: number,
-    public orderId?: number,
-    public orderDateCreated?: Date,
-    public orderDateDone?:Date,
+    public id?: number,
+    public dateCreated?: Date,
+    public dateDone?:Date,
+    public nameCreated?: string,
+    public phone?: string,
+    public storeId?: Store,
+    public statusId?: OrderStatus,
+    public quantites?: Quantity[],
+    public isShipping?: boolean,
+    public addressShipping?: number,
+    public shippingPrice?: number,
+    public totalPrice?: number,
   ) {}
 }

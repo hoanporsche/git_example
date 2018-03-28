@@ -24,16 +24,16 @@ public class Role implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "role_id", nullable = false)
-  private Long roleId;
+  @Column(name = "id", nullable = false)
+  private Long id;
   
   @NotEmpty
   @Size(max = 255)
-  @Column(name = "role_name", nullable = false)
-  private String roleName;
+  @Column(name = "name", nullable = false)
+  private String name;
   
-  @Column(name = "role_enabled", nullable = false)
-  private boolean roleEnabled;
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
   
   @ManyToMany(mappedBy = "roles")
   @JsonIgnore
@@ -41,40 +41,32 @@ public class Role implements Serializable {
   
   public Role() {}
   
-  public Role(Long id) {
-    this.roleId = id;
-  }
-  
   public String toString() {
-    return this.roleName;
+    return this.name;
   }
 
-  public Role(String name) {
-    this.roleName = name;
+  public Long getId() {
+    return id;
   }
 
-  public Long getRoleId() {
-    return roleId;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public void setRoleId(Long roleId) {
-    this.roleId = roleId;
+  public String getName() {
+    return name;
   }
 
-  public String getRoleName() {
-    return roleName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public void setRoleName(String roleName) {
-    this.roleName = roleName;
+  public boolean isEnabled() {
+    return enabled;
   }
 
-  public boolean isRoleEnabled() {
-    return roleEnabled;
-  }
-
-  public void setRoleEnabled(boolean roleEnabled) {
-    this.roleEnabled = roleEnabled;
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public Set<User> getUsers() {

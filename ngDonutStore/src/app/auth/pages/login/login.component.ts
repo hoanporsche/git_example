@@ -62,43 +62,13 @@ export class LoginComponent implements OnInit {
     
     const autoLogin = query.get("auto_login") === "true" ? true : false;
   }
-  // login(auto?: boolean) {
-  //   this.loading = true;
-  //   this.message = '';
-  //   const query = this.route.snapshot.queryParamMap;
-  //   const userInput = this.loginForm.value;
-  //   const user = new User();
-  //   user.userName = userInput.username;
-  //   user.userPassword = this.password.value;
-
-  //   this.loginService.login(user).switchMap((token: Response) => {
-  //     this.localStorageService.setItem(LOCAL_STORAGE.TOKEN, JSON.stringify(token.json()));
-
-  //     return this.loginService.getCurrentUser();
-  //   }).subscribe((users: User[]) => {
-  //     this.localStorageService.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(users[0]));
-  //     // Hide the loading icon
-  //     this.loading = false;
-  //     // Reset currentUser in IdentityService
-  //     this.identityService.initializeCurrentUser();
-  //     // navigate to homepage of current user
-  //     this.navigationService.navHomepage();
-  //   }, (e: Response) => {
-  //     this.loading = false;
-  //     if (e.status === 400) {
-  //       this.message = 'Wrong username or password';
-  //     } else {
-  //       this.message = 'Problem occurs. Please try again later';
-  //     }
-  //     console.log('>>> login message: ', this.message);
-  //   });
-  // }
+  
   login(auto?: boolean) {
     this.loading = true;
     this.message = '';
     const user = new User();
-    user.userEmail = this.username.value;
-    user.userPassword = this.password.value;
+    user.email = this.username.value;
+    user.password = this.password.value;
     this.loginService.login(user)
       .subscribe((token: Response) => {
         // console.log(token);

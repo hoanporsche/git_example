@@ -28,132 +28,120 @@ public class Store implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "store_id", nullable = false)
-  private Long storeId;
-  
-  @Size(max = 255)
-  @Column(name = "store_name", nullable = false)
-  private String storeName;
-  
-  @Size(max = 1000)
-  @Column(name = "store_picture")
-  private String storePicture;
-  
-  @Size(max = 20)
-  @Column(name = "store_phone_number", nullable = false)
-  private String storePhoneNumber;
-  
-  @Size(max = 255)
-  @Column(name = "store_address", nullable = false)
-  private String storeAddress;
-  
-  @Column(name = "store_date_created")
-  private Date storeDateCreated;
-  
-  @Column(name = "store_date_updated")
-  private Date storeDateUpdated;
-  
-  @Column(name = "store_enabled", nullable = false)
-  private boolean storeEnabled;
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "staffStore")
+  @Size(max = 255)
+  @Column(name = "name", nullable = false)
+  private String name;
+
+  @Size(max = 1000)
+  @Column(name = "picture")
+  private String picture;
+
+  @Size(max = 20)
+  @Column(name = "phone", nullable = false)
+  private String phone;
+
+  @Size(max = 255)
+  @Column(name = "address", nullable = false)
+  private String address;
+
+  @Column(name = "date_created")
+  private Date dateCreated;
+
+  @Column(name = "date_updated")
+  private Date dateUpdated;
+
+  @Column(name = "enabled", nullable = false)
+  private boolean enabled;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
   @JsonIgnore
   private List<Staff> staffs;
-  
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "storeId")
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
   @JsonIgnore
   private List<MaterialDailyReport> reports;
-  
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "storeId")
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
   @JsonIgnore
   private List<Order> orders;
-  
+
   @ManyToMany
-  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "store_id"),
-      inverseJoinColumns = @JoinColumn(name = "item_id"))
+  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "store_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
   @JsonIgnore
   private Set<Item> items;
-  
-  public Store() {}
-  
-  public Store(Long id) {
-    this.storeId = id;
+
+  public Store() {
   }
-  
-  /** Constructor .
-   * @description: 
-   * @author: VDHoan
-   * @date_created: Dec 22, 2017
-   * @param storeName .
-   * @param storeDateCreated .
-   * @param storeDateUpdated .
-   * @param status .
-   */
-  public Store(String storeName,Date storeDateCreated, Date storeDateUpdated, boolean status) {
-    this.storeName = storeName;
-    this.storeDateCreated = storeDateCreated;
-    this.storeDateUpdated = storeDateUpdated;
-    this.storeEnabled = status;
-  }
-  
+
   public String toString() {
-    return this.storeName;
-  }
-  
-  public Long getStoreId() {
-    return storeId;
+    return this.name;
   }
 
-  public void setStoreId(Long storeId) {
-    this.storeId = storeId;
-  }
-  
-  public String getStoreName() {
-    return storeName;
+  public Long getId() {
+    return id;
   }
 
-  public void setStoreName(String storeName) {
-    this.storeName = storeName;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public String getStorePhoneNumber() {
-    return storePhoneNumber;
+  public String getName() {
+    return name;
   }
 
-  public void setStorePhoneNumber(String storePhoneNumber) {
-    this.storePhoneNumber = storePhoneNumber;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getStoreAddress() {
-    return storeAddress;
+  public String getPicture() {
+    return picture;
   }
 
-  public void setStoreAddress(String storeAddress) {
-    this.storeAddress = storeAddress;
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
-  public Date getStoreDateCreated() {
-    return storeDateCreated;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setStoreDateCreated(Date storeDateCreated) {
-    this.storeDateCreated = storeDateCreated;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-  public Date getStoreDateUpdated() {
-    return storeDateUpdated;
+  public String getPddress() {
+    return address;
   }
 
-  public void setStoreDateUpdated(Date storeDateUpdated) {
-    this.storeDateUpdated = storeDateUpdated;
+  public void setPddress(String address) {
+    this.address = address;
   }
 
-  public boolean isStoreStatus() {
-    return storeEnabled;
+  public Date getDateCreated() {
+    return dateCreated;
   }
 
-  public void setStoreStatus(boolean storeStatus) {
-    this.storeEnabled = storeStatus;
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  public Date getDateUpdated() {
+    return dateUpdated;
+  }
+
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   public List<Staff> getStaffs() {
@@ -162,30 +150,6 @@ public class Store implements Serializable {
 
   public void setStaffs(List<Staff> staffs) {
     this.staffs = staffs;
-  }
-
-  public String getStorePicture() {
-    return storePicture;
-  }
-
-  public void setStorePicture(String storePicture) {
-    this.storePicture = storePicture;
-  }
-
-  public Set<Item> getItems() {
-    return items;
-  }
-
-  public void setItems(Set<Item> items) {
-    this.items = items;
-  }
-
-  public boolean isStoreEnabled() {
-    return storeEnabled;
-  }
-
-  public void setStoreEnabled(boolean storeEnabled) {
-    this.storeEnabled = storeEnabled;
   }
 
   public List<MaterialDailyReport> getReports() {
@@ -203,5 +167,13 @@ public class Store implements Serializable {
   public void setOrders(List<Order> orders) {
     this.orders = orders;
   }
-  
+
+  public Set<Item> getItems() {
+    return items;
+  }
+
+  public void setItems(Set<Item> items) {
+    this.items = items;
+  }
+
 }
