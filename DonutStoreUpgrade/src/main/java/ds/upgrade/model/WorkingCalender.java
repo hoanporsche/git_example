@@ -35,7 +35,7 @@ public class WorkingCalender implements Serializable {
   @Column(name = "name", nullable = false)
   private String name;
   @Size(max = 255)
-  @Column(name = "desciption")
+  @Column(name = "description")
   private String description;
   @Column(name = "enabled", nullable = false)
   private boolean enabled;

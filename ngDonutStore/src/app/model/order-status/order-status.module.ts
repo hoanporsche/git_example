@@ -4,21 +4,22 @@ import { OrderStatusRoutingModule } from './order-status.routing';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderStatusCreateComponent } from './page/order-status-create/order-status-create.component';
-import { OrderStatusDetaiComponent } from './page/order-status-detai/order-status-detai.component';
 import { OrderStatusListComponent } from './page/order-status-list/order-status-list.component';
 import { OrderStatusComponent } from './order-status.component';
+import { OrderStatusDetailComponent } from './page/order-status-detail/order-status-detail.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
-    CommonModule,
     OrderStatusRoutingModule,
     SharedModule,
+    NgbModule
   ],
   declarations: [
     OrderStatusComponent,
     OrderStatusCreateComponent, 
-    OrderStatusDetaiComponent, 
-    OrderStatusListComponent
+    OrderStatusListComponent, 
+    OrderStatusDetailComponent
   ],
   providers: [
     OrderStatusService

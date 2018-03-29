@@ -1,6 +1,5 @@
 import { MaterialService } from './../material/service/material.service';
 import { CategoryService } from './../category/service/category.service';
-import { CoreModule } from './../../core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ItemComponent } from './item.component';
 import { SharedModule } from './../../shared/shared.module';
@@ -17,7 +16,6 @@ import { ItemListComponent } from './page/item-list/item-list.component';
     ItemRoutingModule,
     SharedModule,
     NgbModule,
-    CoreModule
   ],
   declarations: [
     ItemComponent,

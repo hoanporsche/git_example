@@ -1,7 +1,5 @@
 package ds.upgrade.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "item")
@@ -60,10 +60,6 @@ public class Item implements Serializable {
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
   private Set<Material> materials;
-
-  @ManyToMany(mappedBy = "items")
-  @JsonIgnore
-  private Set<Store> stores;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
   @JsonIgnore
@@ -146,15 +142,7 @@ public class Item implements Serializable {
   public void setMaterials(Set<Material> materials) {
     this.materials = materials;
   }
-
-  public Set<Store> getStores() {
-    return stores;
-  }
-
-  public void setStores(Set<Store> stores) {
-    this.stores = stores;
-  }
-
+  
   public List<Quantity> getQuantites() {
     return quantites;
   }

@@ -58,7 +58,7 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Page<Store> findList(Pageable pageable, Boolean enabled) {
-    Specification<Store> spec = new StoreSpecification(enabled, null);
+    Specification<Store> spec = new StoreSpecification(enabled);
     return storeRepository.findAll(spec, pageable);
   }
 

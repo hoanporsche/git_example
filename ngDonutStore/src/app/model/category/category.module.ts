@@ -1,4 +1,3 @@
-import { CoreModule } from './../../core/core.module';
 import { SharedModule } from './../../shared/shared.module';
 import { CategoryRoutingModule } from './category.routing';
 import { CategoryService } from './service/category.service';
@@ -13,7 +12,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CategoryRoutingModule,
     SharedModule,
-    CoreModule,
     NgbModule
   ],
   declarations: [

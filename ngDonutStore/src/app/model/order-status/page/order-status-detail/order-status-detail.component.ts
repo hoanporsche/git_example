@@ -1,34 +1,33 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
+import { OrderStatus } from '../../order-status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { OrderStatusService } from '../../service/order-status.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
-import { OrderStatusValidator } from '../../../../shared/custom-validator/order-status.validator';
 
 @Component({
-  selector: 'app-order-status-create',
-  templateUrl: './order-status-create.component.html',
-  styleUrls: ['./order-status-create.component.css']
+  selector: 'app-order-status-detail',
+  templateUrl: './order-status-detail.component.html',
+  styleUrls: ['./order-status-detail.component.css']
 })
-export class OrderStatusCreateComponent implements OnInit, OnDestroy {
+export class OrderStatusDetailComponent implements OnInit, OnDestroy {
 
-  ngOnDestroy(): void {
-    if (this.subOrderStatus)
-      this.subOrderStatus.unsubscribe();
-  }
   // To inform parent when the department is created successfully.
   @Output() submitted = new EventEmitter<string>();
+
+  @Input() oldOrderStatus: OrderStatus;
 
   formOrderStatus: FormGroup;
 
   private subOrderStatus: Subscription;
+  
   constructor(
-    private orderStatusService: OrderStatusService,
+    private fb: FormBuilder,
+    public orderStatusService: OrderStatusService,
     private navigationService: NavigationService,
-    private fb: FormBuilder
-  ) {
+  ) { 
     this.formOrderStatus = fb.group({
-      name: ['', [Validators.required], [OrderStatusValidator.shouldBeUnique(this.orderStatusService)]],
+      name: ['', Validators.required],
       description: [''],
     })
   }
@@ -36,12 +35,25 @@ export class OrderStatusCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  onCancel() {
-    this.formOrderStatus.reset();
+  ngOnDestroy(): void {
+    if (this.subOrderStatus)
+      this.subOrderStatus.unsubscribe();
+  }
+
+  validateName() {
+    const oldName = this.oldOrderStatus.name;
+    this.orderStatusService.findByName(this.name.value)
+      .subscribe(response => {
+        if (response && response.name != oldName) 
+          this.name.setErrors({shouldBeUnique: true});
+      }, error => {
+        console.log(error)
+      });
   }
   onSubmit() {
     if (this.formOrderStatus.valid) {
       const orderStatus = {
+        id: this.oldOrderStatus.id,
         name: this.name.value,
         description: this.description.value
       }
@@ -49,7 +61,6 @@ export class OrderStatusCreateComponent implements OnInit, OnDestroy {
         .subscribe(response => {
           if (response.name === this.name.value) {
             this.submitted.emit('success');
-            this.formOrderStatus.reset();
           }
         }, error => {
           this.submitted.emit('fail');
@@ -64,4 +75,5 @@ export class OrderStatusCreateComponent implements OnInit, OnDestroy {
   get description() {
     return this.formOrderStatus.get('description');
   }
+
 }

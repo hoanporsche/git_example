@@ -23,14 +23,11 @@ import ds.upgrade.util.Constants;
 public class StoreSpecification implements Specification<Store> {
 
   private Boolean enabled;
-  
-  private Long itemId;
 
   public StoreSpecification() {}
   
-  public StoreSpecification(Boolean enabled, Long itemId) {
+  public StoreSpecification(Boolean enabled) {
     this.enabled = enabled;
-    this.itemId = itemId;
   }
 
   @Override
@@ -39,10 +36,6 @@ public class StoreSpecification implements Specification<Store> {
     if (enabled != null) {
       predicate = cb.and(predicate,
           cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
-    }
-    if (itemId != null) {
-      predicate = cb.and(predicate,
-          cb.equal(root.join(Constants.PROPERTY.ITEMS_PROPERTY).<Long>get(Constants.PARAM.ID_PARAM), itemId));
     }
     return predicate;
   }

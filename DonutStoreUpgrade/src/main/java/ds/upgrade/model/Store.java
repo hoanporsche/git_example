@@ -1,11 +1,8 @@
 package ds.upgrade.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,12 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "store")
@@ -67,11 +63,6 @@ public class Store implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
   @JsonIgnore
   private List<Order> orders;
-
-  @ManyToMany
-  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "store_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-  @JsonIgnore
-  private Set<Item> items;
 
   public Store() {
   }
@@ -166,14 +157,6 @@ public class Store implements Serializable {
 
   public void setOrders(List<Order> orders) {
     this.orders = orders;
-  }
-
-  public Set<Item> getItems() {
-    return items;
-  }
-
-  public void setItems(Set<Item> items) {
-    this.items = items;
   }
 
 }

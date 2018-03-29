@@ -264,20 +264,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `donutstore`.`item_store`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `donutstore`.`item_store` (
-  `item_id` BIGINT NOT NULL,
-  `store_id` BIGINT NOT NULL,
-  PRIMARY KEY(`item_id`,`store_id`),
-	FOREIGN KEY (`item_id`)
-    REFERENCES `donutstore`.`item`(`id`),
-    FOREIGN KEY (`store_id`)
-    REFERENCES `donutstore`.`store`(`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
--- -----------------------------------------------------
 -- Table `donutstore`.`material_daily_report`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (

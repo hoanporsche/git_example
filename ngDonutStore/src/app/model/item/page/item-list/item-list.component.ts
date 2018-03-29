@@ -41,8 +41,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
     sort: 'id,desc'
   }
   enabled = [
-    { view: 'true' },
-    { view: 'false' }
+    { view: 'Active', value: 'true' },
+    { view: 'In-Active', value: 'false' }
   ]
 
   private subListItem: Subscription;
@@ -181,9 +181,9 @@ export class ItemListComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.findList();
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 }

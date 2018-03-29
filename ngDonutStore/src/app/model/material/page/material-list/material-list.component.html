@@ -76,6 +76,32 @@
           <div class="m-portlet__body">
             <div class="m-section">
               <div class="m-section__content">
+                <!-- FILTER -->
+                <div class="row">
+                  <div class="col-12 col-xs-4 col-md-2">
+                    <div class="form-group m-form__group">
+                      <div class="input-group">
+                        <select class="form-control" [(ngModel)]="params.enabled">
+                          <option value="">Select</option>
+                          <option *ngFor="let e of enabled" [value]="e.value">{{ e.view }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xs-6 col-md-2">
+                    <div class="float-right">
+                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="findList()">
+                        <span>
+                          <i class="la la-filter"></i>
+                          <span>
+                            Filter
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- END FILTER -->
                 <!-- TABLE -->
                 <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
                   <thead>
@@ -102,7 +128,7 @@
                         <span placement="top" ngbTooltip="{{ material?.singleValue }}">{{ material?.singleValue }}</span>
                       </td>
                       <td>
-                        <img width="200" [src]="material?.picture"/>
+                        <img width="200" [src]="material?.picture" />
                       </td>
                       <td>
                         <span placement="top" ngbTooltip="{{ material?.supplyId.name }}">{{ material?.supplyId.name | summary: 20 }}</span>
@@ -121,7 +147,7 @@
                         <i class="la la-edit" (click)="onDetail(material)" placement="top" ngbTooltip="View detail">
                         </i>
                         <i class="la la-magic" (click)="onEnabledOrNot(material?.id)" placement="top" ngbTooltip="Enabled or Disabled">
-                          </i>
+                        </i>
                       </td>
                     </tr>
                   </tbody>
