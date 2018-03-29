@@ -27,11 +27,14 @@ public class Constants {
     public static final String ID_PARAM = "id";
     public static final String ENABLED_PARAM = "enabled";
     public static final String NAME_PARAM = "name";
-  }
-  
-  public static class PROPERTY {
-    public static final String ITEMS_PROPERTY = "items";
-    public static final String MATERIALS_PROPERTY = "materials";
+    public static final String STATUS_ID_PARAM = "statusId";
+    public static final String STAFF_ID_PARAM = "staffId";
+    public static final String STORE_ID_PARAM = "storeId";
+    public static final String START_DATE_PARAM = "startDate";
+    public static final String END_DATE_PARAM = "endDate";
+    public static final String DATE_CREATED_PARAM = "dateCreated";
+    public static final String ITEMS_PARAM = "items";
+    public static final String MATERIALS_PARAM = "materials";
   }
   
   public static class API_URL {
@@ -62,4 +65,7 @@ public class Constants {
     public static final String WORKING_CALENDER_MODEL = "working-calender";
   }
   
+  public static class FORMAT {
+    public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+  }
 }

@@ -1,3 +1,4 @@
+import { TimekeepingStatusService } from './../timekeeping-status/service/timekeeping-status.service';
 import { TimekeepingComponent } from './timekeeping.component';
 import { TimekeepingService } from './service/timekeeping.service';
 import { SharedModule } from './../../shared/shared.module';
@@ -7,6 +8,8 @@ import { TimekeepingDetailComponent } from './page/timekeeping-detail/timekeepin
 import { TimekeepingListComponent } from './page/timekeeping-list/timekeeping-list.component';
 import { TimekeepingRoutingModule } from './timekeeping.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { StoreService } from '../store/service/store.service';
+import { StaffService } from '../staff/service/staff.service';
 
 @NgModule({
   imports: [
@@ -21,7 +24,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TimekeepingListComponent
   ],
   providers: [
-    TimekeepingService
+    TimekeepingService,
+    StoreService,
+    StaffService,
+    TimekeepingStatusService,
   ]
 })
 export class TimekeepingModule { }

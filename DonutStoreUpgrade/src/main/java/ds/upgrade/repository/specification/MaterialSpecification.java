@@ -53,7 +53,7 @@ public class MaterialSpecification implements Specification<Material> {
     }
     if (itemId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.join(Constants.PROPERTY.ITEMS_PROPERTY).<Long>get(Constants.PARAM.ID_PARAM), itemId));
+          cb.equal(root.join(Constants.PARAM.ITEMS_PARAM).<Long>get(Constants.PARAM.ID_PARAM), itemId));
     }
     return predicate;
   }
