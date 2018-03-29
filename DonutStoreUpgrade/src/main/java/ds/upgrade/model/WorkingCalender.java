@@ -32,7 +32,7 @@ public class WorkingCalender implements Serializable {
   @Column(name = "id")
   private Long id;
   @Size(max = 255)
-  @Column(name = "name", nullable = false)
+  @Column(name = "name", nullable = false, unique = true)
   private String name;
   @Size(max = 255)
   @Column(name = "description")

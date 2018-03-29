@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import ds.upgrade.model.Staff;
 import ds.upgrade.model.Store;
+import ds.upgrade.repository.StaffRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.StoreSpecification;
 import ds.upgrade.service.StoreService;
@@ -19,6 +21,9 @@ public class StoreServiceImpl implements StoreService {
 
   @Autowired
   private StoreRepository storeRepository;
+  @Autowired
+  private StaffRepository staffRepository;
+  
   /**
    * @description: .
    * @author: VDHoan
@@ -100,6 +105,11 @@ public class StoreServiceImpl implements StoreService {
     Store foundStore = storeRepository.findOne(id);
     if (foundStore == null)
       return null;
+    if (foundStore.isEnabled()) {
+      List<Staff> list = staffRepository.findByStore(id);
+      if (list.size() > 0)
+        return null;
+    }
     foundStore.setDateUpdated(new Date());
     foundStore.setEnabled(!foundStore.isEnabled());
     return storeRepository.save(foundStore);

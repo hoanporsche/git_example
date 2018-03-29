@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BIT NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC)
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -47,7 +48,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`supply` (
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BIT NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC)
 )ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -65,7 +67,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `enabled` boolean not null,
   PRIMARY KEY (`id`),
   FOREIGN KEY(`supply_id`)
-  REFERENCES `donutstore`.`supply`(`id`))
+  REFERENCES `donutstore`.`supply`(`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -92,7 +95,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
     `name` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
     `enabled` boolean not null,
-    PRIMARY KEY(`id`))
+    PRIMARY KEY(`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -108,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `enabled` BIT NOT NULL,
- PRIMARY KEY (`id`))
+ PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -156,7 +161,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`role` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` NVARCHAR(255) NOT NULL,
   `enabled` boolean not null,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -168,7 +174,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
     `name` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
     `enabled` boolean not null,
-    PRIMARY KEY(`id`))
+    PRIMARY KEY(`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -177,7 +184,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(1000) NOT NULL,
+  `name` NVARCHAR(255) NOT NULL,
   `picture` NVARCHAR(255),
   `store_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -204,7 +211,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
     `name` NVARCHAR(255) NOT NULL,
     `description` NVARCHAR(255) NOT NULL,
     `enabled` boolean not null,
-    PRIMARY KEY(`id`))
+    PRIMARY KEY(`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -278,4 +286,3 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (
     FOREIGN KEY (`material_id`) REFERENCES `donutstore`.`material`(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
