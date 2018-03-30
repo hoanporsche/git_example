@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ItemService extends BaseService {
+  private findAllUrl = environment.baseUrl + MODEL_URL.ITEM + API_URL.FIND_ALL;
   private findListUrl = environment.baseUrl + MODEL_URL.ITEM + API_URL.FIND_LIST;
   private saveUrl = environment.baseUrl + MODEL_URL.ITEM + API_URL.SAVE;
   private findByNameUrl = environment.baseUrl + MODEL_URL.ITEM + API_URL.FIND_BY_NAME;
@@ -24,14 +25,18 @@ export class ItemService extends BaseService {
 
   constructor(httpClient: HttpClient) {
     super(httpClient);
-   }
+  }
+
+  findAll(): Observable<any> {
+    return this.get(this.findAllUrl);
+  }
 
   findList(params: {}): Observable<any> {
     return this.get(this.findListUrl, params);
   }
 
   findByName(name): Observable<any> {
-    return this.get(this.findByNameUrl, {name: name});
+    return this.get(this.findByNameUrl, { name: name });
   }
 
   save(params: {}): Observable<any> {

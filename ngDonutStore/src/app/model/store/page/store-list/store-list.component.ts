@@ -42,7 +42,6 @@ export class StoreListComponent implements OnInit, OnDestroy {
   private subListStore: Subscription;
   private subSortService: Subscription;
   private subStore: Subscription;
-  private subListCategory: Subscription;
 
   constructor(private storeService: StoreService,
     private navigationService: NavigationService,
@@ -64,8 +63,6 @@ export class StoreListComponent implements OnInit, OnDestroy {
       this.subSortService.unsubscribe();
     if (this.subStore)
       this.subStore.unsubscribe();
-    if (this.subListCategory)
-      this.subListCategory.unsubscribe();
   }
 
   findList() {

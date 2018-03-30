@@ -26,7 +26,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter store's picture">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter store's picture">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
           <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
             Picture is required.
@@ -56,7 +56,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="phone" maxlength="255" placeholder="Enter store's phone"
+        <input type="text" class="form-control m-input" formControlName="phone" maxlength="20" placeholder="Enter store's phone"
           OnlyNumber>
         <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
           <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">

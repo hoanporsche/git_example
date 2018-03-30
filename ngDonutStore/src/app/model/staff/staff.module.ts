@@ -1,3 +1,5 @@
+import { WorkingCalenderModule } from './../working-calender/working-calender.module';
+import { StoreModule } from './../store/store.module';
 import { NgModule } from '@angular/core';
 import { StaffCreateComponent } from './page/staff-create/staff-create.component';
 import { StaffDetailComponent } from './page/staff-detail/staff-detail.component';
@@ -13,6 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     StaffRoutingModule,
     SharedModule,
+    StoreModule,
+    WorkingCalenderModule
   ],
   declarations: [
     StaffComponent,

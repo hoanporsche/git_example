@@ -82,7 +82,7 @@
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.enabled">
-                          <option value="">Select</option>
+                          <option value="">Select Enabled</option>
                           <option *ngFor="let e of enabled" [value]="e.value">{{ e.view }}</option>
                         </select>
                       </div>
@@ -92,7 +92,7 @@
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.materialId">
-                          <option value="">Select</option>
+                          <option value="">Select material</option>
                           <option *ngFor="let material of listMaterial" [value]="material?.id">{{ material?.name }}</option>
                         </select>
                       </div>
@@ -102,7 +102,7 @@
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.categoryId">
-                          <option value="">Select</option>
+                          <option value="">Select category</option>
                           <option *ngFor="let category of listCategory" [value]="category?.id">{{ category?.name }}</option>
                         </select>
                       </div>

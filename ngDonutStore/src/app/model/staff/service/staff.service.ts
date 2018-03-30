@@ -12,7 +12,7 @@ export class StaffService extends BaseService {
   private findAllUrl = environment.baseUrl + MODEL_URL.STAFF + API_URL.FIND_ALL;
   private findListUrl = environment.baseUrl + MODEL_URL.STAFF + API_URL.FIND_LIST;
   private saveUrl = environment.baseUrl + MODEL_URL.STAFF + API_URL.SAVE;
-  private findByNameUrl = environment.baseUrl + MODEL_URL.STAFF + API_URL.FIND_BY_NAME;
+  private findByIdentityCardUrl = environment.baseUrl + MODEL_URL.STAFF + API_URL.FIND_BY_IDENTITY_CARD;
   private enabledOrNotUrl = environment.baseUrl + MODEL_URL.STAFF + API_URL.ENABLED_OR_NOT;
 
   private staff = new Staff();
@@ -36,8 +36,8 @@ export class StaffService extends BaseService {
     return this.get(this.findListUrl, params);
   }
 
-  findByName(name): Observable<any> {
-    return this.get(this.findByNameUrl, { name: name });
+  findByIdentityCard(name): Observable<any> {
+    return this.get(this.findByIdentityCardUrl, { identityCard: name });
   }
 
   save(params: {}): Observable<any> {

@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name = "material")
 public class Material implements Serializable {
@@ -31,11 +33,11 @@ public class Material implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "picture")
   private String picture;
@@ -49,7 +51,7 @@ public class Material implements Serializable {
 
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
-
+  @NotEmpty
   @Column(name = "single_value", nullable = false)
   private BigDecimal singleValue;
 

@@ -96,10 +96,14 @@ public class StaffRestController {
    */
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
+      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled,
+      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = Constants.PARAM.WORKING_CALENDER_ID_PARAM, required = false) String workingCalenderId) {
     try {
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
-      Page<Staff> list = staffService.findList(pageable, newEnabled);
+      Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      Long newWorkingCalenderId = (StringUtils.isEmpty(workingCalenderId)) ? null : Long.parseLong(workingCalenderId);
+      Page<Staff> list = staffService.findList(pageable, newEnabled, newStoreId, newWorkingCalenderId);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Staff>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
@@ -163,7 +167,7 @@ public class StaffRestController {
   }
 
   /**
-   * @description: /find-by-name.
+   * @description: /find-by-identity-card.
    * @author: VDHoan
    * @created_date: Mar 27, 2018
    * @modifier: hoan
@@ -171,10 +175,10 @@ public class StaffRestController {
    * @param name
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_BY_NAME)
-  public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
+  @GetMapping(Constants.API_URL.FIND_BY_IDENTITY_CARD)
+  public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.IDENTITY_CARD_ID_PARAM) String identityCard) {
     try {
-      Staff staff = staffService.findByName(name);
+      Staff staff = staffService.findByIdentityCard(identityCard);
       if (staff != null)
         return new ResponseEntity<Staff>(staff, HttpStatus.OK);
     } catch (Exception e) {

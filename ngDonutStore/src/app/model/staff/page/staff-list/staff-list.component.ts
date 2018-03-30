@@ -1,3 +1,6 @@
+import { WorkingCalenderService } from './../../../working-calender/service/working-calender.service';
+import { WorkingCalender } from './../../../working-calender/working-calender';
+import { StoreService } from './../../../store/service/store.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Staff } from '../../staff';
 import { CONFIG } from '../../../../shared/constants/configuration.constant';
@@ -6,8 +9,9 @@ import { StaffService } from '../../service/staff.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { SortService } from '../../../../core/services/sort.service';
 import { sortByProperty } from '../../../../shared/helpers/data.helper';
+import { Store } from '../../../store/store';
 
-declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-staff-list',
   templateUrl: './staff-list.component.html',
@@ -17,6 +21,8 @@ export class StaffListComponent implements OnInit, OnDestroy {
 
   listStaff: Staff[];
   oldStaff: Staff;
+  listStore: Store[];
+  listWorkingCalender: WorkingCalender[];
 
   requestPage;
   notFoundMessage = '';
@@ -30,6 +36,8 @@ export class StaffListComponent implements OnInit, OnDestroy {
 
   params = {
     enabled: '',
+    storeId: '',
+    workingCalenderId: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
@@ -42,9 +50,12 @@ export class StaffListComponent implements OnInit, OnDestroy {
   private subListStaff: Subscription;
   private subSortService: Subscription;
   private subStaff: Subscription;
-  private subListCategory: Subscription;
+  private subListStore: Subscription;
+  private subListWorkingCalender: Subscription;
 
-  constructor(private staffService: StaffService,
+  constructor(private storeService: StoreService,
+    private workingCalenderService: WorkingCalenderService,
+    private staffService: StaffService,
     private navigationService: NavigationService,
     private sortService: SortService
   ) {
@@ -55,6 +66,14 @@ export class StaffListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.findList();
+    this.subListStore = this.storeService.findAll()
+      .subscribe(response => {
+        this.listStore = response;
+      });
+    this.subListWorkingCalender = this.workingCalenderService.findAll()
+      .subscribe(response => {
+        this.listWorkingCalender = response;
+      })
   }
 
   ngOnDestroy(): void {
@@ -64,8 +83,10 @@ export class StaffListComponent implements OnInit, OnDestroy {
       this.subSortService.unsubscribe();
     if (this.subStaff)
       this.subStaff.unsubscribe();
-    if (this.subListCategory)
-      this.subListCategory.unsubscribe();
+    if (this.subListStore)
+      this.subListStore.unsubscribe();
+    if (this.subListWorkingCalender)
+      this.subListWorkingCalender.unsubscribe();
   }
 
   findList() {

@@ -6,8 +6,8 @@ export class StaffValidator {
 
   static shouldBeUnique(staffService: StaffService) {
     return (control: AbstractControl) => {
-      if(control.value.trim() !== '') {
-        return staffService.findByName(control.value.trim())
+      if(control.value.toString().trim() !== '') {
+        return staffService.findByIdentityCard(control.value.toString().trim())
           .map(response => {
             return (!response) ? null : { shouldBeUnique: true };
           });

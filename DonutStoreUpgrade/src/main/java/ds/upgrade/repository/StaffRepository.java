@@ -15,7 +15,7 @@ public interface StaffRepository extends JpaRepository<Staff, Long>, JpaSpecific
   @Query("SELECT s FROM Staff s WHERE s.enabled = true")
   List<Staff> findAll();
   
-  Staff findByName(String name);
+  Staff findByIdentityCard(String identityCard);
   
   @Query("SELECT s FROM Staff s WHERE s.storeId.id = :id")
   List<Staff> findByStore(@Param(Constants.PARAM.ID_PARAM) Long id);

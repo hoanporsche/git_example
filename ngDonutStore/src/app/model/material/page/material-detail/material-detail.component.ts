@@ -79,7 +79,6 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
   }
 
   onChangeMaterial() {
-    console.log(this.name.value)
     this.supplyId.setValue(this.materialService.getMaterial().supplyId);
   }
 

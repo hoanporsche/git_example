@@ -57,8 +57,8 @@ public class StaffServiceImpl implements StaffService {
    * @return
    */
   @Override
-  public Page<Staff> findList(Pageable pageable, Boolean enabled) {
-    Specification<Staff> spec = new StaffSpecification(enabled);
+  public Page<Staff> findList(Pageable pageable, Boolean enabled, Long storeId, Long workingCalenderId) {
+    Specification<Staff> spec = new StaffSpecification(enabled, storeId, workingCalenderId);
     return staffRepository.findAll(spec, pageable);
   }
 
@@ -115,8 +115,8 @@ public class StaffServiceImpl implements StaffService {
    * @return
    */
   @Override
-  public Staff findByName(String name) {
-    return staffRepository.findByName(name);
+  public Staff findByIdentityCard(String identityCard) {
+    return staffRepository.findByIdentityCard(identityCard);
   }
 
 }

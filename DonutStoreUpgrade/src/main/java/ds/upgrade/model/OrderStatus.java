@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -41,6 +43,7 @@ public class OrderStatus implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
   private Long id;
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "name", nullable = false, unique = true)
   private String name;

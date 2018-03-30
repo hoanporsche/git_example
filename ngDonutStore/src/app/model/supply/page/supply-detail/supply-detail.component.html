@@ -43,7 +43,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="phone" maxlength="255" placeholder="Enter supply's phone"
+        <input type="text" class="form-control m-input" formControlName="phone" maxlength="20" placeholder="Enter supply's phone"
         [(ngModel)]="supplyService.getSupply().phone" OnlyNumber>
         <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
           <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">

@@ -13,11 +13,11 @@ public interface StaffService {
 
   Staff findOne(Long id);
   
-  Page<Staff> findList(Pageable pageable, Boolean enabled);
+  Page<Staff> findList(Pageable pageable, Boolean enabled, Long storeId, Long workingCalenderId);
   
   Staff save(Staff staff);
   
   Staff enabledOrNot(Long id);
   
-  Staff findByName(String name);
+  Staff findByIdentityCard(String identityCard);
 }

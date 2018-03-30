@@ -15,7 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +32,11 @@ public class Staff implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-  
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "name", nullable = false)
   private String name;
-  
+  @NotEmpty
   @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
@@ -47,23 +50,23 @@ public class Staff implements Serializable {
   
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
-  
+  @NotEmpty
   @Size(max = 20)
   @Column(name = "phone", nullable = false)
   private String phone;
-  
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "address", nullable = false)
   private String address;
-  
+  @NotEmpty
   @Size(max = 12)
-  @Column(name = "identity_card", nullable = false)
+  @Column(name = "identity_card", nullable = false, unique = true)
   private String identityCard;
-  
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "home_town", nullable = false)
   private String homeTown;
-  
+  @Max(100000000)
   @Column(name = "salary", nullable = false)
   private BigDecimal salary;
   

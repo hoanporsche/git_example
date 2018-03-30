@@ -66,12 +66,10 @@ public class TimekeepingSpecification implements Specification<Timekeeping> {
           .get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
     }
     if (startDate != null) {
-      System.out.println(startDate);
       predicate = cb.and(predicate,
           cb.greaterThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), startDate));
     }
     if (endDate != null) {
-      System.out.println(endDate);
       predicate = cb.and(predicate,
           cb.lessThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), endDate));
     }

@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,19 +28,19 @@ public class Store implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-
+  @NotEmpty
   @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
-
+  @NotEmpty
   @Size(max = 20)
   @Column(name = "phone", nullable = false)
   private String phone;
-
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "address", nullable = false)
   private String address;

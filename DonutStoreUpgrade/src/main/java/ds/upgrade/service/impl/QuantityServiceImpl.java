@@ -1,12 +1,16 @@
 package ds.upgrade.service.impl;
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Quantity;
 import ds.upgrade.repository.QuantityRepository;
+import ds.upgrade.repository.specification.QuantitySpecification;
 import ds.upgrade.service.QuantityService;
 
 @Service
@@ -23,8 +27,10 @@ public class QuantityServiceImpl implements QuantityService {
    * @return
    */
   @Override
-  public List<Quantity> findAll() {
-    return quantityRepository.findAll();
+  public Page<Quantity> findList(Pageable pageable, Long storeId, Long itemId, Date startDate,
+      Date endDate) {
+    Specification<Quantity> spec = new QuantitySpecification(storeId, itemId, startDate, endDate);
+    return quantityRepository.findAll(spec, pageable);
   }
 
   /**

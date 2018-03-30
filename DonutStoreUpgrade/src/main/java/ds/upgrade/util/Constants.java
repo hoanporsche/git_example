@@ -38,6 +38,10 @@ public class Constants {
     public static final String CATEGORY_ID_PARAM = "categoryId";
     public static final String MATERIAL_ID_PARAM = "materialId";
     public static final String SUPPLY_ID_PARAM = "supplyId";
+    public static final String WORKING_CALENDER_ID_PARAM = "workingCalenderId";
+    public static final String IDENTITY_CARD_ID_PARAM = "identityCard";
+    public static final String ORDER_ID_PARAM = "orderId";
+    public static final String ITEM_ID_PARAM = "itemId";
   }
   
   public static class API_URL {
@@ -48,6 +52,7 @@ public class Constants {
     public static final String FIND_BY_NAME = "/find-by-name";
     public static final String SAVE = "/save";
     public static final String ENABLED_OR_NOT = "/enabled-or-not";
+    public static final String FIND_BY_IDENTITY_CARD = "/find-by-identity-card";
   }
   
   public static class MODEL {

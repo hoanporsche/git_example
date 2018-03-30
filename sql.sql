@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `phone` VARCHAR(20) NOT NULL,
   `address` VARCHAR(255) NOT NULL,
-  `identity_card` VARCHAR(12) NOT NULL,
+  `identity_card` VARCHAR(12) NOT NULL UNIQUE,
   `home_town` VARCHAR(45) NOT NULL,
   `salary` decimal(10,0) not null,
   `working_calender_id` BIGINT NOT NULL,

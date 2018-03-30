@@ -13,9 +13,6 @@
           <div *ngIf="name.hasError('notEmpty')">
             Name is required.
           </div>
-          <div *ngIf="name.hasError('shouldBeUnique')">
-            Name should be unique.
-          </div>
         </div>
       </div>
     </div>
@@ -26,10 +23,26 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter staff's picture">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter staff's picture">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
           <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
             Picture is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Phone
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="phone" maxlength="20" placeholder="Enter staff's phone"
+          OnlyNumber>
+        <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
+          <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
+            Phone is required.
           </div>
         </div>
       </div>
@@ -52,15 +65,87 @@
   </div>
   <div class="form-group m-form__group row">
     <label class="col-form-label col-lg-3 col-sm-12 required">
-      Phone
+      Identity Card
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="phone" maxlength="255" placeholder="Enter staff's phone"
+        <input type="text" class="form-control m-input" formControlName="identityCard" maxlength="12" placeholder="Enter staff's identityCard"
           OnlyNumber>
-        <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
-          <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
-            Phone is required.
+        <div class="error-no-padding" *ngIf="identityCard.touched && identityCard.invalid">
+          <div *ngIf="identityCard.hasError('required') || identityCard.hasError('notEmpty')">
+            Identity Card is required.
+          </div>
+          <div *ngIf="identityCard.hasError('shouldBeUnique')">
+            Identity Card should be unique.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Home Town
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="homeTown" maxlength="255" placeholder="Enter staff's homeTown">
+        <div class="error-no-padding" *ngIf="homeTown.touched && homeTown.invalid">
+          <div *ngIf="homeTown.hasError('required') || homeTown.hasError('notEmpty')">
+            Home Town is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Salary
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="salary" maxlength="9" placeholder="Enter staff's salary"
+          OnlyNumber>
+        <div class="error-no-padding" *ngIf="salary.touched && salary.invalid">
+          <div *ngIf="salary.hasError('required') || salary.hasError('notEmpty')">
+            Salary is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Store
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <select class="form-control m-input" formControlName="storeId">
+          <option *ngFor="let store of listStore" [ngValue]="store">
+            {{ store?.name }}
+          </option>
+        </select>
+        <div class="error-no-padding" *ngIf="storeId.invalid">
+          <div *ngIf="storeId.hasError('required')">
+            Store is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Working Calender
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <select class="form-control m-input" formControlName="workingCalenderId">
+          <option *ngFor="let workingCalender of listWorkingCalender" [ngValue]="workingCalender">
+            {{ workingCalender?.name }}
+          </option>
+        </select>
+        <div class="error-no-padding" *ngIf="workingCalenderId.invalid">
+          <div *ngIf="workingCalenderId.hasError('required')">
+            Working Calender is required.
           </div>
         </div>
       </div>

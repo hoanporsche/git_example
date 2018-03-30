@@ -23,11 +23,15 @@ import ds.upgrade.util.Constants;
 public class StaffSpecification implements Specification<Staff> {
 
   private Boolean enabled;
+  private Long storeId;
+  private Long workingCalenderId;
 
   public StaffSpecification() {}
 
-  public StaffSpecification(Boolean enabled) {
+  public StaffSpecification(Boolean enabled, Long storeId, Long workingCalenderId) {
     this.enabled = enabled;
+    this.storeId = storeId;
+    this.workingCalenderId = workingCalenderId;
   }
 
   @Override
@@ -36,6 +40,14 @@ public class StaffSpecification implements Specification<Staff> {
     if (enabled != null) {
       predicate = cb.and(predicate,
           cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    if (storeId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Long>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+    }
+    if (workingCalenderId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Long>get(Constants.PARAM.WORKING_CALENDER_ID_PARAM).get(Constants.PARAM.ID_PARAM), workingCalenderId));
     }
     return predicate;
   }

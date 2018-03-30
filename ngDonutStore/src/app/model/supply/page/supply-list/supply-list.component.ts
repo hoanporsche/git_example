@@ -42,7 +42,6 @@ export class SupplyListComponent implements OnInit, OnDestroy {
   private subListSupply: Subscription;
   private subSortService: Subscription;
   private subSupply: Subscription;
-  private subListCategory: Subscription;
 
   constructor(private supplyService: SupplyService,
     private navigationService: NavigationService,
@@ -64,8 +63,6 @@ export class SupplyListComponent implements OnInit, OnDestroy {
       this.subSortService.unsubscribe();
     if (this.subSupply)
       this.subSupply.unsubscribe();
-    if (this.subListCategory)
-      this.subListCategory.unsubscribe();
   }
 
   findList() {

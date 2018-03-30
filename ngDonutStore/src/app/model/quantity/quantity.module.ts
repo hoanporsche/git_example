@@ -7,12 +7,16 @@ import { QuantityCreateComponent } from './page/quantity-create/quantity-create.
 import { QuantityDetailComponent } from './page/quantity-detail/quantity-detail.component';
 import { QuantityListComponent } from './page/quantity-list/quantity-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { StoreModule } from '../store/store.module';
+import { ItemModule } from '../item/item.module';
 
 @NgModule({
   imports: [
     QuantityRoutingModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    StoreModule,
+    ItemModule
   ],
   declarations: [
     QuantityComponent,

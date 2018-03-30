@@ -107,8 +107,10 @@ public class StoreServiceImpl implements StoreService {
       return null;
     if (foundStore.isEnabled()) {
       List<Staff> list = staffRepository.findByStore(id);
-      if (list.size() > 0)
-        return null;
+      for (Staff staff : list) {
+         staff.setEnabled(false);
+         staffRepository.save(staff);
+      }
     }
     foundStore.setDateUpdated(new Date());
     foundStore.setEnabled(!foundStore.isEnabled());

@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { StaffService } from '../../service/staff.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
+import { Store } from '../../../store/store';
+import { WorkingCalender } from '../../../working-calender/working-calender';
 
 @Component({
   selector: 'app-staff-detail',
@@ -17,6 +19,9 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
   @Output() submitted = new EventEmitter<string>();
 
   @Input() oldStaff: Staff;
+
+  @Input() listStore: Store[];
+  @Input() listWorkingCalender: WorkingCalender[];
 
   formStaff: FormGroup;
 
@@ -35,7 +40,8 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
       address: ['', [Validators.required, CommonValidator.notEmpty]],
       identityCard: ['', [Validators.required]],
       homeTown: ['', [Validators.required]],
-      salary: ['', [Validators.required]]
+      salary: ['', [Validators.required]],
+      workingCalenderId: ['', [Validators.required]]
     })
   }
 
@@ -47,12 +53,12 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
       this.subStaff.unsubscribe();
   }
 
-  validateName() {
-    const oldName = this.oldStaff.name;
+  validateIdentityCard() {
+    const oldIdentityCard = this.oldStaff.identityCard;
     if (this.name.value.trim() !== '') {
-      this.staffService.findByName(this.name.value.trim())
+      this.staffService.findByIdentityCard(this.identityCard.value.toString().trim())
         .subscribe(response => {
-          if (response && response.name != oldName)
+          if (response && response.identityCard != oldIdentityCard)
             this.name.setErrors({ shouldBeUnique: true });
         }, error => {
           console.log(error)
@@ -65,8 +71,13 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
         id: this.oldStaff.id,
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
-        phone: this.phone.value.trim(),
-        address: this.address.value.trim()
+        storeId: this.storeId.value,
+        phone: this.phone.value.toString().trim(),
+        address: this.address.value.trim(),
+        identityCard: this.identityCard.value.toString().trim(),
+        homeTown: this.homeTown.value.trim(),
+        salary: this.salary.value.toString().trim(),
+        workingCalenderId: this.workingCalenderId.value
       }
       this.subStaff = this.staffService.save(staff)
         .subscribe(response => {
@@ -83,6 +94,14 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
     return this.formStaff.get('name');
   }
 
+  get picture() {
+    return this.formStaff.get('picture');
+  }
+
+  get storeId() {
+    return this.formStaff.get('storeId');
+  }
+
   get phone() {
     return this.formStaff.get('phone');
   }
@@ -90,9 +109,20 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
   get address() {
     return this.formStaff.get('address');
   }
-  
-  get picture() {
-    return this.formStaff.get('picture');
+
+  get identityCard() {
+    return this.formStaff.get('identityCard');
   }
 
+  get homeTown() {
+    return this.formStaff.get('homeTown');
+  }
+
+  get salary() {
+    return this.formStaff.get('salary');
+  }
+
+  get workingCalenderId() {
+    return this.formStaff.get('workingCalenderId');
+  }
 }
