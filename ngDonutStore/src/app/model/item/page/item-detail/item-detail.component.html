@@ -11,6 +11,9 @@
           <div *ngIf="name.hasError('required')">
             Name is required.
           </div>
+          <div *ngIf="name.hasError('notEmpty')">
+            Name is required.
+          </div>
           <div *ngIf="name.hasError('shouldBeUnique')">
             Name should be unique.
           </div>

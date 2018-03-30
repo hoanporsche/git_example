@@ -6,8 +6,8 @@ export class MaterialValidator {
 
   static shouldBeUnique(materialService: MaterialService) {
     return (control: AbstractControl) => {
-      if(control.value) {
-        return materialService.findByName(control.value)
+      if(control.value.trim() !== '') {
+        return materialService.findByName(control.value.trim())
           .map(response => {
             return (!response) ? null : { shouldBeUnique: true };
           });

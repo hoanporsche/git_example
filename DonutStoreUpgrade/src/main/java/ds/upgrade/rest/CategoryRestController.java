@@ -158,7 +158,7 @@ public class CategoryRestController {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_DISABLED, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(Constants.REPONSE.NOT_RETRIVE_DATA, HttpStatus.BAD_REQUEST);
   }
 
   /**

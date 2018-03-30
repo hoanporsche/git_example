@@ -6,8 +6,8 @@ export class OrderStatusValidator {
 
   static shouldBeUnique(orderStatusService: OrderStatusService) {
     return (control: AbstractControl) => {
-      if(control.value) {
-        return orderStatusService.findByName(control.value)
+      if(control.value.trim() !== '') {
+        return orderStatusService.findByName(control.value.trim())
           .map(response => {
             return (!response) ? null : { shouldBeUnique: true };
           });

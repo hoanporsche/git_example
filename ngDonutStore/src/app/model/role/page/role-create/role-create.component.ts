@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { RoleService } from '../../service/role.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { RoleValidator } from '../../../../shared/custom-validator/role.validator';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-role-create',
@@ -28,7 +29,7 @@ export class RoleCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formRole = fb.group({
-      name: ['', [Validators.required], [RoleValidator.shouldBeUnique(this.roleService)]]
+      name: ['', [Validators.required, CommonValidator.notEmpty], [RoleValidator.shouldBeUnique(this.roleService)]]
     })
   }
 
@@ -41,11 +42,11 @@ export class RoleCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formRole.valid) {
       const role = {
-        name: this.name.value
+        name: this.name.value.trim()
       }
       this.subRole = this.roleService.save(role)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formRole.reset();
           }

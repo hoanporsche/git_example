@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { TimekeepingStatusService } from '../../service/timekeeping-status.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-timekeeping-status-detail',
@@ -20,14 +21,14 @@ export class TimekeepingStatusDetailComponent implements OnInit, OnDestroy {
   formTimekeepingStatus: FormGroup;
 
   private subTimekeepingStatus: Subscription;
-  
+
   constructor(
     private fb: FormBuilder,
     public timekeepingStatusService: TimekeepingStatusService,
     private navigationService: NavigationService,
-  ) { 
+  ) {
     this.formTimekeepingStatus = fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, CommonValidator.notEmpty]],
       description: [''],
     })
   }
@@ -42,24 +43,26 @@ export class TimekeepingStatusDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldTimekeepingStatus.name;
-    this.timekeepingStatusService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName) 
-          this.name.setErrors({shouldBeUnique: true});
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.timekeepingStatusService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formTimekeepingStatus.valid) {
       const timekeepingStatus = {
         id: this.oldTimekeepingStatus.id,
-        name: this.name.value,
-        description: this.description.value
+        name: this.name.value.trim(),
+        description: this.description.value.trim()
       }
       this.subTimekeepingStatus = this.timekeepingStatusService.save(timekeepingStatus)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

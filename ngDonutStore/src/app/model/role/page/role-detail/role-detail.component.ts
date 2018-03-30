@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { RoleService } from '../../service/role.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-role-detail',
@@ -27,7 +28,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
   ) {
     this.formRole = fb.group({
-      name: ['', Validators.required]
+      name: ['', [Validators.required, CommonValidator.notEmpty]]
     })
   }
 
@@ -41,23 +42,25 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldRole.name;
-    this.roleService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName)
-          this.name.setErrors({ shouldBeUnique: true });
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.roleService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formRole.valid) {
       const role = {
         id: this.oldRole.id,
-        name: this.name.value
+        name: this.name.value.trim()
       }
       this.subRole = this.roleService.save(role)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

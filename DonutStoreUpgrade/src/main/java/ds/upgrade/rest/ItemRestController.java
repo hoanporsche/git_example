@@ -96,10 +96,14 @@ public class ItemRestController {
    */
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
+      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled,
+      @RequestParam(value = Constants.PARAM.MATERIAL_ID_PARAM, required = false) String materialId,
+      @RequestParam(value = Constants.PARAM.CATEGORY_ID_PARAM, required = false) String categoryId) {
     try {
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
-      Page<Item> list = itemService.findList(pageable, newEnabled);
+      Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
+      Long newCategoryId = (StringUtils.isEmpty(categoryId)) ? null : Long.parseLong(categoryId);
+      Page<Item> list = itemService.findList(pageable, newEnabled, newMaterialId, newCategoryId);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Item>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
@@ -134,7 +138,7 @@ public class ItemRestController {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(Constants.REPONSE.NOT_RETRIVE_DATA, HttpStatus.BAD_REQUEST);
   }
   
   /**

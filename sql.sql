@@ -1,6 +1,6 @@
 -- Schema donutstore
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `donutstore` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `donutstore` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 USE `donutstore` ;
 
 -- -----------------------------------------------------
@@ -8,7 +8,7 @@ USE `donutstore` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BIT NOT NULL,
@@ -16,15 +16,15 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
   UNIQUE INDEX `name_UNIQUE` (`name` ASC)
   )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`item`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(255) NOT NULL,
-  `picture` NVARCHAR(1000),
+  `name` VARCHAR(255) NOT NULL,
+  `picture` VARCHAR(1000),
   `category_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -35,31 +35,31 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   FOREIGN KEY (`category_id`)
   REFERENCES `donutstore`.`category`(`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`supply`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`supply` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(255) NOT NULL,
-  `phone` NVARCHAR(20) NOT NULL,
-  `address` NVARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `address` VARCHAR(255) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BIT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC)
 )ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`material`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(255) NOT NULL,
-  `picture` NVARCHAR(1000),
+  `name` VARCHAR(255) NOT NULL,
+  `picture` VARCHAR(1000),
   `supply_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   REFERENCES `donutstore`.`supply`(`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -85,37 +85,37 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item_material` (
     FOREIGN KEY (`item_id`)
     REFERENCES `donutstore`.`item` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`order_status`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`store`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `id` BIGINT NOT NULL AUTO_INCREMENT,
- `name` NVARCHAR(255) NOT NULL,
- `picture` NVARCHAR(1000),
- `phone` NVARCHAR(20) NOT NULL,
- `address` NVARCHAR(255) NOT NULL,
+ `name` VARCHAR(255) NOT NULL,
+ `picture` VARCHAR(1000),
+ `phone` VARCHAR(20) NOT NULL,
+ `address` VARCHAR(255) NOT NULL,
  `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `enabled` BIT NOT NULL,
  PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`order`
@@ -124,19 +124,19 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_done` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name_created` NVARCHAR(255) NOT NULL,
-  `phone` NVARCHAR(18) NULL DEFAULT NULL,
+  `name_created` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(18) NULL DEFAULT NULL,
   `store_id` BIGINT NOT NULL,
   `status_id` BIGINT NOT NULL,
   `is_shipping` BIT NOT NULL,
-  `address_shipping` NVARCHAR(255) NULL DEFAULT NULL,
+  `address_shipping` VARCHAR(255) NULL DEFAULT NULL,
   `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `total_price` DECIMAL(10,0) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`status_id`) REFERENCES `donutstore`.`order_status`(`id`),
   FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   FOREIGN KEY (`order_id`) REFERENCES `donutstore`.`orders`(`id`),
   FOREIGN KEY (`item_id`) REFERENCES `donutstore`.`item`(`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -159,40 +159,40 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`role` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `enabled` boolean not null,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`working_calender`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`staff`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` NVARCHAR(255) NOT NULL,
-  `picture` NVARCHAR(255),
+  `name` VARCHAR(255) NOT NULL,
+  `picture` VARCHAR(255),
   `store_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `phone` NVARCHAR(20) NOT NULL,
-  `address` NVARCHAR(255) NOT NULL,
-  `identity_card` NVARCHAR(12) NOT NULL,
-  `home_town` NVARCHAR(45) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `address` VARCHAR(255) NOT NULL,
+  `identity_card` VARCHAR(12) NOT NULL,
+  `home_town` VARCHAR(45) NOT NULL,
   `salary` decimal(10,0) not null,
   `working_calender_id` BIGINT NOT NULL,
   `enabled` BIT NOT NULL,
@@ -201,20 +201,20 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   REFERENCES `donutstore`.`store` (`id`),
   FOREIGN KEY (`working_calender_id`) REFERENCES `donutstore`.`working_calender` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`timekeeping_status`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`timekeeping`
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping` (
   FOREIGN KEY (`staff_id`) REFERENCES `donutstore`.`staff`(`id`),
   FOREIGN KEY (`status_id`) REFERENCES `donutstore`.`timekeeping_status`(`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -238,11 +238,11 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `username` NVARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(60) NOT NULL,
-  `email` NVARCHAR(255) NOT NULL UNIQUE,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
   `phone` VARCHAR(20) NULL DEFAULT NULL,
-  `address` NVARCHAR(255) NULL DEFAULT NULL,
+  `address` VARCHAR(255) NULL DEFAULT NULL,
   `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_order_time` TIMESTAMP NULL DEFAULT NULL,
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   PRIMARY KEY (`id`),
   FOREIGN KEY(`store_id`) references `donutstore`.`store`(`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user_role` (
     FOREIGN KEY (`role_id`)
     REFERENCES `donutstore`.`role` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `donutstore`.`material_daily_report`
@@ -280,9 +280,9 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (
     `material_id` BIGINT NOT NULL,
     `material_remain` INT NOT NULL,
     `material_import` INT NOT NULL,
-    `description` NVARCHAR(1000) NOT NULL,
+    `description` VARCHAR(1000) NOT NULL,
     PRIMARY KEY(`id`),
     FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`),
     FOREIGN KEY (`material_id`) REFERENCES `donutstore`.`material`(`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;

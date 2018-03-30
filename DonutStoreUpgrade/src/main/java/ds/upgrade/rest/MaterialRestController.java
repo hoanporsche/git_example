@@ -96,10 +96,12 @@ public class MaterialRestController {
    */
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
+      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled,
+      @RequestParam(value = Constants.PARAM.SUPPLY_ID_PARAM, required = false) String supplyId) {
     try {
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
-      Page<Material> list = materialService.findList(pageable, newEnabled);
+      Long newSupplyId = (StringUtils.isEmpty(supplyId)) ? null : Long.parseLong(supplyId);
+      Page<Material> list = materialService.findList(pageable, newEnabled, newSupplyId);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Material>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
@@ -159,7 +161,7 @@ public class MaterialRestController {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_DISABLED, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(Constants.REPONSE.NOT_RETRIVE_DATA, HttpStatus.BAD_REQUEST);
   }
 
   /**

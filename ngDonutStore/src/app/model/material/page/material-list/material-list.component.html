@@ -78,7 +78,7 @@
               <div class="m-section__content">
                 <!-- FILTER -->
                 <div class="row">
-                  <div class="col-12 col-xs-4 col-md-2">
+                  <div class="col-12 col-sm-6 col-md-3">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.enabled">
@@ -88,7 +88,17 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-xs-6 col-md-2">
+                  <div class="col-12 col-sm-6 col-md-3">
+                    <div class="form-group m-form__group">
+                      <div class="input-group">
+                        <select class="form-control" [(ngModel)]="params.supplyId">
+                          <option value="">Select</option>
+                          <option *ngFor="let supply of listSupply" [value]="supply?.id">{{ supply?.name }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-2">
                     <div class="float-right">
                       <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="findList()">
                         <span>

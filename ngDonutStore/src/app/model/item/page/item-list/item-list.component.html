@@ -78,7 +78,7 @@
               <div class="m-section__content">
                 <!-- FILTER -->
                 <div class="row">
-                  <div class="col-12 col-xs-4 col-md-2">
+                  <div class="col-12 col-sm-4 col-md-3">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.enabled">
@@ -88,7 +88,27 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-xs-6 col-md-2">
+                  <div class="col-12 col-sm-4 col-md-3">
+                    <div class="form-group m-form__group">
+                      <div class="input-group">
+                        <select class="form-control" [(ngModel)]="params.materialId">
+                          <option value="">Select</option>
+                          <option *ngFor="let material of listMaterial" [value]="material?.id">{{ material?.name }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4 col-md-3">
+                    <div class="form-group m-form__group">
+                      <div class="input-group">
+                        <select class="form-control" [(ngModel)]="params.categoryId">
+                          <option value="">Select</option>
+                          <option *ngFor="let category of listCategory" [value]="category?.id">{{ category?.name }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-3">
                     <div class="float-right">
                       <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="findList()">
                         <span>

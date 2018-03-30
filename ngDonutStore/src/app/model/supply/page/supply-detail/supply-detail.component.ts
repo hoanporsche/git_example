@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { SupplyService } from '../../service/supply.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-supply-detail',
@@ -27,9 +28,9 @@ export class SupplyDetailComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
   ) {
     this.formSupply = fb.group({
-      name: ['', Validators.required],
-      phone: ['', Validators.required],
-      address: ['', Validators.required],
+      name: ['', [Validators.required, CommonValidator.notEmpty]],
+      phone: ['', [Validators.required, CommonValidator.notEmpty]],
+      address: ['', [Validators.required, CommonValidator.notEmpty]],
     })
   }
 
@@ -43,25 +44,27 @@ export class SupplyDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldSupply.name;
-    this.supplyService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName)
-          this.name.setErrors({ shouldBeUnique: true });
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.supplyService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formSupply.valid) {
       const supply = {
         id: this.oldSupply.id,
-        name: this.name.value,
-        phone: this.phone.value,
-        address: this.address.value
+        name: this.name.value.trim(),
+        phone: this.phone.value.trim(),
+        address: this.address.value.trim()
       }
       this.subSupply = this.supplyService.save(supply)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

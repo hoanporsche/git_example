@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { OrderStatusService } from '../../service/order-status.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-order-status-detail',
@@ -20,14 +21,14 @@ export class OrderStatusDetailComponent implements OnInit, OnDestroy {
   formOrderStatus: FormGroup;
 
   private subOrderStatus: Subscription;
-  
+
   constructor(
     private fb: FormBuilder,
     public orderStatusService: OrderStatusService,
     private navigationService: NavigationService,
-  ) { 
+  ) {
     this.formOrderStatus = fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, CommonValidator.notEmpty]],
       description: [''],
     })
   }
@@ -42,24 +43,26 @@ export class OrderStatusDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldOrderStatus.name;
-    this.orderStatusService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName) 
-          this.name.setErrors({shouldBeUnique: true});
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.orderStatusService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formOrderStatus.valid) {
       const orderStatus = {
         id: this.oldOrderStatus.id,
-        name: this.name.value,
-        description: this.description.value
+        name: this.name.value.trim(),
+        description: this.description.value.trim()
       }
       this.subOrderStatus = this.orderStatusService.save(orderStatus)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

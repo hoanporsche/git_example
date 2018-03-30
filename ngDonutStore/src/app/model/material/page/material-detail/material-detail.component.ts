@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { MaterialService } from '../../service/material.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-material-detail',
@@ -30,10 +31,10 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
   ) {
     this.formMaterial = fb.group({
-      name: ['', Validators.required],
-      picture: ['', Validators.required],
-      singleValue: ['', Validators.required],
-      supplyId: ['', Validators.required]
+      name: ['', [Validators.required, CommonValidator.notEmpty]],
+      picture: ['', [Validators.required, CommonValidator.notEmpty]],
+      singleValue: ['', [Validators.required, CommonValidator.notEmpty]],
+      supplyId: ['', [Validators.required]]
     })
   }
 
@@ -47,26 +48,28 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldMaterial.name;
-    this.materialService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName)
-          this.name.setErrors({ shouldBeUnique: true });
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.materialService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formMaterial.valid) {
       const material = {
         id: this.oldMaterial.id,
-        name: this.name.value,
-        picture: this.picture.value,
-        singleValue: this.singleValue.value,
+        name: this.name.value.trim(),
+        picture: this.picture.value.trim(),
+        singleValue: this.singleValue.value.trim(),
         supplyId: this.supplyId.value
       }
       this.subMaterial = this.materialService.save(material)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

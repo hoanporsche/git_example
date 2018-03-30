@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { SupplyService } from '../../service/supply.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { SupplyValidator } from '../../../../shared/custom-validator/supply.validator';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-supply-create',
@@ -27,9 +28,9 @@ export class SupplyCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formSupply = fb.group({
-      name: ['', [Validators.required], [SupplyValidator.shouldBeUnique(this.supplyService)]],
-      phone: ['', Validators.required],
-      address: ['', Validators.required],
+      name: ['', [Validators.required, CommonValidator.notEmpty], [SupplyValidator.shouldBeUnique(this.supplyService)]],
+      phone: ['', [Validators.required, CommonValidator.notEmpty]],
+      address: ['', [Validators.required, CommonValidator.notEmpty]],
     })
   }
 
@@ -42,13 +43,13 @@ export class SupplyCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formSupply.valid) {
       const supply = {
-        name: this.name.value,
-        phone: this.phone.value,
-        address: this.address.value
+        name: this.name.value.trim(),
+        phone: this.phone.value.trim(),
+        address: this.address.value.trim()
       }
       this.subSupply = this.supplyService.save(supply)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formSupply.reset();
           }

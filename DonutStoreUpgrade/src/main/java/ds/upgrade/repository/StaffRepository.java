@@ -17,6 +17,6 @@ public interface StaffRepository extends JpaRepository<Staff, Long>, JpaSpecific
   
   Staff findByName(String name);
   
-  @Query("SELECT s FROM Staff s WHERE s.storeId = :id")
+  @Query("SELECT s FROM Staff s WHERE s.storeId.id = :id")
   List<Staff> findByStore(@Param(Constants.PARAM.ID_PARAM) Long id);
 }

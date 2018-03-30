@@ -10,6 +10,9 @@
           <div *ngIf="name.hasError('required')">
             Name is required.
           </div>
+          <div *ngIf="name.hasError('notEmpty')">
+            Name is required.
+          </div>
           <div *ngIf="name.hasError('shouldBeUnique')">
             Name should be unique.
           </div>
@@ -25,7 +28,7 @@
       <div class="input-group">
         <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter material's picutre">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
-          <div *ngIf="picture.hasError('required')">
+          <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
             Picture is required.
           </div>
         </div>
@@ -41,7 +44,7 @@
         <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5"
         OnlyNumber placeholder="Enter material's single value">
         <div class="error-no-padding" *ngIf="singleValue.touched && singleValue.invalid">
-          <div *ngIf="singleValue.hasError('required')">
+          <div *ngIf="singleValue.hasError('required')  || singleValue.hasError('notEmpty')">
             Single Value is required.
           </div>
         </div>

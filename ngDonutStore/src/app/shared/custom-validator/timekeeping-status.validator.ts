@@ -6,8 +6,8 @@ export class TimekeepingStatusValidator {
 
   static shouldBeUnique(timekeepingStatusService: TimekeepingStatusService) {
     return (control: AbstractControl) => {
-      if(control.value) {
-        return timekeepingStatusService.findByName(control.value)
+      if(control.value.trim() !== '') {
+        return timekeepingStatusService.findByName(control.value.trim())
           .map(response => {
             return (!response) ? null : { shouldBeUnique: true };
           });

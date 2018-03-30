@@ -28,7 +28,6 @@ export class StaffService extends BaseService {
     super(httpClient);
   }
 
-
   findAll(): Observable<any> {
     return this.get(this.findAllUrl);
   }

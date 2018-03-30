@@ -6,6 +6,7 @@ import { Item } from '../../item';
 import { ItemService } from '../../service/item.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { Material } from '../../../material/material';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-item-detail',
@@ -32,10 +33,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
   ) {
     this.formItem = fb.group({
-      name: ['', Validators.required],
-      picture: ['', Validators.required],
-      singleValue: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(255), CommonValidator.notEmpty]],
+      picture: ['', [Validators.required, Validators.maxLength(1000), CommonValidator.notEmpty]],
+      singleValue: ['', [Validators.required, CommonValidator.notEmpty]],
+      categoryId: ['', [Validators.required]],
       materials: [''],
     });
     this.materials.setValue(this.itemService.getItem().materials);
@@ -51,28 +52,30 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldItem.name;
-    this.itemService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName)
-          this.name.setErrors({ shouldBeUnique: true });
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.itemService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     console.log(this.formItem.value);
     if (this.formItem.valid) {
       const item = {
         id: this.oldItem.id,
-        name: this.name.value,
-        picture: this.picture.value,
-        singleValue: this.singleValue.value,
+        name: this.name.value.trim(),
+        picture: this.picture.value.trim(),
+        singleValue: this.singleValue.value.trim(),
         categoryId: this.categoryId.value,
         materials: this.materials.value,
       }
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

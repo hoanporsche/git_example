@@ -63,8 +63,8 @@ public class MaterialServiceImpl implements MaterialService {
    * @return
    */
   @Override
-  public Page<Material> findList(Pageable pageable, Boolean enabled) {
-    Specification<Material> spec = new MaterialSpecification(enabled, null);
+  public Page<Material> findList(Pageable pageable, Boolean enabled, Long supplyId) {
+    Specification<Material> spec = new MaterialSpecification(enabled, supplyId);
     return materialRepository.findAll(spec, pageable);
   }
 
@@ -107,8 +107,13 @@ public class MaterialServiceImpl implements MaterialService {
     if (foundMaterial == null)
       return null;
     if (foundMaterial.isEnabled()) {
-      List<Item> list = itemRepository.findAll(new ItemSpecification(true, id));
-      if (list.size() > 0)
+      List<Item> list = itemRepository.findAll(new ItemSpecification(true, id, null));
+      for (Item item : list) {
+        item.getMaterials().remove(foundMaterial);
+        itemRepository.save(item);
+      }
+      foundMaterial.getItems().clear();
+    } else if (!foundMaterial.getSupplyId().isEnabled()) {
         return null;
     }
     foundMaterial.setDateUpdated(new Date());

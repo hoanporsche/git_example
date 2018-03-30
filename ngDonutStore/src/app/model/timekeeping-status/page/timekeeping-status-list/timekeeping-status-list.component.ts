@@ -28,7 +28,7 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
   sortDirection = 0;
   currentSortProperty = '';
 
-  private params = {
+  params = {
     enabled: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,

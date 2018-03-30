@@ -31,8 +31,9 @@ export class MaterialListComponent implements OnInit, OnDestroy {
   sortDirection = 0;
   currentSortProperty = '';
 
-  private params = {
+  params = {
     enabled: '',
+    supplyId: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'

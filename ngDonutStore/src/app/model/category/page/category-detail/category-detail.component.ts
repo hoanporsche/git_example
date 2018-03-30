@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from '../../service/category.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { Subscription } from 'rxjs/Subscription';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-category-detail',
@@ -20,14 +21,14 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   formCategory: FormGroup;
 
   private subCategory: Subscription;
-  
+
   constructor(
     private fb: FormBuilder,
     public categoryService: CategoryService,
     private navigationService: NavigationService,
-  ) { 
+  ) {
     this.formCategory = fb.group({
-      name: ['', Validators.required]
+      name: ['', [Validators.required, Validators.maxLength(255), CommonValidator.notEmpty]]
     })
   }
 
@@ -41,23 +42,25 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldCategory.name;
-    this.categoryService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName) 
-          this.name.setErrors({shouldBeUnique: true});
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.categoryService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formCategory.valid) {
       const category = {
         id: this.oldCategory.id,
-        name: this.name.value
+        name: this.name.value.trim()
       }
       this.subCategory = this.categoryService.save(category)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {

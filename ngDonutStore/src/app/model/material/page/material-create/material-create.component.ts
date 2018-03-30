@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MaterialService } from '../../service/material.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { MaterialValidator } from '../../../../shared/custom-validator/material.vaildator';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-material-create',
@@ -31,10 +32,10 @@ export class MaterialCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formMaterial = fb.group({
-      name: ['', [Validators.required], [MaterialValidator.shouldBeUnique(this.materialService)]],
-      picture: ['', Validators.required],
-      singleValue: ['', Validators.required],
-      supplyId: ['', Validators.required]
+      name: ['', [Validators.required, CommonValidator.notEmpty], [MaterialValidator.shouldBeUnique(this.materialService)]],
+      picture: ['', [Validators.required, CommonValidator.notEmpty]],
+      singleValue: ['', [Validators.required, CommonValidator.notEmpty]],
+      supplyId: ['', [Validators.required]]
     })
   }
 
@@ -48,14 +49,14 @@ export class MaterialCreateComponent implements OnInit, OnDestroy {
     console.log(this.supplyId.value)
     if (this.formMaterial.valid) {
       const material = {
-        name: this.name.value,
-        picture: this.picture.value,
-        singleValue: this.singleValue.value,
+        name: this.name.value.trim(),
+        picture: this.picture.value.trim(),
+        singleValue: this.singleValue.value.trim(),
         supplyId: this.supplyId.value
       }
       this.subMaterial = this.materialService.save(material)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formMaterial.reset();
           }

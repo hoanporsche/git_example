@@ -103,11 +103,11 @@ public class Store implements Serializable {
     this.phone = phone;
   }
 
-  public String getPddress() {
+  public String getAddress() {
     return address;
   }
 
-  public void setPddress(String address) {
+  public void setAddress(String address) {
     this.address = address;
   }
 

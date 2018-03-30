@@ -34,8 +34,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
   sortDirection = 0;
   currentSortProperty = '';
 
-  private params = {
+  params = {
     enabled: '',
+    materialId: '',
+    categoryId: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'

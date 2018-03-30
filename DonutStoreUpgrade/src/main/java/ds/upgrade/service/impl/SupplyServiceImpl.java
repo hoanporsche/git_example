@@ -107,8 +107,10 @@ public class SupplyServiceImpl implements SupplyService {
       return null;
     if (foundSupply.isEnabled()) {
       List<Material> list = materialRepository.findBySupply(id);
-      if (list.size() > 0)
-        return null;
+      for (Material material : list) {
+        material.setEnabled(false);
+        materialRepository.save(material);
+      }
     }
     foundSupply.setDateUpdated(new Date());
     foundSupply.setEnabled(!foundSupply.isEnabled());

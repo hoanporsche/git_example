@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { OrderStatusService } from '../../service/order-status.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { OrderStatusValidator } from '../../../../shared/custom-validator/order-status.validator';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-order-status-create',
@@ -28,7 +29,7 @@ export class OrderStatusCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formOrderStatus = fb.group({
-      name: ['', [Validators.required], [OrderStatusValidator.shouldBeUnique(this.orderStatusService)]],
+      name: ['', [Validators.required, CommonValidator.notEmpty], [OrderStatusValidator.shouldBeUnique(this.orderStatusService)]],
       description: [''],
     })
   }
@@ -42,12 +43,12 @@ export class OrderStatusCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formOrderStatus.valid) {
       const orderStatus = {
-        name: this.name.value,
-        description: this.description.value
+        name: this.name.value.trim(),
+        description: this.description.value.trim()
       }
       this.subOrderStatus = this.orderStatusService.save(orderStatus)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formOrderStatus.reset();
           }

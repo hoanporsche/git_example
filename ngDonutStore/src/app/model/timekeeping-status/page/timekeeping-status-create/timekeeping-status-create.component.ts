@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { TimekeepingStatusService } from '../../service/timekeeping-status.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { TimekeepingStatusValidator } from '../../../../shared/custom-validator/timekeeping-status.validator';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-timekeeping-status-create',
@@ -28,7 +29,7 @@ export class TimekeepingStatusCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formTimekeepingStatus = fb.group({
-      name: ['', [Validators.required], [TimekeepingStatusValidator.shouldBeUnique(this.timekeepingStatusService)]],
+      name: ['', [Validators.required, CommonValidator.notEmpty], [TimekeepingStatusValidator.shouldBeUnique(this.timekeepingStatusService)]],
       description: [''],
     })
   }
@@ -42,12 +43,12 @@ export class TimekeepingStatusCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formTimekeepingStatus.valid) {
       const timekeepingStatus = {
-        name: this.name.value,
-        description: this.description.value
+        name: this.name.value.trim(),
+        description: this.description.value.trim()
       }
       this.subTimekeepingStatus = this.timekeepingStatusService.save(timekeepingStatus)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formTimekeepingStatus.reset();
           }

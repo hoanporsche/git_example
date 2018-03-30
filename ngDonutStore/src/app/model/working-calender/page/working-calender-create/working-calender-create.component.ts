@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { WorkingCalenderService } from '../../service/working-calender.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { WorkingCalenderValidator } from '../../../../shared/custom-validator/working-calender.validator';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-working-calender-create',
@@ -28,7 +29,7 @@ export class WorkingCalenderCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formWorkingCalender = fb.group({
-      name: ['', [Validators.required], [WorkingCalenderValidator.shouldBeUnique(this.workingCalenderService)]],
+      name: ['', [Validators.required, CommonValidator.notEmpty], [WorkingCalenderValidator.shouldBeUnique(this.workingCalenderService)]],
       description: [''],
     })
   }
@@ -42,12 +43,12 @@ export class WorkingCalenderCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formWorkingCalender.valid) {
       const workingCalender = {
-        name: this.name.value,
-        description: this.description.value
+        name: this.name.value.trim(),
+        description: this.description.value.trim()
       }
       this.subWorkingCalender = this.workingCalenderService.save(workingCalender)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formWorkingCalender.reset();
           }

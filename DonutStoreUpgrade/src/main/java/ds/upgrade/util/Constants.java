@@ -35,6 +35,9 @@ public class Constants {
     public static final String DATE_CREATED_PARAM = "dateCreated";
     public static final String ITEMS_PARAM = "items";
     public static final String MATERIALS_PARAM = "materials";
+    public static final String CATEGORY_ID_PARAM = "categoryId";
+    public static final String MATERIAL_ID_PARAM = "materialId";
+    public static final String SUPPLY_ID_PARAM = "supplyId";
   }
   
   public static class API_URL {

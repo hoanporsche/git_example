@@ -6,8 +6,8 @@ export class RoleValidator {
 
   static shouldBeUnique(roleService: RoleService) {
     return (control: AbstractControl) => {
-      if(control.value) {
-        return roleService.findByName(control.value)
+      if(control.value.trim() !== '') {
+        return roleService.findByName(control.value.trim())
           .map(response => {
             return (!response) ? null : { shouldBeUnique: true };
           });

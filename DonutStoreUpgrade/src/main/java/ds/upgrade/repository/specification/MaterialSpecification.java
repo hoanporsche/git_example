@@ -24,13 +24,13 @@ public class MaterialSpecification implements Specification<Material> {
 
   private Boolean enabled;
   
-  private Long itemId;
+  private Long supplyId;
 
   public MaterialSpecification() {}
   
-  public MaterialSpecification(Boolean enabled, Long itemId) {
+  public MaterialSpecification(Boolean enabled, Long supplyId) {
     this.enabled = enabled;
-    this.itemId = itemId;
+    this.supplyId = supplyId;
   }
 
   /**
@@ -51,9 +51,9 @@ public class MaterialSpecification implements Specification<Material> {
       predicate = cb.and(predicate,
           cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
     }
-    if (itemId != null) {
+    if (supplyId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.join(Constants.PARAM.ITEMS_PARAM).<Long>get(Constants.PARAM.ID_PARAM), itemId));
+          cb.equal(root.<Long>get(Constants.PARAM.SUPPLY_ID_PARAM).get(Constants.PARAM.ID_PARAM), supplyId));
     }
     return predicate;
   }

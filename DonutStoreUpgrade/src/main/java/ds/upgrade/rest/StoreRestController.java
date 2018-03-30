@@ -156,7 +156,7 @@ public class StoreRestController {
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(Constants.REPONSE.NOT_DISABLED, HttpStatus.BAD_REQUEST);

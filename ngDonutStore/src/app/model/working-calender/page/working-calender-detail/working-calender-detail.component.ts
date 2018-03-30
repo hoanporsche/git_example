@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { WorkingCalenderService } from '../../service/working-calender.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
+import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 
 @Component({
   selector: 'app-working-calender-detail',
@@ -20,14 +21,14 @@ export class WorkingCalenderDetailComponent implements OnInit, OnDestroy {
   formWorkingCalender: FormGroup;
 
   private subWorkingCalender: Subscription;
-  
+
   constructor(
     private fb: FormBuilder,
     public workingCalenderService: WorkingCalenderService,
     private navigationService: NavigationService,
-  ) { 
+  ) {
     this.formWorkingCalender = fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, CommonValidator.notEmpty]],
       description: [''],
     })
   }
@@ -42,24 +43,26 @@ export class WorkingCalenderDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldWorkingCalender.name;
-    this.workingCalenderService.findByName(this.name.value)
-      .subscribe(response => {
-        if (response && response.name != oldName) 
-          this.name.setErrors({shouldBeUnique: true});
-      }, error => {
-        console.log(error)
-      });
+    if (this.name.value.trim() !== '') {
+      this.workingCalenderService.findByName(this.name.value.trim())
+        .subscribe(response => {
+          if (response && response.name != oldName)
+            this.name.setErrors({ shouldBeUnique: true });
+        }, error => {
+          console.log(error)
+        });
+    }
   }
   onSubmit() {
     if (this.formWorkingCalender.valid) {
       const workingCalender = {
         id: this.oldWorkingCalender.id,
-        name: this.name.value,
-        description: this.description.value
+        name: this.name.value.trim(),
+        description: this.description.value.trim()
       }
       this.subWorkingCalender = this.workingCalenderService.save(workingCalender)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
           }
         }, error => {
