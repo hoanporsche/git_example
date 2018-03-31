@@ -61,9 +61,9 @@ export class NavigationService {
       console.log('You are not authorized');
     }
   }
-  navUserDetail(id: number) {
+  navUserDetail(email) {
     if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/detail/' + id);
+      this.router.navigateByUrl('/admin/user/detail/' + email);
     } else {
       console.log('You are not authorized');
     }

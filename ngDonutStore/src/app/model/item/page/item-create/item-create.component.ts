@@ -49,15 +49,15 @@ export class ItemCreateComponent implements OnInit, OnDestroy {
     this.formItem.reset();
   }
   onSubmit() {
-    console.log(this.categoryId.value)
     if (this.formItem.valid) {
       const item = {
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
-        singleValue: this.singleValue.value.trim(),
+        singleValue: this.singleValue.value.toString().trim(),
         categoryId: this.categoryId.value,
         materials: this.materials.value
       }
+      console.log(item)
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
           if (response.name === this.name.value.trim()) {

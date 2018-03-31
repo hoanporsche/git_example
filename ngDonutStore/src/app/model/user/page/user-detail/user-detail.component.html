@@ -1,3 +1,93 @@
-<p>
-  user-detail works!
-</p>
+<form [formGroup]="formUser" (ngSubmit)="onSubmit()">
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Email
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <!-- <input type="text" class="form-control m-input" formControlName="email" maxlength="255" placeholder="Enter user's email"
+          [(ngModel)]="userService.getUser().email" (blur)="validateEmail()">
+        <div class="error-no-padding" *ngIf="email.touched && email.invalid">
+          <div *ngIf="email.hasError('required')">
+            Email is required.
+          </div>
+          <div *ngIf="email.hasError('notEmpty')">
+            Email is required.
+          </div>
+          <div *ngIf="email.hasError('shouldBeUnique')">
+            Email should be unique.
+          </div>
+        </div> -->
+        <p>{{ userService.getUser().email }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12">
+      Password
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="password" maxlength="60" [(ngModel)]="userService.getUser().password"
+          placeholder="Enter user's password">
+        <div class="error-no-padding" *ngIf="email.touched && email.invalid">
+          <div *ngIf="password.hasError('required')">
+            Password is required.
+          </div>
+          <div *ngIf="password.hasError('notEmpty')">
+            Password is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Store
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <select class="form-control m-input" formControlName="storeId">
+          <option value="">Old store: {{ userService.getUser().storeId?.name }}</option>
+          <option *ngFor="let store of listStore" [ngValue]="store">
+            {{ store?.name }}
+          </option>
+        </select>
+        <div class="error-no-padding" *ngIf="storeId.invalid">
+          <div *ngIf="storeId.hasError('required')">
+            Store is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Role
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <select class="form-control m-input" formControlName="roles">
+          <option value="" *ngIf="userService.getUser().roles">Old Role: {{ userService.getUser().roles[0].name}}</option>
+          <option *ngFor="let role of listRole" [ngValue]="role">
+            {{ role?.name }}
+          </option>
+        </select>
+        <div class="error-no-padding" *ngIf="storeId.invalid">
+          <div *ngIf="roles.hasError('required')">
+            Role is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary">
+      Update
+    </button>
+    <button type="button" class="btn" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

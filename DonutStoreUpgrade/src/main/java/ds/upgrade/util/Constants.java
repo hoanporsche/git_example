@@ -43,6 +43,9 @@ public class Constants {
     public static final String ORDER_ID_PARAM = "orderId";
     public static final String ITEM_ID_PARAM = "itemId";
     public static final String IS_SHIPPING_PARAM = "isShipping";
+    public static final String EMAIL_PARAM = "email";
+    public static final String ROLE_ID_PARAM = "roleId";
+    public static final String ROLES_PARAM = "roles";
   }
   
   public static class API_URL {
@@ -54,6 +57,8 @@ public class Constants {
     public static final String SAVE = "/save";
     public static final String ENABLED_OR_NOT = "/enabled-or-not";
     public static final String FIND_BY_IDENTITY_CARD = "/find-by-identity-card";
+    public static final String FIND_BY_EMAIL = "/find-by-email";
+    public static final String RESET_PASSWORD = "/reset-password";
   }
   
   public static class MODEL {
@@ -76,5 +81,11 @@ public class Constants {
   
   public static class FORMAT {
     public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+  }
+  
+  public static class ROLE {
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_STORE = "ROLE_STORE";
+    public static final String ROLE_STAFF = "ROLE_STAFF";
   }
 }

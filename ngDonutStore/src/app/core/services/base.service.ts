@@ -51,7 +51,7 @@ export class BaseService {
   }
 
   public createHeaders() {
-    return  new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken().strValue);
+    return  new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
   }
   private getToken(): Token {
     return <Token> JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));

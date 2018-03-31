@@ -45,9 +45,9 @@ public class OAuth2Configuration {
         // Determine if the client request contained an OAuth Authorization
         return (auth != null) && auth.startsWith("Bearer");
       })
-        .antMatcher("/user/**")
+        .antMatcher("/api/**")
         .authorizeRequests()
-        .antMatchers("/user/**").authenticated()
+        .antMatchers("/api/**").authenticated()
         .and()
       .exceptionHandling()
         .accessDeniedHandler(new OAuth2AccessDeniedHandler());

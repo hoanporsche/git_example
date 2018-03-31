@@ -104,11 +104,11 @@ INSERT INTO `donutstore`.`timekeeping` VALUES
 ('1','1','2018-03-06','2018-03-06 08:20:00','2018-03-06 17:30:00', b'1');
 
 INSERT INTO `donutstore`.`user` VALUES 
-('1','Vũ Đình Hoàn','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','admin@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1),
-('2','Vũ Đình Hoàn','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','giangvo@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1),
-('3','Vũ Đình Hoàn','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','nuitruc@gmail.com','094 345 1794','304-a3b','2018-01-02','2018-02-03','2018-03-06',b'1',b'0',b'0',b'0',1);
+('1','admin@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
+('2','giangvo@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
+('3','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1);
 
 INSERT INTO `donutstore`.`user_role` VALUES 
-('1','1'),('1','2'),('1','3'),
-('2','2'),('2','3'),
-('3','2'),('3','3');
+('1','1'),
+('2','2'),
+('3','3');

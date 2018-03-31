@@ -238,14 +238,10 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(60) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
-  `phone` VARCHAR(20) NULL DEFAULT NULL,
-  `address` VARCHAR(255) NULL DEFAULT NULL,
+  `password` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_order_time` TIMESTAMP NULL DEFAULT NULL,
   `enabled` BIT not null,
   `credentialsexpired` BIT not null,
   `expired` BIT not null,

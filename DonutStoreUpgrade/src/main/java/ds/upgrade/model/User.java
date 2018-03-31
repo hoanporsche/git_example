@@ -30,12 +30,6 @@ public class User implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-
-  @NotEmpty
-  @Size(max = 255)
-  @Column(name = "username", nullable = false)
-  private String username;
-  
   @NotEmpty
   @Size(max = 255)
   @Email
@@ -51,19 +45,10 @@ public class User implements Serializable {
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
-  
-  @Size(max = 20)
-  @Column(name = "phone")
-  private String phone;
-  @Size(max = 255)
-  @Column(name = "address")
-  private String address;
   @Column(name = "date_created")
   private Date dateCreated;
   @Column(name = "date_updated")
   private Date dateUpdated;
-  @Column(name = "last_order_time")
-  private Date lastOrderTime;
   @NotNull
   @Column(name = "enabled")
   private boolean enabled = true;
@@ -81,10 +66,6 @@ public class User implements Serializable {
   private Store storeId;
   
   public User() {}
-  
-  public String toString() {
-    return this.username;
-  }
 
   public Long getId() {
     return id;
@@ -92,14 +73,6 @@ public class User implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   public String getEmail() {
@@ -126,22 +99,6 @@ public class User implements Serializable {
     this.roles = roles;
   }
 
-  public String getPhone() {
-    return phone;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
   public Date getDateCreated() {
     return dateCreated;
   }
@@ -156,14 +113,6 @@ public class User implements Serializable {
 
   public void setDateUpdated(Date dateUpdated) {
     this.dateUpdated = dateUpdated;
-  }
-
-  public Date getLastOrderTime() {
-    return lastOrderTime;
-  }
-
-  public void setLastOrderTime(Date lastOrderTime) {
-    this.lastOrderTime = lastOrderTime;
   }
 
   public boolean isEnabled() {

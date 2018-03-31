@@ -64,7 +64,7 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
         id: this.oldMaterial.id,
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
-        singleValue: this.singleValue.value.trim(),
+        singleValue: this.singleValue.value.toString().trim(),
         supplyId: this.supplyId.value
       }
       this.subMaterial = this.materialService.save(material)

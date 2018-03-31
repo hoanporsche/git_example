@@ -13,7 +13,7 @@ import { User } from '../../model/user/user';
 
 @Injectable()
 export class LoginService extends BaseService {
-  loginUrl = environment.baseUrl + API_URL.LOGIN;
+  loginUrl = 'http://localhost:6789' + API_URL.LOGIN;
   constructor(
     httpClient: HttpClient,
     private http: Http,
