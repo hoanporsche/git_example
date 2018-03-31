@@ -105,9 +105,9 @@ export class StaffListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 

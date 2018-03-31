@@ -15,10 +15,6 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
   isAdmin = false;
   isStaff = false;
   isStore = false;
-  isDuLead = false;
-  isDuMember = false;
-  isHrManager = false;
-  isHrMember = false;
   constructor(
     private navigationService: NavigationService,
     private identityService: IdentityService
