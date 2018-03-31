@@ -1,5 +1,6 @@
+import { WorkingCalenderModule } from './../working-calender/working-calender.module';
+import { StoreModule } from './../store/store.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { StaffCreateComponent } from './page/staff-create/staff-create.component';
 import { StaffDetailComponent } from './page/staff-detail/staff-detail.component';
 import { StaffListComponent } from './page/staff-list/staff-list.component';
@@ -7,12 +8,15 @@ import { StaffRoutingModule } from './staff.routing';
 import { SharedModule } from '../../shared/shared.module';
 import { StaffService } from './service/staff.service';
 import { StaffComponent } from './staff.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
-    CommonModule,
+    NgbModule,
     StaffRoutingModule,
     SharedModule,
+    StoreModule,
+    WorkingCalenderModule
   ],
   declarations: [
     StaffComponent,

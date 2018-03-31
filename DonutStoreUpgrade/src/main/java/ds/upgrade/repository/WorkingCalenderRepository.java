@@ -13,4 +13,6 @@ public interface WorkingCalenderRepository
 
   @Query("SELECT wc FROM WorkingCalender wc WHERE wc.enabled = true")
   List<WorkingCalender> findAll();
+  
+  WorkingCalender findByName(String name);
 }

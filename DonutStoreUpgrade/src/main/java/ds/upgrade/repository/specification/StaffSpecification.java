@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Staff;
+import ds.upgrade.util.Constants;
 
 /**
  * @description: .
@@ -21,21 +22,34 @@ import ds.upgrade.model.Staff;
  */
 public class StaffSpecification implements Specification<Staff> {
 
-  /**
-   * @description: .
-   * @author: VDHoan
-   * @created_date: Mar 6, 2018
-   * @modifier: User
-   * @modifier_date: Mar 6, 2018
-   * @param arg0
-   * @param arg1
-   * @param arg2
-   * @return
-   */
+  private Boolean enabled;
+  private Long storeId;
+  private Long workingCalenderId;
+
+  public StaffSpecification() {}
+
+  public StaffSpecification(Boolean enabled, Long storeId, Long workingCalenderId) {
+    this.enabled = enabled;
+    this.storeId = storeId;
+    this.workingCalenderId = workingCalenderId;
+  }
+
   @Override
-  public Predicate toPredicate(Root<Staff> arg0, CriteriaQuery<?> arg1, CriteriaBuilder arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public Predicate toPredicate(Root<Staff> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    Predicate predicate = cb.conjunction();
+    if (enabled != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    if (storeId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Long>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+    }
+    if (workingCalenderId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Long>get(Constants.PARAM.WORKING_CALENDER_ID_PARAM).get(Constants.PARAM.ID_PARAM), workingCalenderId));
+    }
+    return predicate;
   }
 
 }

@@ -1,3 +1,4 @@
+import { CommonValidator } from './../../../../shared/custom-validator/common.validator';
 import { Subscription } from 'rxjs/Subscription';
 import { NavigationService } from './../../../../core/services/navigation.service';
 import { CategoryService } from './../../service/category.service';
@@ -28,7 +29,7 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formCategory = fb.group({
-      name: ['', [Validators.required], [CategoryValidator.shouldBeUnique(this.categoryService)]]
+      name: ['', [Validators.required, Validators.maxLength(255), CommonValidator.notEmpty], [CategoryValidator.shouldBeUnique(this.categoryService)]]
     })
   }
 
@@ -41,11 +42,11 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.formCategory.valid) {
       const category = {
-        name: this.name.value
+        name: this.name.value.trim()
       }
       this.subCategory = this.categoryService.save(category)
         .subscribe(response => {
-          if (response.name === this.name.value) {
+          if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
             this.formCategory.reset();
           }

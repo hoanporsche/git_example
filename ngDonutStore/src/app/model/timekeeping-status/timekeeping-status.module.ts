@@ -1,6 +1,6 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TimekeepingStatusComponent } from './timekeeping-status.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TimekeepingStatusCreateComponent } from './page/timekeeping-status-create/timekeeping-status-create.component';
 import { TimekeepingStatusDetailComponent } from './page/timekeeping-status-detail/timekeeping-status-detail.component';
 import { TimekeepingStatusListComponent } from './page/timekeeping-status-list/timekeeping-status-list.component';
@@ -10,9 +10,9 @@ import { TimekeepingStatusService } from './service/timekeeping-status.service';
 
 @NgModule({
   imports: [
-    CommonModule,
     TimekeepingStatusRoutingModule,
     SharedModule,
+    NgbModule,
   ],
   declarations: [
     TimekeepingStatusComponent,

@@ -8,14 +8,26 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.TimekeepingStatus;
+import ds.upgrade.util.Constants;
 
 public class TimekeepingStatusSpecification implements Specification<TimekeepingStatus> {
 
+  private Boolean enabled;
+
+  public TimekeepingStatusSpecification() {}
+
+  public TimekeepingStatusSpecification(Boolean enabled) {
+    this.enabled = enabled;
+  }
+
   @Override
-  public Predicate toPredicate(Root<TimekeepingStatus> arg0, CriteriaQuery<?> arg1,
-      CriteriaBuilder arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public Predicate toPredicate(Root<TimekeepingStatus> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    Predicate predicate = cb.conjunction();
+    if (enabled != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    return predicate;
   }
 
 }

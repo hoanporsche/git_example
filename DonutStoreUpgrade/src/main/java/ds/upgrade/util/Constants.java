@@ -20,12 +20,29 @@ public class Constants {
     public static final String NOT_RETRIVE_DATA = "Not retrive data";
     public static final String SERVER_ERROR = "Internal Server Error";
     public static final String NOT_SAVE = "Saving content has error";
+    public static final String NOT_DISABLED = "Please Make sure you have a replacement";
   }
   
   public static class PARAM {
     public static final String ID_PARAM = "id";
     public static final String ENABLED_PARAM = "enabled";
     public static final String NAME_PARAM = "name";
+    public static final String STATUS_ID_PARAM = "statusId";
+    public static final String STAFF_ID_PARAM = "staffId";
+    public static final String STORE_ID_PARAM = "storeId";
+    public static final String START_DATE_PARAM = "startDate";
+    public static final String END_DATE_PARAM = "endDate";
+    public static final String DATE_CREATED_PARAM = "dateCreated";
+    public static final String ITEMS_PARAM = "items";
+    public static final String MATERIALS_PARAM = "materials";
+    public static final String CATEGORY_ID_PARAM = "categoryId";
+    public static final String MATERIAL_ID_PARAM = "materialId";
+    public static final String SUPPLY_ID_PARAM = "supplyId";
+    public static final String WORKING_CALENDER_ID_PARAM = "workingCalenderId";
+    public static final String IDENTITY_CARD_ID_PARAM = "identityCard";
+    public static final String ORDER_ID_PARAM = "orderId";
+    public static final String ITEM_ID_PARAM = "itemId";
+    public static final String IS_SHIPPING_PARAM = "isShipping";
   }
   
   public static class API_URL {
@@ -36,6 +53,7 @@ public class Constants {
     public static final String FIND_BY_NAME = "/find-by-name";
     public static final String SAVE = "/save";
     public static final String ENABLED_OR_NOT = "/enabled-or-not";
+    public static final String FIND_BY_IDENTITY_CARD = "/find-by-identity-card";
   }
   
   public static class MODEL {
@@ -56,4 +74,7 @@ public class Constants {
     public static final String WORKING_CALENDER_MODEL = "working-calender";
   }
   
+  public static class FORMAT {
+    public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+  }
 }

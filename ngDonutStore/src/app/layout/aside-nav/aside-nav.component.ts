@@ -43,4 +43,61 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
   navCategoryList() {
     this.navigationService.navCategoryList();
   }
+
+  navItemList() {
+    this.navigationService.navItemList();
+  }
+
+  navMaterialList() {
+    this.navigationService.navMaterialList();
+  }
+
+  navMaterialDailyReportList() {
+    this.navigationService.navMaterialDailyReportList();
+  }
+
+  navQuantityList() {
+    this.navigationService.navQuantityList();
+  }
+
+  navOrderList() {
+    this.navigationService.navOrderList();
+  }
+
+  navOrderStatusList() {
+    this.navigationService.navOrderStatusList();
+  }
+
+  navRoleList() {
+    this.navigationService.navRoleList();
+  }
+
+  navStaffList() {
+    this.navigationService.navStaffList();
+  }
+
+  navStoreList() {
+    this.navigationService.navStoreList();
+  }
+
+  navSupplyList() {
+    this.navigationService.navSupplyList();
+  }
+
+  navTimekeepingList() {
+    this.navigationService.navTimekeepingList();
+  }
+
+  navTimekeepingStatusList() {
+    this.navigationService.navTimekeepingStatusList();
+  }
+
+  navUserList() {
+    this.navigationService.navUserList();
+  }
+
+  navWorkingCalenderList() {
+    this.navigationService.navWorkingCalenderList();
+  }
+
 }

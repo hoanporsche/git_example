@@ -14,7 +14,7 @@
         <i class="m-menu__section-icon flaticon-more-v3"></i>
       </li>
 
-      <!-- USER MENU FOR ADMIN ONLY -->
+      <!-- USER CATEGORY FOR ADMIN ONLY -->
       <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
         aria-haspopup="true" data-menu-submenu-toggle="hover">
         <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
@@ -49,7 +49,488 @@
           </ul>
         </div>
       </li>
-      <!-- END::USER MENU -->
+      <!-- END::CATEGORY MENU -->
+
+      <!-- USER ITEM FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Item
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Item
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navItemList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all items
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::ITEM MENU -->
+
+      <!-- USER MATERIAL FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Material
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Material
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navMaterialList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all materials
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::MATERIAL MENU -->
+
+      <!-- USER MATERIAL DAILY REPORT FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin || isStore" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Material Daily Report
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Material Daily Report
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navMaterialDailyReportList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all material daily reports
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::MATERIAL DAILY REPORT MENU -->
+
+      <!-- USER ORDER FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin || isStore" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Order
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Order
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navOrderList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all orders
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::ORDER MENU -->
+
+      <!-- USER ORDER STATUS FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Order Status
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Order Status
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navOrderStatusList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all order status
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::ORDER STATUS MENU -->
+
+      <!-- USER QUANTITY FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Quantity
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Quantity
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navQuantityList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all quantities
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::QUANTITY MENU -->
+
+      <!-- USER ROLE FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Role
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Role
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navRoleList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all roles
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::ROLE MENU -->
+
+      <!-- USER CATEGORY FOR ADMIN ONLY -->
+      <li *ngIf="isStaff || isStore" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Staff
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Staff
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navStaffList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all staffs
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::Staff MENU -->
+
+      <!-- USER STORE FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Store
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Store
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navStoreList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all store
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::STORE MENU -->
+
+      <!-- USER SUPPLY FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin || isStore" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Supply
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Supply
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navSupplyList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all supplies
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::SUPPLY MENU -->
+
+      <!-- USER TIMEKEEPING FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin || isStore" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Timekeeping
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Timekeeping
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navTimekeepingList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all timekeepings
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::CATEGORY MENU -->
+
+      <!-- USER TIMEKEEPING STATUS FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Timekeeping Status
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Timekeeping Status
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navTimekeepingStatusList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all timekeeping status
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::TIMEKEEPING STATUS MENU -->
+
+      <!-- USER WORKING CALENDER FOR ADMIN ONLY -->
+      <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+        aria-haspopup="true" data-menu-submenu-toggle="hover">
+        <a href="javascript: void(0);" class="m-menu__link m-menu__toggle">
+          <i class="m-menu__link-icon flaticon-file"></i>
+          <!-- <i class="m-menu__link-icon fa fa-vcard-o"></i> -->
+          <span class="m-menu__link-text">
+            Working Calender
+          </span>
+          <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+          <span class="m-menu__arrow"></span>
+          <ul class="m-menu__subnav">
+            <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+              aria-haspopup="true">
+              <a href="#" class="m-menu__link">
+                <span class="m-menu__link-text">
+                  Working Calender
+                </span>
+              </a>
+            </li>
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+              <a href="javascript: void(0);" class="m-menu__link" (click)="navWorkingCalenderList()">
+                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                  <span></span>
+                </i>
+                <span class="m-menu__link-text">
+                  View all working calenders
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- END::CATEGORY MENU -->
 
       <!-- USER MENU FOR ADMIN ONLY -->
       <li *ngIf="isAdmin" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"

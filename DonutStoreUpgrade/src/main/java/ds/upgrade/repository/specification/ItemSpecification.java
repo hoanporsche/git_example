@@ -23,11 +23,15 @@ import ds.upgrade.util.Constants;
 public class ItemSpecification implements Specification<Item> {
 
   private Boolean enabled;
+  private Long materialId;
+  private Long categoryId;
   
   public ItemSpecification() {}
   
-  public ItemSpecification(Boolean enabled ) {
+  public ItemSpecification(Boolean enabled, Long materialId, Long categoryId) {
     this.enabled = enabled;
+    this.materialId = materialId;
+    this.categoryId = categoryId;
   }
   /**
    * @description: .
@@ -46,6 +50,14 @@ public class ItemSpecification implements Specification<Item> {
     if (enabled != null) {
       predicate = cb.and(predicate,
           cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    if (materialId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.join(Constants.PARAM.MATERIALS_PARAM).<Long>get(Constants.PARAM.ID_PARAM), materialId));
+    }
+    if (categoryId != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Long>get(Constants.PARAM.CATEGORY_ID_PARAM).get(Constants.PARAM.ID_PARAM), categoryId));
     }
     return predicate;
   }

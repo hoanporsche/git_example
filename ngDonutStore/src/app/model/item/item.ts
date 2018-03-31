@@ -1,3 +1,4 @@
+import { Material } from './../material/material';
 import { Category } from './../category/category';
 
 export class Item{
@@ -10,5 +11,6 @@ export class Item{
     public dateUpdated?: Date,
     public singleValue?: number,
     public enbled?: boolean,
+    public materials?: Material[],
   ) {}
 }

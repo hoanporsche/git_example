@@ -1,3 +1,64 @@
-<p>
-  supply-detail works!
-</p>
+<form [formGroup]="formSupply" (ngSubmit)="onSubmit()">
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Name
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter supply's name"
+          [(ngModel)]="supplyService.getSupply().name" (blur)="validateName()">
+        <div class="error-no-padding" *ngIf="name.touched && name.invalid">
+          <div *ngIf="name.hasError('required')">
+            Name is required.
+          </div>
+          <div *ngIf="name.hasError('notEmpty')">
+            Name is required.
+          </div>
+          <div *ngIf="name.hasError('shouldBeUnique')">
+            Name should be unique.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Address
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="address" maxlength="255" placeholder="Enter supply's address"
+        [(ngModel)]="supplyService.getSupply().address">
+        <div class="error-no-padding" *ngIf="address.touched && address.invalid">
+          <div *ngIf="address.hasError('required') || address.hasError('notEmpty')">
+            Address is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Phone
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="phone" maxlength="20" placeholder="Enter supply's phone"
+        [(ngModel)]="supplyService.getSupply().phone" OnlyNumber>
+        <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
+          <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
+            Phone is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary">
+      Update
+    </button>
+    <button type="button" class="btn" data-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

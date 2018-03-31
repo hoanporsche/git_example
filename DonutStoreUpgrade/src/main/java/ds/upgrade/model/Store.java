@@ -1,11 +1,8 @@
 package ds.upgrade.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,12 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "store")
@@ -30,19 +28,19 @@ public class Store implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
-
+  @NotEmpty
   @Size(max = 255)
-  @Column(name = "name", nullable = false)
+  @Column(name = "name", nullable = false, unique = true)
   private String name;
-
+  @NotEmpty
   @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
-
+  @NotEmpty
   @Size(max = 20)
   @Column(name = "phone", nullable = false)
   private String phone;
-
+  @NotEmpty
   @Size(max = 255)
   @Column(name = "address", nullable = false)
   private String address;
@@ -67,11 +65,6 @@ public class Store implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
   @JsonIgnore
   private List<Order> orders;
-
-  @ManyToMany
-  @JoinTable(name = "item_store", joinColumns = @JoinColumn(name = "store_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-  @JsonIgnore
-  private Set<Item> items;
 
   public Store() {
   }
@@ -112,11 +105,11 @@ public class Store implements Serializable {
     this.phone = phone;
   }
 
-  public String getPddress() {
+  public String getAddress() {
     return address;
   }
 
-  public void setPddress(String address) {
+  public void setAddress(String address) {
     this.address = address;
   }
 
@@ -166,14 +159,6 @@ public class Store implements Serializable {
 
   public void setOrders(List<Order> orders) {
     this.orders = orders;
-  }
-
-  public Set<Item> getItems() {
-    return items;
-  }
-
-  public void setItems(Set<Item> items) {
-    this.items = items;
   }
 
 }

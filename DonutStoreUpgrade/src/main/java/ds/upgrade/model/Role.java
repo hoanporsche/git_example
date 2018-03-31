@@ -29,7 +29,7 @@ public class Role implements Serializable {
   
   @NotEmpty
   @Size(max = 255)
-  @Column(name = "name", nullable = false)
+  @Column(name = "name", nullable = false, unique = true)
   private String name;
   
   @Column(name = "enabled", nullable = false)

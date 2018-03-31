@@ -13,4 +13,6 @@ public interface OrderStatusRepository
 
   @Query("SELECT os FROM OrderStatus os WHERE os.enabled = true")
   List<OrderStatus> findAll();
+  
+  OrderStatus findByName(String name);
 }

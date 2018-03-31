@@ -4,6 +4,7 @@
 package ds.upgrade.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,6 +44,9 @@ public class MaterialDailyReport implements Serializable {
   @JoinColumn(name = "store_id", referencedColumnName = "id",nullable = false)
   private Store storeId;
   
+  @Column(name = "date_created")
+  private Date dateCreated;
+  
   @ManyToOne
   @JoinColumn(name = "material_id", referencedColumnName = "id",nullable = false)
   private Material materialId;
@@ -78,6 +82,26 @@ public class MaterialDailyReport implements Serializable {
     return storeId;
   }
 
+  public void setStoreId(Store storeId) {
+    this.storeId = storeId;
+  }
+
+  public Date getDateCreated() {
+    return dateCreated;
+  }
+
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  public Material getMaterialId() {
+    return materialId;
+  }
+
+  public void setMaterialId(Material materialId) {
+    this.materialId = materialId;
+  }
+
   public int getMaterialRemain() {
     return materialRemain;
   }
@@ -92,18 +116,6 @@ public class MaterialDailyReport implements Serializable {
 
   public void setMaterialImport(int materialImport) {
     this.materialImport = materialImport;
-  }
-
-  public void setStoreId(Store storeId) {
-    this.storeId = storeId;
-  }
-
-  public Material getMaterialId() {
-    return materialId;
-  }
-
-  public void setMaterialId(Material materialId) {
-    this.materialId = materialId;
   }
 
   public String getDescription() {

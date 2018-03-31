@@ -1,7 +1,5 @@
 package ds.upgrade.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,6 +20,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "item")
 public class Item implements Serializable {
@@ -32,11 +34,11 @@ public class Item implements Serializable {
   @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
+  @NotEmpty
   @Size(max = 255)
-  @Column(name = "name", nullable = false)
+  @Column(name = "name", nullable = false, unique = true)
   private String name;
-
+  @NotEmpty
   @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
@@ -50,7 +52,7 @@ public class Item implements Serializable {
 
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
-
+  @NotEmpty
   @Column(name = "single_value", nullable = false)
   private BigDecimal singleValue;
 
@@ -59,12 +61,7 @@ public class Item implements Serializable {
 
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
-  @JsonIgnore
   private Set<Material> materials;
-
-  @ManyToMany(mappedBy = "items")
-  @JsonIgnore
-  private Set<Store> stores;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
   @JsonIgnore
@@ -147,15 +144,7 @@ public class Item implements Serializable {
   public void setMaterials(Set<Material> materials) {
     this.materials = materials;
   }
-
-  public Set<Store> getStores() {
-    return stores;
-  }
-
-  public void setStores(Set<Store> stores) {
-    this.stores = stores;
-  }
-
+  
   public List<Quantity> getQuantites() {
     return quantites;
   }

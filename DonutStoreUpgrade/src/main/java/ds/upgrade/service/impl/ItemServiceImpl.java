@@ -19,7 +19,7 @@ public class ItemServiceImpl implements ItemService {
 
   @Autowired
   private ItemRepository itemRepository;
-  
+
   /**
    * @description: .
    * @author: VDHoan
@@ -57,8 +57,8 @@ public class ItemServiceImpl implements ItemService {
    * @return
    */
   @Override
-  public Page<Item> findList(Pageable pageable, Boolean enabled) {
-    Specification<Item> spec = new ItemSpecification(enabled);
+  public Page<Item> findList(Pageable pageable, Boolean enabled, Long materialId, Long categoryId) {
+    Specification<Item> spec = new ItemSpecification(enabled, materialId, categoryId);
     return itemRepository.findAll(spec, pageable);
   }
 
@@ -82,6 +82,11 @@ public class ItemServiceImpl implements ItemService {
     Item foundItem = itemRepository.findOne(id);
     if (foundItem == null)
       return null;
+    if (foundItem.isEnabled()) {
+      foundItem.getMaterials().clear();
+    } else if (!foundItem.getCategoryId().isEnabled()) {
+        return null;
+    }
     foundItem.setDateUpdated(new Date());
     foundItem.setEnabled(!foundItem.isEnabled());
     return itemRepository.save(foundItem);

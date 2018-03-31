@@ -28,11 +28,16 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   sortDirection = 0;
   currentSortProperty = '';
 
-  private params = {
+  params = {
+    enabled: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
   }
+  enabled = [
+    { view: 'Active', value: 'true' },
+    { view: 'In-Active', value: 'false' }
+  ]
 
   private subListCategory: Subscription;
   private subSortService: Subscription;
@@ -59,6 +64,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       this.subSortService.unsubscribe();
     if (this.subCategory)
       this.subCategory.unsubscribe();
+  }
+
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
   }
 
   findList() {
@@ -154,9 +164,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.findList();
-      },(error: Error) => {
+      },error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 }

@@ -10,7 +10,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Category;
+import ds.upgrade.model.Item;
 import ds.upgrade.repository.CategoryRepository;
+import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;
 import ds.upgrade.service.CategoryService;
 
@@ -19,6 +21,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Autowired
   private CategoryRepository categoryRepository;
+  @Autowired
+  private ItemRepository itemRepository;
 
   /**
    * @description: .
@@ -82,6 +86,13 @@ public class CategoryServiceImpl implements CategoryService {
     Category foundCategory = categoryRepository.findOne(id);
     if (foundCategory == null)
       return null;
+    if (foundCategory.isEnabled()) {
+      List<Item> list = itemRepository.findByCategory(id);
+      for (Item item : list) {
+        item.setEnabled(false);
+        itemRepository.save(item);
+      }
+    }
     foundCategory.setDateUpdated(new Date());
     foundCategory.setEnabled(!foundCategory.isEnabled());
     return categoryRepository.save(foundCategory);

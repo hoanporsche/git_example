@@ -8,14 +8,26 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.WorkingCalender;
+import ds.upgrade.util.Constants;
 
 public class WorkingCalenderSpecification implements Specification<WorkingCalender> {
 
+  private Boolean enabled;
+
+  public WorkingCalenderSpecification() {}
+
+  public WorkingCalenderSpecification(Boolean enabled) {
+    this.enabled = enabled;
+  }
+
   @Override
-  public Predicate toPredicate(Root<WorkingCalender> arg0, CriteriaQuery<?> arg1,
-      CriteriaBuilder arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public Predicate toPredicate(Root<WorkingCalender> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    Predicate predicate = cb.conjunction();
+    if (enabled != null) {
+      predicate = cb.and(predicate,
+          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+    }
+    return predicate;
   }
 
 }

@@ -76,6 +76,30 @@
           <div class="m-portlet__body">
             <div class="m-section">
               <div class="m-section__content">
+                <div class="row">
+                  <div class="col-12 col-xs-4 col-md-2">
+                    <div class="form-group m-form__group">
+                      <div class="input-group">
+                        <select class="form-control" [(ngModel)]="params.enabled">
+                          <option value="">Select Enabled</option>
+                          <option *ngFor="let e of enabled" [value]="e.value">{{ e.view }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xs-6 col-md-2">
+                    <div class="float-right">
+                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="onFilter()">
+                        <span>
+                          <i class="la la-filter"></i>
+                          <span>
+                            Filter
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
                 <!-- TABLE -->
                 <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
                   <thead>
@@ -107,14 +131,14 @@
                         <span placement="top" ngbTooltip="{{ category?.dateUpdated }}">{{ category?.dateUpdated | date }}</span>
                       </td>
                       <td>
-                        <span *ngIf="category?.enabled">Active</span>
-                        <span *ngIf="!category?.enabled">In-Active</span>
+                        <span *ngIf="category?.enabled" style="color: red">Active</span>
+                        <span *ngIf="!category?.enabled" style="color: black">In-Active</span>
                       </td>
                       <td>
                         <i class="la la-edit" (click)="onDetail(category)" placement="top" ngbTooltip="View detail">
                         </i>
                         <i class="la la-magic" (click)="onEnabledOrNot(category?.id)" placement="top" ngbTooltip="Enabled or Disabled">
-                          </i>
+                        </i>
                       </td>
                     </tr>
                   </tbody>

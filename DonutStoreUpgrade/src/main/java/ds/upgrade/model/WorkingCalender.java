@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -31,11 +33,12 @@ public class WorkingCalender implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
   private Long id;
+  @NotEmpty
   @Size(max = 255)
-  @Column(name = "tilte", nullable = false)
-  private String title;
+  @Column(name = "name", nullable = false, unique = true)
+  private String name;
   @Size(max = 255)
-  @Column(name = "desciption")
+  @Column(name = "description")
   private String description;
   @Column(name = "enabled", nullable = false)
   private boolean enabled;
@@ -51,7 +54,7 @@ public class WorkingCalender implements Serializable {
   }
   
   public String toString() {
-    return this.title;
+    return this.name;
   }
 
   public Long getId() {
@@ -62,12 +65,12 @@ public class WorkingCalender implements Serializable {
     this.id = id;
   }
 
-  public String getTitle() {
-    return title;
+  public String getName() {
+    return name;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getDescription() {

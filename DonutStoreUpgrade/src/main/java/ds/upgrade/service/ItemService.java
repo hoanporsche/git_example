@@ -13,7 +13,7 @@ public interface ItemService {
   
   Item findOne(Long id);
   
-  Page<Item> findList(Pageable pageable, Boolean enabled);
+  Page<Item> findList(Pageable pageable, Boolean enabled, Long materialId, Long categoryId);
   
   Item save(Item item);
   

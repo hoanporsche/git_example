@@ -105,6 +105,11 @@ export class NavigationService {
     this.router.navigateByUrl(this.getRoleSegment() + '/order-status');
   }
 
+  //Quantity
+  navQuantityList() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/quantity');
+  }
+
   //role
   navRoleList() {
     this.router.navigateByUrl(this.getRoleSegment() + '/role');

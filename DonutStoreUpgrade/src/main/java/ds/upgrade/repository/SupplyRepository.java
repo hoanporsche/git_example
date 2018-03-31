@@ -12,4 +12,6 @@ public interface SupplyRepository extends JpaRepository<Supply, Long>, JpaSpecif
 
   @Query("SELECT s FROM Supply s WHERE s.enabled = true")
   List<Supply> findAll();
+  
+  Supply findByName(String name);
 }

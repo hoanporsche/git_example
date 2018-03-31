@@ -6,8 +6,8 @@ export class CategoryValidator {
 
   static shouldBeUnique(categoryService: CategoryService) {
     return (control: AbstractControl) => {
-      if(control.value) {
-        return categoryService.findByName(control.value)
+      if(control.value.trim() !== '') {
+        return categoryService.findByName(control.value.trim())
           .map(response => {
             return (!response) ? null : { shouldBeUnique: true };
           });
