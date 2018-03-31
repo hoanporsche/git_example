@@ -1,3 +1,4 @@
+import { Item } from './../../../item/item';
 import { ItemService } from './../../../item/service/item.service';
 import { StoreService } from './../../../store/service/store.service';
 import { QuantityService } from './../../service/quantity.service';
@@ -18,7 +19,7 @@ export class QuantityListComponent implements OnInit, OnDestroy {
 
   listQuantity: Quantity[];
   listStore: Store[];
-  listItem: Store[];
+  listItem: Item[];
 
   private subListQuantity: Subscription;
   private subListStore: Subscription;
@@ -40,10 +41,15 @@ export class QuantityListComponent implements OnInit, OnDestroy {
     itemId: '',
     startDate: '',
     endDate: '',
+    isShipping: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
   }
+  shipping = [
+    { view: 'Yes', value: 'true' },
+    { view: 'No', value: 'false' }
+  ]
 
   constructor(
     private quantityService: QuantityService,
@@ -79,13 +85,17 @@ export class QuantityListComponent implements OnInit, OnDestroy {
       this.subSortService.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListQuantity = this.quantityService.findList(this.params)
       .subscribe(response => {
         this.error.isError = false;
         this.listQuantity = response.content;
-        console.log(this.listItem)
-        if (this.listItem.length === 0) {
+        if (this.listQuantity.length === 0) {
           this.notFoundMessage = "We're not found any contents";
         } else {
           this.notFoundMessage = "";

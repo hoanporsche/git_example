@@ -66,6 +66,11 @@ export class WorkingCalenderListComponent implements OnInit, OnDestroy {
       this.subWorkingCalender.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListWorkingCalender = this.workingCalenderService.findList(this.params)
       .subscribe(response => {

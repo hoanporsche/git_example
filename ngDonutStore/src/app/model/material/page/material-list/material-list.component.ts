@@ -76,6 +76,11 @@ export class MaterialListComponent implements OnInit, OnDestroy {
       this.subListSupply.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListMaterial = this.materialService.findList(this.params)
       .subscribe(response => {

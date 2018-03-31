@@ -18,6 +18,7 @@ public class QuantityServiceImpl implements QuantityService {
 
   @Autowired
   private QuantityRepository quantityRepository;
+
   /**
    * @description: .
    * @author: VDHoan
@@ -28,8 +29,9 @@ public class QuantityServiceImpl implements QuantityService {
    */
   @Override
   public Page<Quantity> findList(Pageable pageable, Long storeId, Long itemId, Date startDate,
-      Date endDate) {
-    Specification<Quantity> spec = new QuantitySpecification(storeId, itemId, startDate, endDate);
+      Date endDate, Boolean isShipping) {
+    Specification<Quantity> spec = new QuantitySpecification(storeId, itemId, startDate, endDate,
+        isShipping);
     return quantityRepository.findAll(spec, pageable);
   }
 

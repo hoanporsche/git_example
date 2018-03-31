@@ -66,6 +66,11 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
       this.subTimekeepingStatus.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListTimekeepingStatus = this.timekeepingStatusService.findList(this.params)
       .subscribe(response => {

@@ -66,6 +66,11 @@ export class RoleListComponent implements OnInit, OnDestroy {
       this.subRole.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListRole = this.roleService.findList(this.params)
       .subscribe(response => {

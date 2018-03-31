@@ -89,6 +89,11 @@ export class StaffListComponent implements OnInit, OnDestroy {
       this.subListWorkingCalender.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListStaff = this.staffService.findList(this.params)
       .subscribe(response => {

@@ -89,12 +89,16 @@ export class ItemListComponent implements OnInit, OnDestroy {
       this.subListMaterial.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListItem = this.itemService.findList(this.params)
       .subscribe(response => {
         this.error.isError = false;
         this.listItem = response.content;
-        console.log(this.listItem)
         if (this.listItem.length === 0) {
           this.notFoundMessage = "We're not found any contents";
         } else {

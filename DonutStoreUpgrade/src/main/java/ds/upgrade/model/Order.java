@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
@@ -29,8 +31,8 @@ public class Order implements Serializable {
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
 
-  @Column(name = "date_done")
-  private Date dateDone;
+  @Column(name = "date_updated")
+  private Date dateUpdated;
 
   @Column(name = "name_created", nullable = false)
   private String nameCreated;
@@ -47,6 +49,7 @@ public class Order implements Serializable {
   private OrderStatus statusId;
 
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderId")
+  @JsonIgnore 
   private Set<Quantity> quantities;
 
   @Column(name = "is_shipping", nullable = false)
@@ -83,12 +86,12 @@ public class Order implements Serializable {
     this.dateCreated = dateCreated;
   }
 
-  public Date getDateDone() {
-    return dateDone;
+  public Date getDateUpdated() {
+    return dateUpdated;
   }
 
-  public void setDateDone(Date dateDone) {
-    this.dateDone = dateDone;
+  public void setDateUpdate(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
   public String getNameCreated() {
@@ -131,11 +134,11 @@ public class Order implements Serializable {
     this.quantities = quantities;
   }
 
-  public boolean isShipping() {
+  public boolean isIsShipping() {
     return isShipping;
   }
 
-  public void setShipping(boolean isShipping) {
+  public void setIsShipping(boolean isShipping) {
     this.isShipping = isShipping;
   }
 

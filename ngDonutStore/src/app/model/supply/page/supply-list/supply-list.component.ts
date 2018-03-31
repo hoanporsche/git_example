@@ -65,6 +65,11 @@ export class SupplyListComponent implements OnInit, OnDestroy {
       this.subSupply.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListSupply = this.supplyService.findList(this.params)
       .subscribe(response => {

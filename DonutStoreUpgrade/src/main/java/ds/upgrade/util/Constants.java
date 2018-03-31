@@ -42,6 +42,7 @@ public class Constants {
     public static final String IDENTITY_CARD_ID_PARAM = "identityCard";
     public static final String ORDER_ID_PARAM = "orderId";
     public static final String ITEM_ID_PARAM = "itemId";
+    public static final String IS_SHIPPING_PARAM = "isShipping";
   }
   
   public static class API_URL {

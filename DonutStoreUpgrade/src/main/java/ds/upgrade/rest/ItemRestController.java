@@ -160,7 +160,6 @@ public class ItemRestController {
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      System.out.println(e.getMessage());
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -78,7 +78,7 @@
               <div class="m-section__content">
                 <!-- FILTER -->
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-12 col-md-4">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.itemId">
@@ -88,12 +88,22 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-12 col-md-4">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.storeId">
                           <option value="">Select store</option>
                           <option *ngFor="let store of listStore" [value]="store?.id">{{ store?.name }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group m-form__group">
+                      <div class="input-group">
+                        <select class="form-control" [(ngModel)]="params.isShipping">
+                          <option value="">Select isShipping</option>
+                          <option *ngFor="let e of shipping" [value]="e.value">{{ e.view }}</option>
                         </select>
                       </div>
                     </div>
@@ -107,12 +117,12 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-12 col-md-4">
                     <input type="date" class="form-control" [(ngModel)]="params.endDate" />
                   </div>
-                  <div class="col-12 col-md-2">
+                  <div class="col-12 col-md-4">
                     <div class="float-right">
-                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="findList()">
+                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="onFilter()">
                         <span>
                           <i class="la la-filter"></i>
                           <span>
@@ -130,10 +140,11 @@
                     <tr>
                       <th>#</th>
                       <th sortable-column="itemId.name">Item</th>
-                      <th sortable-column="orderId.dateCreate">Date created</th>
+                      <th sortable-column="orderId.nameCreated">Name created</th>
+                      <th sortable-column="orderId.dateCreated">Date created</th>
                       <th sortable-column="orderId.storeId.name">Store</th>
-                      <th sortable-column="quantity">Time In</th>
-                      <th>Action</th>
+                      <th sortable-column="orderId.isShipping">Is Shipping</th>
+                      <th sortable-column="quantity">Quantity</th>
                     </tr>
                   </thead>
                   <!-- END::SHOW MESSAGE -->
@@ -141,22 +152,25 @@
                     <tr *ngFor="let quantity of listQuantity; let i = index;">
                       <th scope="row">{{ requestPage.size * requestPage.number + i + 1 }}</th>
                       <td>
-                        <span placement="top" ngbTooltip="{{ quantity?.staffId.name }}">{{ quantity?.itemId.name | summary: 20}}</span>
+                        <span placement="top" ngbTooltip="{{ quantity?.itemId.name }}">{{ quantity?.itemId.name | summary: 20}}</span>
                       </td>
                       <td>
-                        <span placement="top" ngbTooltip="{{ quantity?.dateCreated }}">{{ quantity?.dateCreated | date }}</span>
+                        <span placement="top" ngbTooltip="{{ quantity?.orderId.nameCreated }}">{{ quantity?.orderId.nameCreated }}</span>
                       </td>
                       <td>
-                        <span placement="top" ngbTooltip="{{ quantity?.staffId.storeId.name }}">
+                        <span placement="top" ngbTooltip="{{ quantity?.orderId.dateCreated }}">{{ quantity?.orderId.dateCreated | date }}</span>
+                      </td>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ quantity?.orderId.storeId.name }}">
                           {{ quantity?.orderId.storeId.name | summary: 20}}
                         </span>
                       </td>
                       <td>
-                        <span placement="top" ngbTooltip="{{ quantity?.quantity }}">{{ quantity?.quantity }}</span>
+                        <span style="color: red" *ngIf="quantity?.orderId.isShipping">Yes</span>
+                        <span style="color: black" *ngIf="!quantity?.orderId.isShipping">No</span>
                       </td>
                       <td>
-                        <i class="la la-edit" (click)="onDetail(quantity)" placement="top" ngbTooltip="View detail">
-                        </i>
+                        <span placement="top" ngbTooltip="{{ quantity?.quantity }}">{{ quantity?.quantity }}</span>
                       </td>
                     </tr>
                   </tbody>

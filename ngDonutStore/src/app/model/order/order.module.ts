@@ -1,3 +1,5 @@
+import { OrderStatusModule } from './../order-status/order-status.module';
+import { StoreModule } from './../store/store.module';
 import { OrderService } from './service/order.service';
 import { SharedModule } from './../../shared/shared.module';
 import { OrderRoutingModule } from './order.routing';
@@ -12,7 +14,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     OrderRoutingModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    StoreModule,
+    OrderStatusModule,
   ],
   declarations: [
     OrderComponent,

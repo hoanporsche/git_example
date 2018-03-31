@@ -78,7 +78,7 @@
               <div class="m-section__content">
                 <!-- FILTER -->
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-12 col-md-4">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.statusId">
@@ -88,7 +88,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-12 col-md-4">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.staffId">
@@ -98,7 +98,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-12 col-md-4">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.storeId">
@@ -110,19 +110,19 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 col-xs-4 col-md-5">
+                  <div class="col-12 col-md-4">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <input type="date" class="form-control" [(ngModel)]="params.startDate"/>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-12 col-md-4">
                     <input type="date" class="form-control" [(ngModel)]="params.endDate"/>
                   </div>
-                  <div class="col-12 col-xs-6 col-md-2">
+                  <div class="col-12 col-md-4">
                     <div class="float-right">
-                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="findList()">
+                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="onFilter()">
                         <span>
                           <i class="la la-filter"></i>
                           <span>

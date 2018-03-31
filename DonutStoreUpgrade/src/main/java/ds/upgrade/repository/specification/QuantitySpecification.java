@@ -28,15 +28,18 @@ public class QuantitySpecification implements Specification<Quantity> {
   private Long itemId;
   private Date startDate;
   private Date endDate;
+  private Boolean isShipping;
 
   public QuantitySpecification() {
   }
 
-  public QuantitySpecification(Long storeId, Long itemId, Date startDate, Date endDate) {
+  public QuantitySpecification(Long storeId, Long itemId, Date startDate, Date endDate,
+      Boolean isShipping) {
     this.storeId = storeId;
     this.itemId = itemId;
     this.startDate = startDate;
     this.endDate = endDate;
+    this.isShipping = isShipping;
   }
 
   /**
@@ -54,20 +57,26 @@ public class QuantitySpecification implements Specification<Quantity> {
   public Predicate toPredicate(Root<Quantity> root, CriteriaQuery<?> arg1, CriteriaBuilder cb) {
     Predicate predicate = cb.conjunction();
     if (storeId != null) {
-      predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.ORDER_ID_PARAM).get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+      predicate = cb.and(predicate, cb.equal(root.<Long>get(Constants.PARAM.ORDER_ID_PARAM)
+          .get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
     }
     if (itemId != null) {
       predicate = cb.and(predicate, cb.equal(
           root.<Long>get(Constants.PARAM.ITEM_ID_PARAM).get(Constants.PARAM.ID_PARAM), itemId));
     }
     if (startDate != null) {
-      predicate = cb.and(predicate,
-          cb.greaterThanOrEqualTo(root.<Date>get(Constants.PARAM.ORDER_ID_PARAM).get(Constants.PARAM.DATE_CREATED_PARAM), startDate));
+      predicate = cb.and(predicate, cb.greaterThanOrEqualTo(
+          root.<Date>get(Constants.PARAM.ORDER_ID_PARAM).get(Constants.PARAM.DATE_CREATED_PARAM),
+          startDate));
     }
     if (endDate != null) {
+      predicate = cb.and(predicate, cb.lessThanOrEqualTo(
+          root.<Date>get(Constants.PARAM.ORDER_ID_PARAM).get(Constants.PARAM.DATE_CREATED_PARAM),
+          endDate));
+    }
+    if (isShipping != null) {
       predicate = cb.and(predicate,
-          cb.lessThanOrEqualTo(root.<Date>get(Constants.PARAM.ORDER_ID_PARAM).get(Constants.PARAM.DATE_CREATED_PARAM), endDate));
+          cb.equal(root.<Boolean>get(Constants.PARAM.ORDER_ID_PARAM).get(Constants.PARAM.IS_SHIPPING_PARAM), isShipping));
     }
     return predicate;
   }

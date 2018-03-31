@@ -1,12 +1,17 @@
 package ds.upgrade.service;
 
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Order;
 
 public interface OrderService {
 
-  List<Order> findAll();
+  Page<Order> findList(Pageable pageable, Long statusId, Long storeId, Boolean isShipping,
+      Date startDate, Date endDate);
 
-  Order findOne(Long id);
+  List<Object> findOne(Long id);
 }

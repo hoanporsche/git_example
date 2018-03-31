@@ -66,6 +66,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       this.subCategory.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListCategory = this.categoryService.findList(this.params)
       .subscribe(response => {

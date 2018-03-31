@@ -65,6 +65,11 @@ export class StoreListComponent implements OnInit, OnDestroy {
       this.subStore.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListStore = this.storeService.findList(this.params)
       .subscribe(response => {

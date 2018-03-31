@@ -66,6 +66,11 @@ export class OrderStatusListComponent implements OnInit, OnDestroy {
       this.subOrderStatus.unsubscribe();
   }
 
+  onFilter() {
+    this.params.page = 0;
+    this.findList();
+  }
+
   findList() {
     this.subListOrderStatus = this.orderStatusService.findList(this.params)
       .subscribe(response => {

@@ -82,7 +82,7 @@
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.enabled">
-                          <option value="">Select</option>
+                          <option value="">Select Enabled</option>
                           <option *ngFor="let e of enabled" [value]="e.value">{{ e.view }}</option>
                         </select>
                       </div>
@@ -90,7 +90,7 @@
                   </div>
                   <div class="col-12 col-xs-6 col-md-2">
                     <div class="float-right">
-                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="findList()">
+                      <button type="button" class="btn btn-info m-btn m-btn--icon" (click)="onFilter()">
                         <span>
                           <i class="la la-filter"></i>
                           <span>
