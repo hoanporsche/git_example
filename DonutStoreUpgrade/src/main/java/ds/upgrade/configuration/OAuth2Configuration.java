@@ -47,7 +47,7 @@ public class OAuth2Configuration {
       })
         .antMatcher("/api/**")
         .authorizeRequests()
-        .antMatchers("/api/**").authenticated()
+        .antMatchers("/api/**").permitAll()
         .and()
       .exceptionHandling()
         .accessDeniedHandler(new OAuth2AccessDeniedHandler());

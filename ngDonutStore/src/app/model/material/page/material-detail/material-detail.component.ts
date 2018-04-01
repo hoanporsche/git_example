@@ -48,7 +48,7 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldMaterial.name;
-    if (this.name.value.trim() !== '') {
+    if (this.name.value && this.name.value.trim() !== '') {
       this.materialService.findByName(this.name.value.trim())
         .subscribe(response => {
           if (response && response.name != oldName)
@@ -71,6 +71,7 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
         .subscribe(response => {
           if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
+            this.formMaterial.reset();
           }
         }, error => {
           this.submitted.emit('fail');
@@ -78,8 +79,8 @@ export class MaterialDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangeMaterial() {
-    this.supplyId.setValue(this.materialService.getMaterial().supplyId);
+  onCancel() {
+    this.formMaterial.reset();
   }
 
   get name() {

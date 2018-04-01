@@ -42,19 +42,6 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     if (this.subUser)
       this.subUser.unsubscribe();
   }
-
-  // validateEmail() {
-  //   const oldEmail = this.oldUser.email;
-  //   if (this.email.value.trim() !== '') {
-  //     this.userService.findByEmail(this.email.value.toString().trim())
-  //       .subscribe(response => {
-  //         if (response && response.identityCard != oldEmail)
-  //           this.email.setErrors({ shouldBeUnique: true });
-  //       }, error => {
-  //         console.log(error)
-  //       });
-  //   }
-  // }
   onSubmit() {
     if (this.formUser.valid) {
       const user = {

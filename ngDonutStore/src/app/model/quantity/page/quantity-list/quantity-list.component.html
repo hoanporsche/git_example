@@ -62,16 +62,6 @@
                 </h3>
               </div>
             </div>
-            <div class="m-portlet__head-tools">
-              <button _ngcontent-c7="" class="btn btn-success m-btn--icon m-btn--air" type="button" (click)="openModal()">
-                <span _ngcontent-c7="">
-                  <i _ngcontent-c7="" class="la la-plus"></i>
-                  <span _ngcontent-c7="">
-                    New Quantity
-                  </span>
-                </span>
-              </button>
-            </div>
           </div>
           <div class="m-portlet__body">
             <div class="m-section">
@@ -88,7 +78,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-md-4">
+                  <div class="col-12 col-md-4" *ngIf="isAdmin">
                     <div class="form-group m-form__group">
                       <div class="input-group">
                         <select class="form-control" [(ngModel)]="params.storeId">

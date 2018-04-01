@@ -12,6 +12,7 @@ import { sortByProperty } from '../../../../shared/helpers/data.helper';
 import { StoreService } from '../../../store/service/store.service';
 import { Staff } from '../../../staff/staff';
 import { Store } from '../../../store/store';
+import { IdentityService } from '../../../../core/services/identity.service';
 
 @Component({
   selector: 'app-timekeeping-list',
@@ -25,6 +26,7 @@ export class TimekeepingListComponent implements OnInit, OnDestroy {
   listStaff: Staff[];
   listStore: Store[];
 
+  isAdmin = false;
   requestPage;
   notFoundMessage = '';
   error = {
@@ -56,12 +58,13 @@ export class TimekeepingListComponent implements OnInit, OnDestroy {
     private storeService: StoreService,
     private staffService: StaffService,
     private timekeepingStatusService: TimekeepingStatusService,
-    private navigationService: NavigationService,
-    private sortService: SortService
+    private sortService: SortService,
+    private identityService: IdentityService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {

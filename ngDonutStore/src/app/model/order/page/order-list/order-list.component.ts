@@ -10,6 +10,7 @@ import { StoreService } from '../../../store/service/store.service';
 import { OrderStatusService } from '../../../order-status/service/order-status.service';
 import { SortService } from '../../../../core/services/sort.service';
 import { sortByProperty } from '../../../../shared/helpers/data.helper';
+import { IdentityService } from '../../../../core/services/identity.service';
 
 @Component({
   selector: 'app-order-list',
@@ -29,6 +30,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
   private subListOrderStatus: Subscription;
   private subSortService: Subscription;
 
+  isAdmin = false;
   requestPage;
   notFoundMessage = '';
   error = {
@@ -58,11 +60,13 @@ export class OrderListComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private storeService: StoreService,
     private orderStatusService: OrderStatusService,
-    private sortService: SortService
+    private sortService: SortService,
+    private identityService: IdentityService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {
@@ -98,7 +102,6 @@ export class OrderListComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.listOrder = response.content;
-        console.log(this.listOrder)
         if (this.listOrder.length === 0) {
           this.notFoundMessage = "We're not found any contents";
         } else {

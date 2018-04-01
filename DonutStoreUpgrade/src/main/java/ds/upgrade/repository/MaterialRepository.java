@@ -18,6 +18,6 @@ public interface MaterialRepository
   
   Material findByName(String name);
   
-  @Query("SELECT m FROM Material m WHERE m.supplyId = :id")
+  @Query("SELECT m FROM Material m WHERE m.supplyId.id = :id")
   List<Material> findBySupply(@Param(Constants.PARAM.ID_PARAM) Long id);
 }

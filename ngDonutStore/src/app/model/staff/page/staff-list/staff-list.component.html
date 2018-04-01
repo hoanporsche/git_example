@@ -231,7 +231,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_add_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -240,7 +240,7 @@
         </h5>
       </div>
       <div class="modal-body">
-        <app-staff-create [listStore]="listStore" [listWorkingCalender]="listWorkingCalender" (submitted)="staffSubmitted($event)"></app-staff-create>
+        <app-staff-create [listStore]="listStore" [listWorkingCalender]="listWorkingCalender" [isAdmin]="isAdmin" (submitted)="staffSubmitted($event)"></app-staff-create>
       </div>
       <!-- <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -250,7 +250,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_update_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -152,7 +152,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_user').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   userSubmitted(event) {
@@ -161,7 +161,7 @@ export class UserListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_user').modal('toggle');
     }
   }
 
@@ -171,14 +171,14 @@ export class UserListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_user').modal('toggle');
     }
   }
 
   onDetail(user) {
     this.oldUser = user;
     this.userService.setUser(JSON.parse(JSON.stringify(user)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_user').appendTo("body").modal('show');
   }
 
   onResetPassword(email) {

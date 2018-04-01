@@ -130,7 +130,7 @@ export class OrderStatusListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_order_status').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   orderStatusSubmitted(event) {
@@ -139,7 +139,7 @@ export class OrderStatusListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_order_status').modal('toggle');
     }
   }
 
@@ -149,14 +149,14 @@ export class OrderStatusListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_order_status').modal('toggle');
     }
   }
 
   onDetail(orderStatus) {
     this.oldOrderStatus = orderStatus;
     this.orderStatusService.setOrderStatus(JSON.parse(JSON.stringify(orderStatus)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_order_status').appendTo("body").modal('show');
   }
 
   onEnabledOrNot(id) {

@@ -63,7 +63,6 @@ export class StaffListComponent implements OnInit, OnDestroy {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
-    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {
@@ -75,7 +74,8 @@ export class StaffListComponent implements OnInit, OnDestroy {
     this.subListWorkingCalender = this.workingCalenderService.findAll()
       .subscribe(response => {
         this.listWorkingCalender = response;
-      })
+      });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnDestroy(): void {
@@ -155,7 +155,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_staff').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   staffSubmitted(event) {
@@ -164,7 +164,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_staff').modal('toggle');
     }
   }
 
@@ -174,14 +174,14 @@ export class StaffListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_staff').modal('toggle');
     }
   }
 
   onDetail(staff) {
     this.oldStaff = staff;
     this.staffService.setStaff(JSON.parse(JSON.stringify(staff)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_staff').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

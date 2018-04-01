@@ -6,7 +6,7 @@
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
         <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter material's name" [(ngModel)]="materialService.getMaterial().name"
-          (blur)="validateName()"  (ngModelChange)="onChangeMaterial()">
+          (blur)="validateName()" >
         <div class="error-no-padding" *ngIf="name.touched && name.invalid">
           <div *ngIf="name.hasError('required')">
             Name is required.
@@ -60,7 +60,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <select class="form-control m-input" formControlName="supplyId">
+        <select class="form-control m-input" formControlName="supplyId" [(ngModel)]="materialService.getMaterial().supplyId">
           <option *ngFor="let supply of listSupply" [ngValue]="supply" [selected]="materialService.getMaterial().supplyId?.id === supply?.id">
             {{ supply?.name }}
           </option>
@@ -77,7 +77,7 @@
     <button type="submit" class="btn btn-primary">
       Update
     </button>
-    <button type="button" class="btn" data-dismiss="modal">
+    <button type="button" (click)="onCancel()" class="btn" data-dismiss="modal">
       Cancel
     </button>
   </div>

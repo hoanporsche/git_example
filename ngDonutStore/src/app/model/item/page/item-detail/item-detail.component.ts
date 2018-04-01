@@ -52,7 +52,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldItem.name;
-    if (this.name.value.trim() !== '') {
+    if (this.name.value && this.name.value.trim() !== '') {
       this.itemService.findByName(this.name.value.trim())
         .subscribe(response => {
           if (response && response.name != oldName)
@@ -72,16 +72,20 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         categoryId: this.categoryId.value,
         materials: this.materials.value,
       }
-      console.log(item)
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
           if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
+            this.formItem.reset();
           }
         }, error => {
           this.submitted.emit('fail');
         });
     }
+  }
+
+  onCancel() {
+    this.formItem.reset();
   }
 
   get name() {

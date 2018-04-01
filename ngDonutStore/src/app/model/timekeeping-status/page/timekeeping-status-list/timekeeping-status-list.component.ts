@@ -130,7 +130,7 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_timekeeping_status').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   timekeepingStatusSubmitted(event) {
@@ -139,7 +139,7 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_timekeeping_status').modal('toggle');
     }
   }
 
@@ -149,14 +149,14 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_timekeeping_status').modal('toggle');
     }
   }
 
   onDetail(timekeepingStatus) {
     this.oldTimekeepingStatus = timekeepingStatus;
     this.timekeepingStatusService.setTimekeepingStatus(JSON.parse(JSON.stringify(timekeepingStatus)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_timekeeping_status').appendTo("body").modal('show');
   }
 
   onEnabledOrNot(id) {

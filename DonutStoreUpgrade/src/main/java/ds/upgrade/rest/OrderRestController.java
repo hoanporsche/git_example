@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Order;
+import ds.upgrade.model.User;
 import ds.upgrade.service.OrderService;
+import ds.upgrade.service.UserService;
 import ds.upgrade.util.Constants;
 
 /**
@@ -35,6 +38,8 @@ public class OrderRestController {
 
   @Autowired
   private OrderService orderService;
+  @Autowired
+  private UserService userService;
 
   /**
    * @description: /find-list.
@@ -44,6 +49,7 @@ public class OrderRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
       @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
@@ -52,8 +58,15 @@ public class OrderRestController {
       @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
       @RequestParam(value = Constants.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
     try {
+      User user = userService.findInfoUser();
+      Long newStoreId;
+      //Admin can overwatch all orders and Store have just overwatch all orders belong to their store.
+      if (userService.isStore(user.getRoles())) {
+        newStoreId = user.getStoreId().getId();
+      } else {
+        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      }
       SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
-      Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -82,6 +95,7 @@ public class OrderRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {

@@ -1,3 +1,4 @@
+import { IdentityService } from './../../../../core/services/identity.service';
 import { Material } from './../../../material/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialDailyReport } from '../../material-daily-report';
@@ -26,6 +27,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
   private subListMaterial: Subscription;
   private subSortService: Subscription;
 
+  isAdmin = false;
   requestPage;
   notFoundMessage = '';
   error = {
@@ -50,11 +52,13 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
     private materialDailyReportService: MaterialDailyReportService,
     private storeService: StoreService,
     private itemService: MaterialService,
-    private sortService: SortService
+    private sortService: SortService,
+    private identityService: IdentityService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {

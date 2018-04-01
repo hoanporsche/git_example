@@ -32,7 +32,6 @@ import ds.upgrade.util.Constants;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.ORDER_STATUS_MODEL)
 public class OrderStatusRestController {
@@ -70,6 +69,7 @@ public class OrderStatusRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -96,6 +96,7 @@ public class OrderStatusRestController {
    * @param enabled
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
       @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
@@ -123,6 +124,7 @@ public class OrderStatusRestController {
    * @param result
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated OrderStatus orderStatus,
       BindingResult result) {
@@ -148,6 +150,7 @@ public class OrderStatusRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -173,6 +176,7 @@ public class OrderStatusRestController {
    * @param name
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_BY_NAME)
   public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
     try {

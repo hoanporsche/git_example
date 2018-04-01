@@ -153,7 +153,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_item').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   itemSubmitted(event) {
@@ -162,7 +162,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_item').modal('toggle');
     }
   }
 
@@ -172,14 +172,14 @@ export class ItemListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_item').modal('toggle');
     }
   }
 
   onDetail(item) {
     this.oldItem = item;
     this.itemService.setItem(JSON.parse(JSON.stringify(item)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_item').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

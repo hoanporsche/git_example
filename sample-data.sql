@@ -3,7 +3,7 @@ USE `donutstore` ;
 INSERT INTO `donutstore`.`category` VALUES 
 (1,'Bánh rán', '2018-01-02', '2018-02-03', b'1'),
 (2,'Bánh mì', '2018-01-02', '2018-02-03', b'1'),
-(3,'Do uong', '2018-01-02', '2018-02-03', b'1');
+(3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
 (1,'Bánh rán mặn', 'https://photos.google.com/photo/AF1QipPVNjHJuYf8JJ0tDy1r0t2BrIt12K8PQdxNbno','1','2018-01-02', '2018-02-03','3000', b'1'),
@@ -106,9 +106,28 @@ INSERT INTO `donutstore`.`timekeeping` VALUES
 INSERT INTO `donutstore`.`user` VALUES 
 ('1','admin@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
 ('2','giangvo@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
-('3','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1);
+('3','staff@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',2),
+('4','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',2);
+
 
 INSERT INTO `donutstore`.`user_role` VALUES 
 ('1','1'),
 ('2','2'),
-('3','3');
+('3','3'),
+('4','2');
+
+INSERT INTO `donutstore`.`material_daily_report` VALUES 
+('1','1','2018-02-07','1','10','11','enough'),
+('2','1','2018-03-07','2','10','11','enough'),
+('3','1','2018-03-07','3','10','11','enough'),
+('4','1','2018-03-08','4','10','11','enough'),
+('5','1','2018-03-09','5','10','11','enough'),
+('6','1','2018-03-07','6','10','11','enough'),
+('7','2','2018-03-07','1','10','11','enough'),
+('8','2','2018-03-07','2','10','11','enough'),
+('9','2','2018-03-07','3','10','11','enough'),
+('10','2','2018-03-07','4','10','11','enough'),
+('11','2','2018-03-07','5','10','11','enough'),
+('12','2','2018-02-03','6','10','11','enough');
+
+

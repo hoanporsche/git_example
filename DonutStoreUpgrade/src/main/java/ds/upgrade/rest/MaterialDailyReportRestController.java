@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.MaterialDailyReport;
+import ds.upgrade.model.User;
 import ds.upgrade.service.MaterialDailyReportService;
+import ds.upgrade.service.UserService;
 import ds.upgrade.util.Constants;
 
 /**
@@ -34,6 +36,8 @@ public class MaterialDailyReportRestController {
 
   @Autowired
   private MaterialDailyReportService materialDailyReportService;
+  @Autowired
+  private UserService userService;
 
   /**
    * @description: /find-list.
@@ -50,8 +54,15 @@ public class MaterialDailyReportRestController {
       @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate) {
     try {
+      User user = userService.findInfoUser();
+      Long newStoreId;
+      //Admin can overwatch all material daily reports and Store have just overwatch all material daily reports belong to their store.
+      if (userService.isStore(user.getRoles())) {
+        newStoreId = user.getStoreId().getId();
+      } else {
+        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      }
       SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
-      Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
