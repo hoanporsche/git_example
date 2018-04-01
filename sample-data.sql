@@ -3,7 +3,7 @@ USE `donutstore` ;
 INSERT INTO `donutstore`.`category` VALUES 
 (1,'Bánh rán', '2018-01-02', '2018-02-03', b'1'),
 (2,'Bánh mì', '2018-01-02', '2018-02-03', b'1'),
-(3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
+(3,'Do uong', '2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
 (1,'Bánh rán mặn', 'https://photos.google.com/photo/AF1QipPVNjHJuYf8JJ0tDy1r0t2BrIt12K8PQdxNbno','1','2018-01-02', '2018-02-03','3000', b'1'),

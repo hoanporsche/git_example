@@ -1,3 +1,4 @@
+import { IdentityService } from './../../../../core/services/identity.service';
 import { WorkingCalenderService } from './../../../working-calender/service/working-calender.service';
 import { WorkingCalender } from './../../../working-calender/working-calender';
 import { StoreService } from './../../../store/service/store.service';
@@ -6,7 +7,6 @@ import { Staff } from '../../staff';
 import { CONFIG } from '../../../../shared/constants/configuration.constant';
 import { Subscription } from 'rxjs/Subscription';
 import { StaffService } from '../../service/staff.service';
-import { NavigationService } from '../../../../core/services/navigation.service';
 import { SortService } from '../../../../core/services/sort.service';
 import { sortByProperty } from '../../../../shared/helpers/data.helper';
 import { Store } from '../../../store/store';
@@ -23,6 +23,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
   oldStaff: Staff;
   listStore: Store[];
   listWorkingCalender: WorkingCalender[];
+  isAdmin = false;
 
   requestPage;
   notFoundMessage = '';
@@ -56,12 +57,13 @@ export class StaffListComponent implements OnInit, OnDestroy {
   constructor(private storeService: StoreService,
     private workingCalenderService: WorkingCalenderService,
     private staffService: StaffService,
-    private navigationService: NavigationService,
-    private sortService: SortService
+    private identityService: IdentityService,
+    private sortService: SortService,
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {

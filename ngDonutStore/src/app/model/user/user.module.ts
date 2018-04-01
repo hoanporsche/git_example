@@ -9,6 +9,7 @@ import { UserService } from './service/user.service';
 import { UserComponent } from './user.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserDetailComponent } from './page/user-detail/user-detail.component';
+import { ChangePasswordComponent } from './page/change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -22,10 +23,14 @@ import { UserDetailComponent } from './page/user-detail/user-detail.component';
     UserComponent,
     UserCreateComponent, 
     UserDetailComponent,
-    UserListComponent
+    UserListComponent,
+    ChangePasswordComponent
   ],
   providers: [
     UserService
+  ],
+  exports: [
+    ChangePasswordComponent
   ]
 })
 export class UserModule { }

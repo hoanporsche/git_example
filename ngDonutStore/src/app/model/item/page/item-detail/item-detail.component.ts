@@ -63,16 +63,16 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
-    console.log(this.formItem.value);
     if (this.formItem.valid) {
       const item = {
         id: this.oldItem.id,
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
-        singleValue: this.singleValue.value.trim(),
+        singleValue: this.singleValue.value.toString().trim(),
         categoryId: this.categoryId.value,
         materials: this.materials.value,
       }
+      console.log(item)
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
           if (response.name === this.name.value.trim()) {
@@ -82,11 +82,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
           this.submitted.emit('fail');
         });
     }
-  }
-
-  onChangeItem() {
-    this.materials.setValue(this.itemService.getItem().materials);
-    this.categoryId.setValue(this.itemService.getItem().categoryId);
   }
 
   get name() {

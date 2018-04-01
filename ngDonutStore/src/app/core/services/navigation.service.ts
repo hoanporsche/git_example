@@ -49,21 +49,7 @@ export class NavigationService {
   // User page navigation for admin only
   navUserList() {
     if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user');
-    } else {
-      console.log('You are not authorized');
-    }
-  }
-  navUserCreate() {
-    if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/create');
-    } else {
-      console.log('You are not authorized');
-    }
-  }
-  navUserDetail(email) {
-    if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/detail/' + email);
+      this.router.navigateByUrl(this.getRoleSegment() + '/user');
     } else {
       console.log('You are not authorized');
     }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -46,6 +47,7 @@ public class WorkingCalenderRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
@@ -68,6 +70,7 @@ public class WorkingCalenderRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -94,6 +97,7 @@ public class WorkingCalenderRestController {
    * @param enabled
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
       @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
@@ -121,6 +125,7 @@ public class WorkingCalenderRestController {
    * @param result
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated WorkingCalender workingCalender,
       BindingResult result) {
@@ -146,6 +151,7 @@ public class WorkingCalenderRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -171,6 +177,7 @@ public class WorkingCalenderRestController {
    * @param name
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_BY_NAME)
   public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
     try {

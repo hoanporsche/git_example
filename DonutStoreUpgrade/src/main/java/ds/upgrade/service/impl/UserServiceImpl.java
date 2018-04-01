@@ -2,18 +2,23 @@ package ds.upgrade.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
 import ds.upgrade.service.UserService;
+import ds.upgrade.util.Constants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -72,9 +77,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User changePassword(String email, String newPassword) {
-    User user = userRepository.findByEmail(email);
-    if (user == null)
+  public User changePassword(String email, String oldPassword, String newPassword) {
+    User user = userRepository.findByEnabledEmail(email);
+    if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword()))
       return null;
     user.setPassword(passwordEncoder.encode(newPassword));
     user.setDateUpdated(new Date());
@@ -109,5 +114,75 @@ public class UserServiceImpl implements UserService {
     foundUser.setDateUpdated(new Date());
     foundUser.setEnabled(!foundUser.isEnabled());;
     return userRepository.save(foundUser);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @return
+   */
+  @Override
+  public User findInfoUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null) 
+      return null;
+    User user = userRepository.findByEnabledEmail(authentication.getName());
+    if (user == null)
+      return null;
+    return user;
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @return
+   */
+  @Override
+  public Boolean isAdmin(Set<Role> roles) {
+    for (Role role : roles) {
+      if (Constants.ROLE.ROLE_ADMIN.equals(role.getName()))
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @return
+   */
+  @Override
+  public Boolean isStore(Set<Role> roles) {
+    for (Role role : roles) {
+      if (Constants.ROLE.ROLE_STORE.equals(role.getName()))
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @return
+   */
+  @Override
+  public Boolean isStaff(Set<Role> roles) {
+    for (Role role : roles) {
+      if (Constants.ROLE.ROLE_STAFF.equals(role.getName()))
+        return true;
+    }
+    return false;
   }
 }

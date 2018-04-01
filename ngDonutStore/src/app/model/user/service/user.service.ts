@@ -14,6 +14,7 @@ export class UserService extends BaseService {
   private findByEmailUrl = environment.baseUrl + MODEL_URL.USER + API_URL.FIND_BY_EMAIL;
   private enabledOrNotUrl = environment.baseUrl + MODEL_URL.USER + API_URL.ENABLED_OR_NOT;
   private resetPasswordUrl = environment.baseUrl + MODEL_URL.USER + API_URL.RESET_PASSWORD;
+  private changePasswordUrl = environment.baseUrl + MODEL_URL.USER + API_URL.CHANGE_PASSWORD;
 
   private user = new User();
 
@@ -48,4 +49,7 @@ export class UserService extends BaseService {
     return this.get(this.resetPasswordUrl, { email: email });
   }
 
+  changePassword(params): Observable<any> {
+    return this.post(this.changePasswordUrl, params);
+  }
 }

@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
     private identityService: IdentityService,
     private localStorageService: LocalStorageService
   ) {
-    // if (this.identityService.isLoggedIn()) {
-    //   this.navigationService.navHomepage();
-    // }
+    if (this.identityService.isLoggedIn()) {
+      this.navigationService.navHomepage();
+    }
   }
 
   loginForm = (new FormBuilder()).group({

@@ -21,6 +21,7 @@ public class Constants {
     public static final String SERVER_ERROR = "Internal Server Error";
     public static final String NOT_SAVE = "Saving content has error";
     public static final String NOT_DISABLED = "Please Make sure you have a replacement";
+    public static final String WRONG_OLD_PASSWORD = "Wrong old password";
   }
   
   public static class PARAM {
@@ -59,6 +60,7 @@ public class Constants {
     public static final String FIND_BY_IDENTITY_CARD = "/find-by-identity-card";
     public static final String FIND_BY_EMAIL = "/find-by-email";
     public static final String RESET_PASSWORD = "/reset-password";
+    public static final String CHANGE_PASSWORD = "/change-password";
   }
   
   public static class MODEL {

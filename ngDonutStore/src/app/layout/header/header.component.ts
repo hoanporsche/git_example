@@ -7,6 +7,7 @@ import { ScriptLoaderService } from '../../core/services/script-loader.service';
 import { NavigationService } from '../../core/services/navigation.service';
 import { User } from '../../model/user/user';
 
+declare var $:any;
 declare let mLayout: any;
 @Component({
   selector: 'app-header',
@@ -32,30 +33,26 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.localStorageService.removeItem(LOCAL_STORAGE.TOKEN);
 
     this.navigationService.navLogin();
-}
+  }
 
   ngAfterViewInit() {
     this._script.load('app-header',
-    'assets/demo/default/custom/header/actions.js').then(() => {
-          console.log('actions.js for header loaded in AppHeaderComponent');
+      'assets/demo/default/custom/header/actions.js').then(() => {
+
       });
-      mLayout.initHeader();
+    mLayout.initHeader();
 
   }
 
-  // navRequestCreate() {
-  //   this.navigationService.navRequestCreate();
-  // }
-  // navCandidateCreate() {
-  //   this.navigationService.navCandidateCreate();
-  // }
-  // navCvCreate() {
-  //   this.navigationService.navCvCreate();
-  // }
-  // navInterviewCreate() {
-  //   this.navigationService.navInterviewCreate();
-  // }
-  navMyProfile() {
-    this.navigationService.navMyProfile();
+  userChangedPassword(event) {
+    if (event === 'success') {
+      $('#modal_change').modal('toggle');
+      this.localStorageService.removeItem(LOCAL_STORAGE.TOKEN);
+      this.navigationService.navLogin();
+    }
+  }
+
+  onChangePassword() {
+    $('#modal_change').appendTo("body").modal({ show: true, backdrop: 'static' });
   }
 }

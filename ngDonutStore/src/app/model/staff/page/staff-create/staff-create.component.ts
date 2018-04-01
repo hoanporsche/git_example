@@ -24,6 +24,7 @@ export class StaffCreateComponent implements OnInit, OnDestroy {
 
   @Input() listStore: Store[];
   @Input() listWorkingCalender: WorkingCalender[];
+  @Input() isAdmin: boolean;
 
   formStaff: FormGroup;
 

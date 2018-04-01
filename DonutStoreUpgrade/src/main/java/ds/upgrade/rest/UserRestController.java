@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -33,6 +34,7 @@ import ds.upgrade.util.Constants;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.USER_MODEL)
 public class UserRestController {
@@ -166,6 +168,15 @@ public class UserRestController {
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
+  /**
+   * @description: /enabled-or-not.
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @param id
+   * @return
+   */
   @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -182,6 +193,16 @@ public class UserRestController {
     return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  /**
+   * @description: /save.
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @param user
+   * @param result
+   * @return
+   */
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated User user, BindingResult result) {
     try {
@@ -195,5 +216,34 @@ public class UserRestController {
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+  }
+  
+  /**
+   * @description: /change-password.
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @param user
+   * @param result
+   * @return
+   */
+  @PostMapping(Constants.API_URL.CHANGE_PASSWORD)
+  public ResponseEntity<?> changePassword(@RequestBody User user) {
+    try {
+      user = userService.changePassword(user.getEmail().trim(), user.getOldPassword(), user.getNewPassword());
+      if (user != null)
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.WRONG_OLD_PASSWORD, HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping("/find-role")
+  public ResponseEntity<?> findRole(){
+    User user = userService.findInfoUser();
+    return new ResponseEntity<User>(user, HttpStatus.OK);
   }
 }

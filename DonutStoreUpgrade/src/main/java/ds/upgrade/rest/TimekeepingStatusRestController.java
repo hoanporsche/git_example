@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,7 @@ import ds.upgrade.util.Constants;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.TIMEKEEPING_STATUS_MODEL)
 public class TimekeepingStatusRestController {

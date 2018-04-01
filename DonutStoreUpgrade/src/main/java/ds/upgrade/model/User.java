@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -64,6 +65,11 @@ public class User implements Serializable {
   @OneToOne
   @JoinColumn(name = "storeId", referencedColumnName = "id")
   private Store storeId;
+  
+  @Transient
+  private String oldPassword;
+  @Transient
+  private String newPassword;
   
   public User() {}
 
@@ -154,4 +160,21 @@ public class User implements Serializable {
   public void setStoreId(Store storeId) {
     this.storeId = storeId;
   }
+
+  public String getOldPassword() {
+    return oldPassword;
+  }
+
+  public void setOldPassword(String oldPassword) {
+    this.oldPassword = oldPassword;
+  }
+
+  public String getNewPassword() {
+    return newPassword;
+  }
+
+  public void setNewPassword(String newPassword) {
+    this.newPassword = newPassword;
+  }
+  
 }
