@@ -66,7 +66,7 @@ public class OrderRestController {
       } else {
         newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       }
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");

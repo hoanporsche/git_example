@@ -65,7 +65,7 @@ public class QuantityRestController {
       } else {
         newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       }
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newItemId = (StringUtils.isEmpty(itemId)) ? null : Long.parseLong(itemId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");

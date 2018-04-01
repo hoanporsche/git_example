@@ -61,6 +61,7 @@ public class Constants {
     public static final String FIND_BY_EMAIL = "/find-by-email";
     public static final String RESET_PASSWORD = "/reset-password";
     public static final String CHANGE_PASSWORD = "/change-password";
+    public static final String FIND_DAILY_REPORT = "/find-daily-report";
   }
   
   public static class MODEL {
@@ -82,7 +83,8 @@ public class Constants {
   }
   
   public static class FORMAT {
-    public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final String DATE_TIME_FORMAT_1 = "yyyy-MM-dd hh:mm:ss";
+    public static final String DATE_FORMAT_1 = "yyyy-MM-dd";
   }
   
   public static class ROLE {

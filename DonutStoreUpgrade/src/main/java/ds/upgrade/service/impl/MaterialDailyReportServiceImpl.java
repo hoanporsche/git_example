@@ -1,6 +1,7 @@
 package ds.upgrade.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,6 +53,20 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
     Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeId,
         materialId, startDate, endDate);
     return materialDailyReportRepository.findAll(spec, pageable);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 1, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 1, 2018
+   * @param dateCreated
+   * @return
+   */
+  @Override
+  public List<MaterialDailyReport> findDailyReport(String dateCreated, Long storeId) {
+    return materialDailyReportRepository.findDailyReport(dateCreated, storeId);
   }
 
 }

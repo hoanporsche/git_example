@@ -127,7 +127,7 @@ public class UserRestController {
       @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
       @RequestParam(value = Constants.PARAM.ROLE_ID_PARAM, required = false) String roleId) {
     try {
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");

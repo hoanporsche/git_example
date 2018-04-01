@@ -5,6 +5,7 @@ package ds.upgrade.rest;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,7 +63,7 @@ public class MaterialDailyReportRestController {
       } else {
         newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       }
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -102,6 +103,24 @@ public class MaterialDailyReportRestController {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
       return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+  
+  @GetMapping(Constants.API_URL.FIND_DAILY_REPORT)
+  public ResponseEntity<?> findDailyReport(@RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = Constants.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
+    try {
+      String todayDate = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT_1).format(new Date()).toString();
+      Long newStoreId = Long.parseLong(storeId);
+      List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(dateCreated, newStoreId);
+      if (list.size() > 0)
+        return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
+    } catch (NumberFormatException e) {
+      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);

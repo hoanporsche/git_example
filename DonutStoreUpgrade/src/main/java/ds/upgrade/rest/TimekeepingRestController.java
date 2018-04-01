@@ -119,7 +119,7 @@ public class TimekeepingRestController {
       } else {
         newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       }
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
       Long newStaffId = (StringUtils.isEmpty(staffId)) ? null : Long.parseLong(staffId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null : format.parse(startDate + " 00:00:00");
