@@ -130,7 +130,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_category').appendTo("body").modal({show: true, backdrop: 'static'});
+    $('#modal_add_category').modal({show: true, backdrop: 'static'});
   }
 
   categorySubmitted(event) {
@@ -156,7 +156,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   onDetail(category) {
     this.oldCategory = category;
     this.categoryService.setCategory(JSON.parse(JSON.stringify(category)));
-    $('#modal_update_category').appendTo("body").modal('show');  
+    $('#modal_update_category').modal('show');  
   }
 
   onEnabledOrNot(id) {

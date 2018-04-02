@@ -153,7 +153,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_item').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_item').modal({ show: true, backdrop: 'static' });
   }
 
   itemSubmitted(event) {
@@ -179,7 +179,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   onDetail(item) {
     this.oldItem = item;
     this.itemService.setItem(JSON.parse(JSON.stringify(item)));
-    $('#modal_update_item').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_update_item').modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

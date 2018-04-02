@@ -4,6 +4,7 @@ import { SummaryPipe } from './pipes/summary.pipe';
 import { SortableColumnComponent } from './components/sortable-column/sortable-column.component';
 import { OnlyNumberDirective } from './directives/only-number.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HrefPreventDefaultDirective } from './directives/href-prevent-default.directive';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     SummaryPipe,
     SortableColumnComponent,
+    HrefPreventDefaultDirective,
     // JobTitleDirective,
     // NameDirective,
     // PhoneNumberDirective,
@@ -27,7 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    // HrefPreventDefaultDirective,
+    HrefPreventDefaultDirective,
     // UnwrapTagDirective,
     SummaryPipe,
     SortableColumnComponent,

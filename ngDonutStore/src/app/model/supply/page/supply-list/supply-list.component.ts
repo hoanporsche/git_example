@@ -129,7 +129,7 @@ export class SupplyListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_supply').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_supply').modal({ show: true, backdrop: 'static' });
   }
 
   supplySubmitted(event) {
@@ -155,7 +155,7 @@ export class SupplyListComponent implements OnInit, OnDestroy {
   onDetail(supply) {
     this.oldSupply = supply;
     this.supplyService.setSupply(JSON.parse(JSON.stringify(supply)));
-    $('#modal_update_supply').appendTo("body").modal('show');
+    $('#modal_update_supply').modal('show');
   }
 
   onEnabledOrNot(id) {

@@ -155,7 +155,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_staff').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_staff').modal({ show: true, backdrop: 'static' });
   }
 
   staffSubmitted(event) {
@@ -181,7 +181,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
   onDetail(staff) {
     this.oldStaff = staff;
     this.staffService.setStaff(JSON.parse(JSON.stringify(staff)));
-    $('#modal_update_staff').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_update_staff').modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

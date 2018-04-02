@@ -129,7 +129,7 @@ export class StoreListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_store').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_store').modal({ show: true, backdrop: 'static' });
   }
 
   storeSubmitted(event) {
@@ -155,7 +155,7 @@ export class StoreListComponent implements OnInit, OnDestroy {
   onDetail(store) {
     this.oldStore = store;
     this.storeService.setStore(JSON.parse(JSON.stringify(store)));
-    $('#modal_update_store').appendTo("body").modal('show');
+    $('#modal_update_store').modal('show');
   }
 
   onEnabledOrNot(id) {

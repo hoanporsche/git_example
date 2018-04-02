@@ -130,7 +130,7 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_timekeeping_status').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_timekeeping_status').modal({ show: true, backdrop: 'static' });
   }
 
   timekeepingStatusSubmitted(event) {
@@ -156,7 +156,7 @@ export class TimekeepingStatusListComponent implements OnInit, OnDestroy {
   onDetail(timekeepingStatus) {
     this.oldTimekeepingStatus = timekeepingStatus;
     this.timekeepingStatusService.setTimekeepingStatus(JSON.parse(JSON.stringify(timekeepingStatus)));
-    $('#modal_update_timekeeping_status').appendTo("body").modal('show');
+    $('#modal_update_timekeeping_status').modal('show');
   }
 
   onEnabledOrNot(id) {

@@ -130,7 +130,7 @@ export class WorkingCalenderListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_working_calender').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_working_calender').modal({ show: true, backdrop: 'static' });
   }
 
   workingCalenderSubmitted(event) {
@@ -156,7 +156,7 @@ export class WorkingCalenderListComponent implements OnInit, OnDestroy {
   onDetail(workingCalender) {
     this.oldWorkingCalender = workingCalender;
     this.workingCalenderService.setWorkingCalender(JSON.parse(JSON.stringify(workingCalender)));
-    $('#modal_update_working_calender').appendTo("body").modal('show');
+    $('#modal_update_working_calender').modal('show');
   }
 
   onEnabledOrNot(id) {

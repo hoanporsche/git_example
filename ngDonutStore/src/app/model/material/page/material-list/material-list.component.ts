@@ -140,7 +140,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_material').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_material').modal({ show: true, backdrop: 'static' });
   }
 
   materialSubmitted(event) {
@@ -166,7 +166,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
   onDetail(material) {
     this.oldMaterial = material;
     this.materialService.setMaterial(JSON.parse(JSON.stringify(material)));
-    $('#modal_update_material').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_update_material').modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

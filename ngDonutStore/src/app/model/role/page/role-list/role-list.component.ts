@@ -130,7 +130,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_role').appendTo("body").modal({show: true, backdrop: 'static'});
+    $('#modal_add_role').modal({show: true, backdrop: 'static'});
   }
 
   roleSubmitted(event) {
@@ -156,7 +156,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
   onDetail(role) {
     this.oldRole = role;
     this.roleService.setRole(JSON.parse(JSON.stringify(role)));
-    $('#modal_update_role').appendTo("body").modal('show');  
+    $('#modal_update_role').modal('show');  
   }
 
   onEnabledOrNot(id) {

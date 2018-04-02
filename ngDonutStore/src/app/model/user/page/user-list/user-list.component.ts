@@ -152,7 +152,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_user').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_user').modal({ show: true, backdrop: 'static' });
   }
 
   userSubmitted(event) {
@@ -178,7 +178,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   onDetail(user) {
     this.oldUser = user;
     this.userService.setUser(JSON.parse(JSON.stringify(user)));
-    $('#modal_update_user').appendTo("body").modal('show');
+    $('#modal_update_user').modal('show');
   }
 
   onResetPassword(email) {

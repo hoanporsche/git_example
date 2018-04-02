@@ -130,7 +130,7 @@ export class OrderStatusListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add_order_status').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_order_status').modal({ show: true, backdrop: 'static' });
   }
 
   orderStatusSubmitted(event) {
@@ -156,7 +156,7 @@ export class OrderStatusListComponent implements OnInit, OnDestroy {
   onDetail(orderStatus) {
     this.oldOrderStatus = orderStatus;
     this.orderStatusService.setOrderStatus(JSON.parse(JSON.stringify(orderStatus)));
-    $('#modal_update_order_status').appendTo("body").modal('show');
+    $('#modal_update_order_status').modal('show');
   }
 
   onEnabledOrNot(id) {
