@@ -74,6 +74,9 @@ export class NavigationService {
   navMaterialDailyReportList() {
     this.router.navigateByUrl(this.getRoleSegment() + '/material-daily-report');
   }
+  navMaterialDailyReportCreate() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/material-daily-report/create');
+  }
 
   //Order
   navOrderList() {

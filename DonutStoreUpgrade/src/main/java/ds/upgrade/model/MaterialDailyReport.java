@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -54,9 +55,11 @@ public class MaterialDailyReport implements Serializable {
   @JoinColumn(name = "material_id", referencedColumnName = "id",nullable = false)
   private Material materialId;
   
+  @NotNull
   @Column(name = "material_remain")
   private int materialRemain;
   
+  @NotNull
   @Column(name = "material_import")
   private int materialImport;
   

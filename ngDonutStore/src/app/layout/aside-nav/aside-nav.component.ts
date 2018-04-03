@@ -51,6 +51,9 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
   navMaterialDailyReportList() {
     this.navigationService.navMaterialDailyReportList();
   }
+  navMaterialDailyReportCreate() {
+    this.navigationService.navMaterialDailyReportCreate();
+  }
 
   navQuantityList() {
     this.navigationService.navQuantityList();

@@ -1,3 +1,4 @@
+import { NavigationService } from './../../../../core/services/navigation.service';
 import { IdentityService } from './../../../../core/services/identity.service';
 import { Material } from './../../../material/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -53,7 +54,8 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
     private storeService: StoreService,
     private itemService: MaterialService,
     private sortService: SortService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    private navigationService: NavigationService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
@@ -147,4 +149,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
     }
   }
 
+  navMaterialDailyReportCreate() {
+    this.navigationService.navMaterialDailyReportCreate();
+  }
 }

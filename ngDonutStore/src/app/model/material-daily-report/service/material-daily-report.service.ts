@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 export class MaterialDailyReportService extends BaseService {
 
   private findListUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_LIST;
+  private findDailyReportUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_DAILY_REPORT;
 
   constructor(httpClient: HttpClient) { 
     super(httpClient);
@@ -16,6 +17,10 @@ export class MaterialDailyReportService extends BaseService {
 
   findList(params: {}): Observable<any> {
     return this.get(this.findListUrl, params);
+  }
+
+  findDailyReport(params: {}): Observable<any> {
+    return this.get(this.findDailyReportUrl, params);
   }
 
 }

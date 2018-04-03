@@ -10,6 +10,7 @@ export const API_URL = Object.freeze({
     ENABLED_OR_NOT: '/enabled-or-not',
     FIND_BY_IDENTITY_CARD: '/find-by-identity-card',
     FIND_BY_EMAIL: '/find-by-email',
+    FIND_DAILY_REPORT: '/find-daily-report',
 });
 
 export const MODEL_URL= Object.freeze({

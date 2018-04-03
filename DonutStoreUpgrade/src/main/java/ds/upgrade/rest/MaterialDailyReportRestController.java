@@ -57,7 +57,8 @@ public class MaterialDailyReportRestController {
     try {
       User user = userService.findInfoUser();
       Long newStoreId;
-      //Admin can overwatch all material daily reports and Store have just overwatch all material daily reports belong to their store.
+      // Admin can overwatch all material daily reports and Store have just overwatch
+      // all material daily reports belong to their store.
       if (userService.isStore(user.getRoles())) {
         newStoreId = user.getStoreId().getId();
       } else {
@@ -68,7 +69,6 @@ public class MaterialDailyReportRestController {
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-
       Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreId,
           newMaterialId, newStartDate, newEndDate, pageable);
       if (list.getSize() > 0)
@@ -107,20 +107,49 @@ public class MaterialDailyReportRestController {
     }
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
-  
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 3, 2018
+   * @modifier: User
+   * @modifier_date: Apr 3, 2018
+   * @param storeId
+   * @param dateCreated
+   * @return
+   */
   @GetMapping(Constants.API_URL.FIND_DAILY_REPORT)
-  public ResponseEntity<?> findDailyReport(@RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
+  public ResponseEntity<?> findDailyReport(
+      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
       @RequestParam(value = Constants.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
     try {
-      String todayDate = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT_1).format(new Date()).toString();
-      Long newStoreId = Long.parseLong(storeId);
-      List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(dateCreated, newStoreId);
-      if (list.size() > 0)
+      String newDateCreated;
+      SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT_1);
+      // Default dateCreated value is today.
+      if (StringUtils.isEmpty(dateCreated)) {
+        newDateCreated = dateFormat.format(new Date()).toString();
+      } else {
+        newDateCreated = dateFormat.format(dateFormat.parse(dateCreated)).toString();
+      }
+      User user = userService.findInfoUser();
+      Long newStoreId;
+      // Admin can overwatch all material daily reports and Store have just overwatch
+      // all material daily reports belong to their store.
+      if (userService.isStore(user.getRoles())) {
+        newStoreId = user.getStoreId().getId();
+      } else {
+        newStoreId = Long.parseLong(storeId);
+      }
+      List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(newDateCreated,
+          newStoreId);
+      if (list.size() > 0) {
+        System.out.println("into list");
         return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
+      }
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER + e.getMessage(),
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
