@@ -1,3 +1,4 @@
+import { CommonValidator } from './../../../../shared/custom-validator/common.validator';
 import { MaterialDailyReport } from './../../material-daily-report';
 import { MaterialService } from './../../../material/service/material.service';
 import { NavigationService } from './../../../../core/services/navigation.service';
@@ -7,7 +8,7 @@ import { Store } from './../../../store/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { IdentityService } from '../../../../core/services/identity.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { Material } from '../../../material/material';
 
 @Component({
@@ -22,6 +23,8 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   listMaterial: Material[];
   listMaterialDailyReport: MaterialDailyReport[];
   isAdmin = false;
+  today = new Date();
+  storeId = '';
 
   private subListStore: Subscription;
   private subListMaterial: Subscription;
@@ -36,13 +39,15 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     private materialService: MaterialService,
     private fb: FormBuilder) {
     this.isAdmin = this.identityService.isAdmin();
-
+      this.formReports = this.fb.group({
+        reports: this.fb.array([]),
+      });
   }
 
   ngOnInit() {
     this.subListStore = this.storeService.findAll()
       .subscribe(response => {
-        this.listMaterial = response;
+        this.listStore = response;
       });
     this.subListMaterial = this.materialService.findAll()
       .subscribe(response => {
@@ -63,8 +68,9 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
       this.subListMaterialDailyReport.unsubscribe();
   }
 
-  findDailyReport(storeId?) {
-    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: storeId})
+  findDailyReport() {
+    console.log(this.storeId)
+    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeId})
       .subscribe((response: Response) => {
         console.log("=========", this.listMaterialDailyReport)
         if (this.listMaterialDailyReport && this.listMaterialDailyReport.length > 0) {
@@ -72,6 +78,19 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
         }
       }, error => {
         console.log(error.error)
-      }) 
+      }); 
+  }
+
+  addSingleRowReport() {
+    return this.fb.group({
+      materialId: [''],
+      materialRemain: ['', [Validators.required, CommonValidator.notEmpty]],
+      materialImport: ['', [Validators.required, CommonValidator.notEmpty]],
+      description: ['']
+    });
+  } 
+
+  addRowToForm() {
+    this.formReports;
   }
 }
