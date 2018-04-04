@@ -143,7 +143,6 @@ public class MaterialDailyReportRestController {
       List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(newDateCreated,
           newStoreId);
       if (list.size() > 0) {
-        System.out.println("into list");
         return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
       }
     } catch (NumberFormatException e) {

@@ -30,7 +30,9 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   private subListMaterial: Subscription;
   private subListMaterialDailyReport: Subscription;
 
+  // formReports: FormArray;
   formReports: FormGroup;
+  reports: FormArray;
 
   constructor(private materialDailyReportService: MaterialDailyReportService,
     private storeService: StoreService,
@@ -39,9 +41,10 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     private materialService: MaterialService,
     private fb: FormBuilder) {
     this.isAdmin = this.identityService.isAdmin();
-      this.formReports = this.fb.group({
-        reports: this.fb.array([]),
-      });
+    // this.formReports = this.fb.array([]);
+    this.formReports = this.fb.group({
+      reports: this.fb.array([]),
+    });
   }
 
   ngOnInit() {
@@ -52,11 +55,13 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     this.subListMaterial = this.materialService.findAll()
       .subscribe(response => {
         this.listMaterial = response;
+        if (this.listMaterial && this.listMaterial.length > 0) {
+          if (!this.isAdmin) {
+            this.findDailyReport();
+          }
+        }
       });
-    if (!this.isAdmin) {
-      this.findDailyReport();
-    }
-      
+
   }
 
   ngOnDestroy(): void {
@@ -64,33 +69,47 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
       this.subListStore.unsubscribe();
     if (this.subListMaterial)
       this.subListMaterial.unsubscribe();
-    if (this.subListMaterialDailyReport) 
+    if (this.subListMaterialDailyReport)
       this.subListMaterialDailyReport.unsubscribe();
   }
 
   findDailyReport() {
-    console.log(this.storeId)
-    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeId})
-      .subscribe((response: Response) => {
-        console.log("=========", this.listMaterialDailyReport)
+    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeId })
+      .subscribe(response => {
+        this.listMaterialDailyReport = response;
         if (this.listMaterialDailyReport && this.listMaterialDailyReport.length > 0) {
           //set initial value for formArray
+        } else {
+          this.createFormReports(this.listMaterial);
         }
       }, error => {
         console.log(error.error)
-      }); 
+      });
   }
 
-  addSingleRowReport() {
+  addSingleRowReport(material: Material) {
     return this.fb.group({
-      materialId: [''],
+      storeId: [''],
+      materialId: [material],
       materialRemain: ['', [Validators.required, CommonValidator.notEmpty]],
       materialImport: ['', [Validators.required, CommonValidator.notEmpty]],
       description: ['']
     });
-  } 
-
-  addRowToForm() {
-    this.formReports;
   }
+
+  addRowToForm(material: Material) {
+    this.reports = this.formReports.get('reports') as FormArray;
+    this.reports.push(this.addSingleRowReport(material));
+  }
+
+  createFormReports(material: Material[]) {
+    for (let i = 0; i < material.length; i++) {
+      this.addRowToForm(material[i]);
+    }
+  }
+
+  onSubmit(){
+    console.log("form", this.formReports.value)
+  }
+
 }
