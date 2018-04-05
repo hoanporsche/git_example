@@ -30,7 +30,6 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   private subListMaterial: Subscription;
   private subListMaterialDailyReport: Subscription;
 
-  // formReports: FormArray;
   formReports: FormGroup;
   reports: FormArray;
 
@@ -41,7 +40,6 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     private materialService: MaterialService,
     private fb: FormBuilder) {
     this.isAdmin = this.identityService.isAdmin();
-    // this.formReports = this.fb.array([]);
     this.formReports = this.fb.group({
       reports: this.fb.array([]),
     });
@@ -56,6 +54,7 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listMaterial = response;
         if (this.listMaterial && this.listMaterial.length > 0) {
+          this.createFormReports(this.listMaterial);
           if (!this.isAdmin) {
             this.findDailyReport();
           }
@@ -77,11 +76,14 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeId })
       .subscribe(response => {
         this.listMaterialDailyReport = response;
+        this.formReports.reset();
         if (this.listMaterialDailyReport && this.listMaterialDailyReport.length > 0) {
           //set initial value for formArray
-        } else {
-          this.createFormReports(this.listMaterial);
-        }
+          this.reports = this.formReports.get('reports') as FormArray;
+          for (let i = 0; i < this.reports.length; i++) {
+            this.reports[i].get('materialId').setValue()
+          }
+        } 
       }, error => {
         console.log(error.error)
       });

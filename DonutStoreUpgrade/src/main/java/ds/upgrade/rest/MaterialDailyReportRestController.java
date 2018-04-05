@@ -6,6 +6,7 @@ package ds.upgrade.rest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,11 +14,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ds.upgrade.model.Material;
 import ds.upgrade.model.MaterialDailyReport;
 import ds.upgrade.model.User;
 import ds.upgrade.service.MaterialDailyReportService;
@@ -152,5 +158,32 @@ public class MaterialDailyReportRestController {
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+
+  @PostMapping(Constants.API_URL.SAVE)
+  public ResponseEntity<?> createOrUpdate(
+      @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result) {
+    try {
+      if (result.hasErrors() || checkDuplicateMaterial(listReport))
+        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      listReport = materialDailyReportService.save(listReport);
+      if (listReport != null)
+        return new ResponseEntity<List<MaterialDailyReport>>(listReport, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+  }
+
+  private boolean checkDuplicateMaterial(List<MaterialDailyReport> listReport) {
+    Vector<Material> v = new Vector<>();
+    for (int i = 0; i < listReport.size(); i++) {
+      if (v.contains(listReport.get(i).getMaterialId())) {
+        return true;
+      }
+      v.add(listReport.get(i).getMaterialId());
+    }
+    return false;
   }
 }

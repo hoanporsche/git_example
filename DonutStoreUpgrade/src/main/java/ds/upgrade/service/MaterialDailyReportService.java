@@ -16,4 +16,6 @@ public interface MaterialDailyReportService {
   MaterialDailyReport findOne(Long id);
   
   List<MaterialDailyReport> findDailyReport(String dateCreated, Long storeId);
+  
+  List<MaterialDailyReport> save(List<MaterialDailyReport> listReport);
 }

@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +68,28 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
   @Override
   public List<MaterialDailyReport> findDailyReport(String dateCreated, Long storeId) {
     return materialDailyReportRepository.findDailyReport(dateCreated, storeId);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 4, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 4, 2018
+   * @param listReport
+   * @return
+   */
+  @Override
+  public List<MaterialDailyReport> save(List<MaterialDailyReport> listReport) {
+    List<MaterialDailyReport> listSavedReport = new ArrayList<>();
+    for (int i = 0; i < listReport.size(); i++) {
+      MaterialDailyReport savedReport = materialDailyReportRepository.save(listReport.get(i));
+      if (savedReport == null) {
+        return null;
+      }
+      listSavedReport.add(savedReport);
+    }
+    return listSavedReport;
   }
 
 }

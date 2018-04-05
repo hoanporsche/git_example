@@ -49,103 +49,101 @@
       </div>
     </div>
     <!--begin::Form-->
-    <div *ngIf="listMaterial">
-      <form class="m-form m-form--state m-form--fit m-form--label-align-right" [formGroup]="formReports" (ngSubmit)="onSubmit()">
-        <div class="m-portlet__body">
-          <div class="m-form__content">
-            <div class="m-alert m-alert--icon alert alert-warning m--hide" role="alert" id="m_form_2_msg">
-              <div class="m-alert__icon">
-                <i class="la la-warning"></i>
-              </div>
-              <div class="m-alert__text">
-                Oh snap! Change a few things up and try submitting again.
-              </div>
-              <div class="m-alert__close">
-                <button type="button" class="close" data-close="alert" aria-label="Close"></button>
-              </div>
+    <div *ngIf="listMaterial" class="m-form m-form--state m-form--fit m-form--label-align-right">
+      <div class="m-portlet__body">
+        <div class="m-form__content">
+          <div class="m-alert m-alert--icon alert alert-warning m--hide" role="alert" id="m_form_2_msg">
+            <div class="m-alert__icon">
+              <i class="la la-warning"></i>
             </div>
-          </div>
-          <div class="form-group m-form__group row" *ngIf="isAdmin">
-            <label class="col-form-label col-lg-3 col-sm-12">
-              Store *
-            </label>
-            <div class="col-lg-4 col-md-9 col-sm-12">
-              <select class="form-control m-input" name="option" [(ngModel)]="storeId" (change)="findDailyReport()">
-                <option value="">Select Store</option>
-                <option *ngFor="let store of listStore" [value]="store?.id">
-                  {{ store?.name }}
-                </option>
-              </select>
-              <span class="m-form__help">
-                Please select an option.
-              </span>
+            <div class="m-alert__text">
+              Oh snap! Change a few things up and try submitting again.
             </div>
-          </div>
-          <!-- START: TABLE FOR FORM -->
-          <div style="padding: 0% 20% 0% 20%">
-            <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th sortable-column="materialId.name">Material</th>
-                  <th sortable-column="materialRemain">Remain</th>
-                  <th sortable-column="materialImport">Import</th>
-                  <th sortable-column="description">Description</th>
-                </tr>
-              </thead>
-              <!-- START FORM REPORT -->
-              <tbody>
-                <tr formArrayName="reports" *ngFor="let report of formReports.get('reports').controls; let i = index;">
-                  <th scope="row">{{ i + 1 }}</th>
-                  <td [formGroupName]="i">
-                    <h4>{{ listMaterial[i].name }}</h4>
-                  </td>
-                  <td [formGroupName]="i">
-                    <input type="text" class="form-control m-input i-border" formControlName="materialRemain">
-                    <div class="i-error" *ngIf="formReports.get('reports').controls[i].controls.materialRemain.touched && formReports.get('reports').controls[i].controls.materialRemain.invalid">
-                      <div *ngIf="formReports.get('reports').controls[i].controls.materialRemain.hasError('required')">
-                        Remain is required.
-                      </div>
-                      <div *ngIf="formReports.get('reports').controls[i].controls.materialRemain.hasError('notEmpty')">
-                        Remain is required.
-                      </div>
-                    </div>
-                  </td>
-                  <td [formGroupName]="i">
-                    <input type="text" class="form-control m-input i-border" formControlName="materialImport">
-                    <div class="i-error" *ngIf="formReports.get('reports').controls[i].controls.materialImport.touched && formReports.get('reports').controls[i].controls.materialImport.invalid">
-                      <div *ngIf="formReports.get('reports').controls[i].controls.materialImport.hasError('required')">
-                        Import is required.
-                      </div>
-                      <div *ngIf="formReports.get('reports').controls[i].controls.materialImport.hasError('notEmpty')">
-                        Import is required.
-                      </div>
-                    </div>
-                  </td>
-                  <td [formGroupName]="i">
-                    <textarea type="text" maxlength="255" class="form-control m-input i-border" formControlName="description"></textarea>
-                  </td>
-                </tr>
-              </tbody>
-              <!-- END FORM REPORTS -->
-            </table>
-          </div>
-        </div>
-        <div class="m-portlet__foot m-portlet__foot--fit">
-          <div class="m-form__actions m-form__actions">
-            <div class="row">
-              <div class="col-lg-9 ml-lg-auto">
-                <button type="submit" class="btn btn-primary" [disabled]="formReports.invalid">
-                  Submit
-                </button>
-                <button type="reset" class="btn btn-secondary">
-                  Cancel
-                </button>
-              </div>
+            <div class="m-alert__close">
+              <button type="button" class="close" data-close="alert" aria-label="Close"></button>
             </div>
           </div>
         </div>
-      </form>
+        <div class="form-group m-form__group row" *ngIf="isAdmin">
+          <label class="col-form-label col-lg-3 col-sm-12">
+            Store *
+          </label>
+          <div class="col-lg-4 col-md-9 col-sm-12">
+            <select class="form-control m-input" name="option" [(ngModel)]="storeId" (change)="findDailyReport()">
+              <option value="">Select Store</option>
+              <option *ngFor="let store of listStore" [value]="store?.id">
+                {{ store?.name }}
+              </option>
+            </select>
+            <span class="m-form__help">
+              Please select an store.
+            </span>
+          </div>
+        </div>
+        <!-- START: TABLE FOR FORM -->
+        <form [formGroup]="formReports" style="padding: 0% 20% 0% 20%">
+          <table class="table table-responsive table-bordered table-hover m-table m-table--head-bg-info">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th sortable-column="materialId.name">Material</th>
+                <th sortable-column="materialRemain">Remain</th>
+                <th sortable-column="materialImport">Import</th>
+                <th sortable-column="description">Description</th>
+              </tr>
+            </thead>
+            <!-- START FORM REPORT -->
+            <tbody>
+              <tr formArrayName="reports" *ngFor="let report of formReports.get('reports').controls; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td [formGroupName]="i">
+                  <h4>{{ listMaterial[i].name }}</h4>
+                </td>
+                <td [formGroupName]="i">
+                  <input type="text" class="form-control m-input i-border" formControlName="materialRemain">
+                  <div class="i-error" *ngIf="formReports.get('reports').controls[i].controls.materialRemain.touched && formReports.get('reports').controls[i].controls.materialRemain.invalid">
+                    <div *ngIf="formReports.get('reports').controls[i].controls.materialRemain.hasError('required')">
+                      Remain is required.
+                    </div>
+                    <div *ngIf="formReports.get('reports').controls[i].controls.materialRemain.hasError('notEmpty')">
+                      Remain is required.
+                    </div>
+                  </div>
+                </td>
+                <td [formGroupName]="i">
+                  <input type="text" class="form-control m-input i-border" formControlName="materialImport">
+                  <div class="i-error" *ngIf="formReports.get('reports').controls[i].controls.materialImport.touched && formReports.get('reports').controls[i].controls.materialImport.invalid">
+                    <div *ngIf="formReports.get('reports').controls[i].controls.materialImport.hasError('required')">
+                      Import is required.
+                    </div>
+                    <div *ngIf="formReports.get('reports').controls[i].controls.materialImport.hasError('notEmpty')">
+                      Import is required.
+                    </div>
+                  </div>
+                </td>
+                <td [formGroupName]="i">
+                  <textarea type="text" maxlength="255" class="form-control m-input i-border" formControlName="description"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+        <!-- END FORM REPORTS -->
+      </div>
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions">
+          <div class="row">
+            <div class="col-lg-9 ml-lg-auto">
+              <button type="button" (click)="onSubmit()" class="btn btn-primary" [disabled]="formReports.invalid">
+                Submit
+              </button>
+              <button type="reset" class="btn btn-secondary">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!--end::Form-->
     <div *ngIf="!listMaterial">
