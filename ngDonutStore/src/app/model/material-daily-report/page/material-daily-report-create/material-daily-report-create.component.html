@@ -51,13 +51,13 @@
     <!--begin::Form-->
     <div *ngIf="listMaterial" class="m-form m-form--state m-form--fit m-form--label-align-right">
       <div class="m-portlet__body">
-        <div class="m-form__content">
+        <div class="m-form__content" *ngIf="error.isError">
           <div class="m-alert m-alert--icon alert alert-warning m--hide" role="alert" id="m_form_2_msg">
             <div class="m-alert__icon">
               <i class="la la-warning"></i>
             </div>
             <div class="m-alert__text">
-              Oh snap! Change a few things up and try submitting again.
+              {{ error?.message }}
             </div>
             <div class="m-alert__close">
               <button type="button" class="close" data-close="alert" aria-label="Close"></button>
@@ -69,7 +69,7 @@
             Store *
           </label>
           <div class="col-lg-4 col-md-9 col-sm-12">
-            <select class="form-control m-input" name="option" [(ngModel)]="storeId" (change)="findDailyReport()">
+            <select class="form-control m-input" name="option" [(ngModel)]="storeName" (change)="adminFindDailyReport()">
               <option value="">Select Store</option>
               <option *ngFor="let store of listStore" [value]="store?.id">
                 {{ store?.name }}
@@ -134,7 +134,7 @@
         <div class="m-form__actions m-form__actions">
           <div class="row">
             <div class="col-lg-9 ml-lg-auto">
-              <button type="button" (click)="onSubmit()" class="btn btn-primary" [disabled]="formReports.invalid">
+              <button type="button" (click)="onSubmit()" class="btn btn-primary" >
                 Submit
               </button>
               <button type="reset" class="btn btn-secondary">

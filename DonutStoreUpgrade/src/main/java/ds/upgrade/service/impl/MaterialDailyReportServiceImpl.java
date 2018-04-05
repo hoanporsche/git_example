@@ -11,7 +11,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.MaterialDailyReport;
+import ds.upgrade.model.Store;
 import ds.upgrade.repository.MaterialDailyReportRepository;
+import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.MaterialDailyReportSpecification;
 import ds.upgrade.service.MaterialDailyReportService;
 
@@ -20,6 +22,8 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
 
   @Autowired
   private MaterialDailyReportRepository materialDailyReportRepository;
+  @Autowired
+  private StoreRepository storeRepository;
 
   /**
    * @description: .
@@ -49,9 +53,9 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @return
    */
   @Override
-  public Page<MaterialDailyReport> findList(Long storeId, Long materialId, Date startDate,
+  public Page<MaterialDailyReport> findList(String storeName, Long materialId, Date startDate,
       Date endDate, Pageable pageable) {
-    Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeId,
+    Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeName,
         materialId, startDate, endDate);
     return materialDailyReportRepository.findAll(spec, pageable);
   }
@@ -66,8 +70,8 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @return
    */
   @Override
-  public List<MaterialDailyReport> findDailyReport(String dateCreated, Long storeId) {
-    return materialDailyReportRepository.findDailyReport(dateCreated, storeId);
+  public List<MaterialDailyReport> findDailyReport(String dateCreated, String storeName) {
+    return materialDailyReportRepository.findDailyReport(dateCreated, storeName);
   }
 
   /**
@@ -80,10 +84,14 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @return
    */
   @Override
-  public List<MaterialDailyReport> save(List<MaterialDailyReport> listReport) {
+  public List<MaterialDailyReport> save(List<MaterialDailyReport> listReport, String storeName) {
     List<MaterialDailyReport> listSavedReport = new ArrayList<>();
+    Store store = storeRepository.findByName(storeName);
     for (int i = 0; i < listReport.size(); i++) {
-      MaterialDailyReport savedReport = materialDailyReportRepository.save(listReport.get(i));
+      MaterialDailyReport savedReport = listReport.get(i);
+      savedReport.setDateCreated(new Date());
+      savedReport.setStoreId(store);
+      savedReport = materialDailyReportRepository.save(savedReport);
       if (savedReport == null) {
         return null;
       }

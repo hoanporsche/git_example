@@ -40,7 +40,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
   currentSortProperty = '';
 
   params = {
-    storeId: '',
+    storeName: '',
     materialId: '',
     startDate: '',
     endDate: '',

@@ -56,33 +56,24 @@ public class MaterialDailyReportRestController {
    */
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = Constants.PARAM.NAME_PARAM, required = false) String storeName,
       @RequestParam(value = Constants.PARAM.MATERIAL_ID_PARAM, required = false) String materialId,
       @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate) {
     try {
-      User user = userService.findInfoUser();
-      Long newStoreId;
-      // Admin can overwatch all material daily reports and Store have just overwatch
-      // all material daily reports belong to their store.
-      if (userService.isStore(user.getRoles())) {
-        newStoreId = user.getStoreId().getId();
-      } else {
-        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
-      }
+      String newStoreName = setStoreCorrespondingUserRequested(storeName);
       SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-      Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreId,
+      Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreName,
           newMaterialId, newStartDate, newEndDate, pageable);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<MaterialDailyReport>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      System.out.println(e.getMessage());
       return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -126,7 +117,7 @@ public class MaterialDailyReportRestController {
    */
   @GetMapping(Constants.API_URL.FIND_DAILY_REPORT)
   public ResponseEntity<?> findDailyReport(
-      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = Constants.PARAM.NAME_PARAM, required = false) String storeName,
       @RequestParam(value = Constants.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
     try {
       String newDateCreated;
@@ -137,17 +128,9 @@ public class MaterialDailyReportRestController {
       } else {
         newDateCreated = dateFormat.format(dateFormat.parse(dateCreated)).toString();
       }
-      User user = userService.findInfoUser();
-      Long newStoreId;
-      // Admin can overwatch all material daily reports and Store have just overwatch
-      // all material daily reports belong to their store.
-      if (userService.isStore(user.getRoles())) {
-        newStoreId = user.getStoreId().getId();
-      } else {
-        newStoreId = Long.parseLong(storeId);
-      }
+      String newStoreName = setStoreCorrespondingUserRequested(storeName);
       List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(newDateCreated,
-          newStoreId);
+          newStoreName);
       if (list.size() > 0) {
         return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
       }
@@ -160,13 +143,25 @@ public class MaterialDailyReportRestController {
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 5, 2018
+   * @modifier: User
+   * @modifier_date: Apr 5, 2018
+   * @param listReport
+   * @param result
+   * @return
+   */
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(
-      @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result) {
+      @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result,
+      @RequestParam(value = Constants.PARAM.NAME_PARAM) String storeName) {
     try {
       if (result.hasErrors() || checkDuplicateMaterial(listReport))
         return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
-      listReport = materialDailyReportService.save(listReport);
+      String newStoreName = setStoreCorrespondingUserRequested(storeName);
+      listReport = materialDailyReportService.save(listReport, newStoreName);
       if (listReport != null)
         return new ResponseEntity<List<MaterialDailyReport>>(listReport, HttpStatus.OK);
     } catch (Exception e) {
@@ -185,5 +180,18 @@ public class MaterialDailyReportRestController {
       v.add(listReport.get(i).getMaterialId());
     }
     return false;
+  }
+  
+  private String setStoreCorrespondingUserRequested(String storeName) {
+    User user = userService.findInfoUser();
+    String newStoreName = null;
+    // Admin can overwatch all material daily reports and Store have just overwatch
+    // all material daily reports belong to their store.
+    if (userService.isAdmin(user.getRoles())) {
+      newStoreName = (StringUtils.isEmpty(storeName)) ? newStoreName : storeName; 
+    } else {
+      newStoreName = user.getStoreId().getName();
+    }
+    return newStoreName;
   }
 }

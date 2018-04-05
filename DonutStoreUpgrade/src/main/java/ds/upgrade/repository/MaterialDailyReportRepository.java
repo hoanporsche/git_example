@@ -23,8 +23,8 @@ import ds.upgrade.model.MaterialDailyReport;
 public interface MaterialDailyReportRepository extends JpaRepository<MaterialDailyReport, Long>,
     JpaSpecificationExecutor<MaterialDailyReport> {
 
-  @Query("SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId.id = :id ")
+  @Query("SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId.name = :name ")
   List<MaterialDailyReport> findDailyReport(
       @Param(Constants.PARAM.DATE_CREATED_PARAM) String dateCreated,
-      @Param(Constants.PARAM.ID_PARAM) Long id);
+      @Param(Constants.PARAM.NAME_PARAM) String storeName);
 }

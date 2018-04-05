@@ -1,3 +1,4 @@
+import { MaterialDailyReport } from './../material-daily-report';
 import { BaseService } from './../../../core/services/base.service';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
@@ -10,6 +11,7 @@ export class MaterialDailyReportService extends BaseService {
 
   private findListUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_LIST;
   private findDailyReportUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_DAILY_REPORT;
+  private saveUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.SAVE;
 
   constructor(httpClient: HttpClient) { 
     super(httpClient);
@@ -21,6 +23,10 @@ export class MaterialDailyReportService extends BaseService {
 
   findDailyReport(params: {}): Observable<any> {
     return this.get(this.findDailyReportUrl, params);
+  }
+
+  save(params: MaterialDailyReport[], storeName?: string): Observable<any> {
+    return this.post(this.saveUrl + '?name=' + storeName, params);
   }
 
 }

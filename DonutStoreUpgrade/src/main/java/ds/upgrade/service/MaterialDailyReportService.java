@@ -10,12 +10,12 @@ import ds.upgrade.model.MaterialDailyReport;
 
 public interface MaterialDailyReportService {
 
-  Page<MaterialDailyReport> findList(Long storeId, Long materialId, Date startDate, Date endDate,
+  Page<MaterialDailyReport> findList(String storeName, Long materialId, Date startDate, Date endDate,
       Pageable pageable);
 
   MaterialDailyReport findOne(Long id);
   
-  List<MaterialDailyReport> findDailyReport(String dateCreated, Long storeId);
+  List<MaterialDailyReport> findDailyReport(String dateCreated, String storeName);
   
-  List<MaterialDailyReport> save(List<MaterialDailyReport> listReport);
+  List<MaterialDailyReport> save(List<MaterialDailyReport> listReport, String storeName);
 }

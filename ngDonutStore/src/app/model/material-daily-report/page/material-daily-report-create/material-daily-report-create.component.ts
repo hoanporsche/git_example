@@ -24,14 +24,19 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   listMaterialDailyReport: MaterialDailyReport[];
   isAdmin = false;
   today = new Date();
-  storeId = '';
+  storeName = '';
+  error = {
+    isError: false,
+    message: ''
+  }
 
   private subListStore: Subscription;
   private subListMaterial: Subscription;
   private subListMaterialDailyReport: Subscription;
+  private subOnSubmit: Subscription;
 
   formReports: FormGroup;
-  reports: FormArray;
+  reportsFormArray: FormArray;
 
   constructor(private materialDailyReportService: MaterialDailyReportService,
     private storeService: StoreService,
@@ -48,17 +53,25 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subListStore = this.storeService.findAll()
       .subscribe(response => {
+        this.error.isError = false;
         this.listStore = response;
+      }, error => {
+        this.error.isError = true;
+        this.error.message = error.error;
       });
     this.subListMaterial = this.materialService.findAll()
       .subscribe(response => {
+        this.error.isError = false;
         this.listMaterial = response;
         if (this.listMaterial && this.listMaterial.length > 0) {
           this.createFormReports(this.listMaterial);
-          if (!this.isAdmin) {
-            this.findDailyReport();
-          }
+          // if (!this.isAdmin) {
+          //   this.findDailyReport();
+          // }
         }
+      }, error => {
+        this.error.isError = true;
+        this.error.message = error.error;
       });
 
   }
@@ -73,25 +86,31 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   }
 
   findDailyReport() {
-    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeId })
+    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeName })
       .subscribe(response => {
+        this.error.isError = false;
         this.listMaterialDailyReport = response;
-        this.formReports.reset();
         if (this.listMaterialDailyReport && this.listMaterialDailyReport.length > 0) {
           //set initial value for formArray
-          this.reports = this.formReports.get('reports') as FormArray;
-          for (let i = 0; i < this.reports.length; i++) {
-            this.reports[i].get('materialId').setValue()
+          this.reportsFormArray = this.formReports.get('reports') as FormArray;
+          for (let i = 0; i < this.reportsFormArray.length; i++) {
+            this.reportsFormArray[i].get('materialId').setValue()
           }
-        } 
+        }
       }, error => {
-        console.log(error.error)
+        this.error.isError = true;
+        this.error.message = error.error;
       });
+  }
+
+  adminFindDailyReport() {
+    this.formReports.reset();
+    this.storeId.setValue(this.storeName);
+    this.findDailyReport();
   }
 
   addSingleRowReport(material: Material) {
     return this.fb.group({
-      storeId: [''],
       materialId: [material],
       materialRemain: ['', [Validators.required, CommonValidator.notEmpty]],
       materialImport: ['', [Validators.required, CommonValidator.notEmpty]],
@@ -100,8 +119,8 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   }
 
   addRowToForm(material: Material) {
-    this.reports = this.formReports.get('reports') as FormArray;
-    this.reports.push(this.addSingleRowReport(material));
+    this.reportsFormArray = this.formReports.get('reports') as FormArray;
+    this.reportsFormArray.push(this.addSingleRowReport(material));
   }
 
   createFormReports(material: Material[]) {
@@ -110,8 +129,28 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(){
-    console.log("form", this.formReports.value)
+  onSubmit() {
+    console.log("form", this.formReports.value);
+    if (this.formReports.valid) {
+      const listReport = this.formReports.get('reports').value;
+      console.log("list report", listReport);
+      this.subOnSubmit = this.materialDailyReportService.save(listReport, this.storeName)
+        .subscribe(response => {
+          this.error.isError = false;
+
+        }, error => {
+          this.error.isError = true;
+          this.error.message = error.error;
+          console.log(error.error)
+        });
+    }
   }
 
+  get storeId() {
+    return this.formReports.get('storeId');
+  }
+
+  get reports() {
+    return this.formReports.get('reports');
+  }
 }

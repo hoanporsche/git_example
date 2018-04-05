@@ -91,9 +91,9 @@
                   <div class="col-12 col-md-4" *ngIf="isAdmin">
                     <div class="form-group m-form__group">
                       <div class="input-group">
-                        <select class="form-control" [(ngModel)]="params.storeId">
+                        <select class="form-control" [(ngModel)]="params.storeName">
                           <option value="">Select store</option>
-                          <option *ngFor="let store of listStore" [value]="store?.id">{{ store?.name }}</option>
+                          <option *ngFor="let store of listStore" [value]="store?.name">{{ store?.name }}</option>
                         </select>
                       </div>
                     </div>
