@@ -47,7 +47,7 @@ public class MaterialDailyReport implements Serializable {
   @JoinColumn(name = "store_id", referencedColumnName = "id",nullable = false)
   private Store storeId;
   
-  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
+  @JsonFormat(pattern = "MM/dd/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created")
   private Date dateCreated;
   

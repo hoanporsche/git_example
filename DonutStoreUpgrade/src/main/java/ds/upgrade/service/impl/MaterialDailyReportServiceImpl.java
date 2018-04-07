@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import ds.upgrade.repository.MaterialDailyReportRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.MaterialDailyReportSpecification;
 import ds.upgrade.service.MaterialDailyReportService;
+import ds.upgrade.util.Constants;
 
 @Service
 public class MaterialDailyReportServiceImpl implements MaterialDailyReportService {
@@ -85,6 +87,24 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    */
   @Override
   public List<MaterialDailyReport> save(List<MaterialDailyReport> listReport, String storeName) {
+    // If list doesn't have id, will check to create
+    SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT_1);
+    List<MaterialDailyReport> listFoundReport = findDailyReport(
+        dateFormat.format(new Date()).toString(), storeName);
+    if (listReport.get(0).getId() == null) {
+      // 
+      if (listFoundReport.size() > 0)
+        return null;
+      return saveOneByOneReport(listReport, storeName);
+    }
+    // If list has id , will check to update
+    if (willUpdateIfItIsOldList(listReport, listFoundReport))
+      return saveOneByOneReport(listReport, storeName);
+    return null;
+  }
+
+  private List<MaterialDailyReport> saveOneByOneReport(List<MaterialDailyReport> listReport,
+      String storeName) {
     List<MaterialDailyReport> listSavedReport = new ArrayList<>();
     Store store = storeRepository.findByName(storeName);
     for (int i = 0; i < listReport.size(); i++) {
@@ -100,4 +120,19 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
     return listSavedReport;
   }
 
+  private boolean willUpdateIfItIsOldList(List<MaterialDailyReport> listReport,
+      List<MaterialDailyReport> listFoundReport) {
+    // If 2 list sizes difference, wrong input
+    if (listReport.size() != listFoundReport.size())
+      return false;
+    // Check 2 list have id and material are equal
+    for (int i = 0; i < listReport.size(); i++) {
+      MaterialDailyReport newReport = listReport.get(i);
+      MaterialDailyReport oldReport = listFoundReport.get(i);
+      if ((newReport.getId() != oldReport.getId())
+          || (newReport.getMaterialId().getId() != oldReport.getMaterialId().getId()))
+        return false;
+    }
+    return true;
+  }
 }

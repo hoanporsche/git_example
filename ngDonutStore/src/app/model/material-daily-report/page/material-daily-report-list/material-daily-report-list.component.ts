@@ -40,7 +40,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
   currentSortProperty = '';
 
   params = {
-    storeName: '',
+    name: '',
     materialId: '',
     startDate: '',
     endDate: '',
@@ -64,10 +64,11 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.findList();
     this.subListMaterial = this.itemService.findAll()
       .subscribe(response => {
         this.listMaterial = response;
+        this.params.size = this.listMaterial.length;
+        this.findList();
       });
     this.subListStore = this.storeService.findAll()
       .subscribe(response => {

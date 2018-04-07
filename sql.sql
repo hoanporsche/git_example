@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (
     `material_id` BIGINT NOT NULL,
     `material_remain` INT NOT NULL,
     `material_import` INT NOT NULL,
-    `description` VARCHAR(1000) NOT NULL,
+    `description` VARCHAR(1000) ,
     PRIMARY KEY(`id`),
     FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`),
     FOREIGN KEY (`material_id`) REFERENCES `donutstore`.`material`(`id`))

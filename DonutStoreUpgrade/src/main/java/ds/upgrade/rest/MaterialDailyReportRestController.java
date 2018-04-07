@@ -159,7 +159,7 @@ public class MaterialDailyReportRestController {
       @RequestParam(value = Constants.PARAM.NAME_PARAM) String storeName) {
     try {
       if (result.hasErrors() || checkDuplicateMaterial(listReport))
-        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT + result.getAllErrors(), HttpStatus.NOT_ACCEPTABLE);
       String newStoreName = setStoreCorrespondingUserRequested(storeName);
       listReport = materialDailyReportService.save(listReport, newStoreName);
       if (listReport != null)

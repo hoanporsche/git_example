@@ -49,10 +49,9 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         storeId: this.storeId.value,
         roles: [this.roles.value]
       }
-      console.log(user);
       this.subUser = this.userService.save(user)
         .subscribe(response => {
-          if (response.name === this.email.value.trim()) {
+          if (response.email === this.email.value.trim()) {
             this.submitted.emit('success');
             this.formUser.reset();
           }

@@ -65,9 +65,9 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
         this.listMaterial = response;
         if (this.listMaterial && this.listMaterial.length > 0) {
           this.createFormReports(this.listMaterial);
-          // if (!this.isAdmin) {
-          //   this.findDailyReport();
-          // }
+          if (!this.isAdmin) {
+            this.findDailyReport();
+          }
         }
       }, error => {
         this.error.isError = true;
@@ -76,25 +76,30 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    if (this.subListStore)
-      this.subListStore.unsubscribe();
-    if (this.subListMaterial)
-      this.subListMaterial.unsubscribe();
-    if (this.subListMaterialDailyReport)
-      this.subListMaterialDailyReport.unsubscribe();
-  }
-
   findDailyReport() {
-    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ storeId: this.storeName })
+    this.subListMaterialDailyReport = this.materialDailyReportService.findDailyReport({ name: this.storeName })
       .subscribe(response => {
         this.error.isError = false;
         this.listMaterialDailyReport = response;
+        this.reportsFormArray = this.reports as FormArray;
+
+        //this acction is setting up inital value, that serve for updating report action, will allow any role
         if (this.listMaterialDailyReport && this.listMaterialDailyReport.length > 0) {
-          //set initial value for formArray
-          this.reportsFormArray = this.formReports.get('reports') as FormArray;
           for (let i = 0; i < this.reportsFormArray.length; i++) {
-            this.reportsFormArray[i].get('materialId').setValue()
+            this.reportsFormArray.controls[i].get('id').setValue(response[i].id);
+            this.reportsFormArray.controls[i].get('materialId').setValue(response[i].materialId);
+            this.reportsFormArray.controls[i].get('materialRemain').setValue(response[i].materialRemain);
+            this.reportsFormArray.controls[i].get('materialImport').setValue(response[i].materialImport);
+            this.reportsFormArray.controls[i].get('description').setValue(response[i].description);
+          }
+        }
+
+        //this action will use for only admin role, that serve for creating report action when not found any report.
+        if (this.isAdmin && !this.listMaterialDailyReport) {
+          for (let i = 0; i < this.listMaterial.length; i++) {
+            this.reportsFormArray.controls[i].get('id').setValue('');
+            this.reportsFormArray.controls[i].get('materialId').setValue(this.listMaterial[i]);
+            this.reportsFormArray.controls[i].get('description').setValue('');
           }
         }
       }, error => {
@@ -105,12 +110,12 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
 
   adminFindDailyReport() {
     this.formReports.reset();
-    this.storeId.setValue(this.storeName);
     this.findDailyReport();
   }
 
   addSingleRowReport(material: Material) {
     return this.fb.group({
+      id: [''],
       materialId: [material],
       materialRemain: ['', [Validators.required, CommonValidator.notEmpty]],
       materialImport: ['', [Validators.required, CommonValidator.notEmpty]],
@@ -133,24 +138,31 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
     console.log("form", this.formReports.value);
     if (this.formReports.valid) {
       const listReport = this.formReports.get('reports').value;
-      console.log("list report", listReport);
       this.subOnSubmit = this.materialDailyReportService.save(listReport, this.storeName)
         .subscribe(response => {
           this.error.isError = false;
-
+          this.navMaterialDailyReportList();
         }, error => {
           this.error.isError = true;
           this.error.message = error.error;
-          console.log(error.error)
         });
     }
   }
 
-  get storeId() {
-    return this.formReports.get('storeId');
+  navMaterialDailyReportList() {
+    this.navigationService.navMaterialDailyReportList();
   }
 
   get reports() {
     return this.formReports.get('reports');
+  }
+
+  ngOnDestroy(): void {
+    if (this.subListStore)
+      this.subListStore.unsubscribe();
+    if (this.subListMaterial)
+      this.subListMaterial.unsubscribe();
+    if (this.subListMaterialDailyReport)
+      this.subListMaterialDailyReport.unsubscribe();
   }
 }
