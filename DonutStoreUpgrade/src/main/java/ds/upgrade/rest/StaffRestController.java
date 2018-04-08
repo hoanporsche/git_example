@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Staff;
+import ds.upgrade.model.User;
 import ds.upgrade.service.StaffService;
+import ds.upgrade.service.UserService;
 import ds.upgrade.util.Constants;
 
 /**
@@ -37,6 +40,8 @@ public class StaffRestController {
 
   @Autowired
   private StaffService staffService;
+  @Autowired
+  private UserService userService;
 
   /**
    * @description: /find-all.
@@ -46,6 +51,7 @@ public class StaffRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
@@ -68,6 +74,7 @@ public class StaffRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -94,14 +101,21 @@ public class StaffRestController {
    * @param enabled
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
       @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled,
       @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
       @RequestParam(value = Constants.PARAM.WORKING_CALENDER_ID_PARAM, required = false) String workingCalenderId) {
     try {
+      User user = userService.findInfoUser();
+      Long newStoreId = null;
+      if (userService.isAdmin(user.getRoles())) {
+        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      } else {
+        newStoreId = user.getStoreId().getId();
+      }
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
-      Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       Long newWorkingCalenderId = (StringUtils.isEmpty(workingCalenderId)) ? null : Long.parseLong(workingCalenderId);
       Page<Staff> list = staffService.findList(pageable, newEnabled, newStoreId, newWorkingCalenderId);
       if (list.getSize() > 0)
@@ -125,12 +139,18 @@ public class StaffRestController {
    * @param result
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Staff staff,
       BindingResult result) {
     try {
       if (result.hasErrors())
         return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      User user = userService.findInfoUser();
+      //Store have only created your staff belong to your store
+      if (userService.isStore(user.getRoles())) {
+        staff.setStoreId(user.getStoreId());
+      }
       staff = staffService.save(staff);
       if (staff != null)
         return new ResponseEntity<Staff>(staff, HttpStatus.OK);
@@ -150,6 +170,7 @@ public class StaffRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
@@ -174,7 +195,7 @@ public class StaffRestController {
    * @modifier_date: Mar 27, 2018
    * @param name
    * @return
-   */
+   */@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_BY_IDENTITY_CARD)
   public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.IDENTITY_CARD_ID_PARAM) String identityCard) {
     try {

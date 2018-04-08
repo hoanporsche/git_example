@@ -1,9 +1,9 @@
+import { IdentityService } from './../../../../core/services/identity.service';
 import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Staff } from '../../staff';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { StaffService } from '../../service/staff.service';
-import { NavigationService } from '../../../../core/services/navigation.service';
 import { CommonValidator } from '../../../../shared/custom-validator/common.validator';
 import { Store } from '../../../store/store';
 import { WorkingCalender } from '../../../working-calender/working-calender';
@@ -22,6 +22,7 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
 
   @Input() listStore: Store[];
   @Input() listWorkingCalender: WorkingCalender[];
+  @Input() isAdmin: boolean;
 
   formStaff: FormGroup;
 
@@ -30,7 +31,7 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     public staffService: StaffService,
-    private navigationService: NavigationService,
+    private identityService: IdentityService,
   ) {
     this.formStaff = fb.group({
       name: ['', [Validators.required, CommonValidator.notEmpty]],
@@ -42,7 +43,8 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
       homeTown: ['', [Validators.required]],
       salary: ['', [Validators.required]],
       workingCalenderId: ['', [Validators.required]]
-    })
+    });
+    this.isAdmin = false;
   }
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
 
   validateIdentityCard() {
     const oldIdentityCard = this.oldStaff.identityCard;
-    if (this.name.value.trim() !== '') {
+    if (this.identityCard.value && this.identityCard.value.toString().trim() !== '') {
       this.staffService.findByIdentityCard(this.identityCard.value.toString().trim())
         .subscribe(response => {
           if (response && response.identityCard != oldIdentityCard)
@@ -67,7 +69,7 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (this.formStaff.valid) {
-      const staff = {
+      let staff = {
         id: this.oldStaff.id,
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
@@ -83,11 +85,16 @@ export class StaffDetailComponent implements OnInit, OnDestroy {
         .subscribe(response => {
           if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
+            this.formStaff.reset();
           }
         }, error => {
           this.submitted.emit('fail');
         });
     }
+  }
+
+  onCancel() {
+    this.formStaff.reset();
   }
 
   get name() {

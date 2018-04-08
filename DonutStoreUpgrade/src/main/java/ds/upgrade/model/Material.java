@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -51,7 +52,7 @@ public class Material implements Serializable {
 
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
-  @NotEmpty
+  @NotNull
   @Column(name = "single_value", nullable = false)
   private BigDecimal singleValue;
 

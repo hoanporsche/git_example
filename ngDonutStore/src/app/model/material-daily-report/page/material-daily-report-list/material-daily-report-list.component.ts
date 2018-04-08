@@ -1,3 +1,5 @@
+import { NavigationService } from './../../../../core/services/navigation.service';
+import { IdentityService } from './../../../../core/services/identity.service';
 import { Material } from './../../../material/material';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialDailyReport } from '../../material-daily-report';
@@ -26,6 +28,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
   private subListMaterial: Subscription;
   private subSortService: Subscription;
 
+  isAdmin = false;
   requestPage;
   notFoundMessage = '';
   error = {
@@ -37,7 +40,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
   currentSortProperty = '';
 
   params = {
-    storeId: '',
+    name: '',
     materialId: '',
     startDate: '',
     endDate: '',
@@ -50,18 +53,22 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
     private materialDailyReportService: MaterialDailyReportService,
     private storeService: StoreService,
     private itemService: MaterialService,
-    private sortService: SortService
+    private sortService: SortService,
+    private identityService: IdentityService,
+    private navigationService: NavigationService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {
-    this.findList();
     this.subListMaterial = this.itemService.findAll()
       .subscribe(response => {
         this.listMaterial = response;
+        this.params.size = this.listMaterial.length;
+        this.findList();
       });
     this.subListStore = this.storeService.findAll()
       .subscribe(response => {
@@ -96,9 +103,9 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 
@@ -143,4 +150,7 @@ export class MaterialDailyReportListComponent implements OnInit, OnDestroy {
     }
   }
 
+  navMaterialDailyReportCreate() {
+    this.navigationService.navMaterialDailyReportCreate();
+  }
 }

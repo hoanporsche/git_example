@@ -81,9 +81,9 @@ export class SupplyListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 
@@ -129,7 +129,7 @@ export class SupplyListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_supply').modal({ show: true, backdrop: 'static' });
   }
 
   supplySubmitted(event) {
@@ -138,7 +138,7 @@ export class SupplyListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_supply').modal('toggle');
     }
   }
 
@@ -148,14 +148,14 @@ export class SupplyListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_supply').modal('toggle');
     }
   }
 
   onDetail(supply) {
     this.oldSupply = supply;
     this.supplyService.setSupply(JSON.parse(JSON.stringify(supply)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_supply').modal('show');
   }
 
   onEnabledOrNot(id) {

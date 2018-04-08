@@ -81,9 +81,9 @@ export class StoreListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 
@@ -129,7 +129,7 @@ export class StoreListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_store').modal({ show: true, backdrop: 'static' });
   }
 
   storeSubmitted(event) {
@@ -138,7 +138,7 @@ export class StoreListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_store').modal('toggle');
     }
   }
 
@@ -148,14 +148,14 @@ export class StoreListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_store').modal('toggle');
     }
   }
 
   onDetail(store) {
     this.oldStore = store;
     this.storeService.setStore(JSON.parse(JSON.stringify(store)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_store').modal('show');
   }
 
   onEnabledOrNot(id) {

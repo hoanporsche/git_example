@@ -49,21 +49,7 @@ export class NavigationService {
   // User page navigation for admin only
   navUserList() {
     if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user');
-    } else {
-      console.log('You are not authorized');
-    }
-  }
-  navUserCreate() {
-    if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/create');
-    } else {
-      console.log('You are not authorized');
-    }
-  }
-  navUserDetail(id: number) {
-    if (this.identityService.isAdmin()) {
-      this.router.navigateByUrl('/admin/user/detail/' + id);
+      this.router.navigateByUrl(this.getRoleSegment() + '/user');
     } else {
       console.log('You are not authorized');
     }
@@ -87,6 +73,9 @@ export class NavigationService {
   //Material-daily-report
   navMaterialDailyReportList() {
     this.router.navigateByUrl(this.getRoleSegment() + '/material-daily-report');
+  }
+  navMaterialDailyReportCreate() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/material-daily-report/create');
   }
 
   //Order
@@ -133,6 +122,9 @@ export class NavigationService {
   //timekeeping
   navTimekeepingList() {
     this.router.navigateByUrl(this.getRoleSegment() + '/timekeeping');
+  }
+  navTimekeepingCreate() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/timekeeping/create');
   }
 
   //timekeeping-status

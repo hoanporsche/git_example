@@ -1,6 +1,7 @@
 
 package ds.upgrade.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
@@ -33,8 +34,10 @@ public class Category implements Serializable {
   @Size(max = 255)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
   @Column(name = "enabled", nullable = false)

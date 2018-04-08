@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-    User user = userRepository.findByemail(email);
+    User user = userRepository.findByEnabledEmail(email);
 
     if (user == null) {
       // Not found...

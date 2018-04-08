@@ -24,7 +24,7 @@ import ds.upgrade.util.Constants;
  */
 public class MaterialDailyReportSpecification implements Specification<MaterialDailyReport> {
   
-  private Long storeId;
+  private String storeName;
   private Long materialId;
   private Date startDate;
   private Date endDate;
@@ -32,8 +32,8 @@ public class MaterialDailyReportSpecification implements Specification<MaterialD
   public MaterialDailyReportSpecification() {
   }
 
-  public MaterialDailyReportSpecification(Long storeId, Long materialId, Date startDate, Date endDate) {
-    this.storeId = storeId;
+  public MaterialDailyReportSpecification(String storeName, Long materialId, Date startDate, Date endDate) {
+    this.storeName = storeName;
     this.materialId = materialId;
     this.startDate = startDate;
     this.endDate = endDate;
@@ -53,9 +53,9 @@ public class MaterialDailyReportSpecification implements Specification<MaterialD
   @Override
   public Predicate toPredicate(Root<MaterialDailyReport> root, CriteriaQuery<?> arg1, CriteriaBuilder cb) {
     Predicate predicate = cb.conjunction();
-    if (storeId != null) {
+    if (storeName != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+          root.<String>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.NAME_PARAM), storeName));
     }
     if (materialId != null) {
       predicate = cb.and(predicate, cb.equal(

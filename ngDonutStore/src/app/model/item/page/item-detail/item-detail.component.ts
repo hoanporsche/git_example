@@ -52,7 +52,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   validateName() {
     const oldName = this.oldItem.name;
-    if (this.name.value.trim() !== '') {
+    if (this.name.value && this.name.value.trim() !== '') {
       this.itemService.findByName(this.name.value.trim())
         .subscribe(response => {
           if (response && response.name != oldName)
@@ -63,13 +63,12 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
-    console.log(this.formItem.value);
     if (this.formItem.valid) {
       const item = {
         id: this.oldItem.id,
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
-        singleValue: this.singleValue.value.trim(),
+        singleValue: this.singleValue.value.toString().trim(),
         categoryId: this.categoryId.value,
         materials: this.materials.value,
       }
@@ -77,6 +76,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         .subscribe(response => {
           if (response.name === this.name.value.trim()) {
             this.submitted.emit('success');
+            this.formItem.reset();
           }
         }, error => {
           this.submitted.emit('fail');
@@ -84,9 +84,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangeItem() {
-    this.materials.setValue(this.itemService.getItem().materials);
-    this.categoryId.setValue(this.itemService.getItem().categoryId);
+  onCancel() {
+    this.formItem.reset();
   }
 
   get name() {

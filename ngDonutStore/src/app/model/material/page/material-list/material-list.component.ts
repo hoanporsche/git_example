@@ -140,7 +140,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_material').modal({ show: true, backdrop: 'static' });
   }
 
   materialSubmitted(event) {
@@ -149,7 +149,7 @@ export class MaterialListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_material').modal('toggle');
     }
   }
 
@@ -159,14 +159,14 @@ export class MaterialListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_material').modal('toggle');
     }
   }
 
   onDetail(material) {
     this.oldMaterial = material;
     this.materialService.setMaterial(JSON.parse(JSON.stringify(material)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_material').modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: MaterialDailyReportComponent,
     children: [
-      { path: 'detail', component: MaterialDailyReportDetailComponent},
+      { path: 'detail/:storeName/:dateCreated', component: MaterialDailyReportDetailComponent},
       { path: 'create', component: MaterialDailyReportCreateComponent},
       { path: '', component: MaterialDailyReportListComponent},
     ]

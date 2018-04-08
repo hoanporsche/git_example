@@ -1,3 +1,4 @@
+import { IdentityService } from './../../../../core/services/identity.service';
 import { WorkingCalenderService } from './../../../working-calender/service/working-calender.service';
 import { WorkingCalender } from './../../../working-calender/working-calender';
 import { StoreService } from './../../../store/service/store.service';
@@ -6,7 +7,6 @@ import { Staff } from '../../staff';
 import { CONFIG } from '../../../../shared/constants/configuration.constant';
 import { Subscription } from 'rxjs/Subscription';
 import { StaffService } from '../../service/staff.service';
-import { NavigationService } from '../../../../core/services/navigation.service';
 import { SortService } from '../../../../core/services/sort.service';
 import { sortByProperty } from '../../../../shared/helpers/data.helper';
 import { Store } from '../../../store/store';
@@ -23,6 +23,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
   oldStaff: Staff;
   listStore: Store[];
   listWorkingCalender: WorkingCalender[];
+  isAdmin = false;
 
   requestPage;
   notFoundMessage = '';
@@ -56,8 +57,8 @@ export class StaffListComponent implements OnInit, OnDestroy {
   constructor(private storeService: StoreService,
     private workingCalenderService: WorkingCalenderService,
     private staffService: StaffService,
-    private navigationService: NavigationService,
-    private sortService: SortService
+    private identityService: IdentityService,
+    private sortService: SortService,
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
@@ -73,7 +74,8 @@ export class StaffListComponent implements OnInit, OnDestroy {
     this.subListWorkingCalender = this.workingCalenderService.findAll()
       .subscribe(response => {
         this.listWorkingCalender = response;
-      })
+      });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnDestroy(): void {
@@ -105,9 +107,9 @@ export class StaffListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 
@@ -153,7 +155,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({ show: true, backdrop: 'static' });
+    $('#modal_add_staff').modal({ show: true, backdrop: 'static' });
   }
 
   staffSubmitted(event) {
@@ -162,7 +164,7 @@ export class StaffListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_staff').modal('toggle');
     }
   }
 
@@ -172,14 +174,14 @@ export class StaffListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_staff').modal('toggle');
     }
   }
 
   onDetail(staff) {
     this.oldStaff = staff;
     this.staffService.setStaff(JSON.parse(JSON.stringify(staff)));
-    $('#modal_update').appendTo("body").modal('show');
+    $('#modal_update_staff').modal({ show: true, backdrop: 'static' });
   }
 
   onEnabledOrNot(id) {

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Timekeeping;
+import ds.upgrade.model.User;
 import ds.upgrade.service.TimekeepingService;
+import ds.upgrade.service.UserService;
 import ds.upgrade.util.Constants;
 
 /**
@@ -35,6 +38,8 @@ public class TimekeepingRestController {
 
   @Autowired
   private TimekeepingService timekeepingService;
+  @Autowired
+  private UserService userService;
 
   /**
    * @description: /find-all.
@@ -96,6 +101,7 @@ public class TimekeepingRestController {
    * @param pageable
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(
       @RequestParam(value = Constants.PARAM.STATUS_ID_PARAM, required = false) String statusId,
@@ -104,13 +110,18 @@ public class TimekeepingRestController {
       @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
       Pageable pageable) {
-    System.out.println(startDate);
-    System.out.println(endDate);
     try {
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
+      User user = userService.findInfoUser();
+      Long newStoreId;
+      //Admin can overwatch all orders and Store have just overwatch all orders belong to their store.
+      if (userService.isStore(user.getRoles())) {
+        newStoreId = user.getStoreId().getId();
+      } else {
+        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      }
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
       Long newStaffId = (StringUtils.isEmpty(staffId)) ? null : Long.parseLong(staffId);
-      Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
       

@@ -82,9 +82,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 
@@ -130,7 +130,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    $('#modal_add').appendTo("body").modal({show: true, backdrop: 'static'});
+    $('#modal_add_category').modal({show: true, backdrop: 'static'});
   }
 
   categorySubmitted(event) {
@@ -139,7 +139,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_add').modal('toggle');
+      $('#modal_add_category').modal('toggle');
     }
   }
 
@@ -149,14 +149,14 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       // reload request list
       this.findList();
       // close modal
-      $('#modal_update').modal('toggle');
+      $('#modal_update_category').modal('toggle');
     }
   }
 
   onDetail(category) {
     this.oldCategory = category;
     this.categoryService.setCategory(JSON.parse(JSON.stringify(category)));
-    $('#modal_update').appendTo("body").modal('show');  
+    $('#modal_update_category').modal('show');  
   }
 
   onEnabledOrNot(id) {

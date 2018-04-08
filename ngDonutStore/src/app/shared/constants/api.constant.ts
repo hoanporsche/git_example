@@ -1,6 +1,7 @@
 export const API_URL = Object.freeze({
     LOGIN: '/oauth/token',
-    RESET_PASSWORD: '/user/reset-password',
+    RESET_PASSWORD: '/reset-password',
+    CHANGE_PASSWORD: '/change-password',
     FIND_ALL: '/find-all',
     FIND_ONE: '/find-one',
     FIND_LIST: '/find-list',
@@ -8,6 +9,8 @@ export const API_URL = Object.freeze({
     SAVE: '/save',
     ENABLED_OR_NOT: '/enabled-or-not',
     FIND_BY_IDENTITY_CARD: '/find-by-identity-card',
+    FIND_BY_EMAIL: '/find-by-email',
+    FIND_DAILY_REPORT: '/find-daily-report',
 });
 
 export const MODEL_URL= Object.freeze({

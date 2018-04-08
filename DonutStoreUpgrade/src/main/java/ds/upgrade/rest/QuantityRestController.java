@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Quantity;
+import ds.upgrade.model.User;
 import ds.upgrade.service.QuantityService;
+import ds.upgrade.service.UserService;
 import ds.upgrade.util.Constants;
 
 /**
@@ -34,6 +37,8 @@ public class QuantityRestController {
 
   @Autowired
   private QuantityService quantityService;
+  @Autowired
+  private UserService userService;
 
   /**
    * @description: /find-list.
@@ -43,6 +48,7 @@ public class QuantityRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
       @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
@@ -51,8 +57,15 @@ public class QuantityRestController {
       @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
       @RequestParam(value = Constants.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
     try {
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT);
-      Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      User user = userService.findInfoUser();
+      Long newStoreId;
+      //Admin can overwatch all quantites and Store have just overwatch all quantities belong to their store.
+      if (userService.isStore(user.getRoles())) {
+        newStoreId = user.getStoreId().getId();
+      } else {
+        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+      }
+      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
       Long newItemId = (StringUtils.isEmpty(itemId)) ? null : Long.parseLong(itemId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -82,6 +95,7 @@ public class QuantityRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(Constants.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {

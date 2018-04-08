@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
   `name` VARCHAR(255) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `enabled` BIT NOT NULL,
+  `enabled` BOOLEAN NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC)
   )
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`supply` (
   `address` VARCHAR(255) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `enabled` BIT NOT NULL,
+  `enabled` BOOLEAN NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC)
 )ENGINE = InnoDB
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `address` VARCHAR(255) NOT NULL,
  `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- `enabled` BIT NOT NULL,
+ `enabled` BOOLEAN NOT NULL,
  PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `phone` VARCHAR(18) NULL DEFAULT NULL,
   `store_id` BIGINT NOT NULL,
   `status_id` BIGINT NOT NULL,
-  `is_shipping` BIT NOT NULL,
+  `is_shipping` BOOLEAN NOT NULL,
   `address_shipping` VARCHAR(255) NULL DEFAULT NULL,
   `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `total_price` DECIMAL(10,0) NOT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `home_town` VARCHAR(45) NOT NULL,
   `salary` decimal(10,0) not null,
   `working_calender_id` BIGINT NOT NULL,
-  `enabled` BIT NOT NULL,
+  `enabled` BOOLEAN NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`store_id`)
   REFERENCES `donutstore`.`store` (`id`),
@@ -238,18 +238,14 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(60) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
-  `phone` VARCHAR(20) NULL DEFAULT NULL,
-  `address` VARCHAR(255) NULL DEFAULT NULL,
+  `password` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_order_time` TIMESTAMP NULL DEFAULT NULL,
-  `enabled` BIT not null,
-  `credentialsexpired` BIT not null,
-  `expired` BIT not null,
-  `locked` BIT not null,
+  `enabled` BOOLEAN not null,
+  `credentialsexpired` BOOLEAN not null,
+  `expired` BOOLEAN not null,
+  `locked` BOOLEAN not null,
   `store_id` BIGINT,
   PRIMARY KEY (`id`),
   FOREIGN KEY(`store_id`) references `donutstore`.`store`(`id`))
@@ -281,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (
     `material_id` BIGINT NOT NULL,
     `material_remain` INT NOT NULL,
     `material_import` INT NOT NULL,
-    `description` VARCHAR(1000) NOT NULL,
+    `description` VARCHAR(1000) ,
     PRIMARY KEY(`id`),
     FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`),
     FOREIGN KEY (`material_id`) REFERENCES `donutstore`.`material`(`id`))

@@ -24,6 +24,7 @@ export class StaffCreateComponent implements OnInit, OnDestroy {
 
   @Input() listStore: Store[];
   @Input() listWorkingCalender: WorkingCalender[];
+  @Input() isAdmin: boolean;
 
   formStaff: FormGroup;
 
@@ -36,7 +37,7 @@ export class StaffCreateComponent implements OnInit, OnDestroy {
     this.formStaff = fb.group({
       name: ['', [Validators.required, CommonValidator.notEmpty]],
       picture: ['', [Validators.required, CommonValidator.notEmpty]],
-      storeId: ['',[Validators.required]],
+      storeId: [''],
       phone: ['', [Validators.required, CommonValidator.notEmpty]],
       address: ['', [Validators.required, CommonValidator.notEmpty]],
       identityCard: ['', [Validators.required], [StaffValidator.shouldBeUnique(this.staffService)]],
@@ -54,7 +55,7 @@ export class StaffCreateComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (this.formStaff.valid) {
-      const staff = {
+      let staff = {
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
         storeId: this.storeId.value,
@@ -64,6 +65,9 @@ export class StaffCreateComponent implements OnInit, OnDestroy {
         homeTown: this.homeTown.value.trim(),
         salary: this.salary.value.toString().trim(),
         workingCalenderId: this.workingCalenderId.value
+      }
+      if(!this.isAdmin) {
+        staff.storeId = new Store();
       }
       this.subStaff = this.staffService.save(staff)
         .subscribe(response => {

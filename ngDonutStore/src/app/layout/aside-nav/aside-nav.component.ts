@@ -15,10 +15,6 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
   isAdmin = false;
   isStaff = false;
   isStore = false;
-  isDuLead = false;
-  isDuMember = false;
-  isHrManager = false;
-  isHrMember = false;
   constructor(
     private navigationService: NavigationService,
     private identityService: IdentityService
@@ -55,6 +51,9 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
   navMaterialDailyReportList() {
     this.navigationService.navMaterialDailyReportList();
   }
+  navMaterialDailyReportCreate() {
+    this.navigationService.navMaterialDailyReportCreate();
+  }
 
   navQuantityList() {
     this.navigationService.navQuantityList();
@@ -86,6 +85,9 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
 
   navTimekeepingList() {
     this.navigationService.navTimekeepingList();
+  }
+  navTimekeepingCreate() {
+    this.navigationService.navTimekeepingCreate();
   }
 
   navTimekeepingStatusList() {

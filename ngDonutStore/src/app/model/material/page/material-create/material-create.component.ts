@@ -46,12 +46,11 @@ export class MaterialCreateComponent implements OnInit, OnDestroy {
     this.formMaterial.reset();
   }
   onSubmit() {
-    console.log(this.supplyId.value)
     if (this.formMaterial.valid) {
       const material = {
         name: this.name.value.trim(),
         picture: this.picture.value.trim(),
-        singleValue: this.singleValue.value.trim(),
+        singleValue: this.singleValue.value.toString().trim(),
         supplyId: this.supplyId.value
       }
       this.subMaterial = this.materialService.save(material)

@@ -9,6 +9,7 @@ import { Quantity } from '../../quantity';
 import { CONFIG } from '../../../../shared/constants/configuration.constant';
 import { SortService } from '../../../../core/services/sort.service';
 import { sortByProperty } from '../../../../shared/helpers/data.helper';
+import { IdentityService } from '../../../../core/services/identity.service';
 
 @Component({
   selector: 'app-quantity-list',
@@ -26,6 +27,7 @@ export class QuantityListComponent implements OnInit, OnDestroy {
   private subListItem: Subscription;
   private subSortService: Subscription;
 
+  isAdmin = false;
   requestPage;
   notFoundMessage = '';
   error = {
@@ -55,11 +57,13 @@ export class QuantityListComponent implements OnInit, OnDestroy {
     private quantityService: QuantityService,
     private storeService: StoreService,
     private itemService: ItemService,
-    private sortService: SortService
+    private sortService: SortService,
+    private identityService: IdentityService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
     });
+    this.isAdmin = this.identityService.isAdmin();
   }
 
   ngOnInit() {
@@ -101,9 +105,9 @@ export class QuantityListComponent implements OnInit, OnDestroy {
           this.notFoundMessage = "";
         }
         this.requestPage = response;
-      }, (error: Error) => {
+      }, error => {
         this.error.isError = true;
-        this.error.message = error.message;
+        this.error.message = error.error;
       })
   }
 
