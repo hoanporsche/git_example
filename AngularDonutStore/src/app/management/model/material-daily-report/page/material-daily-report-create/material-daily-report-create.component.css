@@ -1,0 +1,9 @@
+.form-report {
+    margin: 2%;
+}
+.i-border {
+    border: 1px solid blue;
+}
+.i-error {
+    color: red;
+}
