@@ -86,6 +86,9 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
   navTimekeepingList() {
     this.navigationService.navTimekeepingList();
   }
+  navTimekeepingCreate() {
+    this.navigationService.navTimekeepingCreate();
+  }
 
   navTimekeepingStatusList() {
     this.navigationService.navTimekeepingStatusList();

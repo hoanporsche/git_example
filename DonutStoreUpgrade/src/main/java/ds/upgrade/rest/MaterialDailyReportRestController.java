@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -54,6 +55,7 @@ public class MaterialDailyReportRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
       @RequestParam(value = Constants.PARAM.NAME_PARAM, required = false) String storeName,
@@ -115,6 +117,7 @@ public class MaterialDailyReportRestController {
    * @param dateCreated
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(Constants.API_URL.FIND_DAILY_REPORT)
   public ResponseEntity<?> findDailyReport(
       @RequestParam(value = Constants.PARAM.NAME_PARAM, required = false) String storeName,
@@ -153,6 +156,7 @@ public class MaterialDailyReportRestController {
    * @param result
    * @return
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @PostMapping(Constants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(
       @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result,

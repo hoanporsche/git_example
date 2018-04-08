@@ -59,7 +59,8 @@ export class TimekeepingListComponent implements OnInit, OnDestroy {
     private staffService: StaffService,
     private timekeepingStatusService: TimekeepingStatusService,
     private sortService: SortService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    private navigationService: NavigationService
   ) {
     this.subSortService = this.sortService.columnSorted$.subscribe(colName => {
       this.sort(colName);
@@ -161,6 +162,10 @@ export class TimekeepingListComponent implements OnInit, OnDestroy {
 
   onDetail(id) {
 
+  }
+
+  navTimekeepingCreate() {
+    this.navigationService.navTimekeepingCreate();
   }
 
 }

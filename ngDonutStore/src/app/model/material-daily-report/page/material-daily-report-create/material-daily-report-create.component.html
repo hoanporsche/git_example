@@ -134,7 +134,7 @@
         <div class="m-form__actions m-form__actions">
           <div class="row">
             <div class="col-lg-9 ml-lg-auto">
-              <button type="button" (click)="onSubmit()" class="btn btn-primary" >
+              <button type="button" (click)="onSubmit()" [disabled]="formReports.invalid" class="btn btn-primary" >
                 Submit
               </button>
               <button type="reset" class="btn btn-secondary">

@@ -123,6 +123,9 @@ export class NavigationService {
   navTimekeepingList() {
     this.router.navigateByUrl(this.getRoleSegment() + '/timekeeping');
   }
+  navTimekeepingCreate() {
+    this.router.navigateByUrl(this.getRoleSegment() + '/timekeeping/create');
+  }
 
   //timekeeping-status
   navTimekeepingStatusList() {

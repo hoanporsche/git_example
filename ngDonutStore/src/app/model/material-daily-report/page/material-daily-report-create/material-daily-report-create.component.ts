@@ -18,7 +18,6 @@ import { Material } from '../../../material/material';
 })
 export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
 
-
   listStore: Store[];
   listMaterial: Material[];
   listMaterialDailyReport: MaterialDailyReport[];
@@ -36,7 +35,7 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   private subOnSubmit: Subscription;
 
   formReports: FormGroup;
-  reportsFormArray: FormArray;
+  formArrayReports: FormArray;
 
   constructor(private materialDailyReportService: MaterialDailyReportService,
     private storeService: StoreService,
@@ -63,6 +62,8 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.listMaterial = response;
+
+        //if listMaterial is existed, we create form
         if (this.listMaterial && this.listMaterial.length > 0) {
           this.createFormReports(this.listMaterial);
           if (!this.isAdmin) {
@@ -81,25 +82,25 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.error.isError = false;
         this.listMaterialDailyReport = response;
-        this.reportsFormArray = this.reports as FormArray;
+        this.formArrayReports = this.reports as FormArray;
 
         //this acction is setting up inital value, that serve for updating report action, will allow any role
         if (this.listMaterialDailyReport && this.listMaterialDailyReport.length > 0) {
-          for (let i = 0; i < this.reportsFormArray.length; i++) {
-            this.reportsFormArray.controls[i].get('id').setValue(response[i].id);
-            this.reportsFormArray.controls[i].get('materialId').setValue(response[i].materialId);
-            this.reportsFormArray.controls[i].get('materialRemain').setValue(response[i].materialRemain);
-            this.reportsFormArray.controls[i].get('materialImport').setValue(response[i].materialImport);
-            this.reportsFormArray.controls[i].get('description').setValue(response[i].description);
+          for (let i = 0; i < this.formArrayReports.length; i++) {
+            this.formArrayReports.controls[i].get('id').setValue(response[i].id);
+            this.formArrayReports.controls[i].get('materialId').setValue(response[i].materialId);
+            this.formArrayReports.controls[i].get('materialRemain').setValue(response[i].materialRemain);
+            this.formArrayReports.controls[i].get('materialImport').setValue(response[i].materialImport);
+            this.formArrayReports.controls[i].get('description').setValue(response[i].description);
           }
         }
 
         //this action will use for only admin role, that serve for creating report action when not found any report.
         if (this.isAdmin && !this.listMaterialDailyReport) {
           for (let i = 0; i < this.listMaterial.length; i++) {
-            this.reportsFormArray.controls[i].get('id').setValue('');
-            this.reportsFormArray.controls[i].get('materialId').setValue(this.listMaterial[i]);
-            this.reportsFormArray.controls[i].get('description').setValue('');
+            this.formArrayReports.controls[i].get('id').setValue('');
+            this.formArrayReports.controls[i].get('materialId').setValue(this.listMaterial[i]);
+            this.formArrayReports.controls[i].get('description').setValue('');
           }
         }
       }, error => {
@@ -124,8 +125,8 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   }
 
   addRowToForm(material: Material) {
-    this.reportsFormArray = this.formReports.get('reports') as FormArray;
-    this.reportsFormArray.push(this.addSingleRowReport(material));
+    this.formArrayReports = this.formReports.get('reports') as FormArray;
+    this.formArrayReports.push(this.addSingleRowReport(material));
   }
 
   createFormReports(material: Material[]) {
@@ -135,7 +136,7 @@ export class MaterialDailyReportCreateComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log("form", this.formReports.value);
+    // console.log("form", this.formReports.value);
     if (this.formReports.valid) {
       const listReport = this.formReports.get('reports').value;
       this.subOnSubmit = this.materialDailyReportService.save(listReport, this.storeName)
