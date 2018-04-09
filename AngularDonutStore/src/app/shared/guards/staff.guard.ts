@@ -15,7 +15,7 @@ export class StaffGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.identityService.isStaff()) {
+    if (this.identityService.isStaff() || this.identityService.isAdmin()) {
       return true;
     } else {
       this.navigationService.navErrorUnauthorized();

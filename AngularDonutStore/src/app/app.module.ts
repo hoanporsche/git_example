@@ -35,13 +35,7 @@ import { AuthGuard } from './auth/guards';
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
-    ScriptLoaderService,
-    AdminGuard,
-    StoreGuard,
-    StaffGuard,
     AuthGuard,
-    NavigationService,
-    IdentityService,
   ],
   bootstrap: [AppComponent]
 })
