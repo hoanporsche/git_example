@@ -1,3 +1,165 @@
-<p>
-  home-main works!
-</p>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="./assets/img/donut-store/BR1.jpg" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="./assets/img/donut-store/BR2.jpg" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="./assets/img/donut-store/BR3.jpg" alt="Third slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="./assets/img/donut-store/BR4.jpg" alt="Fourth slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="./assets/img/donut-store/BR5.jpg" alt="Fifth slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="container-fluid" style="margin-top:1%;">
+  <div class="col-md-10 col-md-offset-1" style="background:white;">
+    <div class="col-md-7">
+
+    </div>
+    <div class="col-md-5">
+      <div class="panel" id="show_ggmaps">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row" style="margin-top:1%;">
+    <!-- <div class="panel panel-warning">
+      <h2 align="center">
+        <b>
+          <span class="label label-warning">BĂ¡nh rĂ¡n</span>
+        </b>
+      </h2>
+      <div class="row product-info" align="center">
+        <div class="col-md-4">
+          <img alt="" src="images/BR7.JPG" style="width:80%;" />
+        </div>
+        <div class="col-md-8">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <div class="panel-title">BĂ¡nh rĂ¡n máº·n</div>
+            </div>
+            <div class="panel-body"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row product-info" align="center">
+        <div class="col-md-4">
+          <img alt="" src="images/BR8.jpg" style="height:20%;width:80%;" />
+        </div>
+        <div class="col-md-8">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <div class="panel-title">BĂ¡nh rĂ¡n ngá»�t</div>
+            </div>
+            <div class="panel-body"></div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  <div class="card" *ngFor="let category of listCategory">
+      <h5 class="card-header">{{ category?.name}}</h5>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h5 class="card-header">Featured</h5>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+  <!-- <div class="row">
+    <div class="panel panel-info">
+      <h2 align="center">
+        <b>
+          <span class="label label-info">BĂ¡nh mĂ¬</span>
+        </b>
+      </h2>
+      <div class="row product-info">
+        <div class="col-md-4" align="center">
+          <img alt="" src="images/BM1.jpg" style="height:20%;width:80%;" />
+          <h3>
+            <b>BĂ¡nh mĂ¬ pate trá»©ng</b>
+          </h3>
+          <p>12.000Ä‘</p>
+        </div>
+        <div class="col-md-4" align="center">
+          <img alt="" src="images/BM2.jpg" style="height:20%;width:80%;" />
+          <h3>
+            <b>BĂ¡nh mĂ¬ pate trá»©ng xĂºc xĂ­ch</b>
+          </h3>
+          <p>15.000Ä‘</p>
+        </div>
+        <div class="col-md-4" align="center">
+          <img alt="" src="images/BM3.jpg" style="height:20%;width:80%;" />
+          <h3>
+            <b>BĂ¡nh mĂ¬ pate trá»©ng xĂºc xĂ­ch</b>
+          </h3>
+          <p>18.000Ä‘</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="panel panel-success">
+      <h2 align="center">
+        <b>
+          <span class="label label-success">Ä�á»“ uá»‘ng</span>
+        </b>
+      </h2>
+      <div class="row product-info">
+        <div class="col-md-4" align="center">
+          <img alt="" src="images/COCA.jpg" style="height:20%;width:80%;" />
+          <h3>
+            <b>Coca cola</b>
+          </h3>
+          <p>10.000Ä‘</p>
+        </div>
+        <div class="col-md-4" align="center">
+          <img alt="" src="images/TRADA.jpg" style="height:20%;width:80%;" />
+          <h3>
+            <b>TrĂ  Ä‘Ă¡</b>
+          </h3>
+          <p>3.000Ä‘</p>
+        </div>
+        <div class="col-md-4" align="center">
+          <img alt="" src="images/MIRINDA.jpg" style="height:20%;width:80%;" />
+          <h3>
+            <b>Mirrinda</b>
+          </h3>
+          <p>10.000Ä‘</p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

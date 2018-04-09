@@ -9,12 +9,12 @@ import { User } from '../user';
 @Injectable()
 export class UserService extends BaseService {
 
-  private findListUrl = environment.baseUrl + MODEL_URL.USER + API_URL.FIND_LIST;
-  private saveUrl = environment.baseUrl + MODEL_URL.USER + API_URL.SAVE;
-  private findByEmailUrl = environment.baseUrl + MODEL_URL.USER + API_URL.FIND_BY_EMAIL;
-  private enabledOrNotUrl = environment.baseUrl + MODEL_URL.USER + API_URL.ENABLED_OR_NOT;
-  private resetPasswordUrl = environment.baseUrl + MODEL_URL.USER + API_URL.RESET_PASSWORD;
-  private changePasswordUrl = environment.baseUrl + MODEL_URL.USER + API_URL.CHANGE_PASSWORD;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.FIND_LIST;
+  private saveUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.SAVE;
+  private findByEmailUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.FIND_BY_EMAIL;
+  private enabledOrNotUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.ENABLED_OR_NOT;
+  private resetPasswordUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.RESET_PASSWORD;
+  private changePasswordUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.CHANGE_PASSWORD;
 
   private user = new User();
 

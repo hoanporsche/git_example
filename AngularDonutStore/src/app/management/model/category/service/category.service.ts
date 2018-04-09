@@ -8,11 +8,11 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CategoryService extends BaseService {
-  private findAllUrl = environment.baseUrl + MODEL_URL.CATEGORY + API_URL.FIND_ALL;
-  private findListUrl = environment.baseUrl + MODEL_URL.CATEGORY + API_URL.FIND_LIST;
-  private findByNameUrl = environment.baseUrl + MODEL_URL.CATEGORY + API_URL.FIND_BY_NAME;
-  private saveUrl = environment.baseUrl + MODEL_URL.CATEGORY + API_URL.SAVE;
-  private enabledOrNotUrl = environment.baseUrl + MODEL_URL.CATEGORY + API_URL.ENABLED_OR_NOT;
+  private findAllUrl =  environment.baseUrl + API_URL.API + MODEL_URL.CATEGORY + API_URL.FIND_ALL;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.CATEGORY + API_URL.FIND_LIST;
+  private findByNameUrl = environment.baseUrl + API_URL.API + MODEL_URL.CATEGORY + API_URL.FIND_BY_NAME;
+  private saveUrl = environment.baseUrl + API_URL.API + MODEL_URL.CATEGORY + API_URL.SAVE;
+  private enabledOrNotUrl = environment.baseUrl + API_URL.API + MODEL_URL.CATEGORY + API_URL.ENABLED_OR_NOT;
 
   private category = new Category();
 

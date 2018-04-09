@@ -9,11 +9,11 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class TimekeepingStatusService extends BaseService {
 
-  private findAllUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING_STATUS + API_URL.FIND_ALL;
-  private findListUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING_STATUS + API_URL.FIND_LIST;
-  private saveUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING_STATUS + API_URL.SAVE;
-  private findByNameUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING_STATUS + API_URL.FIND_BY_NAME;
-  private enabledOrNotUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING_STATUS + API_URL.ENABLED_OR_NOT;
+  private findAllUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING_STATUS + API_URL.FIND_ALL;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING_STATUS + API_URL.FIND_LIST;
+  private saveUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING_STATUS + API_URL.SAVE;
+  private findByNameUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING_STATUS + API_URL.FIND_BY_NAME;
+  private enabledOrNotUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING_STATUS + API_URL.ENABLED_OR_NOT;
 
   private timekeepingStatus = new TimekeepingStatus();
 

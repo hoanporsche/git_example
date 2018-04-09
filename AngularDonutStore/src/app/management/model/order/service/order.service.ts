@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class OrderService extends BaseService {
 
-  private findListUrl = environment.baseUrl + MODEL_URL.ORDER + API_URL.FIND_LIST;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.ORDER + API_URL.FIND_LIST;
 
   constructor(httpClient: HttpClient) { 
     super(httpClient);

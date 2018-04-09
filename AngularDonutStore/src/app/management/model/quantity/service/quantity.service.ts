@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class QuantityService extends BaseService {
 
-  private findListUrl = environment.baseUrl + MODEL_URL.QUANTITY + API_URL.FIND_LIST;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.QUANTITY + API_URL.FIND_LIST;
 
   constructor(httpClient: HttpClient) { 
     super(httpClient);

@@ -11,7 +11,7 @@ import { HomeComponent } from './home.component';
   imports: [
     SharedModule,
     HomeRoutingModule,
-    NgbModule
+    NgbModule,
   ],
   declarations: [
     HomeComponent,

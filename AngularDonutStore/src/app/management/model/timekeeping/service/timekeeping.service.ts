@@ -9,9 +9,9 @@ import { MODEL_URL, API_URL } from '../../../../shared/constants/api.constant';
 @Injectable()
 export class TimekeepingService extends BaseService {
 
-  private findListUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING + API_URL.FIND_LIST;
-  private findDailyReportUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING + API_URL.FIND_DAILY_REPORT;
-  private saveUrl = environment.baseUrl + MODEL_URL.TIMEKEEPING + API_URL.SAVE;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING + API_URL.FIND_LIST;
+  private findDailyReportUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING + API_URL.FIND_DAILY_REPORT;
+  private saveUrl = environment.baseUrl + API_URL.API + MODEL_URL.TIMEKEEPING + API_URL.SAVE;
 
   constructor(httpClient: HttpClient) { 
     super(httpClient);

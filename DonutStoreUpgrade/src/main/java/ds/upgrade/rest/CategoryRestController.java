@@ -46,6 +46,7 @@ public class CategoryRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("permitAll()")
   @GetMapping(Constants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {

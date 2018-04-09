@@ -9,9 +9,9 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class MaterialDailyReportService extends BaseService {
 
-  private findListUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_LIST;
-  private findDailyReportUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_DAILY_REPORT;
-  private saveUrl = environment.baseUrl + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.SAVE;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_LIST;
+  private findDailyReportUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.FIND_DAILY_REPORT;
+  private saveUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL_DAILY_REPORT + API_URL.SAVE;
 
   constructor(httpClient: HttpClient) { 
     super(httpClient);

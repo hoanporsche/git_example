@@ -8,11 +8,11 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MaterialService extends BaseService {
-  private findAllUrl = environment.baseUrl + MODEL_URL.MATERIAL + API_URL.FIND_ALL;
-  private findListUrl = environment.baseUrl + MODEL_URL.MATERIAL + API_URL.FIND_LIST;
-  private saveUrl = environment.baseUrl + MODEL_URL.MATERIAL + API_URL.SAVE;
-  private findByNameUrl = environment.baseUrl + MODEL_URL.MATERIAL + API_URL.FIND_BY_NAME;
-  private enabledOrNotUrl = environment.baseUrl + MODEL_URL.MATERIAL + API_URL.ENABLED_OR_NOT;
+  private findAllUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL + API_URL.FIND_ALL;
+  private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL + API_URL.FIND_LIST;
+  private saveUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL + API_URL.SAVE;
+  private findByNameUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL + API_URL.FIND_BY_NAME;
+  private enabledOrNotUrl = environment.baseUrl + API_URL.API + MODEL_URL.MATERIAL + API_URL.ENABLED_OR_NOT;
 
   private material = new Material();
 

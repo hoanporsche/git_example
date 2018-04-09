@@ -1,4 +1,5 @@
 export const API_URL = Object.freeze({
+    API: '/api',
     LOGIN: '/oauth/token',
     RESET_PASSWORD: '/reset-password',
     CHANGE_PASSWORD: '/change-password',
