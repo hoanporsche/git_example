@@ -17,4 +17,19 @@ export class HeaderMainComponent implements OnInit {
     this.navigationService.navLogin();
   }
 
+  navHome() {
+    this.navigationService.navHome();
+  }
+
+  navOrder() {
+    this.navigationService.navOrder();
+  }
+
+  navContact() {
+    this.navigationService.navContact();
+  }
+  
+  navDetail() {
+    this.navigationService.navDetail();
+  }
 }

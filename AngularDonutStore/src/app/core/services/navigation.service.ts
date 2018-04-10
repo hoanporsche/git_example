@@ -23,6 +23,19 @@ export class NavigationService {
     }
   }
 
+  navHome() {
+    this.router.navigateByUrl("/");
+  }
+  navOrder() {
+    this.router.navigateByUrl("/order");
+  }
+  navContact() {
+    this.router.navigateByUrl("/contact");
+  }
+  navDetail() {
+    this.router.navigateByUrl("/detail");
+  }
+
   navLogin() {
     this.router.navigateByUrl('/auth/login');
   }

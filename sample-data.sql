@@ -6,14 +6,14 @@ INSERT INTO `donutstore`.`category` VALUES
 (3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
-(1,'Bánh rán mặn', 'https://photos.google.com/photo/AF1QipPVNjHJuYf8JJ0tDy1r0t2BrIt12K8PQdxNbno','1','2018-01-02', '2018-02-03','3000', b'1',''),
-(2,'Bánh rán ngọt', 'https://photos.google.com/photo/AF1QipN6C4PTn4ViZ2XtbY9ZqqXd3DDdHKcBndehrEo','1','2018-01-02', '2018-02-03','3000', b'1',''),
-(3,'Bánh mì pate trứng', 'https://photos.google.com/photo/AF1QipMn-51kzai-eV7_S79O3n1V96l8NJHpsuBrU6A','2','2018-01-02', '2018-02-03','12000', b'1',''),
-(4,'Bánh mì pate xúc xích', 'https://photos.google.com/photo/AF1QipMCZmlX4ifSz3BRnJ0qKVjf-iQAUfY_XW4txo8','2','2018-01-02', '2018-02-03','15000', b'1',''),
-(5,'Bánh mì pate trứng xúc xích', 'https://photos.google.com/photo/AF1QipMoO-fmt2wm-KP3kZMCXwFsXFRb989Bg0NeWlM','2','2018-01-02', '2018-02-03','18000', b'1',''),
-(6,'Trà đá', 'https://photos.google.com/photo/AF1QipPZpk1NjwKpGagINhLtGrw8XsBH5Qz9ffUYY68','3','2018-01-02', '2018-02-03','3000', b'1',''),
-(7,'Mirrinda', 'https://photos.google.com/photo/AF1QipNoMc3qsFE5eFC8-Q6KJm4GQkqleao5FU_NeUs','3','2018-01-02', '2018-02-03','10000', b'1',''),
-(8,'Coca', 'https://photos.google.com/photo/AF1QipMrIw9aPFxKDAh-oBH8fvYn2nekauBYMx6U5D0','3','2018-01-02', '2018-02-03','10000', b'1','');
+(1,'Bánh rán mặn', './assets/img/donut-store/BR7.jpg','1','2018-01-02', '2018-02-03','3000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
+(2,'Bánh rán ngọt', './assets/img/donut-store/BR8.jpg','1','2018-01-02', '2018-02-03','3000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
+(3,'Bánh mì pate trứng', './assets/img/donut-store/BM1.jpg','2','2018-01-02', '2018-02-03','12000', b'1','Bánh mì với nhân là pate, trứng chiên cùng các loại rau và sốt.'),
+(4,'Bánh mì pate xúc xích', './assets/img/donut-store/BM2.jpg','2','2018-01-02', '2018-02-03','15000', b'1','Bánh mì với nhân là pate, xúc xích rán cùng các loại rau và sốt.'),
+(5,'Bánh mì pate trứng xúc xích', './assets/img/donut-store/BM3.jpg','2','2018-01-02', '2018-02-03','18000', b'1','Bánh mì với nhân là pate, trứng chiên, xúc xích rán cùng các loại rau và sốt.'),
+(6,'Trà đá', './assets/img/donut-store/TRADA.jpg','3','2018-01-02', '2018-02-03','3000', b'1','Trà xanh ướp lạnh.'),
+(7,'Mirrinda', './assets/img/donut-store/MIRRINDA.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Mirrinda ướp lạnh'),
+(8,'Coca', './assets/img/donut-store/COCA.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Coca ướp lạnh');
 
 INSERT INTO `donutstore`.`supply` VALUES 
 ('1','Chị Lý','0988888888','C4 Giảng Võ', '2018-01-02', '2018-02-03', b'1'),

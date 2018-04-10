@@ -1,3 +1,4 @@
+import { Item } from './../item/item';
 
 export class Category {
   constructor(
@@ -6,5 +7,6 @@ export class Category {
     public dateCreated?: Date,
     public dateUpdated?: Date,
     public enabled?: boolean,
+    public items?: Item[],
   ) {}
 }
