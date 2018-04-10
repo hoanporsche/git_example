@@ -4,3 +4,7 @@
 	height:400px;
 	margin-top:10px;
 }
+.ds-main-img {
+	max-width:250%;
+	max-height: 250px;
+}

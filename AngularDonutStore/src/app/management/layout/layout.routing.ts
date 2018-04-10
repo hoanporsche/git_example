@@ -1,10 +1,10 @@
-import { LayoutComponent } from './layout.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MODEL_ROUTING } from '../../shared/constants/routing.constant';
-import { AdminGuard } from '../../shared/guards/admin.guard';
-import { StoreGuard } from '../../shared/guards/store.guard';
-import { StaffGuard } from '../../shared/guards/staff.guard';
+import { Routes, RouterModule } from "@angular/router";
+import { LayoutComponent } from "./layout.component";
+import { MODEL_ROUTING } from "../../shared/constants/routing.constant";
+import { AdminGuard } from "../../shared/guards/admin.guard";
+import { StaffGuard } from "../../shared/guards/staff.guard";
+import { StoreGuard } from "../../shared/guards/store.guard";
+import { NgModule } from "@angular/core";
 
 const routes: Routes = [
   {

@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `single_value` DECIMAL(10,0) NOT NULL,
   `enabled` boolean not null,
+  `description` VARCHAR(1000),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   FOREIGN KEY (`category_id`)

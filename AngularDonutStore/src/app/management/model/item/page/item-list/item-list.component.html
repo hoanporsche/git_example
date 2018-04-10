@@ -130,6 +130,7 @@
                       <th sortable-column="name">Name</th>
                       <th sortable-column="singleValue">Single Value</th>
                       <th sortable-column="picture">Picture</th>
+                      <th sortable-column="description">Description</th>
                       <th sortable-column="categoryId.name">Category</th>
                       <th>Material</th>
                       <th sortable-column="dateCreated">Date Created</th>
@@ -150,6 +151,9 @@
                       </td>
                       <td>
                         <img width="200" [src]="item?.picture" />
+                      </td>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ item?.description }}">{{ item?.description | summary: 50 }}</span>
                       </td>
                       <td>
                         <span placement="top" ngbTooltip="{{ item?.categoryId.name }}">{{ item?.categoryId.name | summary: 20 }}</span>

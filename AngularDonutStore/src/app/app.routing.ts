@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: './main/layout-main/layout-main.module#LayoutMainModule'
-  }
+  },
 ];
 
 @NgModule({

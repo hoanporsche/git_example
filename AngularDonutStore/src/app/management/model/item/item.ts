@@ -12,5 +12,6 @@ export class Item{
     public singleValue?: number,
     public enbled?: boolean,
     public materials?: Material[],
+    public description?: string,
   ) {}
 }

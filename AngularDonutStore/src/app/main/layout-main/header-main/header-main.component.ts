@@ -2,11 +2,11 @@ import { NavigationService } from './../../../core/services/navigation.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'app-header-main',
+  templateUrl: './header-main.component.html',
+  styleUrls: ['./header-main.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderMainComponent implements OnInit {
 
   constructor(private navigationService: NavigationService) { }
 

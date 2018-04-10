@@ -38,6 +38,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       singleValue: ['', [Validators.required, CommonValidator.notEmpty]],
       categoryId: ['', [Validators.required]],
       materials: [''],
+      description: ['', [Validators.required]],
     });
     this.materials.setValue(this.itemService.getItem().materials);
   }
@@ -71,6 +72,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         singleValue: this.singleValue.value.toString().trim(),
         categoryId: this.categoryId.value,
         materials: this.materials.value,
+        description: this.description.value,
       }
       this.subItem = this.itemService.save(item)
         .subscribe(response => {
@@ -106,5 +108,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   get materials() {
     return this.formItem.get('materials');
+  }
+
+  get description() {
+    return this.formItem.get('description');
   }
 }

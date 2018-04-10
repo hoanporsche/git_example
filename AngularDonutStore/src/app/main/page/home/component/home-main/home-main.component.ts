@@ -1,3 +1,4 @@
+import { MainService } from './../../../../layout-main/service-main/main-service.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ItemService } from './../../../../../management/model/item/service/item.service';
 import { CategoryService } from './../../../../../management/model/category/service/category.service';
@@ -18,17 +19,19 @@ export class HomeMainComponent implements OnInit, OnDestroy {
   private subListCategory: Subscription;
   private subListItem: Subscription;
 
-  constructor() { }
+  constructor(
+    private mainService: MainService
+  ) { }
 
   ngOnInit() {
-    // this.subListCategory = this.categoryService.findAll()
-    //   .subscribe(response => {
-    //     this.listCategory = response;
-    //   });
-    // this.subListItem = this.itemService.findAll()
-    //   .subscribe(response => {
-    //     this.listItem = response;
-    //   });
+    this.subListCategory = this.mainService.findAllCategory()
+      .subscribe(response => {
+        this.listCategory = response;
+      });
+    this.subListItem = this.mainService.findAllItem()
+      .subscribe(response => {
+        this.listItem = response;
+      });
   }
 
   ngOnDestroy(): void {

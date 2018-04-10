@@ -27,10 +27,27 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter item's picutre" [(ngModel)]="itemService.getItem().picture">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter item's picutre"
+          [(ngModel)]="itemService.getItem().picture">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
           <div *ngIf="picture.hasError('required')">
             Picture is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Description
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <textarea type="text" class="form-control m-input" formControlName="description" maxlength="1000" [(ngModel)]="itemService.getItem().description"
+          placeholder="Enter item's description"></textarea>
+        <div class="error-no-padding" *ngIf="description.touched && description.invalid">
+          <div *ngIf="description.hasError('required')">
+            Description is required.
           </div>
         </div>
       </div>
@@ -42,8 +59,8 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5"
-        OnlyNumber placeholder="Enter item's single value" [(ngModel)]="itemService.getItem().singleValue">
+        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5" OnlyNumber placeholder="Enter item's single value"
+          [(ngModel)]="itemService.getItem().singleValue">
         <div class="error-no-padding" *ngIf="singleValue.touched && singleValue.invalid">
           <div *ngIf="singleValue.hasError('required')">
             Single Value is required.
@@ -59,6 +76,7 @@
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
         <select class="form-control m-input" formControlName="categoryId" [(ngModel)]="itemService.getItem().categoryId">
+          <option value="">Select Category</option>
           <option *ngFor="let category of listCategory" [ngValue]="category" [selected]="category?.id === itemService.getItem().categoryId?.id">
             {{ category?.name }}
           </option>
@@ -78,7 +96,7 @@
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
         <select class="form-control m-input" formControlName="materials" multiple>
-          <option *ngFor="let material of listMaterial" [ngValue]="material" >
+          <option *ngFor="let material of listMaterial" [ngValue]="material">
             {{ material?.name }}
           </option>
         </select>

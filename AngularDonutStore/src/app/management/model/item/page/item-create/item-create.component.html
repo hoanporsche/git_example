@@ -41,11 +41,25 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5"
-        OnlyNumber placeholder="Enter item's single value">
+        <input type="text" class="form-control m-input" formControlName="singleValue" maxlength="5" OnlyNumber placeholder="Enter item's single value">
         <div class="error-no-padding" *ngIf="singleValue.touched && singleValue.invalid">
           <div *ngIf="singleValue.hasError('required')">
             Single Value is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Description
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <textarea type="text" class="form-control m-input" formControlName="description" maxlength="1000" placeholder="Enter item's description"></textarea>
+        <div class="error-no-padding" *ngIf="description.touched && description.invalid">
+          <div *ngIf="description.hasError('required')">
+            Description is required.
           </div>
         </div>
       </div>
@@ -58,6 +72,7 @@
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
         <select class="form-control m-input" formControlName="categoryId">
+          <option value="">Select Category</option>
           <option *ngFor="let category of listCategory" [ngValue]="category">
             {{ category?.name }}
           </option>
