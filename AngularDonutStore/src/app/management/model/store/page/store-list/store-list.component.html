@@ -111,6 +111,8 @@
                       <th sortable-column="picture">Picture</th>
                       <th sortable-column="phone">Phone</th>
                       <th sortable-column="address">Address</th>
+                      <th sortable-column="lat">Lat</th>
+                      <th sortable-column="lng">Lng</th>
                       <th sortable-column="dateCreated">Date Created</th>
                       <th sortable-column="dateUpdated">Date Updated</th>
                       <th sortable-column="enabled">Enabled</th>
@@ -137,6 +139,16 @@
                       <td>
                         <span placement="top" ngbTooltip="{{ store?.address }}">
                           {{ store?.address | summary: 20}}
+                        </span>
+                      </td>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ store?.lat }}">
+                          {{ store?.lat | summary: 10}}
+                        </span>
+                      </td>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ store?.lng }}">
+                          {{ store?.lng | summary: 10}}
                         </span>
                       </td>
                       <td>

@@ -44,6 +44,12 @@ public class Store implements Serializable {
   @Size(max = 255)
   @Column(name = "address", nullable = false)
   private String address;
+  @Size(max = 20)
+  @Column(name = "lat")
+  private String lat;
+  @Size(max = 20)
+  @Column(name = "lng")
+  private String lng;
 
   @Column(name = "date_created")
   private Date dateCreated;
@@ -111,6 +117,22 @@ public class Store implements Serializable {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public String getLat() {
+    return lat;
+  }
+
+  public void setLat(String lat) {
+    this.lat = lat;
+  }
+
+  public String getLng() {
+    return lng;
+  }
+
+  public void setLng(String lng) {
+    this.lng = lng;
   }
 
   public Date getDateCreated() {

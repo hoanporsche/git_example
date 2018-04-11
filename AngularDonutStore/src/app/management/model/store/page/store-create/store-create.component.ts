@@ -33,6 +33,8 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
       phone: ['', [Validators.required, CommonValidator.notEmpty]],
       picture: ['', [Validators.required, CommonValidator.notEmpty]],
       address: ['', [Validators.required, CommonValidator.notEmpty]],
+      lat: [''],
+      lng: [''],
     })
   }
 
@@ -48,7 +50,9 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
         name: this.name.value.trim(),
         phone: this.phone.value.trim(),
         picture: this.picture.value.trim(),
-        address: this.address.value.trim()
+        address: this.address.value.trim(),
+        lat: this.lat.value.trim(),
+        lng: this.lng.value.trim(),
       }
       this.subStore = this.storeService.save(store)
         .subscribe(response => {
@@ -76,6 +80,14 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
 
   get address() {
     return this.formStore.get('address');
+  }
+
+  get lat() {
+    return this.formStore.get('lat');
+  }
+
+  get lng() {
+    return this.formStore.get('lng');
   }
 
 }
