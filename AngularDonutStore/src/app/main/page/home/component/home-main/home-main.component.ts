@@ -1,11 +1,12 @@
 import { MainService } from './../../../../layout-main/service-main/main-service.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, OnDestroy, AfterViewInit, Inject, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Inject, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { Category } from '../../../../../management/model/category/category';
 import { Item } from '../../../../../management/model/item/item';
 import { ScriptLoaderService } from '../../../../../core/services/script-loader.service';
 import { } from '@types/googlemaps';
 import { Store } from '../../../../../management/model/store/store';
+import { MapsAPILoader } from '@agm/core';
 
 declare var $: any;
 @Component({
@@ -31,7 +32,9 @@ export class HomeMainComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private mainService: MainService,
     private _script: ScriptLoaderService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private mapsAPITLoader: MapsAPILoader,
+    private ngZone: NgZone
   ) {
     this.latlng = [];
    }

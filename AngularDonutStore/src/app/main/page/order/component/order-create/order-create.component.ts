@@ -2,9 +2,10 @@ import { Item } from './../../../../../management/model/item/item';
 import { MainService } from './../../../../layout-main/service-main/main-service.service';
 import { CommonValidator } from './../../../../../shared/custom-validator/common.validator';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Store } from '../../../../../management/model/store/store';
 import { Subscription } from 'rxjs/Subscription';
+import { } from '@types/googlemaps';
 
 @Component({
   selector: 'app-order-create',
@@ -22,6 +23,9 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   formArrayQuantites: FormArray;
 
   showFormShipping = false;
+
+  @ViewChild('gmap') gmapElement: any;
+  map: google.maps.Map;
 
   constructor(
     private mainService: MainService,
@@ -45,12 +49,13 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     this.subListStore = this.mainService.findAllStore()
       .subscribe(response => {
         this.listStore = response;
+        this.storeId.setValue(this.listStore[0].id);
+        this.showGgmaps();
       });
     this.subListItem = this.mainService.findAllItem()
       .subscribe(response => {
         this.listItem = response;
       });
-      this.showGgmaps();
   }
 
   showGgmaps() {
@@ -68,7 +73,69 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       //icon:"banhran.jpg", đây là icon cho marker
       title: store.name
     });
-    
+
+    //Bắt đầu sử dụng autocomple place
+
+    const newplace = <HTMLInputElement>this.addressShipping.value;
+    let autocomplete = new google.maps.places.Autocomplete(newplace);
+    autocomplete.bindTo('bounds', map);//gắn nó vào map
+
+    let directionsService = new google.maps.DirectionsService;
+    let directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(map);
+    let service = new google.maps.DistanceMatrixService;
+
+    autocomplete.addListener('place_changed',function(){
+      let place = autocomplete.getPlace();	
+      
+      if (!place.geometry) {
+        window.alert(place.name + " không tồn tại");
+        return;
+      }
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+      }
+      
+      let destinationPlaceId = place.place_id;
+      let destinationLocation = place.geometry.location;
+  
+      //Bắt đầu sử dụng Directions
+      // directionsService.route()
+      // directionsService.route({
+      //   origin : {'placeId': "ChIJK7dSb3GrNTERxFvb2QVeOw8"},
+      //   destination :{'placeId': destinationPlaceId},
+      //   travelMode : 'DRIVING'
+      //   }, function(response, status){
+      //     if (status === 'OK'){
+      //       directionsDisplay.setDirections(response);
+      //     } else {
+      //       window.alert('Directions request failed due to ' + status);
+      //     }
+      // });
+      
+      // service.getDistanceMatrix({
+      //   origins:[latlng],
+      //   destinations: [destinationLocation],
+      //   travelMode: 'DRIVING',	
+      // },function(response, status) {
+      //   if(status != 'OK'){
+      //     alert('Error was: ' + status);
+      //   }else {
+          
+      //     let results = response.rows[0].elements;
+      //     document.getElementById('distance').value = results[0].distance.text;
+      //     let distance = $('#distance').val();
+      //     distance = distance.replace(" km","");
+      //     distance = distance.replace(",",".");
+      //     console.log(distance);
+      //     $('#shippingPrice').val(distance*5500 + " nghìn");
+      //   }
+      // });
+      
+      marker1.setVisible(false);
+    });	
   }
 
   isShippingValueChange() {
