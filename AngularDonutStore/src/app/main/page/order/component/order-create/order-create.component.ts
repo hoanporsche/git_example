@@ -21,6 +21,8 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   formOrder: FormGroup;
   formArrayQuantites: FormArray;
 
+  showFormShipping = false;
+
   constructor(
     private mainService: MainService,
     private fb: FormBuilder,
@@ -30,8 +32,9 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       dateUpdated: ['', [Validators.required, CommonValidator.notEmpty]],
       phone: ['', [Validators.required, CommonValidator.notEmpty]],
       storeId: ['', [Validators.required]],
-      isShipping: ['', [Validators.required]],
+      isShipping: ['false', [Validators.required]],
       addressShipping: [''],
+      distance: [''],
       shippingPrice: [''],
       totalPrice: [''],
       quantites: this.fb.array([])
@@ -47,10 +50,39 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listItem = response;
       });
+      this.showGgmaps();
   }
 
-  onSubmit() {
+  showGgmaps() {
+    const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
+    const latlng = new google.maps.LatLng(+store.lat, +store.lng);
+    const myOptions = {
+      zoom: 14,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    const map = new google.maps.Map(document.getElementById("show_ggmaps"), myOptions);
+    const marker1 = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      //icon:"banhran.jpg", đây là icon cho marker
+      title: store.name
+    });
     
+  }
+
+  isShippingValueChange() {
+    if (this.isShipping.value === 'true') {
+      this.showFormShipping = true;
+    } else if (this.isShipping.value === 'false') {
+      this.showFormShipping = false;
+      this.addressShipping.setValue('');
+      this.shippingPrice.setValue('');
+      this.totalPrice.setValue(this.totalPrice.value - this.shippingPrice.value);
+    }
+  }
+  onSubmit() {
+    console.log(this.formOrder.value)
   }
 
   addSingleRowQuantity(item: Item) {
@@ -76,5 +108,41 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       this.subListStore.unsubscribe();
     if (this.subListItem)
       this.subListItem.unsubscribe();
+  }
+
+  get nameCreated() {
+    return this.formOrder.get('nameCreated');
+  }
+
+  get dateUpdated() {
+    return this.formOrder.get('dateUpdated');
+  }
+
+  get phone() {
+    return this.formOrder.get('phone');
+  }
+
+  get storeId() {
+    return this.formOrder.get('storeId');
+  }
+
+  get isShipping() {
+    return this.formOrder.get('isShipping');
+  }
+
+  get addressShipping() {
+    return this.formOrder.get('addressShipping');
+  }
+
+  get distance() {
+    return this.formOrder.get('distance');
+  }
+
+  get shippingPrice() {
+    return this.formOrder.get('shippingPrice');
+  }
+
+  get totalPrice() {
+    return this.formOrder.get('totalPrice');
   }
 }

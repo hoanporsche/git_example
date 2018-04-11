@@ -57,6 +57,9 @@ public class Order implements Serializable {
 
   @Column(name = "address_shipping")
   private String addressShipping;
+  
+  @Column(name = "distance")
+  private float distance;
 
   @Column(name = "shipping_price")
   private double shippingPrice;
@@ -90,7 +93,7 @@ public class Order implements Serializable {
     return dateUpdated;
   }
 
-  public void setDateUpdate(Date dateUpdated) {
+  public void setDateUpdated(Date dateUpdated) {
     this.dateUpdated = dateUpdated;
   }
 
@@ -134,7 +137,7 @@ public class Order implements Serializable {
     this.quantities = quantities;
   }
 
-  public boolean isIsShipping() {
+  public boolean isShipping() {
     return isShipping;
   }
 
@@ -148,6 +151,14 @@ public class Order implements Serializable {
 
   public void setAddressShipping(String addressShipping) {
     this.addressShipping = addressShipping;
+  }
+
+  public float getDistance() {
+    return distance;
+  }
+
+  public void setDistance(float distance) {
+    this.distance = distance;
   }
 
   public double getShippingPrice() {

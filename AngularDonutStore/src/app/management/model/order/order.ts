@@ -13,7 +13,8 @@ export class Order {
     public statusId?: OrderStatus,
     public quantites?: Quantity[],
     public isShipping?: boolean,
-    public addressShipping?: number,
+    public addressShipping?: string,
+    public distance?: number,
     public shippingPrice?: number,
     public totalPrice?: number,
   ) {}

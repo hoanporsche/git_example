@@ -133,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `status_id` BIGINT NOT NULL,
   `is_shipping` BOOLEAN NOT NULL,
   `address_shipping` VARCHAR(255) NULL DEFAULT NULL,
+  `distance` FLOAT,
   `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `total_price` DECIMAL(10,0) NOT NULL,
   PRIMARY KEY (`id`),
