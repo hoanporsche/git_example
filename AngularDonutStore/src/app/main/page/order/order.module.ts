@@ -6,12 +6,14 @@ import { OrderRoutingModule } from './order.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderService } from './service/order.service';
 import { SharedModule } from '../../../shared/shared.module';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
     OrderRoutingModule,
     NgbModule,
-    SharedModule
+    SharedModule,
+    AgmCoreModule
   ],
   declarations: [
     OrderComponent,

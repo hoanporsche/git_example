@@ -1,11 +1,12 @@
 import { Item } from './../../../../../management/model/item/item';
 import { MainService } from './../../../../layout-main/service-main/main-service.service';
 import { CommonValidator } from './../../../../../shared/custom-validator/common.validator';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { Store } from '../../../../../management/model/store/store';
 import { Subscription } from 'rxjs/Subscription';
 import { } from '@types/googlemaps';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-order-create',
@@ -24,12 +25,20 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
 
   showFormShipping = false;
 
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+  
+  public latitude: number;
+  public longitude: number;
+  public searchControl: FormControl;
+  public desLatitude: number;
+  public desLongitude: number;
 
   constructor(
     private mainService: MainService,
     private fb: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
   ) {
     this.formOrder = this.fb.group({
       nameCreated: ['', [Validators.required, CommonValidator.notEmpty]],
@@ -50,7 +59,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listStore = response;
         this.storeId.setValue(this.listStore[0].id);
-        this.showGgmaps();
+        // this.showGgmaps();
       });
     this.subListItem = this.mainService.findAllItem()
       .subscribe(response => {
@@ -60,83 +69,114 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
 
   showGgmaps() {
     const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
-    const latlng = new google.maps.LatLng(+store.lat, +store.lng);
-    const myOptions = {
-      zoom: 14,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    const map = new google.maps.Map(document.getElementById("show_ggmaps"), myOptions);
-    const marker1 = new google.maps.Marker({
-      position: latlng,
-      map: map,
-      //icon:"banhran.jpg", đây là icon cho marker
-      title: store.name
+    this.latitude = +store.lat;
+    this.longitude = +store.lng;
+
+    //create search FormControl
+    this.searchControl = new FormControl();
+
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          //set latitude, longitude and zoom
+          this.desLatitude = place.geometry.location.lat();
+          this.desLongitude = place.geometry.location.lng();
+        });
+      });
     });
-
-    //Bắt đầu sử dụng autocomple place
-
-    const newplace = <HTMLInputElement>this.addressShipping.value;
-    let autocomplete = new google.maps.places.Autocomplete(newplace);
-    autocomplete.bindTo('bounds', map);//gắn nó vào map
-
-    let directionsService = new google.maps.DirectionsService;
-    let directionsDisplay = new google.maps.DirectionsRenderer;
-    directionsDisplay.setMap(map);
-    let service = new google.maps.DistanceMatrixService;
-
-    autocomplete.addListener('place_changed',function(){
-      let place = autocomplete.getPlace();	
-      
-      if (!place.geometry) {
-        window.alert(place.name + " không tồn tại");
-        return;
-      }
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        map.setCenter(place.geometry.location);
-      }
-      
-      let destinationPlaceId = place.place_id;
-      let destinationLocation = place.geometry.location;
-  
-      //Bắt đầu sử dụng Directions
-      // directionsService.route()
-      // directionsService.route({
-      //   origin : {'placeId': "ChIJK7dSb3GrNTERxFvb2QVeOw8"},
-      //   destination :{'placeId': destinationPlaceId},
-      //   travelMode : 'DRIVING'
-      //   }, function(response, status){
-      //     if (status === 'OK'){
-      //       directionsDisplay.setDirections(response);
-      //     } else {
-      //       window.alert('Directions request failed due to ' + status);
-      //     }
-      // });
-      
-      // service.getDistanceMatrix({
-      //   origins:[latlng],
-      //   destinations: [destinationLocation],
-      //   travelMode: 'DRIVING',	
-      // },function(response, status) {
-      //   if(status != 'OK'){
-      //     alert('Error was: ' + status);
-      //   }else {
-          
-      //     let results = response.rows[0].elements;
-      //     document.getElementById('distance').value = results[0].distance.text;
-      //     let distance = $('#distance').val();
-      //     distance = distance.replace(" km","");
-      //     distance = distance.replace(",",".");
-      //     console.log(distance);
-      //     $('#shippingPrice').val(distance*5500 + " nghìn");
-      //   }
-      // });
-      
-      marker1.setVisible(false);
-    });	
   }
+
+  // showGgmaps() {
+  //   const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
+  //   const latlng = new google.maps.LatLng(+store.lat, +store.lng);
+  //   const myOptions = {
+  //     zoom: 14,
+  //     center: latlng,
+  //     mapTypeId: google.maps.MapTypeId.ROADMAP
+  //   }
+  //   const map = new google.maps.Map(document.getElementById("show_ggmaps"), myOptions);
+  //   const marker1 = new google.maps.Marker({
+  //     position: latlng,
+  //     map: map,
+  //     //icon:"banhran.jpg", đây là icon cho marker
+  //     title: store.name
+  //   });
+
+  //   //Bắt đầu sử dụng autocomple place
+
+  //   const newplace = <HTMLInputElement>this.addressShipping.value;
+  //   let autocomplete = new google.maps.places.Autocomplete(newplace);
+  //   autocomplete.bindTo('bounds', map);//gắn nó vào map
+
+  //   let directionsService = new google.maps.DirectionsService;
+  //   let directionsDisplay = new google.maps.DirectionsRenderer;
+  //   directionsDisplay.setMap(map);
+  //   let service = new google.maps.DistanceMatrixService;
+
+  //   autocomplete.addListener('place_changed',function(){
+  //     let place = autocomplete.getPlace();	
+      
+  //     if (!place.geometry) {
+  //       window.alert(place.name + " không tồn tại");
+  //       return;
+  //     }
+  //     if (place.geometry.viewport) {
+  //       map.fitBounds(place.geometry.viewport);
+  //     } else {
+  //       map.setCenter(place.geometry.location);
+  //     }
+      
+  //     let destinationPlaceId = place.place_id;
+  //     let destinationLocation = place.geometry.location;
+  
+  //     //Bắt đầu sử dụng Directions
+  //     // directionsService.route()
+  //     // directionsService.route({
+  //     //   origin : {'placeId': "ChIJK7dSb3GrNTERxFvb2QVeOw8"},
+  //     //   destination :{'placeId': destinationPlaceId},
+  //     //   travelMode : 'DRIVING'
+  //     //   }, function(response, status){
+  //     //     if (status === 'OK'){
+  //     //       directionsDisplay.setDirections(response);
+  //     //     } else {
+  //     //       window.alert('Directions request failed due to ' + status);
+  //     //     }
+  //     // });
+      
+  //     // service.getDistanceMatrix({
+  //     //   origins:[latlng],
+  //     //   destinations: [destinationLocation],
+  //     //   travelMode: 'DRIVING',	
+  //     // },function(response, status) {
+  //     //   if(status != 'OK'){
+  //     //     alert('Error was: ' + status);
+  //     //   }else {
+          
+  //     //     let results = response.rows[0].elements;
+  //     //     document.getElementById('distance').value = results[0].distance.text;
+  //     //     let distance = $('#distance').val();
+  //     //     distance = distance.replace(" km","");
+  //     //     distance = distance.replace(",",".");
+  //     //     console.log(distance);
+  //     //     $('#shippingPrice').val(distance*5500 + " nghìn");
+  //     //   }
+  //     // });
+      
+  //     marker1.setVisible(false);
+  //   });	
+  // }
 
   isShippingValueChange() {
     if (this.isShipping.value === 'true') {

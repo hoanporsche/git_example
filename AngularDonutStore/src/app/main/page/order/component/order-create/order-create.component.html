@@ -4,6 +4,7 @@
       <h3 align="center">Đơn hàng mới</h3>
     </div>
     <div class="card-body">
+      <!-- START FORM -->
       <form [formGroup]="formOrder" (ngSubmit)="onSubmit()">
         <!-- START ROW 1 -->
         <div class="row">
@@ -113,7 +114,7 @@
           <div class="col-md-4">
             <div class="form-group m-form__group row">
               <label class="col-form-label col-lg-4 col-sm-12 required">
-                  Địa chỉ giao hàng
+                Địa chỉ giao hàng
               </label>
               <div class="col-lg-8 col-md-8 col-sm-12">
                 <div class="input-group">
@@ -153,25 +154,32 @@
           </div>
         </div>
         <!-- END ROW 4 -->
-        <!-- START ROW 5 -->
-        <div class="row" id="show_ggmaps"></div>
-        <!-- END ROW 5 -->
-        <div class="m-portlet__foot m-portlet__foot--fit">
-          <div class="m-form__actions m-form__actions">
-            <div class="row">
-              <div class="col-lg-9 ml-lg-auto">
-                <button type="submit" class="btn btn-accent">
-                  Create
-                </button>
-                <button type="reset" class="btn btn-secondary">
-                  Cancel
-                </button>
-              </div>
+      </form>
+      <!-- END FORM -->
+      <!-- START ROW 5, show maps -->
+      <div>
+        <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+          #search [formControl]="searchControl">
+        <agm-map *ngIf="latitude && longitude" [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="14">
+          <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+          <agm-marker [latitude]="desLatitude" [longitude]="desLongitude"></agm-marker>
+        </agm-map>
+      </div>
+      <!-- END ROW 5 -->
+      <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions">
+          <div class="row">
+            <div class="col-lg-9 ml-lg-auto">
+              <button type="submit" class="btn btn-accent">
+                Create
+              </button>
+              <button type="reset" class="btn btn-secondary">
+                Cancel
+              </button>
             </div>
           </div>
         </div>
-      </form>
-
+      </div>
     </div>
   </div>
 </div>
