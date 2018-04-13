@@ -3,149 +3,149 @@
  * open div #show_br when button #br checked
  * @returns
  */
-$('#br').change(function(){
-	if(this.checked){
-		$('#show_br').fadeIn('fast');
-	}else{
-		$('#show_br').fadeOut('fast');
-		$('#brmValue').val("");
-		$('#brnValue').val("");
-	}
-});
+// $('#br').change(function(){
+// 	if(this.checked){
+// 		$('#show_br').fadeIn('fast');
+// 	}else{
+// 		$('#show_br').fadeOut('fast');
+// 		$('#brmValue').val("");
+// 		$('#brnValue').val("");
+// 	}
+// });
 
-$('#bm').change(function(){
-	if(this.checked){
-		$('#show_bm').fadeIn('fast');
-	}else{
-		$('#show_bm').fadeOut('fast');
-		$('#bmtValue').val("");
-		$('#bmxxValue').val("");
-		$('#bmtxxValue').val("");
-	}
-});
+// $('#bm').change(function(){
+// 	if(this.checked){
+// 		$('#show_bm').fadeIn('fast');
+// 	}else{
+// 		$('#show_bm').fadeOut('fast');
+// 		$('#bmtValue').val("");
+// 		$('#bmxxValue').val("");
+// 		$('#bmtxxValue').val("");
+// 	}
+// });
 
-$('#du').change(function(){
-	if(this.checked){
-		$('#show_du').fadeIn('fast');
-	}else{
-		$('#show_du').fadeOut('fast');
-		$('#cocaValue').val("");
-		$('#tradaValue').val("");
-		$('#mirindaValue').val("");
-	}
-});
+// $('#du').change(function(){
+// 	if(this.checked){
+// 		$('#show_du').fadeIn('fast');
+// 	}else{
+// 		$('#show_du').fadeOut('fast');
+// 		$('#cocaValue').val("");
+// 		$('#tradaValue').val("");
+// 		$('#mirindaValue').val("");
+// 	}
+// });
 
-$(document).ready(function(){	
+// $(document).ready(function(){	
 	
-	$("#formTest").submit(function(e){
-		e.preventDefault();
-		var testinput = $("#testInput").val();
-		var submit = $("#submit-test").val();
-		$.ajax({
-			type: "post",
-			dataType : "text",
-			url : "test",
-			data: {
-				nameCreate : testinput,
-				action : submit
-			}, 
-			success : function(data){
-				window.location.href = "item-material";
-			},
-			error : function(e){
-				alert("error" + e);
-				console.log(e);
-			}
-		});
-	});
+// 	$("#formTest").submit(function(e){
+// 		e.preventDefault();
+// 		var testinput = $("#testInput").val();
+// 		var submit = $("#submit-test").val();
+// 		$.ajax({
+// 			type: "post",
+// 			dataType : "text",
+// 			url : "test",
+// 			data: {
+// 				nameCreate : testinput,
+// 				action : submit
+// 			}, 
+// 			success : function(data){
+// 				window.location.href = "item-material";
+// 			},
+// 			error : function(e){
+// 				alert("error" + e);
+// 				console.log(e);
+// 			}
+// 		});
+// 	});
 	
-	$('.form_datetime').datetimepicker({
-        startDate: new Date() ,
-        endDate : new Date(new Date().getTime()+1000*60*60*36),//limit 36 hours
-        todayHighlight: true,
-        weekStart: 1,
-        autoclose: 1,
-        inline: true,
-        sideBySide: true
-    });
-	var orderNameCreated = $('#nameCreate').val();
-	var orderPhoneReceiver = $('#phoneReceiver').val();
-	var orderDateDone = $('#dateDone').val();
+// 	$('.form_datetime').datetimepicker({
+//         startDate: new Date() ,
+//         endDate : new Date(new Date().getTime()+1000*60*60*36),//limit 36 hours
+//         todayHighlight: true,
+//         weekStart: 1,
+//         autoclose: 1,
+//         inline: true,
+//         sideBySide: true
+//     });
+// 	var orderNameCreated = $('#nameCreate').val();
+// 	var orderPhoneReceiver = $('#phoneReceiver').val();
+// 	var orderDateDone = $('#dateDone').val();
 	
-	$('#error-name').hide();
-	$('#error-phone').hide();
-	$('#error-date').hide();
-	var errorName = false;
-	var errorPhone = false;
-	var errorDate = false;
-	var subimt = $('submitOrder').val();
+// 	$('#error-name').hide();
+// 	$('#error-phone').hide();
+// 	$('#error-date').hide();
+// 	var errorName = false;
+// 	var errorPhone = false;
+// 	var errorDate = false;
+// 	var subimt = $('submitOrder').val();
 	
-	$('#nameCreate').focusout(function(){
-		checkName();
-	});
-	$('#phoneReceiver').focusout(function(){
-		checkPhone();
-	});
-	$('#dateDone').focusout(function(){
-		checkDate();
-	});
+// 	$('#nameCreate').focusout(function(){
+// 		checkName();
+// 	});
+// 	$('#phoneReceiver').focusout(function(){
+// 		checkPhone();
+// 	});
+// 	$('#dateDone').focusout(function(){
+// 		checkDate();
+// 	});
 	
-	$('#createOrder').submit(function(){
-		errorName = false;
-		errorPhone = false;
-		errorDate = false;
+// 	$('#createOrder').submit(function(){
+// 		errorName = false;
+// 		errorPhone = false;
+// 		errorDate = false;
 		
-		checkName();
-		checkPhone();
-		checkDate();
-		if(errorName == false && errorPhone == false && errorDate == false){
-			return true;
-		} else {
-			return false;
-		}
-	});
+// 		checkName();
+// 		checkPhone();
+// 		checkDate();
+// 		if(errorName == false && errorPhone == false && errorDate == false){
+// 			return true;
+// 		} else {
+// 			return false;
+// 		}
+// 	});
 	
-	function checkName(){
-		var nameCreate = $('#nameCreate').val().length;
-		if(nameCreate == 0){
-			$('#error-name').html("Hãy nhập tên");
-			$('#error-name').show();
-			errorName = true;
-		} else {
-			$('#error-name').hide();
-		}
-	}
-	function checkPhone(){
-		var phoneReceiver = $('#nameCreate').val().length;
-		if(phoneReceiver == 0){
-			$('#error-phone').html("Hãy nhập số điện thoại");
-			$('#error-phone').show();
-			errorPhone = true;
-		} else {
-			$('#error-phone').hide();
-		}
-	}
-	function checkDate(){
-		var nameCreate = $('#dateDone').val().length;
-		if(nameCreate == 0){
-			$('#error-date').html("Hãy nhập thời gian");
-			$('#error-date').show();
-			errorDate = true;
-		} else {
-			$('#error-date').hide();
-		}
-	}
-});
+// 	function checkName(){
+// 		var nameCreate = $('#nameCreate').val().length;
+// 		if(nameCreate == 0){
+// 			$('#error-name').html("Hãy nhập tên");
+// 			$('#error-name').show();
+// 			errorName = true;
+// 		} else {
+// 			$('#error-name').hide();
+// 		}
+// 	}
+// 	function checkPhone(){
+// 		var phoneReceiver = $('#nameCreate').val().length;
+// 		if(phoneReceiver == 0){
+// 			$('#error-phone').html("Hãy nhập số điện thoại");
+// 			$('#error-phone').show();
+// 			errorPhone = true;
+// 		} else {
+// 			$('#error-phone').hide();
+// 		}
+// 	}
+// 	function checkDate(){
+// 		var nameCreate = $('#dateDone').val().length;
+// 		if(nameCreate == 0){
+// 			$('#error-date').html("Hãy nhập thời gian");
+// 			$('#error-date').show();
+// 			errorDate = true;
+// 		} else {
+// 			$('#error-date').hide();
+// 		}
+// 	}
+// });
 
-$('#isShipping').change(function(){
-	var isShipping = $('#isShipping').val();
-	if(isShipping == 1){
-		$('#show_is_shipping').show()
-		showGgmaps();
-	}else{
-		$('#show_is_shipping').hide();
-	}
-});
+// $('#isShipping').change(function(){
+// 	var isShipping = $('#isShipping').val();
+// 	if(isShipping == 1){
+// 		$('#show_is_shipping').show()
+// 		showGgmaps();
+// 	}else{
+// 		$('#show_is_shipping').hide();
+// 	}
+// });
 
 function showGgmaps(){
 	var latlng = new google.maps.LatLng(21.026846,105.821322);

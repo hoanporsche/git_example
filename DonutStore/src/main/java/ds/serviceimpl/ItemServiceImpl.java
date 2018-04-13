@@ -1,4 +1,4 @@
-package ds.service.impl;
+package ds.serviceimpl;
 
 import ds.form.ItemForm;
 import ds.model.Item;

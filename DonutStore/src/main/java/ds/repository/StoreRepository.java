@@ -2,9 +2,9 @@ package ds.repository;
 
 import ds.model.Store;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface StoreRepository extends JpaRepository<Store, Integer> {
+public interface StoreRepository extends CrudRepository<Store, Integer> {
   public Store findBystoreName(String storeName);
   
   public Store findBystoreCode(String storeCode);

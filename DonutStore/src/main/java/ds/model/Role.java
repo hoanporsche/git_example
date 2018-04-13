@@ -26,6 +26,10 @@ public class Role implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "role_id", nullable = false)
   private int roleId;
+
+  @Size(max = 10)
+  @Column(name = "role_code", nullable = false, unique = true)
+  private String roleCode;
   
   @NotEmpty
   @Size(max = 255)
@@ -43,8 +47,9 @@ public class Role implements Serializable {
   public Role() {
   }
 
-  public Role(String name) {
+  public Role(String name, String code) {
     this.roleName = name;
+    this.roleCode = code;
   }
 
   public int getRoleId() {
@@ -53,6 +58,14 @@ public class Role implements Serializable {
 
   public void setRoleId(int roleId) {
     this.roleId = roleId;
+  }
+
+  public String getRoleCode() {
+    return roleCode;
+  }
+
+  public void setRoleCode(String roleCode) {
+    this.roleCode = roleCode;
   }
 
   public String getRoleName() {

@@ -1,4 +1,4 @@
-package ds.service.impl;
+package ds.serviceimpl;
 
 import ds.model.Supply;
 import ds.repository.SupplyRepository;

@@ -1,4 +1,4 @@
-package ds.service.impl;
+package ds.serviceimpl;
 
 import ds.form.MaterialForm;
 import ds.model.Material;

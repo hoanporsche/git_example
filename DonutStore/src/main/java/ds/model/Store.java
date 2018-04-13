@@ -29,6 +29,9 @@ public class Store implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "store_id", nullable = false)
   private int storeId;
+  @Size(max = 10)
+  @Column(name = "store_code", nullable = false, unique = true)
+  private String storeCode;
   @Size(max = 255)
   @Column(name = "store_name", nullable = false)
   private String storeName;
@@ -92,7 +95,15 @@ public class Store implements Serializable {
   public void setStoreId(int storeId) {
     this.storeId = storeId;
   }
-  
+
+  public String getStoreCode() {
+    return storeCode;
+  }
+
+  public void setStoreCode(String storeCode) {
+    this.storeCode = storeCode;
+  }
+
   public String getStoreName() {
     return storeName;
   }

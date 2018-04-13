@@ -1,4 +1,4 @@
-package ds.service.impl;
+package ds.serviceimpl;
 
 import ds.form.StaffForm;
 import ds.model.Staff;

@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import { DetailService } from './service/detail.service';
 import { DetailComponent } from './detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +11,8 @@ import { DetailMainComponent } from './component/detail-main/detail-main.compone
   imports: [
     SharedModule,
     DetailRoutingModule,
-    NgbModule
+    NgbModule,
+    AgmCoreModule
   ],
   declarations: [
     DetailComponent,

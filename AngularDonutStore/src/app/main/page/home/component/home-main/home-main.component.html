@@ -39,7 +39,10 @@
 
     </div>
     <div class="col-md-5">
-      <div class="panel" id="show_ggmaps">
+      <div id="show_ggmaps" *ngIf="listStore">
+        <agm-map [latitude]="+listStore[0].lat" [longitude]="+listStore[0].lng" [zoom]="13">
+          <agm-marker *ngFor="let store of listStore" [latitude]="+store?.lat" [longitude]="+store?.lng"></agm-marker>
+        </agm-map>
       </div>
     </div>
   </div>
