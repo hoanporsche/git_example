@@ -7,13 +7,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderService } from './service/order.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { AgmCoreModule } from '@agm/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     OrderRoutingModule,
     NgbModule,
     SharedModule,
-    AgmCoreModule
+    AgmCoreModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     OrderComponent,

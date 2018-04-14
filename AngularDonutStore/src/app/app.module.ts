@@ -1,3 +1,4 @@
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavigationService } from './core/services/navigation.service';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app.routing';
@@ -32,7 +33,9 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM',
       libraries: ['places']
-    })
+    }),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuard,

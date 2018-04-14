@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { } from '@types/googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
+declare var $:any;
 @Component({
   selector: 'app-order-create',
   templateUrl: './order-create.component.html',
@@ -50,6 +51,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       distance: [''],
       shippingPrice: [''],
       totalPrice: [''],
+      searchControl: [''],
       quantites: this.fb.array([])
     });
   }
@@ -59,7 +61,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listStore = response;
         this.storeId.setValue(this.listStore[0].id);
-        // this.showGgmaps();
+        this.showGgmaps();
       });
     this.subListItem = this.mainService.findAllItem()
       .subscribe(response => {
@@ -71,6 +73,8 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
     this.latitude = +store.lat;
     this.longitude = +store.lng;
+    this.desLatitude = +store.lat;
+    this.desLongitude = +store.lng;
 
     //create search FormControl
     this.searchControl = new FormControl();
@@ -91,9 +95,12 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
           }
 
           //set latitude, longitude and zoom
-          this.desLatitude = place.geometry.location.lat();
-          this.desLongitude = place.geometry.location.lng();
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
         });
+        // this.addressShipping.setValue($('#search-control').val());
+        this.addressShipping.setValue(this.formOrder.get('searchControl').value);
+        console.log($('#search-control').val());
       });
     });
   }
