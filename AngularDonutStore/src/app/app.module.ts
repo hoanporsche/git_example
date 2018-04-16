@@ -32,7 +32,7 @@ import { AgmCoreModule } from '@agm/core';
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM',
-      libraries: ['places']
+      libraries: ['places','geometry']
     }),
     FormsModule,
     ReactiveFormsModule
