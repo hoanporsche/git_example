@@ -15,7 +15,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="nameCreated" maxlength="255" placeholder="Nhập tên người nhận">
+                  <input type="text" class="form-control m-input" formControlName="nameCreated" maxlength="constants.maxlength_text" placeholder="Nhập tên người nhận">
                   <div class="error-no-padding" *ngIf="nameCreated.touched && nameCreated.invalid">
                     <div *ngIf="nameCreated.hasError('required') || nameCreated.hasError('notEmpty')">
                       Tên người nhận là bắt buộc.
@@ -32,7 +32,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="datetime-local" class="form-control m-input" formControlName="dateUpdated">
+                  <input type="datetime-local" class="form-control m-input" formControlName="dateUpdated" maxlength="constants.maxlength_text">
                   <div class="error-no-padding" *ngIf="dateUpdated.touched && dateUpdated.invalid">
                     <div *ngIf="dateUpdated.hasError('required')">
                       Thời gian lấy hàng là bắt buộc.
@@ -53,7 +53,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="phone" maxlength="255" placeholder="Nhập số điện thoại người nhận">
+                  <input type="text" class="form-control m-input" formControlName="phone" maxlength="constants.maxlength_number" placeholder="Nhập số điện thoại người nhận">
                   <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
                     <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
                       Số điện thoại người nhận là bắt buộc.
@@ -70,7 +70,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <select class="form-control m-input" formControlName="storeId">
+                  <select class="form-control m-input" formControlName="storeId" (ngModelChange)="storeIdValueChange()">
                     <option value="">Xin chọn cửa hàng</option>
                     <option *ngFor="let store of listStore" [value]="store?.id">{{ store?.name}}</option>
                   </select>
@@ -111,14 +111,15 @@
         <!-- END ROW 3 -->
         <!-- START ROW 4 -->
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group m-form__group row">
-              <label class="col-form-label col-lg-4 col-sm-12 required">
-                Địa chỉ giao hàng
+              <label class="col-form-label col-lg-3 col-sm-12 required">
+                Địa chỉ nhận hàng
               </label>
-              <div class="col-lg-8 col-md-8 col-sm-12">
+              <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="addressShipping">
+                  <input type="text" class="form-control m-input" formControlName="addressShipping" #search maxlength="constants.maxlength_text"
+                    id="search-control">
                   <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
                     <div *ngIf="addressShipping.hasError('required')">
                       Hãy nhập địa chỉ giao hàng.
@@ -128,34 +129,40 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group m-form__group row">
-              <label class="col-form-label col-lg-4 col-sm-12 required">
-                Quãng đường
-              </label>
-              <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="distance">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-4 col-sm-12 required">
+                    Quãng đường
+                  </label>
+                  <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control m-input" formControlName="distance" maxlength="constants.maxlength_number" placeholder="Quãng đường"
+                        readonly>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group m-form__group row">
-              <label class="col-form-label col-lg-4 col-sm-12 required">
-                Tiền ship
-              </label>
-              <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="shippingPrice">
+              <div class="col-md-6">
+                <div class="form-group m-form__group row">
+                  <label class="col-form-label col-lg-4 col-sm-12 required">
+                    Tiền ship
+                  </label>
+                  <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control m-input" formControlName="shippingPrice" placeholder="Tiền ship" maxlength="constants.maxlength_number"
+                        readonly>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
-            #search formControlName="searchControl" id="search-control">
+          <!-- <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+            #search formControlName="searchControl" id="search-control"> -->
           <agm-map [latitude]="destination?.lat" [longitude]="destination?.lng" [scrollwheel]="true" [zoom]="13">
             <agm-marker [latitude]="destination?.lat" [longitude]="destination?.lng"></agm-marker>
             <agm-marker [latitude]="origin?.lat" [longitude]="origin?.lng"></agm-marker>

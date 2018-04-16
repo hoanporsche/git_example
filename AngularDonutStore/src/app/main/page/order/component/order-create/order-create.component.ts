@@ -39,7 +39,10 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   }
   dir = undefined;
 
-  public searchControl: FormControl;
+  constants = {
+    maxLength_text: 255,
+    maxLength_number: 20
+  }
 
   constructor(
     private mainService: MainService,
@@ -57,7 +60,6 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       distance: [''],
       shippingPrice: [''],
       totalPrice: [''],
-      searchControl: [''],
       quantites: this.fb.array([])
     });
   }
@@ -66,8 +68,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     this.subListStore = this.mainService.findAllStore()
       .subscribe(response => {
         this.listStore = response;
-        this.storeId.setValue(this.listStore[0].id);
-        this.showGgmaps();
+        this.storeId.setValue(1);
       });
     this.subListItem = this.mainService.findAllItem()
       .subscribe(response => {
@@ -81,9 +82,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     this.origin.lng = +store.lng;
     this.destination.lat = +store.lat;
     this.destination.lng = +store.lng;
-
-    //create search FormControl
-    this.searchControl = new FormControl();
+    // console.log(store);
 
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
@@ -117,9 +116,18 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  storeIdValueChange() {
+    console.log(this.showFormShipping)
+    console.log("storeId =" , this.storeId.value)
+    if (this.showFormShipping) {
+      this.showGgmaps();
+    }
+  }
+
   isShippingValueChange() {
     if (this.isShipping.value === 'true') {
       this.showFormShipping = true;
+      // this.showGgmaps();
     } else if (this.isShipping.value === 'false') {
       this.showFormShipping = false;
       this.addressShipping.setValue('');
@@ -127,6 +135,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       this.totalPrice.setValue(this.totalPrice.value - this.shippingPrice.value);
     }
   }
+  
   onSubmit() {
     console.log(this.formOrder.value)
   }
