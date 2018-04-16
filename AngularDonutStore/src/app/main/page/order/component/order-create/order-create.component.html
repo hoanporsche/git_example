@@ -156,9 +156,10 @@
         <div>
           <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
             #search formControlName="searchControl" id="search-control">
-          <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="13">
-            <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-            <agm-marker [latitude]="desLatitude" [longitude]="desLongitude"></agm-marker>
+          <agm-map [latitude]="destination?.lat" [longitude]="destination?.lng" [scrollwheel]="true" [zoom]="13">
+            <agm-marker [latitude]="destination?.lat" [longitude]="destination?.lng"></agm-marker>
+            <agm-marker [latitude]="origin?.lat" [longitude]="origin?.lng"></agm-marker>
+            <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
           </agm-map>
         </div>
         <!-- END ROW 4 -->

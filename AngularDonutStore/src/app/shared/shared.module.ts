@@ -5,12 +5,14 @@ import { SortableColumnComponent } from './components/sortable-column/sortable-c
 import { OnlyNumberDirective } from './directives/only-number.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HrefPreventDefaultDirective } from './directives/href-prevent-default.directive';
+import { AgmDirectionModule } from 'agm-direction'; 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmDirectionModule
   ],
   declarations: [
     SummaryPipe,
@@ -40,7 +42,8 @@ import { HrefPreventDefaultDirective } from './directives/href-prevent-default.d
     // LetterNumberOnlyDirective,
     // UsernameDirective,
     // EmailDirective,
-    // RolePipe
+    // RolePipe,
+    AgmDirectionModule
   ]
 })
 export class SharedModule { }

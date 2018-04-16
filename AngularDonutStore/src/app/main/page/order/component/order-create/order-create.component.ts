@@ -27,13 +27,19 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   showFormShipping = false;
 
   @ViewChild("search")
-  public searchElementRef: ElementRef;
+  searchElementRef: ElementRef;
   
-  public latitude: number;
-  public longitude: number;
+  origin = {
+    lat: 0,
+    lng: 0,
+  }
+  destination = {
+    lat: 0,
+    lng: 0,
+  }
+  dir = undefined;
+
   public searchControl: FormControl;
-  public desLatitude: number;
-  public desLongitude: number;
 
   constructor(
     private mainService: MainService,
@@ -71,10 +77,10 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
 
   showGgmaps() {
     const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
-    this.latitude = +store.lat;
-    this.longitude = +store.lng;
-    this.desLatitude = +store.lat;
-    this.desLongitude = +store.lng;
+    this.origin.lat = +store.lat;
+    this.origin.lng = +store.lng;
+    this.destination.lat = +store.lat;
+    this.destination.lng = +store.lng;
 
     //create search FormControl
     this.searchControl = new FormControl();
@@ -95,11 +101,15 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
           }
 
           //set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
+          this.destination.lat = place.geometry.location.lat();
+          this.destination.lng = place.geometry.location.lng();
         });
-        // this.addressShipping.setValue($('#search-control').val());
-        this.addressShipping.setValue(this.formOrder.get('searchControl').value);
+        this.dir = {
+          origin: this.origin,
+          destination: this.destination,
+        }
+        this.addressShipping.setValue($('#search-control').val());
+        // this.addressShipping.setValue(this.formOrder.get('searchControl').value);
         console.log($('#search-control').val());
       });
     });
