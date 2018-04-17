@@ -1,3 +1,4 @@
+import { Category } from './../../../../../management/model/category/category';
 import { Item } from './../../../../../management/model/item/item';
 import { MainService } from './../../../../layout-main/service-main/main-service.service';
 import { CommonValidator } from './../../../../../shared/custom-validator/common.validator';
@@ -18,8 +19,10 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
 
   listStore: Store[];
   listItem: Item[];
+  listCategory: Category[];
   private subListStore: Subscription;
   private subListItem: Subscription;
+  private subListCategory: Subscription;
 
   formOrder: FormGroup;
   formArrayQuantites: FormArray;
@@ -80,6 +83,10 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listItem = response;
       });
+    this.subListCategory = this.mainService.findAllCategory()
+      .subscribe(response => {
+        this.listCategory = response;
+      });
   }
 
   showGgmaps() {
@@ -119,7 +126,13 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
            */
           if (this.isShipping.value === 'true') {
             // let service = new google.maps.DistanceMatrixService;
-            this.distance.setValue(google.maps.geometry.spherical.computeDistanceBetween(origin, destination));
+            const distance = +((google.maps.geometry.spherical.computeDistanceBetween(origin, destination) / 1000) + 0.1).toString().substring(0, 3);
+            this.distance.setValue(distance);
+            if (distance < 4) {
+              this.shippingPrice.setValue("12000");
+            } else {
+              this.shippingPrice.setValue(distance * 5500);
+            }
             this.addressShipping.setValue($('#search-control').val());
           }
         });
@@ -207,6 +220,8 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       this.subListStore.unsubscribe();
     if (this.subListItem)
       this.subListItem.unsubscribe();
+    if (this.subListCategory)
+      this.subListCategory.unsubscribe();
   }
 
   get nameCreated() {

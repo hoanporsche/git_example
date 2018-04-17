@@ -84,11 +84,43 @@
           </div>
         </div>
         <!-- END ROW 2 -->
+        <!-- START ROW CHOOSE ITEM-->
+        <div class="row">
+          <div class="col-4">
+            <div class="ds-choose-category">
+              <table class="table table-striped m-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Sản phẩm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listItem; let i = index;">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                      </label>
+                      {{ item?.name}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="ds-choose-item">
+
+            </div>
+          </div>
+        </div>
+        <!-- END ROW CHOOSE ITEM-->
         <!-- START ROW 3 -->
         <div class="row">
           <div class="col-md-6">
             <div class="form-group m-form__group row">
-              <label class="col-form-label col-lg-3 col-sm-12 required">
+              <label class="col-form-label col-lg-5 col-sm-12 required">
                 Phương thức lấy hàng
               </label>
               <div class="col-lg-4 col-md-9 col-sm-12">
@@ -117,7 +149,8 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="addressShipping" placeholder="Làm ơn nhập địa chỉ ở phía dưới ạ" (ngModelChange)="onChangeAddress()" maxlength="constants.maxlength_text" readonly>
+                  <input type="text" class="form-control m-input" formControlName="addressShipping" placeholder="Làm ơn nhập địa chỉ ở phía dưới ạ"
+                    (ngModelChange)="onChangeAddress()" maxlength="constants.maxlength_text" readonly>
                   <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
                     <div *ngIf="addressShipping.hasError('required')">
                       Hãy nhập địa chỉ giao hàng.
@@ -131,10 +164,10 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group m-form__group row">
-                  <label class="col-form-label col-lg-4 col-sm-12 required">
-                    Quãng đường
+                  <label class="col-form-label col-lg-6 col-sm-12 required">
+                    Quãng đường (km)
                   </label>
-                  <div class="col-lg-8 col-md-8 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="input-group">
                       <input type="text" class="form-control m-input" formControlName="distance" maxlength="constants.maxlength_number" placeholder="Quãng đường"
                         readonly>
@@ -144,10 +177,10 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group m-form__group row">
-                  <label class="col-form-label col-lg-4 col-sm-12 required">
-                    Tiền ship
+                  <label class="col-form-label col-lg-6 col-sm-12 required">
+                    Tiền ship (vnđ)
                   </label>
-                  <div class="col-lg-8 col-md-8 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="input-group">
                       <input type="text" class="form-control m-input" formControlName="shippingPrice" placeholder="Tiền ship" maxlength="constants.maxlength_number"
                         readonly>
