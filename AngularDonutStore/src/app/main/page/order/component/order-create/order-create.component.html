@@ -70,9 +70,8 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <select class="form-control m-input" formControlName="storeId" (ngModelChange)="storeIdValueChange()">
-                    <option value="">Xin chọn cửa hàng</option>
-                    <option *ngFor="let store of listStore" [value]="store?.id">{{ store?.name}}</option>
+                  <select class="form-control m-input" formControlName="storeId" (change)="storeIdValueChange()">
+                    <option *ngFor="let store of listStore" value="{{store?.id}}">{{ store?.name}} </option>
                   </select>
                   <div class="error-no-padding" *ngIf="storeId.invalid">
                     <div *ngIf="storeId.hasError('required')">
@@ -95,11 +94,11 @@
               <div class="col-lg-4 col-md-9 col-sm-12">
                 <div class="m-radio-inline">
                   <label class="m-radio">
-                    <input type="radio" formControlName="isShipping" (change)="isShippingValueChange()" value="false">Đến cửa hàng
+                    <input type="radio" formControlName="isShipping" value="false">Đến cửa hàng
                     <span></span>
                   </label>
                   <label class="m-radio">
-                    <input type="radio" formControlName="isShipping" (change)="isShippingValueChange()" value="true">Giao tận nơi
+                    <input type="radio" formControlName="isShipping" value="true">Giao tận nơi
                     <span></span>
                   </label>
                 </div>
@@ -118,8 +117,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="addressShipping" #search maxlength="constants.maxlength_text"
-                    id="search-control">
+                  <input type="text" class="form-control m-input" formControlName="addressShipping" (ngModelChange)="onChangeAddress()" maxlength="constants.maxlength_text">
                   <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
                     <div *ngIf="addressShipping.hasError('required')">
                       Hãy nhập địa chỉ giao hàng.
@@ -161,12 +159,12 @@
           </div>
         </div>
         <div>
-          <!-- <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
-            #search formControlName="searchControl" id="search-control"> -->
+          <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+            #search formControlName="searchControl" id="search-control">
           <agm-map [latitude]="destination?.lat" [longitude]="destination?.lng" [scrollwheel]="true" [zoom]="13">
+            <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination" [visible]="visible"></agm-direction>
             <agm-marker [latitude]="destination?.lat" [longitude]="destination?.lng"></agm-marker>
             <agm-marker [latitude]="origin?.lat" [longitude]="origin?.lng"></agm-marker>
-            <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
           </agm-map>
         </div>
         <!-- END ROW 4 -->

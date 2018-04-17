@@ -38,11 +38,13 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     lng: 0,
   }
   dir = undefined;
+  visible= true;
 
   constants = {
     maxLength_text: 255,
     maxLength_number: 20
   }
+  searchControl: FormControl;
 
   constructor(
     private mainService: MainService,
@@ -60,7 +62,8 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       distance: [''],
       shippingPrice: [''],
       totalPrice: [''],
-      quantites: this.fb.array([])
+      quantites: this.fb.array([]),
+      searchControl: ['']
     });
   }
 
@@ -69,6 +72,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listStore = response;
         this.storeId.setValue(1);
+        this.showGgmaps();
       });
     this.subListItem = this.mainService.findAllItem()
       .subscribe(response => {
@@ -77,13 +81,14 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   }
 
   showGgmaps() {
-    const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
+    // const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
+    const store = this.findStoreById(this.storeId.value);
     this.origin.lat = +store.lat;
     this.origin.lng = +store.lng;
     this.destination.lat = +store.lat;
     this.destination.lng = +store.lng;
-    // console.log(store);
 
+    this.searchControl = new FormControl();
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
@@ -91,6 +96,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       });
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
+
           //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
@@ -102,25 +108,40 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
           //set latitude, longitude and zoom
           this.destination.lat = place.geometry.location.lat();
           this.destination.lng = place.geometry.location.lng();
+          this.dir = {
+            origin: this.origin,
+            destination: this.destination,
+          }
+          const origin = new google.maps.LatLng(this.origin.lat, this.origin.lng);
+          const destination = new google.maps.LatLng(this.destination.lat, this.destination.lng);
+          // let service = new google.maps.DistanceMatrixService;
+          this.distance.setValue(google.maps.geometry.spherical.computeDistanceBetween(origin, destination));
+          this.addressShipping.setValue($('#search-control').val());
         });
-        this.dir = {
-          origin: this.origin,
-          destination: this.destination,
-        }
-        const origin = new google.maps.LatLng(this.origin.lat, this.origin.lng);
-        const destination = new google.maps.LatLng(this.destination.lat, this.destination.lng);
-        // let service = new google.maps.DistanceMatrixService;
-        this.distance.setValue(google.maps.geometry.spherical.computeDistanceBetween(origin, destination));
-        this.addressShipping.setValue($('#search-control').val());
       });
     });
   }
-
+  onChangeAddress(){
+    setTimeout(()=> {
+      this.visible= true;
+      console.log("1")
+    },100);
+    this.visible = false;
+    console.log("2")
+  }
   storeIdValueChange() {
-    console.log(this.showFormShipping)
-    console.log("storeId =" , this.storeId.value)
-    if (this.showFormShipping) {
-      this.showGgmaps();
+    if (this.isShipping.value === 'true') {
+      // this.showGgmaps();
+    } else {
+      // this.dir = undefined;
+      this.visible = !this.visible;
+    }
+  }
+
+  findStoreById(storeId: number): Store {
+    for (let i = 0; i < this.listStore.length; i++) {
+      if (this.listStore[i].id === +storeId)
+      return this.listStore[i];
     }
   }
 
