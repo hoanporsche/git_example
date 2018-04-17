@@ -25,9 +25,11 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   formArrayQuantites: FormArray;
 
   showFormShipping = false;
+  isShowGgmaps = false;
 
   @ViewChild("search")
   searchElementRef: ElementRef;
+  content: ElementRef;
 
   origin = {
     lat: 0,
@@ -38,7 +40,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     lng: 0,
   }
   dir = undefined;
-  visible= true;
+  visible = true;
 
   constants = {
     maxLength_text: 255,
@@ -81,7 +83,6 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   }
 
   showGgmaps() {
-    // const store = this.listStore.filter(o => o.id = +this.storeId.value)[0];
     const store = this.findStoreById(this.storeId.value);
     this.origin.lat = +store.lat;
     this.origin.lng = +store.lng;
@@ -96,7 +97,6 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       });
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
-
           //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
@@ -114,49 +114,72 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
           }
           const origin = new google.maps.LatLng(this.origin.lat, this.origin.lng);
           const destination = new google.maps.LatLng(this.destination.lat, this.destination.lng);
-          // let service = new google.maps.DistanceMatrixService;
-          this.distance.setValue(google.maps.geometry.spherical.computeDistanceBetween(origin, destination));
-          this.addressShipping.setValue($('#search-control').val());
+          /**
+           * if user chooses to ship their stuffs, we will calculate shipping price
+           */
+          if (this.isShipping.value === 'true') {
+            // let service = new google.maps.DistanceMatrixService;
+            this.distance.setValue(google.maps.geometry.spherical.computeDistanceBetween(origin, destination));
+            this.addressShipping.setValue($('#search-control').val());
+          }
         });
       });
     });
   }
-  onChangeAddress(){
-    setTimeout(()=> {
-      this.visible= true;
-      console.log("1")
-    },100);
+
+  /**
+   * catch event when change address
+   * we will re-route/re-render with new direction on GGMaps
+   */
+  onChangeAddress() {
+    setTimeout(() => {
+      this.visible = true;
+    }, 100);
     this.visible = false;
-    console.log("2")
   }
-  storeIdValueChange() {
-    if (this.isShipping.value === 'true') {
-      // this.showGgmaps();
-    } else {
-      // this.dir = undefined;
-      this.visible = !this.visible;
+  /**
+   * catch event when user change target store
+   * if user is choosing to ship their stuffs, we will reset GGMaps and 3 fileds
+   * shippingPrice + distance + totalPrice
+   */
+  onChangeStoreId() {
+    this.searchElementRef = this.content;
+    this.showGgmaps();
+    if (this.visible) {
+      this.visible = false;
+      // this.addressShipping.setValue('');
+      this.shippingPrice.setValue('');
+      this.distance.setValue('');
+      this.totalPrice.setValue(this.totalPrice.value - this.shippingPrice.value);
     }
   }
-
-  findStoreById(storeId: number): Store {
-    for (let i = 0; i < this.listStore.length; i++) {
-      if (this.listStore[i].id === +storeId)
-      return this.listStore[i];
-    }
-  }
-
-  isShippingValueChange() {
+  /**
+   * catch event when change isShipping field
+   * if user changes a kind of receving stuffs
+   * we show or not GGMaps
+   */
+  onChangeIsShipping() {
     if (this.isShipping.value === 'true') {
       this.showFormShipping = true;
-      // this.showGgmaps();
     } else if (this.isShipping.value === 'false') {
       this.showFormShipping = false;
+      this.distance.setValue('');
       this.addressShipping.setValue('');
       this.shippingPrice.setValue('');
       this.totalPrice.setValue(this.totalPrice.value - this.shippingPrice.value);
     }
   }
-  
+  /**
+   * find a store to show a marker of found store on GGMaps
+   * @param storeId 
+   */
+  findStoreById(storeId: number): Store {
+    for (let i = 0; i < this.listStore.length; i++) {
+      if (this.listStore[i].id === +storeId)
+        return this.listStore[i];
+    }
+  }
+
   onSubmit() {
     console.log(this.formOrder.value)
   }

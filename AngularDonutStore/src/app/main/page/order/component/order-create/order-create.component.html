@@ -70,7 +70,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <select class="form-control m-input" formControlName="storeId" (change)="storeIdValueChange()">
+                  <select class="form-control m-input" formControlName="storeId" (change)="onChangeStoreId()">
                     <option *ngFor="let store of listStore" value="{{store?.id}}">{{ store?.name}} </option>
                   </select>
                   <div class="error-no-padding" *ngIf="storeId.invalid">
@@ -94,11 +94,11 @@
               <div class="col-lg-4 col-md-9 col-sm-12">
                 <div class="m-radio-inline">
                   <label class="m-radio">
-                    <input type="radio" formControlName="isShipping" value="false">Đến cửa hàng
+                    <input type="radio" formControlName="isShipping" (change)="onChangeIsShipping()" value="false">Đến cửa hàng
                     <span></span>
                   </label>
                   <label class="m-radio">
-                    <input type="radio" formControlName="isShipping" value="true">Giao tận nơi
+                    <input type="radio" formControlName="isShipping" (change)="onChangeIsShipping()" value="true">Giao tận nơi
                     <span></span>
                   </label>
                 </div>
@@ -109,7 +109,7 @@
         </div>
         <!-- END ROW 3 -->
         <!-- START ROW 4 -->
-        <div class="row">
+        <div class="row" *ngIf="showFormShipping">
           <div class="col-md-6">
             <div class="form-group m-form__group row">
               <label class="col-form-label col-lg-3 col-sm-12 required">
@@ -117,7 +117,7 @@
               </label>
               <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="addressShipping" (ngModelChange)="onChangeAddress()" maxlength="constants.maxlength_text">
+                  <input type="text" class="form-control m-input" formControlName="addressShipping" placeholder="Làm ơn nhập địa chỉ ở phía dưới ạ" (ngModelChange)="onChangeAddress()" maxlength="constants.maxlength_text" readonly>
                   <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
                     <div *ngIf="addressShipping.hasError('required')">
                       Hãy nhập địa chỉ giao hàng.
