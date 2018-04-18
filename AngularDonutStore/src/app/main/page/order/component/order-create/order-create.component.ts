@@ -192,6 +192,13 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
         return this.listStore[i];
     }
   }
+  onChooseItem(event, item) {
+    if (event.target.checked) {
+      this.addRowToForm(item);
+    } else {
+      this.deleteSingleRowQuantity(item);
+    }
+  }
 
   onSubmit() {
     console.log(this.formOrder.value)
@@ -204,6 +211,15 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       orderId: [''],
       quantity: ['']
     });
+  }
+
+  deleteSingleRowQuantity(item: Item) {
+    this.formArrayQuantites = this.quantities as FormArray;
+    for (let i = 0; i < this.formArrayQuantites.length; i++) {
+      if (this.formArrayQuantites.controls[i].get('itemId').value.id === item.id) {
+        this.formArrayQuantites.removeAt(i);
+      }
+    }
   }
 
   addRowToForm(item) {

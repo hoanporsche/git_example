@@ -100,9 +100,9 @@
                     <th scope="row">{{ i + 1 }}</th>
                     <td>
                       <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" value="">
+                        <input class="form-check-input" type="checkbox" value="" (change)="onChooseItem($event, item)">
                       </label>
-                      {{ item?.name}}
+                      {{ item?.name }}
                     </td>
                   </tr>
                 </tbody>
@@ -110,8 +110,17 @@
             </div>
           </div>
           <div class="col-8">
-            <div class="ds-choose-item">
-
+            <div class="ds-choose-item container">
+              <div formArrayName="quantites" *ngFor="let quantity of formOrder.get('quantites').controls; let i = index;">
+                <div [formGroupName]="i" class="row form-group m-form__group">
+                  <label class="col-lg-5 col-form-label">
+                    {{ formOrder.get('quantites').controls[i].controls.itemId.value.name }}
+                  </label>
+                  <div class="col-lg-5">
+                    <input type="text" class="form-control m-input i-border" formControlName="quantity">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
