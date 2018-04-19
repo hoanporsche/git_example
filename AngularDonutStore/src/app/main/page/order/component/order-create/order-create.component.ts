@@ -147,7 +147,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   onChangeAddress() {
     setTimeout(() => {
       this.visible = true;
-    }, 100);
+    }, 500);
     this.visible = false;
   }
   /**

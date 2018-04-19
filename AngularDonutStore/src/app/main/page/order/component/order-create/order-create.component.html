@@ -117,7 +117,7 @@
                     {{ formOrder.get('quantites').controls[i].controls.itemId.value.name }}
                   </label>
                   <div class="col-lg-5">
-                    <input type="text" class="form-control m-input i-border" formControlName="quantity">
+                    <input type="text" class="form-control m-input i-border" formControlName="quantity" placeholder="Xin nhập số lượng">
                   </div>
                 </div>
               </div>
@@ -128,6 +128,15 @@
         <!-- START ROW 3 -->
         <div class="row">
           <div class="col-md-6">
+            <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+              #search formControlName="searchControl" id="search-control" (change)="onChangeAddress()">
+            <agm-map [latitude]="destination?.lat" [longitude]="destination?.lng" [scrollwheel]="true" [zoom]="13">
+              <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination" [visible]="visible"></agm-direction>
+              <agm-marker [latitude]="destination?.lat" [longitude]="destination?.lng"></agm-marker>
+              <agm-marker [latitude]="origin?.lat" [longitude]="origin?.lng"></agm-marker>
+            </agm-map>
+          </div>
+          <div class="col-md-6" style="height: 437px;">
             <div class="form-group m-form__group row">
               <label class="col-form-label col-lg-5 col-sm-12 required">
                 Phương thức lấy hàng
@@ -145,79 +154,55 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6"></div>
-        </div>
-        <!-- END ROW 3 -->
-        <!-- START ROW 4 -->
-        <div class="row" *ngIf="showFormShipping">
-          <div class="col-md-6">
-            <div class="form-group m-form__group row">
-              <label class="col-form-label col-lg-3 col-sm-12 required">
-                Địa chỉ nhận hàng
-              </label>
-              <div class="col-lg-9 col-md-9 col-sm-12">
-                <div class="input-group">
-                  <input type="text" class="form-control m-input" formControlName="addressShipping" placeholder="Làm ơn nhập địa chỉ ở phía dưới ạ"
-                    (ngModelChange)="onChangeAddress()" maxlength="constants.maxlength_text" readonly>
-                  <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
-                    <div *ngIf="addressShipping.hasError('required')">
-                      Hãy nhập địa chỉ giao hàng.
+            <!-- START DIV SHIPPING -->
+            <div *ngIf="showFormShipping">
+              <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12 required">
+                  Địa chỉ nhận hàng
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control m-input" formControlName="addressShipping" placeholder="Làm ơn nhập địa chỉ ở ô bên trái ạ"
+                      maxlength="constants.maxlength_text" readonly>
+                    <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
+                      <div *ngIf="addressShipping.hasError('required')">
+                        Hãy nhập địa chỉ giao hàng.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group m-form__group row">
+                    <label class="col-form-label col-lg-6 col-sm-12 required">
+                      Quãng đường (km)
+                    </label>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <div class="input-group">
+                        <input type="text" class="form-control m-input" formControlName="distance" maxlength="constants.maxlength_number" placeholder="Quãng đường"
+                          readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group m-form__group row">
+                    <label class="col-form-label col-lg-6 col-sm-12 required">
+                      Tiền ship (vnđ)
+                    </label>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <div class="input-group">
+                        <input type="text" class="form-control m-input" formControlName="shippingPrice" placeholder="Tiền ship" maxlength="constants.maxlength_number"
+                          readonly>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group m-form__group row">
-                  <label class="col-form-label col-lg-6 col-sm-12 required">
-                    Quãng đường (km)
-                  </label>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="input-group">
-                      <input type="text" class="form-control m-input" formControlName="distance" maxlength="constants.maxlength_number" placeholder="Quãng đường"
-                        readonly>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group m-form__group row">
-                  <label class="col-form-label col-lg-6 col-sm-12 required">
-                    Tiền ship (vnđ)
-                  </label>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="input-group">
-                      <input type="text" class="form-control m-input" formControlName="shippingPrice" placeholder="Tiền ship" maxlength="constants.maxlength_number"
-                        readonly>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
-            #search formControlName="searchControl" id="search-control">
-          <agm-map [latitude]="destination?.lat" [longitude]="destination?.lng" [scrollwheel]="true" [zoom]="13">
-            <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination" [visible]="visible"></agm-direction>
-            <agm-marker [latitude]="destination?.lat" [longitude]="destination?.lng"></agm-marker>
-            <agm-marker [latitude]="origin?.lat" [longitude]="origin?.lng"></agm-marker>
-          </agm-map>
-        </div>
-        <!-- END ROW 4 -->
-      </form>
-      <!-- END FORM -->
-      <!-- START ROW 5, show maps -->
-      <!-- END ROW 5 -->
-      <div class="m-portlet__foot m-portlet__foot--fit">
-        <div class="m-form__actions m-form__actions">
-          <div class="row">
-            <div class="col-lg-9 ml-lg-auto">
+            <!-- END DIV SHIPPING -->
+            <div class="col-lg-12 ml-lg-auto" style="position: absolute;bottom: 0px; text-align: center;">
               <button type="button" class="btn btn-accent" (click)="onSubmit()">
                 Create
               </button>
@@ -227,7 +212,9 @@
             </div>
           </div>
         </div>
-      </div>
+        <!-- END ROW 3 -->
+      </form>
+      <!-- END FORM -->
     </div>
   </div>
 </div>
