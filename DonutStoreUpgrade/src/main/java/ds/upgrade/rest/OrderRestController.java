@@ -5,7 +5,6 @@ package ds.upgrade.rest;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -100,9 +99,9 @@ public class OrderRestController {
   public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
-      List<Object> order = orderService.findOne(newId);
+      Order order = orderService.findOne(newId);
       if (order != null)
-        return new ResponseEntity<List<Object>>(order, HttpStatus.OK);
+        return new ResponseEntity<Order>(order, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {

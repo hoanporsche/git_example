@@ -209,7 +209,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       id: [''],
       itemId: [item],
       orderId: [''],
-      quantity: ['']
+      quantity: ['',[Validators.required, CommonValidator.notEmpty]]
     });
   }
 

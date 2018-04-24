@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
@@ -27,6 +25,9 @@ public class Order implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
+
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
 
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
@@ -49,7 +50,6 @@ public class Order implements Serializable {
   private OrderStatus statusId;
 
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderId")
-  @JsonIgnore 
   private Set<Quantity> quantities;
 
   @Column(name = "is_shipping", nullable = false)
@@ -79,6 +79,14 @@ public class Order implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Date getDateCreated() {

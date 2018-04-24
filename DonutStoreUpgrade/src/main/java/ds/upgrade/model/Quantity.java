@@ -11,11 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 @Table(name = "quantity")
 public class Quantity implements Serializable {
 
-  static final long serialVersionUID = 4197942078910386097L;
+  private static final long serialVersionUID = 4197942078910386097L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +31,7 @@ public class Quantity implements Serializable {
   private int quantity;
 
   @ManyToOne
+  @JsonProperty(access = Access.WRITE_ONLY)
   @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
   private Order orderId;
   

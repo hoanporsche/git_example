@@ -1,8 +1,6 @@
 package ds.upgrade.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,14 +29,11 @@ public class OrderServiceImpl implements OrderService {
    * @return
    */
   @Override
-  public List<Object> findOne(Long id) {
+  public Order findOne(Long id) {
     Order order = orderRepository.findOne(id);
     if (order == null)
       return null;
-    List<Object> list = new ArrayList<Object>();
-    list.add(order);
-    list.add(order.getQuantities());
-    return list;
+    return order;
   }
 
   /**
@@ -60,6 +55,21 @@ public class OrderServiceImpl implements OrderService {
       Date startDate, Date endDate) {
     Specification<Order> spec = new OrderSpecification(statusId, storeId, isShipping, startDate, endDate);
     return orderRepository.findAll(spec, pageable);
+  }
+
+  /**
+   * @description: .
+   * @author: VDHoan
+   * @created_date: Apr 23, 2018
+   * @modifier: hoan
+   * @modifier_date: Apr 23, 2018
+   * @param order
+   * @return
+   */
+  @Override
+  public Order createOrUpdate(Order order) {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
