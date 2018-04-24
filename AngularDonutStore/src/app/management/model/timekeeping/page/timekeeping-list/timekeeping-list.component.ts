@@ -37,12 +37,12 @@ export class TimekeepingListComponent implements OnInit, OnDestroy {
   sortDirection = 0;
   currentSortProperty = '';
 
-  private params = {
+  public params = {
     staffId: '',
     statusId: '',
     storeId: '',
-    dateStart: '',
-    dateEnd: '',
+    startDate: '',
+    endDate: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'

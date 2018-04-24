@@ -18,5 +18,6 @@ export class User {
     public locked?: boolean,
     public userStore?: Store,
     public roles?: Role[],
+    public storeId?: Store
   ) {}
 }

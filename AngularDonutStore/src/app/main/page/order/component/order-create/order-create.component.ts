@@ -139,6 +139,10 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       });
     });
   }
+  
+  get formData() { 
+    return <FormArray>this.formOrder.get('quantites'); 
+  }
 
   /**
    * catch event when change address

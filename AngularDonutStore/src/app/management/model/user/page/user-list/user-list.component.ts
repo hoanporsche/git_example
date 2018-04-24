@@ -38,11 +38,11 @@ export class UserListComponent implements OnInit, OnDestroy {
   sortDirection = 0;
   currentSortProperty = '';
 
-  private params = {
+  public params = {
     storeId: '',
     roleId: '',
-    dateStart: '',
-    dateEnd: '',
+    startDate: '',
+    endDate: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'

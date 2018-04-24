@@ -111,7 +111,7 @@
           </div>
           <div class="col-8">
             <div class="ds-choose-item container">
-              <div formArrayName="quantites" *ngFor="let quantity of formOrder.get('quantites').controls; let i = index;">
+              <div formArrayName="quantites" *ngFor="let quantity of formData.controls; let i = index;">
                 <div [formGroupName]="i" class="row form-group m-form__group">
                   <label class="col-lg-5 col-form-label">
                     {{ formOrder.get('quantites').controls[i].controls.itemId.value.name }}

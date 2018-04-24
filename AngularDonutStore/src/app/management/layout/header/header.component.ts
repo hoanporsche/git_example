@@ -15,7 +15,7 @@ declare let mLayout: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  currentUser: User;
+  currentUser;
   constructor(
     private router: Router,
     private _script: ScriptLoaderService,

@@ -159,4 +159,8 @@ export class OrderListComponent implements OnInit, OnDestroy {
     console.log(order);
   }
 
+  openModal() {
+    
+  }
+
 }

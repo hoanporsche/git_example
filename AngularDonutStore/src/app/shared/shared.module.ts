@@ -18,31 +18,16 @@ import { AgmDirectionModule } from 'agm-direction';
     SummaryPipe,
     SortableColumnComponent,
     HrefPreventDefaultDirective,
-    // JobTitleDirective,
-    // NameDirective,
-    // PhoneNumberDirective,
     OnlyNumberDirective,
-    // LetterNumberOnlyDirective,
-    // UsernameDirective,
-    // EmailDirective,
-    // RolePipe
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HrefPreventDefaultDirective,
-    // UnwrapTagDirective,
     SummaryPipe,
     SortableColumnComponent,
-    // JobTitleDirective,
-    // NameDirective,
-    // PhoneNumberDirective,
     OnlyNumberDirective,
-    // LetterNumberOnlyDirective,
-    // UsernameDirective,
-    // EmailDirective,
-    // RolePipe,
     AgmDirectionModule
   ]
 })
