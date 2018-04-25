@@ -131,7 +131,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
             if (distance < 4) {
               this.shippingPrice.setValue("12000");
             } else {
-              this.shippingPrice.setValue(distance * 5500);
+              this.shippingPrice.setValue(distance * 5500 - 12000);
             }
             this.addressShipping.setValue($('#search-control').val());
           }
@@ -182,8 +182,8 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       this.showFormShipping = false;
       this.distance.setValue('');
       this.addressShipping.setValue('');
-      this.shippingPrice.setValue('');
       this.totalPrice.setValue(this.totalPrice.value - this.shippingPrice.value);
+      this.shippingPrice.setValue('');
     }
   }
   /**
@@ -196,12 +196,29 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
         return this.listStore[i];
     }
   }
+  /**
+   * add one row that corresponding item in view
+   * @param event 
+   * @param item 
+   */
   onChooseItem(event, item) {
     if (event.target.checked) {
       this.addRowToForm(item);
     } else {
       this.deleteSingleRowQuantity(item);
     }
+    this.onCaculateTotalPrice();
+  }
+  onCaculateTotalPrice() {
+    let totalPrice = 0;
+    this.formArrayQuantites = this.quantities as FormArray;
+    for (let i = 0; i < this.formArrayQuantites.length; i++) {
+      totalPrice = +totalPrice + (
+        +this.formArrayQuantites.controls[i].get('itemId').value.singleValue * +this.formArrayQuantites.controls[i].get('quantity').value
+      );
+    }
+    totalPrice = +totalPrice + +this.shippingPrice.value;
+    this.totalPrice.setValue(totalPrice);
   }
 
   onSubmit() {
@@ -229,10 +246,6 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   addRowToForm(item) {
     this.formArrayQuantites = this.quantities as FormArray;
     this.formArrayQuantites.push(this.addSingleRowQuantity(item));
-  }
-
-  get quantities() {
-    return this.formOrder.get('quantites');
   }
 
   ngOnDestroy(): void {
@@ -278,5 +291,9 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
 
   get totalPrice() {
     return this.formOrder.get('totalPrice');
+  }
+
+  get quantities() {
+    return this.formOrder.get('quantites');
   }
 }

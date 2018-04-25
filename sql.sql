@@ -124,8 +124,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- Table `donutstore`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `code` VARCHAR(10) NOT NULL,
+  `id` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name_created` VARCHAR(255) NOT NULL,
@@ -138,7 +137,6 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `total_price` DECIMAL(10,0) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `code_UNIQUE` (`code` ASC),
   FOREIGN KEY (`status_id`) REFERENCES `donutstore`.`order_status`(`id`),
   FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`))
 ENGINE = InnoDB
@@ -150,7 +148,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `order_id` BIGINT NOT NULL,
+  `order_id` VARCHAR(60) NOT NULL,
   `item_id` BIGINT NOT NULL,
   `quantity` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
