@@ -2,8 +2,8 @@ package ds.repository;
 
 import ds.model.Timekeeping;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface TimekeepingRepository extends JpaRepository<Timekeeping, Integer> {
+public interface TimekeepingRepository extends CrudRepository<Timekeeping, Integer> {
 
 }

@@ -2,8 +2,8 @@ package ds.repository;
 
 import ds.model.Quantity;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface QuantityRepository extends JpaRepository<Quantity, Integer> {
+public interface QuantityRepository extends CrudRepository<Quantity, Integer> {
 
 }

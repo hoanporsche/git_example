@@ -27,6 +27,9 @@ public class Category implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "category_id", nullable = false)
   private int categoryId;
+  @Size(max = 10)
+  @Column(name = "category_code", nullable = false)
+  private String categoryCode;
   @NotEmpty
   @Size(min = 10,max = 255)
   @Column(name = "category_name", nullable = false)
@@ -52,6 +55,14 @@ public class Category implements Serializable {
 
   public void setCategoryId(int categoryId) {
     this.categoryId = categoryId;
+  }
+
+  public String getCategoryCode() {
+    return categoryCode;
+  }
+
+  public void setCategoryCode(String categoryCode) {
+    this.categoryCode = categoryCode;
   }
 
   public String getCategoryName() {

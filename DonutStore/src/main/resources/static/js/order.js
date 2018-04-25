@@ -224,7 +224,7 @@ function showGgmaps(){
 				distance = distance.replace(" km","");
 				distance = distance.replace(",",".");
 				console.log(distance);
-				$('#shippingPrice').val(distance*5500 + " nghìn");
+				$('#shippingPrice').val(distance*5000 + " nghìn");
 			}
 		});
 		

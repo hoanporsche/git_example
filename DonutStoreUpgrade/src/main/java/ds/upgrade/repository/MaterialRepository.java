@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ds.upgrade.util.Constants;
 import ds.upgrade.model.Material;
+import ds.upgrade.util.Constants;
 
 public interface MaterialRepository
     extends JpaRepository<Material, Long>, JpaSpecificationExecutor<Material> {

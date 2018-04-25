@@ -1,0 +1,235 @@
+<div class="container">
+  <div class="card ds-card-margin">
+    <div class="card-header">
+      <h3 align="center">Đơn hàng mới</h3>
+    </div>
+    <div class="card-body">
+      <!-- START FORM -->
+      <form [formGroup]="formOrder">
+        <!-- START ROW 1 -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group m-form__group row">
+              <label class="col-form-label col-lg-3 col-sm-12 required">
+                Người nhận
+              </label>
+              <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="input-group">
+                  <input type="text" class="form-control m-input" formControlName="nameCreated" maxlength="constants.maxlength_text" placeholder="Nhập tên người nhận">
+                  <div class="error-no-padding" *ngIf="nameCreated.touched && nameCreated.invalid">
+                    <div *ngIf="nameCreated.hasError('required') || nameCreated.hasError('notEmpty')">
+                      Tên người nhận là bắt buộc.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group m-form__group row">
+              <label class="col-form-label col-lg-3 col-sm-12 required">
+                Thời gian lấy hàng
+              </label>
+              <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="input-group">
+                  <input type="datetime-local" class="form-control m-input" formControlName="dateUpdated" maxlength="constants.maxlength_text">
+                  <div class="error-no-padding" *ngIf="dateUpdated.touched && dateUpdated.invalid">
+                    <div *ngIf="dateUpdated.hasError('required')">
+                      Thời gian lấy hàng là bắt buộc.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END ROW 1 -->
+        <!-- START ROW 2 -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group m-form__group row">
+              <label class="col-form-label col-lg-3 col-sm-12 required">
+                Số điện thoại
+              </label>
+              <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="input-group">
+                  <input type="text" class="form-control m-input" formControlName="phone" maxlength="constants.maxlength_number" placeholder="Nhập số điện thoại người nhận">
+                  <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
+                    <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
+                      Số điện thoại người nhận là bắt buộc.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group m-form__group row">
+              <label class="col-form-label col-lg-3 col-sm-12 required">
+                Tại Cửa hàng
+              </label>
+              <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="input-group">
+                  <select class="form-control m-input" formControlName="storeId" (change)="onChangeStoreId()">
+                    <option *ngFor="let store of listStore" value="{{store?.id}}">{{ store?.name}} </option>
+                  </select>
+                  <div class="error-no-padding" *ngIf="storeId.invalid">
+                    <div *ngIf="storeId.hasError('required')">
+                      Xin hãy chọn cửa hàng.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END ROW 2 -->
+        <!-- START ROW CHOOSE ITEM-->
+        <div class="row">
+          <div class="col-4">
+            <div class="ds-choose-category">
+              <table class="table table-striped m-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Sản phẩm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listItem; let i = index;">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="" (change)="onChooseItem($event, item)">
+                      </label>
+                      {{ item?.name }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="ds-choose-item container">
+              <div formArrayName="quantites" *ngFor="let quantity of formData.controls; let i = index;">
+                <div [formGroupName]="i" class="row form-group m-form__group">
+                  <label class="col-lg-5 col-form-label">
+                    {{ formOrder.get('quantites').controls[i].controls.itemId.value.name }}
+                  </label>
+                  <div class="col-lg-3">
+                    <input type="text" class="form-control m-input i-border" formControlName="quantity" placeholder="Xin nhập số lượng"
+                    (change)="onCaculateTotalPrice()">
+                  </div>
+                  <label class="col-lg-4 col-form-label">
+                    x
+                    <span style="color: red">{{ formOrder.get('quantites').controls[i].controls.itemId.value.singleValue }}</span> đ
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END ROW CHOOSE ITEM-->
+        <!-- START ROW 3 -->
+        <div class="row">
+          <div class="col-md-6">
+            <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+              #search formControlName="searchControl" id="search-control" (change)="onChangeAddress()">
+            <agm-map [latitude]="destination?.lat" [longitude]="destination?.lng" [scrollwheel]="true" [zoom]="13">
+              <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination" [visible]="visible"></agm-direction>
+              <agm-marker [latitude]="destination?.lat" [longitude]="destination?.lng"></agm-marker>
+              <agm-marker [latitude]="origin?.lat" [longitude]="origin?.lng"></agm-marker>
+            </agm-map>
+          </div>
+          <div class="col-md-6" style="height: 437px;">
+            <div class="form-group m-form__group row">
+              <label class="col-form-label col-lg-5 col-sm-12 required">
+                Phương thức lấy hàng
+              </label>
+              <div class="col-lg-4 col-md-9 col-sm-12">
+                <div class="m-radio-inline">
+                  <label class="m-radio">
+                    <input type="radio" formControlName="isShipping" (change)="onChangeIsShipping()" value="false">Đến cửa hàng
+                    <span></span>
+                  </label>
+                  <label class="m-radio">
+                    <input type="radio" formControlName="isShipping" (change)="onChangeIsShipping()" value="true">Giao tận nơi
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- START DIV SHIPPING -->
+            <div *ngIf="showFormShipping">
+              <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12 required">
+                  Địa chỉ nhận hàng
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control m-input" formControlName="addressShipping" placeholder="Làm ơn nhập địa chỉ ở ô bên trái ạ"
+                      maxlength="constants.maxlength_text" readonly>
+                    <div class="error-no-padding" *ngIf="addressShipping.touched && addressShipping.invalid">
+                      <div *ngIf="addressShipping.hasError('required')">
+                        Hãy nhập địa chỉ giao hàng.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group m-form__group row">
+                    <label class="col-form-label col-lg-6 col-sm-12 required">
+                      Quãng đường (km)
+                    </label>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <div class="input-group">
+                        <input type="text" class="form-control m-input" formControlName="distance" maxlength="constants.maxlength_number" placeholder="Quãng đường"
+                          readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group m-form__group row">
+                    <label class="col-form-label col-lg-6 col-sm-12 required">
+                      Tiền ship (vnđ)
+                    </label>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <div class="input-group">
+                        <input type="text" class="form-control m-input" formControlName="shippingPrice" placeholder="Tiền ship" maxlength="constants.maxlength_number"
+                          readonly (ngModelChange)="onCaculateTotalPrice()">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END DIV SHIPPING -->
+            <!-- START DIV TOTAL PRICE -->
+            <div class="form-group m-form__group row">
+              <label class="col-form-label col-lg-5 col-sm-12 required">
+                Tổng giá trị đơn hàng
+              </label>
+              <div class="col-lg-7 col-md-7 col-sm-12">
+                <input type="text" class="form-control m-input" formControlName="totalPrice" readonly>
+              </div>
+            </div>
+            <!-- END DIV TOTAL PRICE -->
+            <div class="col-lg-12 ml-lg-auto" style="position: absolute;bottom: 0px; text-align: center;">
+              <button type="button" class="btn btn-accent" (click)="onSubmit()">
+                Create
+              </button>
+              <button type="reset" class="btn btn-secondary">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- END ROW 3 -->
+      </form>
+      <!-- END FORM -->
+    </div>
+  </div>
+</div>

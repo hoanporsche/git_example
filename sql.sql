@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `single_value` DECIMAL(10,0) NOT NULL,
   `enabled` boolean not null,
+  `description` VARCHAR(1000),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   FOREIGN KEY (`category_id`)
@@ -109,6 +110,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `picture` VARCHAR(1000),
  `phone` VARCHAR(20) NOT NULL,
  `address` VARCHAR(255) NOT NULL,
+ `lat` VARCHAR(20),
+ `lng` VARCHAR(20),
  `date_created` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `enabled` BOOLEAN NOT NULL,
@@ -121,7 +124,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- Table `donutstore`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name_created` VARCHAR(255) NOT NULL,
@@ -130,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `status_id` BIGINT NOT NULL,
   `is_shipping` BOOLEAN NOT NULL,
   `address_shipping` VARCHAR(255) NULL DEFAULT NULL,
+  `distance` FLOAT,
   `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `total_price` DECIMAL(10,0) NOT NULL,
   PRIMARY KEY (`id`),
@@ -144,7 +148,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `order_id` BIGINT NOT NULL,
+  `order_id` VARCHAR(60) NOT NULL,
   `item_id` BIGINT NOT NULL,
   `quantity` INT(11) NOT NULL,
   PRIMARY KEY (`id`),

@@ -60,6 +60,10 @@ public class Item implements Serializable {
   @Column(name = "enabled", nullable = false)
   private boolean enabled;
 
+  @Size(max = 1000)
+  @Column(name = "description", nullable = false)
+  private String description;
+  
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
   private Set<Material> materials;
@@ -152,6 +156,14 @@ public class Item implements Serializable {
 
   public void setQuantites(List<Quantity> quantites) {
     this.quantites = quantites;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 }

@@ -1,0 +1,115 @@
+<!-- <p>
+  header works!
+</p>
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" style="padding:0px;" href="/">
+        <img src="/images/BR6.jpg" class="img-thumbnail" style="width:80px; padding:0px;" />
+      </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li class="currentPage">
+          <a href="/order">Đặt hàng</a>
+        </li>
+        <li class="currentPage == 'reference'? 'active':null">
+          <a href="/main/reference">Hướng dẫn</a>
+        </li>
+        <li class="currentPage == 'contact'? 'active':null">
+          <a href="/main/contact">Liên hệ</a>
+        </li>
+        <li>
+          <h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="currentPage == order? 'active':null">
+          <a href="/admin">Admin</a>
+        </li>
+      </ul>
+      <ul sec:authorize="hasAnyRole('MEMBER')" class="nav navbar-nav navbar-right">
+        <li>
+          <a style="color:white"></a>
+        </li>
+        <li>
+          <a href="/logout">[Đăng xuất]</a>
+        </li>
+      </ul>
+      <div class="navbar-right">
+        <a class="btn btn-danger navbar-btn" href="/registry">Đăng ký</a>
+        <button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#userLogin">Đăng nhập</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="userLogin" class="modal modal-style fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" align="center">
+            <b>Đăng nhập</b>
+          </h4>
+        </div>
+        <div class="modal-body form-style">
+          <form action="#" action="/login" method="post">
+            <div class="form-group">
+              <label>
+                <b>Email</b>
+              </label>
+              <input type="text" class="form-control" name="userEmail" placeholder="" />
+              <label>
+                <b>Mật khẩu</b>
+              </label>
+              <input type="password" class="form-control" name="userPassword" placeholder="" />
+              <button type="submit">Đăng nhập</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav> -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#" (click)="navHome()">
+    <img src="./assets/img/donut-store/BR6.jpg" class="img-thumbnail" style="width:80px; padding:0px;" />
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#" (click)="navHome()">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="navOrder()">Order</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="navContact()">Contact</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="navDetail()">Detail</a>
+      </li>
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+    <div class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="navLogin()">Login</button>
+    </div>
+  </div>
+</nav>

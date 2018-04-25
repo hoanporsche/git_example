@@ -33,18 +33,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http
       .authorizeRequests()
         .antMatchers("/registry").permitAll()
-        .antMatchers("/").authenticated()
+        .antMatchers("/").permitAll()
         .antMatchers("/admin/**").hasRole("ADMIN")
-        .and()
+      .and()
         .csrf().disable()
-      .formLogin()
-        .loginPage("/login")
+        .formLogin().loginPage("/login")
         .usernameParameter("userEmail")
         .passwordParameter("userPassword")
         .defaultSuccessUrl("/")
         .failureUrl("/login?error")
-        .and()
-      .exceptionHandling()
+      .and()
+        .exceptionHandling()
         .accessDeniedPage("/403");
   }
 

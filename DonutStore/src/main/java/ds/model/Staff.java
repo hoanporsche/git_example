@@ -26,6 +26,9 @@ public class Staff implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "staff_id", nullable = false)
   private int staffId;
+  @Size(max = 10)
+  @Column(name = "staff_code", nullable = false, unique = true)
+  private String staffCode;
   @Size(max = 255)
   @Column(name = "staff_name", nullable = false)
   private String staffName;
@@ -70,6 +73,14 @@ public class Staff implements Serializable {
 
   public void setStaffId(int staffId) {
     this.staffId = staffId;
+  }
+
+  public String getStaffCode() {
+    return staffCode;
+  }
+
+  public void setStaffCode(String staffCode) {
+    this.staffCode = staffCode;
   }
 
   public String getStaffName() {

@@ -7,15 +7,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "orders")
@@ -24,10 +20,9 @@ public class Order implements Serializable {
   private static final long serialVersionUID = 4197942078910386097L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
-  private Long id;
-
+  private String id;
+  
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
 
@@ -49,7 +44,6 @@ public class Order implements Serializable {
   private OrderStatus statusId;
 
   @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderId")
-  @JsonIgnore 
   private Set<Quantity> quantities;
 
   @Column(name = "is_shipping", nullable = false)
@@ -57,6 +51,9 @@ public class Order implements Serializable {
 
   @Column(name = "address_shipping")
   private String addressShipping;
+  
+  @Column(name = "distance")
+  private float distance;
 
   @Column(name = "shipping_price")
   private double shippingPrice;
@@ -70,11 +67,11 @@ public class Order implements Serializable {
     return this.nameCreated;
   }
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -90,7 +87,7 @@ public class Order implements Serializable {
     return dateUpdated;
   }
 
-  public void setDateUpdate(Date dateUpdated) {
+  public void setDateUpdated(Date dateUpdated) {
     this.dateUpdated = dateUpdated;
   }
 
@@ -134,7 +131,7 @@ public class Order implements Serializable {
     this.quantities = quantities;
   }
 
-  public boolean isIsShipping() {
+  public boolean isShipping() {
     return isShipping;
   }
 
@@ -148,6 +145,14 @@ public class Order implements Serializable {
 
   public void setAddressShipping(String addressShipping) {
     this.addressShipping = addressShipping;
+  }
+
+  public float getDistance() {
+    return distance;
+  }
+
+  public void setDistance(float distance) {
+    this.distance = distance;
   }
 
   public double getShippingPrice() {
