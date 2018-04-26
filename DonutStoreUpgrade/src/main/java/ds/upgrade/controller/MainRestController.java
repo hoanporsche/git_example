@@ -64,5 +64,4 @@ public class MainRestController {
     }
     return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
-
 }

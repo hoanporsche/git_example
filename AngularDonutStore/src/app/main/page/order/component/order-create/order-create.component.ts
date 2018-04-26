@@ -32,7 +32,6 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
 
   @ViewChild("search")
   searchElementRef: ElementRef;
-  content: ElementRef;
 
   origin = {
     lat: 0,
@@ -139,9 +138,9 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
       });
     });
   }
-  
-  get formData() { 
-    return <FormArray>this.formOrder.get('quantites'); 
+
+  get formData() {
+    return <FormArray>this.formOrder.get('quantites');
   }
 
   /**
@@ -160,14 +159,13 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
    * shippingPrice + distance + totalPrice
    */
   onChangeStoreId() {
-    this.searchElementRef = this.content;
     this.showGgmaps();
     if (this.visible) {
       this.visible = false;
       // this.addressShipping.setValue('');
-      this.shippingPrice.setValue('');
       this.distance.setValue('');
       this.totalPrice.setValue(this.totalPrice.value - this.shippingPrice.value);
+      this.shippingPrice.setValue('');
     }
   }
   /**
@@ -188,7 +186,7 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   }
   /**
    * find a store to show a marker of found store on GGMaps
-   * @param storeId 
+   * @param storeId
    */
   findStoreById(storeId: number): Store {
     for (let i = 0; i < this.listStore.length; i++) {
@@ -198,8 +196,8 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
   }
   /**
    * add one row that corresponding item in view
-   * @param event 
-   * @param item 
+   * @param event
+   * @param item
    */
   onChooseItem(event, item) {
     if (event.target.checked) {
