@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+var SockJs = require('sockjs-client');
+var Stomp = require('stompjs');
 import * as Rx from 'rxjs';
 
 @Injectable()
@@ -7,13 +9,20 @@ export class WebSocketService {
 
   constructor() { }
 
-  public connect(url): Rx.Subject<MessageEvent> {
-    if (!this.subject) {
-      this.subject = this.create(url);
-      console.log("Successfully connect: ", url);
-    }
-    return this.subject;
+  public connect(url) {
+    let socket = new SockJs(url);
+    let stompClient = Stomp.over(socket);
+
+    return stompClient;
   }
+
+  // public connect(url): Rx.Subject<MessageEvent> {
+  //   if (!this.subject) {
+  //     this.subject = this.create(url);
+  //     console.log("Successfully connect: ", url);
+  //   }
+  //   return this.subject;
+  // }
 
   private create(url): Rx.Subject<MessageEvent> {
     let ws = new WebSocket(url);

@@ -1,3 +1,4 @@
+import { WebSocketService } from './../../../core/services/web-socket.service';
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../../core/services/chat.service';
 import {StompService} from 'ng2-stomp-service';
@@ -11,7 +12,8 @@ export class ChatComponent implements OnInit {
 
   constructor(
     // private chatService: ChatService,
-    private stompService: StompService;
+    private stompService: StompService,
+    private wsSocket: WebSocketService,
   ) { }
 
   ngOnInit() {

@@ -1,3 +1,4 @@
+import { StompService } from 'ng2-stomp-service';
 import { SortService } from './services/sort.service';
 import { BaseService } from './services/base.service';
 import { ScriptLoaderService } from './services/script-loader.service';
@@ -31,6 +32,7 @@ import { WebSocketService } from './services/web-socket.service';
     ScriptLoaderService,
     LocalStorageService,
     SortService,
+    StompService,
     ChatService,
     WebSocketService
   ]
