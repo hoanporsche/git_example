@@ -2,26 +2,26 @@ package ds.upgrade.model.support;
 
 public class OutputMessage {
 
-  private String from;
-  private String text;
-  private String time;
+  private Object from;
+  private Object text;
+  private Object time;
 
-  public OutputMessage(final String from, final String text, final String time) {
+  public OutputMessage(final Object from, final Object text, final Object time) {
 
       this.from = from;
       this.text = text;
       this.time = time;
   }
 
-  public String getText() {
+  public Object getText() {
       return text;
   }
 
-  public String getTime() {
+  public Object getTime() {
       return time;
   }
 
-  public String getFrom() {
+  public Object getFrom() {
       return from;
   }
 }

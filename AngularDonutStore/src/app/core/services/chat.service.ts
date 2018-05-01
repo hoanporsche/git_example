@@ -12,19 +12,48 @@ export interface Message {
 export class ChatService {
   public messages: Subject<Message>;
 
-  private chatUrl = 'ws://localhost:6789' + '/chat';
+  // private chatUrl = 'ws://localhost:6789' + '/chat';
+  private chatUrl = environment.baseUrl + '/chat';
+  private appChatUrl = environment.baseUrl + '/app/chat';
+  private messageUrl = environment.baseUrl + '/topic/messages';
+
+  private stompClient: any;
   constructor(
     private wsService: WebSocketService
   ) {
-    this.messages = <Subject<Message>>wsService
-      .connect(this.chatUrl)
-      .map((response: MessageEvent): Message => {
-        let data = JSON.parse(response.data);
-        return {
-          author: data.author,
-          message: data.message
-        }
-      });
+    // this.messages = <Subject<Message>>wsService
+    //   .connect(this.chatUrl)
+    //   .map((response: MessageEvent): Message => {
+    //     let data = JSON.parse(response.data);
+    //     return {
+    //       author: data.author,
+    //       message: data.message
+    //     }
+    //   });
+
+    this.stompClient = this.wsService.connect(this.chatUrl);
+  }
+
+  public connect(): Object {
+    let messages;
+    this.stompClient.connect({}, frame => {
+      this.stompClient.subcribe(this.messageUrl, messageOutput => {
+        messages = messageOutput;
+      })
+    });
+    return messages;
+  }
+
+  public disconnect() {
+    if (this.stompClient)
+      this.stompClient.disconnect();
+  }
+
+  public sendMessage(messageInput) {
+    this.stompClient.send(this.appChatUrl, {}, JSON.stringify({
+      from: messageInput.from,
+      text: messageInput.text
+    }))
   }
 
 }
