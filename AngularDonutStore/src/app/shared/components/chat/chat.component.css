@@ -1,0 +1,23 @@
+.ds-chat-box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+.ds-box {
+  transition: height 1s ease-out;
+  width: 300px;
+  height: 0px;
+  background: red;
+  z-index: 9999;
+}
+.ds-open:hover>.ds-box{
+  height: 400px;
+  transition: height 1s ease-out;
+}
+.ds-open {
+  text-align: center;
+  font-size: 20px;
+  border: 2px solid #3F51B5;
+  background: #673AB7;
+  color: #eaeaea;
+}

@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from './services/local-storage.service';
+import { ChatService } from './services/chat.service';
+import { WebSocketService } from './services/web-socket.service';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { LocalStorageService } from './services/local-storage.service';
     NavigationService,
     ScriptLoaderService,
     LocalStorageService,
-    SortService
+    SortService,
+    ChatService,
+    WebSocketService
   ]
 })
 export class CoreModule { }

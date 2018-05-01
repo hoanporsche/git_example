@@ -5,20 +5,22 @@ import { SortableColumnComponent } from './components/sortable-column/sortable-c
 import { OnlyNumberDirective } from './directives/only-number.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HrefPreventDefaultDirective } from './directives/href-prevent-default.directive';
-import { AgmDirectionModule } from 'agm-direction'; 
+import { AgmDirectionModule } from 'agm-direction';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AgmDirectionModule
+    AgmDirectionModule,
   ],
   declarations: [
     SummaryPipe,
     SortableColumnComponent,
     HrefPreventDefaultDirective,
     OnlyNumberDirective,
+    ChatComponent,
   ],
   exports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { AgmDirectionModule } from 'agm-direction';
     SummaryPipe,
     SortableColumnComponent,
     OnlyNumberDirective,
-    AgmDirectionModule
+    AgmDirectionModule,
+    ChatComponent,
   ]
 })
 export class SharedModule { }
