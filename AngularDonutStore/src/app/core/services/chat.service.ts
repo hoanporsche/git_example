@@ -31,13 +31,13 @@ export class ChatService {
     //     }
     //   });
 
-    this.stompClient = this.wsService.connect(this.chatUrl);
   }
 
   public connect(): Object {
     let messages;
+    this.stompClient = this.wsService.connect(this.chatUrl);
     this.stompClient.connect({}, frame => {
-      this.stompClient.subcribe(this.messageUrl, messageOutput => {
+      this.stompClient.subscribe(this.messageUrl, messageOutput => {
         messages = messageOutput;
       })
     });
