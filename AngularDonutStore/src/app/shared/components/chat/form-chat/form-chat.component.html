@@ -1,0 +1,45 @@
+<div class="ds-formChat">
+  <div class="ds-chat-header">
+    <div class="ds-avatar_supporter">
+      <img src="https://widget-css.subiz.com/v3/img/avatar-chat.png" alt="">
+    </div>
+    <p>
+      <font class="ds-name_supporter">Tư vấn trực tuyến</font>
+    </p>
+    <p>
+      <font class="ds-text_supporter">Sẵn sàng hỗ trợ</font>
+    </p>
+  </div>
+  <div class="ds-all-messages">
+    <div class="col-12" *ngFor="let receivedMessage of allReceivedMessages">
+      <!-- START FOR USER's MESSAGES -->
+      <div class="ds-message" *ngIf="currentUser?.name === receivedMessage?.from.name">
+        <div class="col-12">
+          <div class="float-right">
+            <h5>{{ receivedMessage?.from.name }}</h5>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-12">
+          <div class="float-right">
+            <div class="ds-sent-message">
+              {{ receivedMessage?.text }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END FOR USER's MESSAGES -->
+      <!-- START FOR ADMIN's MESSAGES-->
+      <div class="ds-message" *ngIf="currentUser?.name !== receivedMessage?.from.name">
+        {{ receivedMessage?.from.name }}
+      </div>
+      <!-- END FOR ADMIN's MESSAGES-->
+    </div>
+  </div>
+  <div class="ds-input-message">
+    <p>
+      <textarea placeholder="Nhập nội dung và ấn &quot;Enter&quot; để chat" rows="2" cols="20" class="ds-textarea-online" [(ngModel)]="message"
+        (keyup.enter)="sendMessage()"></textarea>
+    </p>
+  </div>
+</div>

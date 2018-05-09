@@ -1,68 +1,90 @@
 import { WebSocketService } from './../../../core/services/web-socket.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { ChatService } from '../../../core/services/chat.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CommonValidator } from '../../custom-validator/common.validator';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
+declare var $: any;
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   @Input() currentUser;
-  formCurrentUser: FormGroup;
-  messages;
+  isOpen = false;
+  stompClient;
+  allReceivedMessages = [];
+
+  private chatUrl = environment.baseUrl + '/chat';
+  private appChatUrl = '/app/chat';
+  private messageUrl = '/topic/messages';
+
   constructor(
-    private chatService: ChatService,
-    private fb: FormBuilder,
-  ) {
-    this.formCurrentUser = fb.group({
-      name: ['', [Validators.required, CommonValidator.notEmpty], []],
-      phone: ['', [Validators.required, CommonValidator.notEmpty], []],
-      email: ['', [Validators.required, CommonValidator.notEmpty], []],
-    })
-  }
+    private wsService: WebSocketService,
+  ) { }
 
   ngOnInit() {
-    // if (!this.currentUser) {
-    //   this.currentUser = { userName: 'unknow' }
-    // }
   }
 
-  setCurrentUser() {
-    this.currentUser = {
-      name: this.name.value,
-      phone: this.phone.value,
-      email: this.email.value,
+  emitAction(event) {
+    if (event === 'byFb') {
+      console.log(event === 'byFb');
+    } else {
+      this.currentUser = event;
+      this.connect();
     }
   }
-  connect() {
-    this.messages = this.chatService.connect();
+  emitMessage(event) {
+    this.sendMessage(event);
   }
 
-  disconnect() {
-    this.chatService.disconnect();
+  reset() {
+    this.currentUser = undefined;
+  }
+
+  connect() {
+    this.stompClient = this.wsService.connect(this.chatUrl);
+    this.stompClient.connect({}, frame => {
+      this.stompClient.subscribe(this.messageUrl, messageOutput => {
+        this.showMessages(messageOutput);
+      })
+    });
   }
 
   sendMessage(message) {
-    const messageInput = {
+    this.stompClient.send(this.appChatUrl, {}, JSON.stringify({
       from: this.currentUser,
       text: message
+    }));
+  }
+
+  showMessages(messages) {
+    console.log(messages);
+    if (messages.body) {
+      // $(".ds-all-messages").append(
+      //   "<div class='col-12 ds-message'>"
+      //     + "<div class='col-12'>"
+      //       + "<div class='float-right'><h5>"+ receivedFoundUser.name +"</h5></div>"
+      //     + "</div>"
+      //     + "<div class='col-12'>"
+      //       + "<div class='ds-sent-message float-right'>" +recivedMessage.text + "</div>"
+      //     + "</div>"
+      //   +"</div>");
+      this.allReceivedMessages.push(JSON.parse(messages.body));
     }
-    this.chatService.sendMessage(messageInput);
   }
 
-  get name() {
-    return this.formCurrentUser.get('name');
+  openBox() {
+    this.isOpen = true;
+  }
+  closeBox() {
+    this.isOpen = false;
+    this.currentUser = undefined;
+    this.stompClient.disconnect();
   }
 
-  get phone() {
-    return this.formCurrentUser.get('phone');
-  }
-
-  get email() {
-    return this.formCurrentUser.get('email');
+  ngOnDestroy() {
+    if (this.stompClient)
+      this.stompClient.disconnect();
   }
 }

@@ -1,0 +1,31 @@
+.ds-input {
+  width: 100%;
+  background-clip: padding-box;
+  border: 1px solid #ababab;
+  border-radius: 2px;
+  padding: 6px 7px 8px 7px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0px 0px 3px #e4e4e4;
+}
+
+.ds-form-group {
+  padding: 5% 5% 0% 5%;
+  color: black;
+}
+
+.fa-facebook-square {
+  color: #888;
+  font-size: 25px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.fa-facebook-square:hover {
+  color: blue;
+  font-size: 25px;
+  display: inline-block;
+  vertical-align: middle;
+}

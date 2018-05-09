@@ -2,22 +2,22 @@ package ds.upgrade.model.support;
 
 public class Message {
 
-  private Object from;
-  private Object text;
+  private Sender from;
+  private String text;
 
-  public Object getFrom() {
+  public Sender getFrom() {
     return from;
   }
 
-  public void setFrom(Object from) {
+  public void setFrom(Sender from) {
     this.from = from;
   }
 
-  public Object getText() {
+  public String getText() {
     return text;
   }
 
-  public void setText(Object text) {
+  public void setText(String text) {
     this.text = text;
   }
 

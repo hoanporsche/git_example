@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HrefPreventDefaultDirective } from './directives/href-prevent-default.directive';
 import { AgmDirectionModule } from 'agm-direction';
 import { ChatComponent } from './components/chat/chat.component';
+import { FormUserComponent } from './components/chat/form-user/form-user.component';
+import { FormChatComponent } from './components/chat/form-chat/form-chat.component';
 
 @NgModule({
   imports: [
@@ -21,6 +23,8 @@ import { ChatComponent } from './components/chat/chat.component';
     HrefPreventDefaultDirective,
     OnlyNumberDirective,
     ChatComponent,
+    FormUserComponent,
+    FormChatComponent,
   ],
   exports: [
     CommonModule,
