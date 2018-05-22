@@ -11,7 +11,7 @@
   </div>
   <div class="ds-form-group">
     <div class="input-group">
-      <input type="text" class="m-input ds-input" OnlyNumber formControlName="phone" maxlength="255" placeholder="Enter your's phone">
+      <input type="text" class="m-input ds-input" OnlyNumber formControlName="phone" maxlength="20" placeholder="Enter your's phone">
       <div class="error-no-padding" *ngIf="name.touched && name.invalid">
         <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
           Phone is required.
