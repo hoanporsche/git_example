@@ -4,6 +4,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import ds.upgrade.model.SenderDb;
+
 public class Sender {
 
   @NotEmpty
@@ -12,6 +14,18 @@ public class Sender {
   @NotEmpty
   @NotNull
   private String phone;
+  
+  public Sender() {}
+  
+  public Sender(String name, String phone) {
+    this.name = name;
+    this.phone = phone;
+  }
+  
+  public Sender(SenderDb senderDb) {
+    this.name = senderDb.getName();
+    this.phone = senderDb.getPhone();
+  }
   
   public String getName() {
     return name;

@@ -1,7 +1,6 @@
 package ds.upgrade.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,8 +16,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "sender_db")
-public class SenderDb implements Serializable {
+@Table(name = "room_db")
+public class RoomDb implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
 
@@ -30,24 +27,16 @@ public class SenderDb implements Serializable {
   private Long id;
   @Column(name = "name")
   private String name;
-  @Column(name = "phone")
-  private String phone;
-  @Column(name = "last_connect")
-  private Date lastConnect;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderDbId")
+  @ManyToMany(mappedBy = "roomDbs" )
+  private Set<SenderDb> senderDbs;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomDbId")
   @JsonIgnore
   private Set<MessageDb> messageDbs;
-  @ManyToMany
-  @JoinTable(name = "sender_room_db", joinColumns = @JoinColumn(name = "sender_db_id"),
-      inverseJoinColumns = @JoinColumn(name = "room_db_id"))
-  @JsonIgnore
-  private Set<RoomDb> roomDbs;
   
-  public SenderDb() {}
+  public RoomDb() {}
   
-  public SenderDb(String name, String phone) {
+  public RoomDb(String name) {
     this.name = name;
-    this.phone = phone;
   }
 
   public Long getId() {
@@ -66,20 +55,12 @@ public class SenderDb implements Serializable {
     this.name = name;
   }
 
-  public String getPhone() {
-    return phone;
+  public Set<SenderDb> getSenderDbs() {
+    return senderDbs;
   }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public Date getLastConnect() {
-    return lastConnect;
-  }
-
-  public void setLastConnect(Date lastConnect) {
-    this.lastConnect = lastConnect;
+  public void setSenderDbs(Set<SenderDb> senderDbs) {
+    this.senderDbs = senderDbs;
   }
 
   public Set<MessageDb> getMessageDbs() {
@@ -90,18 +71,10 @@ public class SenderDb implements Serializable {
     this.messageDbs = messageDbs;
   }
 
-  public Set<RoomDb> getRoomDbs() {
-    return roomDbs;
-  }
-
-  public void setRoomDbs(Set<RoomDb> roomDbs) {
-    this.roomDbs = roomDbs;
-  }
-
   @Override
   public String toString() {
-    return "SenderDb [id=" + id + ", name=" + name + ", phone=" + phone + ", lastConnect="
-        + lastConnect + "]";
+    return "RoomDb [id=" + id + ", name=" + name + ", senderDbs=" + senderDbs + ", messageDbs="
+        + messageDbs + "]";
   }
   
 }

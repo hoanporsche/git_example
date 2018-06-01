@@ -12,7 +12,9 @@ public class Message {
   @NotEmpty
   @NotNull
   private String text;
+  private String roomName;
 
+  public Message() {}
   public Sender getFrom() {
     return from;
   }
@@ -29,9 +31,16 @@ public class Message {
     this.text = text;
   }
 
+  public String getRoomName() {
+    return roomName;
+  }
+
+  public void setRoomName(String roomName) {
+    this.roomName = roomName;
+  }
   @Override
   public String toString() {
-    return "Message [from=" + from + ", text=" + text + "]";
+    return "Message [from=" + from + ", text=" + text + ", roomName=" + roomName + "]";
   }
 
 }

@@ -17,7 +17,7 @@ export class FormUserComponent implements OnInit {
   ) {
     this.formCurrentUser = fb.group({
       name: ['', [Validators.required, CommonValidator.notEmpty], []],
-      phone: ['', [Validators.required, CommonValidator.notEmpty], []],
+      phone: ['', [Validators.required, CommonValidator.notEmpty, CommonValidator.mustPhoneNumber], []],
     });
   }
 

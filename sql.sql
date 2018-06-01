@@ -288,12 +288,30 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `donutstore`.`room_db` (
+	`id` BIGINT NOT NULL auto_increment,
+    `name` VARCHAR(40) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `donutstore`.`sender_db` (
 	`id` BIGINT NOT NULL auto_increment,
-    `name` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
     `last_connect` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY(`id`)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `donutstore`.`sender_room_db` (
+	`sender_db_id` BIGINT NOT NULL,
+    `room_db_id` BIGINT NOT NULL,
+    PRIMARY KEY(`sender_db_id`,`room_db_id`),
+    FOREIGN KEY (`sender_db_id`) REFERENCES `donutstore`.`sender_db`(`id`),
+    FOREIGN KEY(`room_db_id`) REFERENCES `donutstore`.`room_db`(`id`)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
@@ -303,8 +321,10 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`message_db` (
     `sender_db_id` BIGINT NOT NULL,
     `text` VARCHAR(255) NOT NULL,
     `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `room_db_id` BIGINT NOT NULL,
     PRIMARY KEY(`id`),
-    FOREIGN KEY(`sender_db_id`) REFERENCES `donutstore`.`sender_db`(`id`)
+    FOREIGN KEY(`sender_db_id`) REFERENCES `donutstore`.`sender_db`(`id`),
+    FOREIGN KEY(`room_db_id`) REFERENCES `donutstore`.`room_db`(`id`)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;

@@ -130,16 +130,26 @@ INSERT INTO `donutstore`.`material_daily_report` VALUES
 ('11','2','2018-03-07','5','10','11','enough'),
 ('12','2','2018-02-03','6','10','11','enough');
 
+INSERT INTO `donutstore`.`room_db` VALUES 
+('1', 'Customer1'),
+('2', 'Customer2');
+
 INSERT INTO `donutstore`.`sender_db` VALUES
 ('1','giangvo','0943451794','2018-05-22'),
 ('2','nuitruc','0969550954','2018-05-22'),
 ('3','Hoang ngu','0988888888','2018-05-22'),
 ('4','Phong ngu','0988888888','2018-05-22');
 
+INSERT INTO `donutstore`.`sender_db` VALUES
+('1','1'),
+('2','1'),
+('3','2'),
+('4','2');
+
 INSERT INTO `donutstore`.`message_db` VALUES 
-('1','3','Hello','2018-05-22 13:04;00'),
-('2','1','Chao ban','2018-05-22 13:05;00'),
-('3','4','Minh muon mua banh ran','2018-05-22 13:09;00'),
-('4','2','Ban lay bao nhieu chiec a','2018-05-22 13:10;00');
+('1','3','Hello','2018-05-22 13:04;00', '1'),
+('2','1','Chao ban','2018-05-22 13:05;00', '1'),
+('3','4','Minh muon mua banh ran','2018-05-22 13:09;00', '2'),
+('4','2','Ban lay bao nhieu chiec a','2018-05-22 13:10;00', '2');
 
 

@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ds.upgrade.model.SenderDb;
-
 @Entity
 @Table(name = "message_db")
 public class MessageDb implements Serializable{
@@ -29,12 +27,16 @@ public class MessageDb implements Serializable{
   @Column(name = "text")
   private String text;
   @Column(name = "time")
-  private Date time;
+  private Date time = new Date();
+  @ManyToOne
+  @JoinColumn(name = "room_db_id", referencedColumnName = "id", nullable = false)
+  private RoomDb roomDbId;
   
   public MessageDb() {}
   
-  public MessageDb(SenderDb senderDsId, String text) {
+  public MessageDb(SenderDb senderDsId, RoomDb roomDbId, String text) {
     this.senderDbId = senderDsId;
+    this.roomDbId = roomDbId;
     this.text = text;
   }
 
@@ -68,6 +70,14 @@ public class MessageDb implements Serializable{
 
   public void setTime(Date time) {
     this.time = time;
+  }
+
+  public RoomDb getRoomDbId() {
+    return roomDbId;
+  }
+
+  public void setRoomDbId(RoomDb roomDbId) {
+    this.roomDbId = roomDbId;
   }
 
   @Override
