@@ -36,6 +36,7 @@ public class SenderDbServiceImpl implements SenderDbService {
       listRoomOfSender = new HashSet<>();
     }
     listRoomOfSender.add(newRoomDb);
+    senderDb.setRoomDbs(listRoomOfSender);
     return senderDbRepository.save(senderDb);
   }
 

@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class SenderDb implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderDbId")
   @JsonIgnore
   private Set<MessageDb> messageDbs;
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "sender_room_db", joinColumns = @JoinColumn(name = "sender_db_id"),
       inverseJoinColumns = @JoinColumn(name = "room_db_id"))
   @JsonIgnore
@@ -100,8 +101,8 @@ public class SenderDb implements Serializable {
 
   @Override
   public String toString() {
-    return "SenderDb [id=" + id + ", name=" + name + ", phone=" + phone + ", lastConnect="
-        + lastConnect + "]";
+    return "SenderDb [name=" + name + ", phone=" + phone + ", lastConnect=" + lastConnect
+        + ", messageDbs=" + messageDbs + ", roomDbs=" + roomDbs + "]";
   }
   
 }

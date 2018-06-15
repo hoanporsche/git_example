@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   logout() {
     // clear token remove user from local storage to log user out
     this.localStorageService.removeItem(LOCAL_STORAGE.TOKEN);
-
+    this.identityService.setCurrentUser(undefined);
     this.navigationService.navLogin();
   }
 

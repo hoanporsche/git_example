@@ -1,5 +1,6 @@
+import { IdentityService } from './../../../core/services/identity.service';
 import { NavigationService } from './../../../core/services/navigation.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-header-main',
@@ -7,14 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-main.component.css']
 })
 export class HeaderMainComponent implements OnInit {
-
-  constructor(private navigationService: NavigationService) { }
+  currentUser;
+  constructor(
+    private navigationService: NavigationService,
+    private identityService: IdentityService,
+  ) {
+  }
 
   ngOnInit() {
+    this.currentUser = this.identityService.getCurrentUser();
   }
 
   navLogin() {
     this.navigationService.navLogin();
+  }
+
+  navManagement() {
+    this.navigationService.navHomepage();
   }
 
   navHome() {
@@ -28,7 +38,7 @@ export class HeaderMainComponent implements OnInit {
   navContact() {
     this.navigationService.navContact();
   }
-  
+
   navDetail() {
     this.navigationService.navDetail();
   }

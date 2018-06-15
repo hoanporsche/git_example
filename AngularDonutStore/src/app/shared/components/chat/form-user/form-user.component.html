@@ -1,7 +1,7 @@
 <form [formGroup]="formCurrentUser" (ngSubmit)="setCurrentUser()">
   <div class="ds-form-group">
     <div class="input-group">
-      <input type="text" class="m-input ds-input" formControlName="name" maxlength="255" placeholder="Enter your's name">
+      <input type="text" class="m-input ds-input" formControlName="name" maxlength="20" placeholder="Enter your's name">
       <div class="error-no-padding" *ngIf="name.touched && name.invalid">
         <div *ngIf="name.hasError('required') || name.hasError('notEmpty')">
           Name is required.
@@ -12,8 +12,8 @@
   <div class="ds-form-group">
     <div class="input-group">
       <input type="text" class="m-input ds-input" OnlyNumber formControlName="phone" maxlength="20" placeholder="Enter your's phone">
-      <div class="error-no-padding" *ngIf="name.touched && name.invalid">
-        <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty')">
+      <div class="error-no-padding" *ngIf="phone.touched && phone.invalid">
+        <div *ngIf="phone.hasError('required') || phone.hasError('notEmpty') || phone.hasError('mustPhoneNumber')">
           Phone is required.
         </div>
       </div>

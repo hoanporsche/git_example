@@ -31,7 +31,7 @@ public class Category implements Serializable {
   @Column(name = "id", nullable = false)
   private Long id;
   @NotEmpty
-  @Size(max = 255)
+  @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")

@@ -17,6 +17,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
   @Query("SELECT u FROM User u WHERE u.email = :email AND u.enabled = true")
   User findByEnabledEmail(@Param(Constants.PARAM.EMAIL_PARAM) String email);
   
+  @Query("SELECT u FROM User u WHERE u.storeId.phone = :phone AND u.enabled = true")
+  User findByEnabledPhone(@Param(Constants.PARAM.PHONE_PARAM) String phone);
+  
   @Query("SELECt u FROM User u WHERE u.enabled = true")
   List<User> findAll();
 

@@ -28,6 +28,7 @@ public class RoomDb implements Serializable {
   @Column(name = "name")
   private String name;
   @ManyToMany(mappedBy = "roomDbs" )
+  @JsonIgnore
   private Set<SenderDb> senderDbs;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomDbId")
   @JsonIgnore

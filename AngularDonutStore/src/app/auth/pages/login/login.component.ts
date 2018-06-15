@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       maxlength: 50,
     }
   };
-  
+
   private redirect: string;
 
   constructor(
@@ -61,10 +61,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     Helpers.setLoading(false);
     const query = this.route.snapshot.queryParamMap;
-    
+
     const autoLogin = query.get("auto_login") === "true" ? true : false;
   }
-  
+
   login(auto?: boolean) {
     Helpers.setLoading(true);
     this.loading = true;
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
           this.identityService.initializeCurrentUser();
           this.navigationService.navHomepage();
           Helpers.setLoading(false);
-        } 
+        }
       }, (error: Response) => {
         Helpers.setLoading(false);
         this.loading = false;
@@ -97,6 +97,9 @@ export class LoginComponent implements OnInit {
     this.navigationService.navForgotPassword();
   }
 
+  onCancel() {
+    this.navigationService.navHome();
+  }
 
   displaySignInForm() {
     const login = $('#m_login');

@@ -1,6 +1,7 @@
 package ds.upgrade.model.support;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -10,9 +11,11 @@ public class Sender {
 
   @NotEmpty
   @NotNull
+  @Size(max = 20)
   private String name;
   @NotEmpty
   @NotNull
+  @Size(max = 20)
   private String phone;
   
   public Sender() {}

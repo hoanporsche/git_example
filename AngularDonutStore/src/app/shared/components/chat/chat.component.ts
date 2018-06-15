@@ -1,6 +1,8 @@
+import { ChatService } from './../../../core/services/chat.service';
 import { WebSocketService } from './../../../core/services/web-socket.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 @Component({
@@ -16,11 +18,17 @@ export class ChatComponent implements OnInit, OnDestroy {
   allReceivedMessages = [];
 
   private chatUrl = environment.baseUrl + '/chat';
-  private appChatUrl = '/app/chat';
-  private messageUrl = '/topic/messages';
+  // private appChatUrl = '/app/chat';
+  // private messageUrl = '/topic/messages';
 
+  private appChatRoomUrl = '/app/chat/room/';
+  private roomChatUrl = '/topic/room/';
+  private roomName: string;
+
+  private subCreateRoom: Subscription;
   constructor(
     private wsService: WebSocketService,
+    private chatService: ChatService,
   ) { }
 
   ngOnInit() {
@@ -31,7 +39,11 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.log(event === 'byFb');
     } else {
       this.currentUser = event;
-      this.connect();
+      this.subCreateRoom = this.chatService.createRoom(event)
+        .subscribe(response => {
+          this.roomName = response.name
+          this.connect();
+        });
     }
   }
   emitMessage(event) {
@@ -42,36 +54,29 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.currentUser = undefined;
   }
 
+  // connect() {
+  //   this.stompClient = this.wsService.connect(this.chatUrl);
+  //   this.stompClient.connect({}, frame => {
+  //     this.stompClient.subscribe(this.roomChatUrl, messageOutput => {
+  //       this.showMessages(messageOutput);
+  //     })
+  //   });
+  // }
+
   connect() {
     this.stompClient = this.wsService.connect(this.chatUrl);
     this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe(this.messageUrl, messageOutput => {
-        this.showMessages(messageOutput);
+      this.stompClient.subscribe(this.roomChatUrl + this.roomName, messageOutput => {
+        this.allReceivedMessages.push(JSON.parse(messageOutput.body));
       })
     });
   }
 
   sendMessage(message) {
-    this.stompClient.send(this.appChatUrl, {}, JSON.stringify({
+    this.stompClient.send(this.appChatRoomUrl + this.roomName, {}, JSON.stringify({
       from: this.currentUser,
       text: message
     }));
-  }
-
-  showMessages(messages) {
-    console.log(messages);
-    if (messages.body) {
-      // $(".ds-all-messages").append(
-      //   "<div class='col-12 ds-message'>"
-      //     + "<div class='col-12'>"
-      //       + "<div class='float-right'><h5>"+ receivedFoundUser.name +"</h5></div>"
-      //     + "</div>"
-      //     + "<div class='col-12'>"
-      //       + "<div class='ds-sent-message float-right'>" +recivedMessage.text + "</div>"
-      //     + "</div>"
-      //   +"</div>");
-      this.allReceivedMessages.push(JSON.parse(messages.body));
-    }
   }
 
   openBox() {
@@ -80,7 +85,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   closeBox() {
     this.isOpen = false;
     this.currentUser = undefined;
-    this.stompClient.disconnect();
+    if (this.stompClient)
+      this.stompClient.disconnect();
   }
 
   ngOnDestroy() {

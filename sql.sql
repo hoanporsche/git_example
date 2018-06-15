@@ -8,7 +8,7 @@ USE `donutstore` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BOOLEAN NOT NULL,
@@ -23,7 +23,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
   `picture` VARCHAR(1000),
   `category_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -43,9 +43,9 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`supply` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(40) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
-  `address` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BOOLEAN NOT NULL,
@@ -59,8 +59,8 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `picture` VARCHAR(1000),
+  `name` VARCHAR(20) NOT NULL,
+  `picture` VARCHAR(255),
   `supply_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -93,7 +93,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`order_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`),
@@ -104,12 +104,12 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `donutstore`.`store`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
+CREATE TABLE IF NOT EXISTS `dosnutstore`.`store` (
  `id` BIGINT NOT NULL AUTO_INCREMENT,
- `name` VARCHAR(255) NOT NULL,
- `picture` VARCHAR(1000),
+ `name` VARCHAR(20) NOT NULL,
+ `picture` VARCHAR(255),
  `phone` VARCHAR(20) NOT NULL,
- `address` VARCHAR(255) NOT NULL,
+ `address` VARCHAR(60) NOT NULL,
  `lat` VARCHAR(20),
  `lng` VARCHAR(20),
  `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -127,12 +127,12 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `id` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name_created` VARCHAR(255) NOT NULL,
+  `name_created` VARCHAR(40) NOT NULL,
   `phone` VARCHAR(18) NULL DEFAULT NULL,
   `store_id` BIGINT NOT NULL,
   `status_id` BIGINT NOT NULL,
   `is_shipping` BOOLEAN NOT NULL,
-  `address_shipping` VARCHAR(255) NULL DEFAULT NULL,
+  `address_shipping` VARCHAR(60) NULL DEFAULT NULL,
   `distance` FLOAT,
   `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
   `total_price` DECIMAL(10,0) NOT NULL,
@@ -163,7 +163,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`role` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
   `enabled` boolean not null,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
@@ -175,7 +175,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`working_calender` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`),
@@ -188,15 +188,15 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`staff` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(40) NOT NULL,
   `picture` VARCHAR(255),
   `store_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `phone` VARCHAR(20) NOT NULL,
-  `address` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(60) NOT NULL,
   `identity_card` VARCHAR(12) NOT NULL UNIQUE,
-  `home_town` VARCHAR(45) NOT NULL,
+  `home_town` VARCHAR(20) NOT NULL,
   `salary` decimal(10,0) not null,
   `working_calender_id` BIGINT NOT NULL,
   `enabled` BOOLEAN NOT NULL,
@@ -212,7 +212,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`timekeeping_status` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(20) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
     `enabled` boolean not null,
     PRIMARY KEY(`id`),
@@ -242,7 +242,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(255) NOT NULL UNIQUE,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
   `password` VARCHAR(60) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -301,7 +301,8 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`sender_db` (
     `name` VARCHAR(20) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
     `last_connect` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`),
+    UNIQUE INDEX `phone_UNIQUE` (`phone` ASC)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
@@ -325,6 +326,18 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`message_db` (
     PRIMARY KEY(`id`),
     FOREIGN KEY(`sender_db_id`) REFERENCES `donutstore`.`sender_db`(`id`),
     FOREIGN KEY(`room_db_id`) REFERENCES `donutstore`.`room_db`(`id`)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS`donutstore`.`notification_db` (
+	`id` BIGINT NOT NULL auto_increment,
+    `user_id` BIGINT NOT NULL,
+    `text` VARCHAR(255) NOT NULL,
+    `time` TIMESTAMP NOT NULL,
+    `seen` BOOLEAN NOT NULL,
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`user_id`) REFERENCES `donutstore`.`user`(`id`)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;

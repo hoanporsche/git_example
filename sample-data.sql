@@ -137,10 +137,10 @@ INSERT INTO `donutstore`.`room_db` VALUES
 INSERT INTO `donutstore`.`sender_db` VALUES
 ('1','giangvo','0943451794','2018-05-22'),
 ('2','nuitruc','0969550954','2018-05-22'),
-('3','Hoang ngu','0988888888','2018-05-22'),
+('3','Hoang ngu','0988888808','2018-05-22'),
 ('4','Phong ngu','0988888888','2018-05-22');
 
-INSERT INTO `donutstore`.`sender_db` VALUES
+INSERT INTO `donutstore`.`sender_room_db` VALUES
 ('1','1'),
 ('2','1'),
 ('3','2'),
@@ -152,4 +152,9 @@ INSERT INTO `donutstore`.`message_db` VALUES
 ('3','4','Minh muon mua banh ran','2018-05-22 13:09;00', '2'),
 ('4','2','Ban lay bao nhieu chiec a','2018-05-22 13:10;00', '2');
 
+INSERT INTO `donutstore`.`notification_db` VALUES
+('1','1','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
+('2','2','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
+('3','3','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
+('4','4','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0');
 

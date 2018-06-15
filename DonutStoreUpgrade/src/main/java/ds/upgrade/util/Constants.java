@@ -47,6 +47,8 @@ public class Constants {
     public static final String EMAIL_PARAM = "email";
     public static final String ROLE_ID_PARAM = "roleId";
     public static final String ROLES_PARAM = "roles";
+    public static final String PHONE_PARAM = "phone";
+    public static final String USER_ID_PARAM = "userId";
   }
   
   public static class API_URL {
@@ -62,6 +64,7 @@ public class Constants {
     public static final String RESET_PASSWORD = "/reset-password";
     public static final String CHANGE_PASSWORD = "/change-password";
     public static final String FIND_DAILY_REPORT = "/find-daily-report";
+    public static final String USER_HAS_SEEN = "/user-has-seen";
   }
   
   public static class MODEL {
@@ -80,6 +83,7 @@ public class Constants {
     public static final String TIMEKEEPING_STATUS_MODEL = "timekeeping-status";
     public static final String USER_MODEL = "user";
     public static final String WORKING_CALENDER_MODEL = "working-calender";
+    public static final String NOTIFICATION_DB_MODEL = "notification-db";
   }
   
   public static class FORMAT {

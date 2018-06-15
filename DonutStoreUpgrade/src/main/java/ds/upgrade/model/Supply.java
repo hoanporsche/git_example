@@ -31,7 +31,7 @@ public class Supply implements Serializable {
 
   @Column(name = "name", nullable = false, unique = true)
   @NotEmpty
-  @Size(min = 2, max = 255)
+  @Size(min = 2, max = 40)
   private String name;
 
   @Column(name = "phone", nullable = false)
@@ -41,7 +41,7 @@ public class Supply implements Serializable {
 
   @Column(name = "address", nullable = false)
   @NotEmpty
-  @Size(min = 2, max = 255)
+  @Size(min = 2, max = 60)
   private String address;
 
   @Column(name = "date_created", nullable = false)

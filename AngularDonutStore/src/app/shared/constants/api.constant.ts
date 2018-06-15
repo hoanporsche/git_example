@@ -12,6 +12,8 @@ export const API_URL = Object.freeze({
     FIND_BY_IDENTITY_CARD: '/find-by-identity-card',
     FIND_BY_EMAIL: '/find-by-email',
     FIND_DAILY_REPORT: '/find-daily-report',
+    CREATE_ROOM: '/create-room',
+    USER_HAS_SEEN: '/user-has-seen',
 });
 
 export const MODEL_URL= Object.freeze({
@@ -30,4 +32,5 @@ export const MODEL_URL= Object.freeze({
     TIMEKEEPING_STATUS: '/timekeeping-status',
     USER: '/user',
     WORKING_CALENDER: '/working-calender',
+    NOTIFICATION: '/notification-db',
 });

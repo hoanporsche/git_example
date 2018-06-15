@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "orders")
@@ -29,9 +30,11 @@ public class Order implements Serializable {
   @Column(name = "date_updated")
   private Date dateUpdated;
 
+  @Size(max = 40)
   @Column(name = "name_created", nullable = false)
   private String nameCreated;
 
+  @Size(max = 20)
   @Column(name = "phone", nullable = false)
   private String phone;
 
@@ -49,6 +52,7 @@ public class Order implements Serializable {
   @Column(name = "is_shipping", nullable = false)
   private boolean isShipping;
 
+  @Size(max = 60)
   @Column(name = "address_shipping")
   private String addressShipping;
   

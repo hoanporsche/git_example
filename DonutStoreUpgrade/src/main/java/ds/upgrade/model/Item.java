@@ -36,11 +36,11 @@ public class Item implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @NotEmpty
-  @Size(max = 255)
+  @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   @NotEmpty
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "picture")
   private String picture;
 

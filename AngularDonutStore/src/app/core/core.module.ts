@@ -1,3 +1,5 @@
+import { ChatService } from './services/chat.service';
+import { NotificationService } from './services/notification.service';
 import { SortService } from './services/sort.service';
 import { BaseService } from './services/base.service';
 import { ScriptLoaderService } from './services/script-loader.service';
@@ -30,7 +32,9 @@ import { WebSocketService } from './services/web-socket.service';
     ScriptLoaderService,
     LocalStorageService,
     SortService,
-    WebSocketService
+    WebSocketService,
+    NotificationService,
+    ChatService,
   ]
 })
 export class CoreModule { }

@@ -1,3 +1,4 @@
+import { InfiniteScrollDirective } from './directives/infinite-scroll.directive';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SummaryPipe } from './pipes/summary.pipe';
@@ -9,6 +10,8 @@ import { AgmDirectionModule } from 'agm-direction';
 import { ChatComponent } from './components/chat/chat.component';
 import { FormUserComponent } from './components/chat/form-user/form-user.component';
 import { FormChatComponent } from './components/chat/form-chat/form-chat.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { ElapsedTimePipe } from './pipes/elapsed-time.pipe';
 
 @NgModule({
   imports: [
@@ -25,6 +28,9 @@ import { FormChatComponent } from './components/chat/form-chat/form-chat.compone
     ChatComponent,
     FormUserComponent,
     FormChatComponent,
+    NotificationComponent,
+    ElapsedTimePipe,
+    InfiniteScrollDirective,
   ],
   exports: [
     CommonModule,
@@ -36,6 +42,9 @@ import { FormChatComponent } from './components/chat/form-chat/form-chat.compone
     OnlyNumberDirective,
     AgmDirectionModule,
     ChatComponent,
+    NotificationComponent,
+    ElapsedTimePipe,
+    InfiniteScrollDirective,
   ]
 })
 export class SharedModule { }

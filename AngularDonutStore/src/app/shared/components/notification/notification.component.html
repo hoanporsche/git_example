@@ -1,0 +1,17 @@
+<div class="m-scrollable" data-scrollable="true" data-max-height="250" data-mobile-max-height="200">
+  <div class="m-list-timeline m-list-timeline--skin-light" [infiniteScroll]="LoadMore">
+    <div class="m-list-timeline__items" *ngIf="listNotification && listNotification.length > 0">
+
+      <div class="m-list-timeline__item" *ngFor="let notification of listNotification; let i = index;">
+        <span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
+        <a href="" class="m-list-timeline__text" [ngClass]="{'background-not-seen': !notification.seen}" (click)="onSeenNoti(notification?.id, i)">
+          {{ notification?.text }}
+        </a>
+        <span class="m-list-timeline__time" [ngClass]="{'background-not-seen': !notification.seen}">
+          {{ notification?.time | elapsedTime }}
+        </span>
+
+      </div>
+    </div>
+  </div>
+</div>
