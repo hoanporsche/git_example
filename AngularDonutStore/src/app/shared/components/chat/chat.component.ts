@@ -1,4 +1,4 @@
-import { ChatService } from './../../../core/services/chat.service';
+import { ChatFreeService } from './../../../core/services/chat-free.service';
 import { WebSocketService } from './../../../core/services/web-socket.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { environment } from '../../../../environments/environment';
@@ -18,17 +18,17 @@ export class ChatComponent implements OnInit, OnDestroy {
   allReceivedMessages = [];
 
   private chatUrl = environment.baseUrl + '/chat';
-  // private appChatUrl = '/app/chat';
-  // private messageUrl = '/topic/messages';
 
   private appChatRoomUrl = '/app/chat/room/';
   private roomChatUrl = '/topic/room/';
   private roomName: string;
 
   private subCreateRoom: Subscription;
+  private subChatRoom: Subscription;
+
   constructor(
     private wsService: WebSocketService,
-    private chatService: ChatService,
+    private chatService: ChatFreeService,
   ) { }
 
   ngOnInit() {
@@ -53,15 +53,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   reset() {
     this.currentUser = undefined;
   }
-
-  // connect() {
-  //   this.stompClient = this.wsService.connect(this.chatUrl);
-  //   this.stompClient.connect({}, frame => {
-  //     this.stompClient.subscribe(this.roomChatUrl, messageOutput => {
-  //       this.showMessages(messageOutput);
-  //     })
-  //   });
-  // }
 
   connect() {
     this.stompClient = this.wsService.connect(this.chatUrl);

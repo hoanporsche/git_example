@@ -1,4 +1,5 @@
-import { ChatService } from './services/chat.service';
+import { ChatInternalService } from './services/chat-internal.service';
+import { ChatFreeService } from './services/chat-free.service';
 import { NotificationService } from './services/notification.service';
 import { SortService } from './services/sort.service';
 import { BaseService } from './services/base.service';
@@ -34,7 +35,8 @@ import { WebSocketService } from './services/web-socket.service';
     SortService,
     WebSocketService,
     NotificationService,
-    ChatService,
+    ChatFreeService,
+    ChatInternalService,
   ]
 })
 export class CoreModule { }

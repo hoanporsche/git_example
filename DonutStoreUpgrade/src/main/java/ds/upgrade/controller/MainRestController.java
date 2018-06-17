@@ -14,7 +14,7 @@ import ds.upgrade.model.Store;
 import ds.upgrade.service.CategoryService;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.service.StoreService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 @RestController
 public class MainRestController {
@@ -26,42 +26,42 @@ public class MainRestController {
   @Autowired
   private StoreService storeService;
   
-  @GetMapping(Constants.MODEL.CATEGORY_MODEL + Constants.API_URL.FIND_ALL)
+  @GetMapping(AppConstants.MODEL.CATEGORY_MODEL + AppConstants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllCategory() {
     try {
       List<Category> list = categoryService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
   
-  @GetMapping(Constants.MODEL.ITEM_MODEL + Constants.API_URL.FIND_ALL)
+  @GetMapping(AppConstants.MODEL.ITEM_MODEL + AppConstants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllItem() {
     try {
       List<Item> list = itemService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<Item>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
   
-  @GetMapping(Constants.MODEL.STORE_MODEL + Constants.API_URL.FIND_ALL)
+  @GetMapping(AppConstants.MODEL.STORE_MODEL + AppConstants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllStore() {
     try {
       List<Store> list = storeService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<Store>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ds.upgrade.model.Material;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 public interface MaterialRepository
     extends JpaRepository<Material, Long>, JpaSpecificationExecutor<Material> {
@@ -19,5 +19,5 @@ public interface MaterialRepository
   Material findByName(String name);
   
   @Query("SELECT m FROM Material m WHERE m.supplyId.id = :id")
-  List<Material> findBySupply(@Param(Constants.PARAM.ID_PARAM) Long id);
+  List<Material> findBySupply(@Param(AppConstants.PARAM.ID_PARAM) Long id);
 }

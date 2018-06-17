@@ -23,8 +23,8 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NOT NULL,
-  `picture` VARCHAR(1000),
+  `name` VARCHAR(40) NOT NULL,
+  `picture` VARCHAR(255),
   `category_id` BIGINT NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -104,7 +104,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `donutstore`.`store`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dosnutstore`.`store` (
+CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `id` BIGINT NOT NULL AUTO_INCREMENT,
  `name` VARCHAR(20) NOT NULL,
  `picture` VARCHAR(255),
@@ -308,11 +308,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `donutstore`.`sender_room_db` (
-	`sender_db_id` BIGINT NOT NULL,
     `room_db_id` BIGINT NOT NULL,
-    PRIMARY KEY(`sender_db_id`,`room_db_id`),
-    FOREIGN KEY (`sender_db_id`) REFERENCES `donutstore`.`sender_db`(`id`),
-    FOREIGN KEY(`room_db_id`) REFERENCES `donutstore`.`room_db`(`id`)
+	`sender_db_id` BIGINT NOT NULL,
+    PRIMARY KEY(`room_db_id`,`sender_db_id`),
+    FOREIGN KEY(`room_db_id`) REFERENCES `donutstore`.`room_db`(`id`),
+    FOREIGN KEY (`sender_db_id`) REFERENCES `donutstore`.`sender_db`(`id`)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;

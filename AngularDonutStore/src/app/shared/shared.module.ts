@@ -12,6 +12,7 @@ import { FormUserComponent } from './components/chat/form-user/form-user.compone
 import { FormChatComponent } from './components/chat/form-chat/form-chat.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ElapsedTimePipe } from './pipes/elapsed-time.pipe';
+import { ChatInternalComponent } from './components/chat-internal/chat-internal.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { ElapsedTimePipe } from './pipes/elapsed-time.pipe';
     NotificationComponent,
     ElapsedTimePipe,
     InfiniteScrollDirective,
+    ChatInternalComponent,
   ],
   exports: [
     CommonModule,

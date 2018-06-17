@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 /**
  * @description: .
@@ -49,15 +49,15 @@ public class ItemSpecification implements Specification<Item> {
     Predicate predicate = cb.conjunction();
     if (enabled != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+          cb.equal(root.<Boolean>get(AppConstants.PARAM.ENABLED_PARAM), enabled));
     }
     if (materialId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.join(Constants.PARAM.MATERIALS_PARAM).<Long>get(Constants.PARAM.ID_PARAM), materialId));
+          cb.equal(root.join(AppConstants.PARAM.MATERIALS_PARAM).<Long>get(AppConstants.PARAM.ID_PARAM), materialId));
     }
     if (categoryId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Long>get(Constants.PARAM.CATEGORY_ID_PARAM).get(Constants.PARAM.ID_PARAM), categoryId));
+          cb.equal(root.<Long>get(AppConstants.PARAM.CATEGORY_ID_PARAM).get(AppConstants.PARAM.ID_PARAM), categoryId));
     }
     return predicate;
   }

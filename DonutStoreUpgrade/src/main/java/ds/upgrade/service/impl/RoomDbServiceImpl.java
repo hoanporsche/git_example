@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,17 @@ import ds.upgrade.util.ConstantsWebSocket;
 
 @Service
 public class RoomDbServiceImpl implements RoomDbService {
-  
+
   @Autowired
   private RoomDbRepository roomDbRepository;
 
   @Override
-  public RoomDb createOrUpdate(SenderDb senderDb) {
-    RoomDb roomDb = roomDbRepository.findByName(senderDb.getName() + "-" + senderDb.getPhone());
-    if (roomDb == null) 
-      roomDb = roomDbRepository.save(new RoomDb(senderDb.getName() + "-" + senderDb.getPhone()));
-    return roomDb;
+  public RoomDb create(SenderDb senderDb) {
+    RoomDb roomDb = new RoomDb(senderDb.getName().trim() + "-" + senderDb.getPhone().trim());
+    Set<SenderDb> listSenderInRoom = new HashSet<>();
+    listSenderInRoom.add(senderDb);
+    roomDb.setSenderDbs(listSenderInRoom);
+    return roomDbRepository.save(roomDb);
   }
 
   @Override

@@ -18,7 +18,7 @@ import ds.upgrade.model.User;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean isAdmin(Set<Role> roles) {
     for (Role role : roles) {
-      if (Constants.ROLE.ROLE_ADMIN.equals(role.getName()))
+      if (AppConstants.ROLE.ROLE_ADMIN.equals(role.getName()))
         return true;
     }
     return false;
@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean isStore(Set<Role> roles) {
     for (Role role : roles) {
-      if (Constants.ROLE.ROLE_STORE.equals(role.getName()))
+      if (AppConstants.ROLE.ROLE_STORE.equals(role.getName()))
         return true;
     }
     return false;
@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean isStaff(Set<Role> roles) {
     for (Role role : roles) {
-      if (Constants.ROLE.ROLE_STAFF.equals(role.getName()))
+      if (AppConstants.ROLE.ROLE_STAFF.equals(role.getName()))
         return true;
     }
     return false;

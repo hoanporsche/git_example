@@ -142,9 +142,9 @@ INSERT INTO `donutstore`.`sender_db` VALUES
 
 INSERT INTO `donutstore`.`sender_room_db` VALUES
 ('1','1'),
-('2','1'),
-('3','2'),
-('4','2');
+('1','2'),
+('2','3'),
+('2','4');
 
 INSERT INTO `donutstore`.`message_db` VALUES 
 ('1','3','Hello','2018-05-22 13:04;00', '1'),

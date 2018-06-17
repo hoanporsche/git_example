@@ -6,9 +6,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,7 +30,9 @@ public class RoomDb implements Serializable {
   private Long id;
   @Column(name = "name")
   private String name;
-  @ManyToMany(mappedBy = "roomDbs" )
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "sender_room_db", joinColumns = @JoinColumn(name = "room_db_id"),
+      inverseJoinColumns = @JoinColumn(name = "sender_db_id"))
   @JsonIgnore
   private Set<SenderDb> senderDbs;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomDbId")
@@ -35,6 +40,10 @@ public class RoomDb implements Serializable {
   private Set<MessageDb> messageDbs;
   
   public RoomDb() {}
+  
+  public RoomDb(Long id) {
+    this.id = id;
+  }
   
   public RoomDb(String name) {
     this.name = name;
@@ -74,8 +83,7 @@ public class RoomDb implements Serializable {
 
   @Override
   public String toString() {
-    return "RoomDb [id=" + id + ", name=" + name + ", senderDbs=" + senderDbs + ", messageDbs="
-        + messageDbs + "]";
+    return "RoomDb [name=" + name + "]";
   }
   
 }

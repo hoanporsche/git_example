@@ -1,12 +1,8 @@
 package ds.upgrade.service.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.support.Sender;
 import ds.upgrade.repository.SenderDbRepository;
@@ -24,19 +20,12 @@ public class SenderDbServiceImpl implements SenderDbService {
   }
 
   @Override
-  public SenderDb create(Sender sender) {
-    SenderDb senderDb = new SenderDb(sender.getName(), sender.getPhone());
-    return senderDbRepository.save(senderDb);
-  }
-
-  @Override
-  public SenderDb updateRoom(SenderDb senderDb, RoomDb newRoomDb) {
-    Set<RoomDb> listRoomOfSender = senderDb.getRoomDbs();
-    if (listRoomOfSender == null) {
-      listRoomOfSender = new HashSet<>();
+  public SenderDb createOrUpdate(Sender sender) {
+    SenderDb foundSender = senderDbRepository.findByPhone(sender.getPhone().trim());
+    SenderDb senderDb = new SenderDb(sender.getName().trim(), sender.getPhone().trim());
+    if (foundSender != null) {
+      senderDb.setId(foundSender.getId());
     }
-    listRoomOfSender.add(newRoomDb);
-    senderDb.setRoomDbs(listRoomOfSender);
     return senderDbRepository.save(senderDb);
   }
 

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ds.upgrade.model.Staff;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 public interface StaffRepository extends JpaRepository<Staff, Long>, JpaSpecificationExecutor<Staff> {
  
@@ -18,5 +18,5 @@ public interface StaffRepository extends JpaRepository<Staff, Long>, JpaSpecific
   Staff findByIdentityCard(String identityCard);
   
   @Query("SELECT s FROM Staff s WHERE s.storeId.id = :id")
-  List<Staff> findByStore(@Param(Constants.PARAM.ID_PARAM) Long id);
+  List<Staff> findByStore(@Param(AppConstants.PARAM.ID_PARAM) Long id);
 }

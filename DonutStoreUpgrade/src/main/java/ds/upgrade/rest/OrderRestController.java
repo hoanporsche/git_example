@@ -22,7 +22,7 @@ import ds.upgrade.model.Order;
 import ds.upgrade.model.User;
 import ds.upgrade.service.OrderService;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 /**
  * @description: /api/order.
@@ -32,7 +32,7 @@ import ds.upgrade.util.Constants;
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.ORDER_MODEL)
+@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.ORDER_MODEL)
 public class OrderRestController {
 
   @Autowired
@@ -49,13 +49,13 @@ public class OrderRestController {
    * @return
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
-  @GetMapping(Constants.API_URL.FIND_LIST)
+  @GetMapping(AppConstants.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
-      @RequestParam(value = Constants.PARAM.STATUS_ID_PARAM, required = false) String statusId,
-      @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
-      @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = Constants.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
+      @RequestParam(value = AppConstants.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = AppConstants.PARAM.STATUS_ID_PARAM, required = false) String statusId,
+      @RequestParam(value = AppConstants.PARAM.START_DATE_PARAM, required = false) String startDate,
+      @RequestParam(value = AppConstants.PARAM.END_DATE_PARAM, required = false) String endDate,
+      @RequestParam(value = AppConstants.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
     try {
       User user = userService.findInfoUser();
       Long newStoreId;
@@ -65,7 +65,7 @@ public class OrderRestController {
       } else {
         newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       }
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
+      SimpleDateFormat format = new SimpleDateFormat(AppConstants.FORMAT.DATE_TIME_FORMAT_1);
       Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -77,12 +77,12 @@ public class OrderRestController {
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Order>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -95,19 +95,19 @@ public class OrderRestController {
    * @return
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
-  @GetMapping(Constants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstants.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       Order order = orderService.findOne(newId);
       if (order != null)
         return new ResponseEntity<Order>(order, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

@@ -36,7 +36,7 @@ public class Item implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @NotEmpty
-  @Size(max = 20)
+  @Size(max = 40)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   @NotEmpty

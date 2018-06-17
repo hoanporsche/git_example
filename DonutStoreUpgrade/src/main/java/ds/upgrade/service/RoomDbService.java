@@ -5,7 +5,7 @@ import ds.upgrade.model.SenderDb;
 
 public interface RoomDbService {
 
-  RoomDb createOrUpdate(SenderDb senderDb);
+  RoomDb create(SenderDb senderDb);
   
   RoomDb findByName(String name);
   

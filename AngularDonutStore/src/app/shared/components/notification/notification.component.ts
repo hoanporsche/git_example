@@ -1,3 +1,4 @@
+import { ChatInternalService } from './../../../core/services/chat-internal.service';
 import { IdentityService } from './../../../core/services/identity.service';
 import { WebSocketService } from './../../../core/services/web-socket.service';
 import { NotificationService } from './../../../core/services/notification.service';
@@ -22,6 +23,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   private subListNotification: Subscription;
   private subUserHasSeen: Subscription;
+  private subJoinRoom: Subscription;
 
   error = {
     isError: false,
@@ -37,6 +39,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private identityService: IdentityService,
     private wsService: WebSocketService,
+    private chatInternalService: ChatInternalService,
   ) { }
 
   ngOnInit() {
@@ -61,15 +64,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   onSeenNoti(id, index) {
-    console.log("seen notification", id, "index", index);
     this.subUserHasSeen = this.notificationService.userHasSeen({id: id})
       .subscribe(response => {
-        console.log(response);
         this.listNotification[index] = response;
-        console.log(this.listNotification[index])
+        this.onJoinRoomChat(response);
       });
   }
 
+  onJoinRoomChat(notification) {
+    // console.log(notification);
+    const notiText = notification.text.toString();
+    const roomName = notiText.substring(30, notiText.length + 1);
+    // console.log(roomName);
+    this.subJoinRoom = this.chatInternalService.joinRoom({name: roomName})
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+        alert(error.error);
+      });
+  }
   ngOnDestroy(): void {
     if (this.subListNotification)
       this.subListNotification.unsubscribe();

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
 
@@ -18,5 +18,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
   Item findByName(String name);
   
   @Query("SELECT i FROM Item i WHERE i.categoryId.id = :id")
-  List<Item> findByCategory(@Param(Constants.PARAM.ID_PARAM) Long id);
+  List<Item> findByCategory(@Param(AppConstants.PARAM.ID_PARAM) Long id);
 }

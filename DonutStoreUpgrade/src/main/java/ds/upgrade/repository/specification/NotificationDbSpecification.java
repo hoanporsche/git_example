@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.NotificationDb;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 public class NotificationDbSpecification implements Specification<NotificationDb> {
   
@@ -32,11 +32,11 @@ public class NotificationDbSpecification implements Specification<NotificationDb
     Predicate predicate = cb.conjunction();
     if (email != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<String>get(Constants.PARAM.USER_ID_PARAM).get(Constants.PARAM.EMAIL_PARAM), email));
+          root.<String>get(AppConstants.PARAM.USER_ID_PARAM).get(AppConstants.PARAM.EMAIL_PARAM), email));
     }
     if (enabledUser != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Boolean>get(Constants.PARAM.USER_ID_PARAM).get(Constants.PARAM.ENABLED_PARAM), true));
+          root.<Boolean>get(AppConstants.PARAM.USER_ID_PARAM).get(AppConstants.PARAM.ENABLED_PARAM), true));
     }
     return predicate;
   }

@@ -29,7 +29,7 @@ import ds.upgrade.model.MaterialDailyReport;
 import ds.upgrade.model.User;
 import ds.upgrade.service.MaterialDailyReportService;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 /**
  * @description: /api/material-daily-report.
@@ -39,7 +39,7 @@ import ds.upgrade.util.Constants;
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.MATERIAL_DAILY_REPORT_MODEL)
+@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.MATERIAL_DAILY_REPORT_MODEL)
 public class MaterialDailyReportRestController {
 
   @Autowired
@@ -56,15 +56,15 @@ public class MaterialDailyReportRestController {
    * @return
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
-  @GetMapping(Constants.API_URL.FIND_LIST)
+  @GetMapping(AppConstants.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.NAME_PARAM, required = false) String storeName,
-      @RequestParam(value = Constants.PARAM.MATERIAL_ID_PARAM, required = false) String materialId,
-      @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
-      @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate) {
+      @RequestParam(value = AppConstants.PARAM.NAME_PARAM, required = false) String storeName,
+      @RequestParam(value = AppConstants.PARAM.MATERIAL_ID_PARAM, required = false) String materialId,
+      @RequestParam(value = AppConstants.PARAM.START_DATE_PARAM, required = false) String startDate,
+      @RequestParam(value = AppConstants.PARAM.END_DATE_PARAM, required = false) String endDate) {
     try {
       String newStoreName = setStoreCorrespondingUserRequested(storeName);
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
+      SimpleDateFormat format = new SimpleDateFormat(AppConstants.FORMAT.DATE_TIME_FORMAT_1);
       Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -74,12 +74,12 @@ public class MaterialDailyReportRestController {
       if (list.getSize() > 0)
         return new ResponseEntity<Page<MaterialDailyReport>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -91,20 +91,20 @@ public class MaterialDailyReportRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstants.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       MaterialDailyReport materialDailyReport = materialDailyReportService.findOne(newId);
       if (materialDailyReport != null)
         return new ResponseEntity<MaterialDailyReport>(materialDailyReport, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -118,13 +118,13 @@ public class MaterialDailyReportRestController {
    * @return
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
-  @GetMapping(Constants.API_URL.FIND_DAILY_REPORT)
+  @GetMapping(AppConstants.API_URL.FIND_DAILY_REPORT)
   public ResponseEntity<?> findDailyReport(
-      @RequestParam(value = Constants.PARAM.NAME_PARAM, required = false) String storeName,
-      @RequestParam(value = Constants.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
+      @RequestParam(value = AppConstants.PARAM.NAME_PARAM, required = false) String storeName,
+      @RequestParam(value = AppConstants.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
     try {
       String newDateCreated;
-      SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT_1);
+      SimpleDateFormat dateFormat = new SimpleDateFormat(AppConstants.FORMAT.DATE_FORMAT_1);
       // Default dateCreated value is today.
       if (StringUtils.isEmpty(dateCreated)) {
         newDateCreated = dateFormat.format(new Date()).toString();
@@ -138,12 +138,12 @@ public class MaterialDailyReportRestController {
         return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
       }
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -157,22 +157,22 @@ public class MaterialDailyReportRestController {
    * @return
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
-  @PostMapping(Constants.API_URL.SAVE)
+  @PostMapping(AppConstants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(
       @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result,
-      @RequestParam(value = Constants.PARAM.NAME_PARAM) String storeName) {
+      @RequestParam(value = AppConstants.PARAM.NAME_PARAM) String storeName) {
     try {
       if (result.hasErrors() || checkDuplicateMaterial(listReport))
-        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT + result.getAllErrors(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT + result.getAllErrors(), HttpStatus.NOT_ACCEPTABLE);
       String newStoreName = setStoreCorrespondingUserRequested(storeName);
       listReport = materialDailyReportService.save(listReport, newStoreName);
       if (listReport != null)
         return new ResponseEntity<List<MaterialDailyReport>>(listReport, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
 
   private boolean checkDuplicateMaterial(List<MaterialDailyReport> listReport) {

@@ -7,12 +7,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,17 +35,20 @@ public class SenderDb implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderDbId")
   @JsonIgnore
   private Set<MessageDb> messageDbs;
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "sender_room_db", joinColumns = @JoinColumn(name = "sender_db_id"),
-      inverseJoinColumns = @JoinColumn(name = "room_db_id"))
+  @ManyToMany(mappedBy = "senderDbs")
   @JsonIgnore
   private Set<RoomDb> roomDbs;
   
   public SenderDb() {}
   
+  public SenderDb(Long id) {
+    this.id = id;
+  }
+  
   public SenderDb(String name, String phone) {
     this.name = name;
     this.phone = phone;
+    this.lastConnect = new Date();
   }
 
   public Long getId() {
@@ -101,8 +101,7 @@ public class SenderDb implements Serializable {
 
   @Override
   public String toString() {
-    return "SenderDb [name=" + name + ", phone=" + phone + ", lastConnect=" + lastConnect
-        + ", messageDbs=" + messageDbs + ", roomDbs=" + roomDbs + "]";
+    return "SenderDb [name=" + name + ", phone=" + phone + ", lastConnect=" + lastConnect + "]";
   }
   
 }

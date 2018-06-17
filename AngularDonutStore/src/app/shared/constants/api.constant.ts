@@ -14,6 +14,8 @@ export const API_URL = Object.freeze({
     FIND_DAILY_REPORT: '/find-daily-report',
     CREATE_ROOM: '/create-room',
     USER_HAS_SEEN: '/user-has-seen',
+    JOIN_ROOM: '/join-room',
+    SEND_MESSAGE: '/send-message',
 });
 
 export const MODEL_URL= Object.freeze({
@@ -33,4 +35,7 @@ export const MODEL_URL= Object.freeze({
     USER: '/user',
     WORKING_CALENDER: '/working-calender',
     NOTIFICATION: '/notification-db',
+    ROOM_DB: '/room-db',
+    MESSAGE_DB: '/message-db',
 });
+

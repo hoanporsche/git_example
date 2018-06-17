@@ -10,7 +10,7 @@ package ds.upgrade.util;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
-public class Constants {
+public class AppConstants {
 
   public static class REPONSE {
     public static final String NO_CONTENT = "We not found any content";
@@ -49,6 +49,12 @@ public class Constants {
     public static final String ROLES_PARAM = "roles";
     public static final String PHONE_PARAM = "phone";
     public static final String USER_ID_PARAM = "userId";
+    public static final String SENDER_DB_ID_PARAM = "senderDbId";
+    public static final String ROOM_DB_ID_PARAM = "roomDbId";
+  }
+  
+  public static class PATH_PARAM {
+    public static final String ROOM_NAME = "/{roomName}";
   }
   
   public static class API_URL {
@@ -65,6 +71,8 @@ public class Constants {
     public static final String CHANGE_PASSWORD = "/change-password";
     public static final String FIND_DAILY_REPORT = "/find-daily-report";
     public static final String USER_HAS_SEEN = "/user-has-seen";
+    public static final String JOIN_ROOM = "/join-room";
+    public static final String SEND_MESSAGE = "/send-message";
   }
   
   public static class MODEL {
@@ -84,6 +92,8 @@ public class Constants {
     public static final String USER_MODEL = "user";
     public static final String WORKING_CALENDER_MODEL = "working-calender";
     public static final String NOTIFICATION_DB_MODEL = "notification-db";
+    public static final String ROOM_DB_MODEL = "room-db";
+    public static final String MESSAGE_DB_MODEL = "message-db";
   }
   
   public static class FORMAT {

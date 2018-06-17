@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.OrderStatus;
 import ds.upgrade.service.OrderStatusService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstants;
 
 /**
  * @description: /api/order-status.
@@ -33,7 +33,7 @@ import ds.upgrade.util.Constants;
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.ORDER_STATUS_MODEL)
+@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.ORDER_STATUS_MODEL)
 public class OrderStatusRestController {
 
   @Autowired
@@ -47,17 +47,17 @@ public class OrderStatusRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_ALL)
+  @GetMapping(AppConstants.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<OrderStatus> list = orderStatusService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<OrderStatus>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -70,20 +70,20 @@ public class OrderStatusRestController {
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @GetMapping(Constants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstants.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       OrderStatus orderStatus = orderStatusService.findOne(newId);
       if (orderStatus != null)
         return new ResponseEntity<OrderStatus>(orderStatus, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -97,21 +97,21 @@ public class OrderStatusRestController {
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @GetMapping(Constants.API_URL.FIND_LIST)
+  @GetMapping(AppConstants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
+      @RequestParam(value = AppConstants.PARAM.ENABLED_PARAM, required = false) String enabled) {
     try {
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
       Page<OrderStatus> list = orderStatusService.findList(pageable, newEnabled);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<OrderStatus>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -125,20 +125,20 @@ public class OrderStatusRestController {
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @PostMapping(Constants.API_URL.SAVE)
+  @PostMapping(AppConstants.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated OrderStatus orderStatus,
       BindingResult result) {
     try {
       if (result.hasErrors())
-        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       orderStatus = orderStatusService.save(orderStatus);
       if (orderStatus != null)
         return new ResponseEntity<OrderStatus>(orderStatus, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
 
   /**
@@ -151,20 +151,20 @@ public class OrderStatusRestController {
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
-  public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstants.API_URL.ENABLED_OR_NOT)
+  public ResponseEntity<?> showOrNot(@RequestParam(AppConstants.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       OrderStatus orderStatus = orderStatusService.enabledOrNot(newId);
       if (orderStatus != null)
         return new ResponseEntity<OrderStatus>(orderStatus, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -177,16 +177,16 @@ public class OrderStatusRestController {
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @GetMapping(Constants.API_URL.FIND_BY_NAME)
-  public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
+  @GetMapping(AppConstants.API_URL.FIND_BY_NAME)
+  public ResponseEntity<?> findByName(@RequestParam(AppConstants.PARAM.NAME_PARAM) String name) {
     try {
       OrderStatus orderStatus = orderStatusService.findByName(name);
       if (orderStatus != null)
         return new ResponseEntity<OrderStatus>(orderStatus, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

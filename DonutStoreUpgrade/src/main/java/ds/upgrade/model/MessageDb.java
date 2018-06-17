@@ -34,6 +34,10 @@ public class MessageDb implements Serializable{
   
   public MessageDb() {}
   
+  public MessageDb(Long id) {
+    this.id = id;
+  }
+  
   public MessageDb(SenderDb senderDsId, RoomDb roomDbId, String text) {
     this.senderDbId = senderDsId;
     this.roomDbId = roomDbId;
@@ -82,7 +86,7 @@ public class MessageDb implements Serializable{
 
   @Override
   public String toString() {
-    return "MessageDb [id=" + id + ", senderDbId=" + senderDbId + ", text=" + text + ", time="
-        + time + "]";
+    return "MessageDb [senderDbId=" + senderDbId + ", text=" + text + ", roomDbId=" + roomDbId
+        + "]";
   }
 }
