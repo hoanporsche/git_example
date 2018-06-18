@@ -51,6 +51,7 @@ public class AppConstants {
     public static final String USER_ID_PARAM = "userId";
     public static final String SENDER_DB_ID_PARAM = "senderDbId";
     public static final String ROOM_DB_ID_PARAM = "roomDbId";
+    public static final String SENDER_DB_S_PARAM = "senderDbs";
   }
   
   public static class PATH_PARAM {
