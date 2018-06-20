@@ -47,6 +47,7 @@ import { ChatInternalComponent } from './components/chat-internal/chat-internal.
     NotificationComponent,
     ElapsedTimePipe,
     InfiniteScrollDirective,
+    ChatInternalComponent,
   ]
 })
 export class SharedModule { }

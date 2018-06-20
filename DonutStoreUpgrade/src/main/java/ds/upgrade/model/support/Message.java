@@ -9,19 +9,21 @@ public class Message {
 
   @NotNull
   @NotEmpty
-  private Sender from;
+  private Sender senderDb;
   @NotEmpty
   @NotNull
   @Size(max = 255)
   private String text;
 
-  public Message() {}
-  public Sender getFrom() {
-    return from;
+  public Message() {
   }
 
-  public void setFrom(Sender from) {
-    this.from = from;
+  public Sender getSenderDb() {
+    return senderDb;
+  }
+
+  public void setSenderDb(Sender senderDb) {
+    this.senderDb = senderDb;
   }
 
   public String getText() {
@@ -30,11 +32,6 @@ public class Message {
 
   public void setText(String text) {
     this.text = text;
-  }
-
-  @Override
-  public String toString() {
-    return "Message [from=" + from + ", text=" + text + "]";
   }
 
 }

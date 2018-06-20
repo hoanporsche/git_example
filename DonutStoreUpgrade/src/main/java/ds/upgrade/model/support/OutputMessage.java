@@ -4,21 +4,21 @@ import ds.upgrade.model.MessageDb;
 
 public class OutputMessage {
 
-  private Object from;
+  private Object senderDb;
   private Object text;
   private Object time;
   private Object roomName;
 
   public OutputMessage(final Object from, final Object text, final Object time) {
 
-      this.from = from;
+      this.senderDb = from;
       this.text = text;
       this.time = time;
   }
   
   public OutputMessage(MessageDb messageDb) {
     Sender sender = new Sender(messageDb.getSenderDbId());
-    this.from = sender;
+    this.senderDb = sender;
     this.text = messageDb.getText();
     this.time = messageDb.getTime();
     this.roomName = messageDb.getRoomDbId().getName();
@@ -32,8 +32,8 @@ public class OutputMessage {
       return time;
   }
 
-  public Object getFrom() {
-      return from;
+  public Object getSenderDb() {
+      return senderDb;
   }
 
   public Object getRoomName() {
@@ -42,7 +42,7 @@ public class OutputMessage {
 
   @Override
   public String toString() {
-    return "OutputMessage [from=" + from + ", text=" + text + ", time=" + time + ", roomName="
+    return "OutputMessage [senderDb=" + senderDb + ", text=" + text + ", time=" + time + ", roomName="
         + roomName + "]";
   }
 }

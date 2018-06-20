@@ -13,19 +13,17 @@
   <div class="ds-all-messages">
     <div class="col-12" *ngFor="let receivedMessage of allReceivedMessages">
       <!-- START FOR USER's MESSAGES -->
-      <div class="ds-message-sent" *ngIf="currentUser?.name === receivedMessage?.from.name">
+      <div class="ds-message-sent" *ngIf="currentUser?.name === receivedMessage?.senderDb.name">
         <div class="clearfix"></div>
         <div class="col-12">
-          <!-- <div class="float-right"> -->
-            <div class="ds-sent-message">
-              {{ receivedMessage?.text }}
-            </div>
-          <!-- </div> -->
+          <div class="ds-sent-message">
+            {{ receivedMessage?.text }}
+          </div>
         </div>
       </div>
       <!-- END FOR USER's MESSAGES -->
       <!-- START FOR ADMIN's MESSAGES-->
-      <div class="ds-message-received" *ngIf="currentUser?.name !== receivedMessage?.from.name">
+      <div class="ds-message-received" *ngIf="currentUser?.name !== receivedMessage?.senderDb.name">
         <div class="col-12">
           <div class="ds-received-message">
             {{ receivedMessage?.text }}

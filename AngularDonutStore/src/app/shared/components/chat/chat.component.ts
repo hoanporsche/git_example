@@ -65,7 +65,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   sendMessage(message) {
     this.stompClient.send(this.appChatRoomUrl + this.roomName, {}, JSON.stringify({
-      from: this.currentUser,
+      senderDb: this.currentUser,
       text: message
     }));
   }

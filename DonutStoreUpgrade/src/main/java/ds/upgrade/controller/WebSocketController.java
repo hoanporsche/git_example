@@ -54,7 +54,7 @@ public class WebSocketController {
   public OutputMessage send(Message message) throws Exception {
     String time = new SimpleDateFormat("HH:mm").format(new Date());
     System.out.println(message);
-    return new OutputMessage(message.getFrom(), message.getText(), time);
+    return new OutputMessage(message.getSenderDb(), message.getText(), time);
   }
   
   @PostMapping("/create-room")
@@ -76,7 +76,7 @@ public class WebSocketController {
 
   @MessageMapping("/chat/room/{name}")
   public void chatRoom(@DestinationVariable String name, Message message) throws Exception {
-    MessageDb messageDb = messageDbService.save(message.getFrom(), name, message.getText());
+    MessageDb messageDb = messageDbService.save(message.getSenderDb(), name, message.getText());
     this.template.convertAndSend("/topic/room/" + name.trim(), new OutputMessage(messageDb));
   }
 }

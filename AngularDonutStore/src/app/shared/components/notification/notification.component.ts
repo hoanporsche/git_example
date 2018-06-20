@@ -2,7 +2,7 @@ import { ChatInternalService } from './../../../core/services/chat-internal.serv
 import { IdentityService } from './../../../core/services/identity.service';
 import { WebSocketService } from './../../../core/services/web-socket.service';
 import { NotificationService } from './../../../core/services/notification.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CONFIG } from '../../constants/configuration.constant';
 import { environment } from '../../../../environments/environment';
@@ -13,6 +13,8 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit, OnDestroy {
+
+  @Output() emitRoomName = new EventEmitter<string>();
 
   private chatUrl = environment.baseUrl + '/chat';
   private notificationUrl = '/topic/notification/';
@@ -79,6 +81,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.subJoinRoom = this.chatInternalService.joinRoom({name: roomName})
       .subscribe(response => {
         console.log(response);
+        this.emitRoomName.emit(response.name);
       }, error => {
         alert(error.error);
       });

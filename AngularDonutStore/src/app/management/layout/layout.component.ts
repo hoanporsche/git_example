@@ -14,6 +14,8 @@ export class LayoutComponent implements OnInit {
   title = 'app';
   globalBodyClass = 'm-page--loading-non-block m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default';
 
+  roomName: string;
+
   constructor(private _script: ScriptLoaderService, private _router: Router) {
   }
   ngOnInit() {
@@ -45,5 +47,9 @@ export class LayoutComponent implements OnInit {
         }).removeClass(animation).addClass(animation);
       }
     });
+  }
+
+  getRoomName(event) {
+    this.roomName = event;
   }
 }

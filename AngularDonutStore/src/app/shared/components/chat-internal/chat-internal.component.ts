@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ChatInternalService } from './../../../core/services/chat-internal.service';
 import { IdentityService } from './../../../core/services/identity.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { CONFIG } from '../../constants/configuration.constant';
 
 @Component({
   selector: 'app-chat-internal',
@@ -14,6 +15,14 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   @Input() roomName: string;
   allReceivedMessages = [];
 
+  params = {
+    roomName: this.roomName,
+    page: 0,
+    size: CONFIG.PAGE_SIZE,
+    sort: 'id,desc'
+  }
+
+  private subFindList: Subscription;
   private subSendMessage: Subscription;
 
   constructor(
@@ -23,6 +32,15 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUser = this.identityService.getCurrentUser();
+  }
+
+  findList() {
+    this.subFindList = this.chatInternalService.findList(this.params)
+      .subscribe(response => {
+        this.allReceivedMessages = response.content;
+      }, error => {
+
+      });
   }
 
   sendMessage(text) {

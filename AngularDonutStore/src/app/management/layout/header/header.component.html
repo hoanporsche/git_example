@@ -97,7 +97,7 @@
                           <div class="tab-pane active" id="topbar_notifications_notifications" role="tabpanel">
 
                             <!-- START USING NOTIFICATION COMPONENT -->
-                            <app-notification></app-notification>
+                            <app-notification (emitRoomName)="getRoomName($event)"></app-notification>
                             <!-- END USING NOTIFICATION COMPONENT -->
 
                           </div>
