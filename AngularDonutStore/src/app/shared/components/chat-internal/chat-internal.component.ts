@@ -14,6 +14,7 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   currentUser;
   @Input() roomName: string;
   allReceivedMessages = [];
+  isOpen = false;
 
   params = {
     roomName: this.roomName,
@@ -38,6 +39,7 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
     this.subFindList = this.chatInternalService.findList(this.params)
       .subscribe(response => {
         this.allReceivedMessages = response.content;
+        console.log(this.allReceivedMessages);
       }, error => {
 
       });
@@ -51,12 +53,20 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
 
       })
   }
+  
+  openBox() {
+    this.isOpen = true;
+    console.log(this.roomName);
+    this.findList();
+  }
 
   ngOnDestroy(): void {
     if (this.currentUser)
       this.currentUser = undefined;
     if (this.subSendMessage)
       this.subSendMessage.unsubscribe();
+    if (this.subFindList)
+      this.subFindList.unsubscribe();
   }
 
 }

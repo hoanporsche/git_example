@@ -301,7 +301,9 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`sender_db` (
     `name` VARCHAR(20) NOT NULL,
     `phone` VARCHAR(20) NOT NULL,
     `last_connect` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `user_id` BIGINT NULL,
     PRIMARY KEY(`id`),
+    FOREIGN KEY(`user_id`) REFERENCES `donutstore`.`user`(`id`),
     UNIQUE INDEX `phone_UNIQUE` (`phone` ASC)
 )
 ENGINE = InnoDB

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,6 +75,10 @@ public class User implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
   @JsonIgnore
   private List<NotificationDb> notifications;
+  
+  @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, 
+              fetch = FetchType.LAZY, optional = false)
+  private SenderDb senderDbId;
   
   @Transient
   private String oldPassword;
@@ -192,6 +197,14 @@ public class User implements Serializable {
 
   public void setNotifications(List<NotificationDb> notifications) {
     this.notifications = notifications;
+  }
+
+  public SenderDb getSenderDbId() {
+    return senderDbId;
+  }
+
+  public void setSenderDbId(SenderDb senderDbId) {
+    this.senderDbId = senderDbId;
   }
 
   @Override

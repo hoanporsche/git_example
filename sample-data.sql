@@ -135,10 +135,10 @@ INSERT INTO `donutstore`.`room_db` VALUES
 ('2', 'Customer2');
 
 INSERT INTO `donutstore`.`sender_db` VALUES
-('1','giangvo','0943451794','2018-05-22'),
-('2','nuitruc','0969550954','2018-05-22'),
-('3','Hoang ngu','0988888808','2018-05-22'),
-('4','Phong ngu','0988888888','2018-05-22');
+('1','giangvo','0943451794','2018-05-22','2'),
+('2','nuitruc','0969550954','2018-05-22','4'),
+('3','Hoang ngu','0988888808','2018-05-22', null),
+('4','Phong ngu','0988888888','2018-05-22', null);
 
 INSERT INTO `donutstore`.`sender_room_db` VALUES
 ('1','1'),

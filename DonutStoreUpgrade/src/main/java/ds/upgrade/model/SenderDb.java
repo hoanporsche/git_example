@@ -7,11 +7,14 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,6 +35,9 @@ public class SenderDb implements Serializable {
   private String phone;
   @Column(name = "last_connect")
   private Date lastConnect;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private User userId;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderDbId")
   @JsonIgnore
   private Set<MessageDb> messageDbs;
@@ -81,6 +87,14 @@ public class SenderDb implements Serializable {
 
   public void setLastConnect(Date lastConnect) {
     this.lastConnect = lastConnect;
+  }
+
+  public User getUserId() {
+    return userId;
+  }
+
+  public void setUserId(User userId) {
+    this.userId = userId;
   }
 
   public Set<MessageDb> getMessageDbs() {

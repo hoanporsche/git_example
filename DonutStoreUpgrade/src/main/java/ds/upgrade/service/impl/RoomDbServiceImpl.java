@@ -44,11 +44,24 @@ public class RoomDbServiceImpl implements RoomDbService {
     return roomDbRepository.findByName(name);
   }
 
+  /**
+   * @description: join one sender to a room.
+   * @author: VDHoan
+   * @created_date: Jun 21, 2018
+   * @param name
+   * @param joinSender
+   * @return: if sender is joining room, return roomDb; else if sender's not joining, 
+   * check number of member, if it's more than 2, return null, else we join sender.
+   */
   @Override
   public RoomDb joinRoom(String name, SenderDb joinSender) {
     RoomDb foundRoom = roomDbRepository.findByName(name);
     if (foundRoom != null) {
       Set<SenderDb> listSenderInRoom = foundRoom.getSenderDbs();
+      for (SenderDb s: listSenderInRoom) {
+        if (s.getId() == joinSender.getId()) 
+          return foundRoom;
+      }
       if (listSenderInRoom.size() < ConstantsWebSocket.PARAM.ROOM_NUMBER_USER) {
         listSenderInRoom.add(joinSender);
         foundRoom.setSenderDbs(listSenderInRoom);
