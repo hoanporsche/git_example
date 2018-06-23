@@ -95,6 +95,7 @@ public class AppConstants {
     public static final String NOTIFICATION_DB_MODEL = "notification-db";
     public static final String ROOM_DB_MODEL = "room-db";
     public static final String MESSAGE_DB_MODEL = "message-db";
+    public static final String SENDER_DB_MODEL = "sender-db";
   }
   
   public static class FORMAT {

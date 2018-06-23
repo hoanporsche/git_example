@@ -29,6 +29,12 @@ public class MessageDbServiceImpl implements MessageDbService {
   @Autowired
   private SenderDbRepository senderDbRepository;
 
+  @Override
+  public Page<MessageDb> findAll(Pageable pageable, String roomName) {
+    Specification<MessageDb> spec = new MessageDbSpecification(roomName.trim());
+    return messageDbRepository.findAll(spec, pageable);
+  }
+
   /**
    * @description: find all messages with pageable.
    * @author: hoan

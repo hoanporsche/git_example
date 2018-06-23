@@ -14,6 +14,7 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   currentUser;
   @Input() roomName: string;
   allReceivedMessages = [];
+  listSender;
   isOpen = false;
 
   params = {
@@ -23,8 +24,9 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
     sort: 'id,desc'
   }
 
-  private subFindList: Subscription;
+  private subFindAllMessage: Subscription;
   private subSendMessage: Subscription;
+  private subFindListSender: Subscription;
 
   constructor(
     private identityService: IdentityService,
@@ -36,7 +38,7 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   }
 
   findList() {
-    this.subFindList = this.chatInternalService.findList(this.params)
+    this.subFindAllMessage = this.chatInternalService.findAll(this.params)
       .subscribe(response => {
         this.allReceivedMessages = response.content;
         console.log(this.allReceivedMessages);
@@ -59,14 +61,17 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
     console.log(this.roomName);
     this.findList();
   }
+  closeBox() {
+    this.isOpen = false;
+  }
 
   ngOnDestroy(): void {
     if (this.currentUser)
       this.currentUser = undefined;
     if (this.subSendMessage)
       this.subSendMessage.unsubscribe();
-    if (this.subFindList)
-      this.subFindList.unsubscribe();
+    if (this.subFindAllMessage)
+      this.subFindAllMessage.unsubscribe();
   }
 
 }

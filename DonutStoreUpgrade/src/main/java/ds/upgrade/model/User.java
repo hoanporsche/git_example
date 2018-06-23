@@ -78,6 +78,7 @@ public class User implements Serializable {
   
   @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, 
               fetch = FetchType.LAZY, optional = false)
+  @JsonIgnore
   private SenderDb senderDbId;
   
   @Transient

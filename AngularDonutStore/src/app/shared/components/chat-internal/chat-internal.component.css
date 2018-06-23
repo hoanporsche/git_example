@@ -1,10 +1,11 @@
 .ds-chat-box {
   position: fixed;
-  bottom: 6%;
+  bottom: 0%;
   right: 3%;
   border: 1px solid #1687c5;
   border-radius: 5px 5px 0 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 10;
 }
 
 .ds-width-250-px {

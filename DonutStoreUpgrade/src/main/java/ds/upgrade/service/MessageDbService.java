@@ -8,6 +8,8 @@ import ds.upgrade.model.User;
 import ds.upgrade.model.support.Sender;
 
 public interface MessageDbService {
+  
+  Page<MessageDb> findAll(Pageable pageable, String roomName);
 
   Page<MessageDb> findList(Pageable pageable, String roomName, User user);
   

@@ -17,6 +17,10 @@ public class MessageDbSpecification implements Specification<MessageDb> {
 
   public MessageDbSpecification() {
   }
+  
+  public MessageDbSpecification(String roomName) {
+    this.roomName = roomName;
+  }
 
   public MessageDbSpecification(String roomName, String senderPhone) {
     this.roomName = roomName;

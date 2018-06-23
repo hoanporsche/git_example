@@ -27,6 +27,19 @@ public class MessageDbRestController {
   private MessageDbService messageDbService;
   @Autowired
   private UserService userService;
+  
+  @GetMapping(AppConstants.API_URL.FIND_ALL)
+  public ResponseEntity<?> findAll(@RequestParam String roomName, Pageable pageable) {
+    try {
+      Page<MessageDb> listMessage = messageDbService.findAll(pageable, roomName);
+      if (listMessage.getContent() != null)
+        return new ResponseEntity<Page<MessageDb>>(listMessage, HttpStatus.OK);
+      return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   @GetMapping(AppConstants.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(@RequestParam String roomName, Pageable pageable) {
