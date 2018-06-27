@@ -15,7 +15,7 @@ import ds.upgrade.model.User;
 import ds.upgrade.repository.RoomDbRepository;
 import ds.upgrade.repository.specification.RoomDbSpecification;
 import ds.upgrade.service.RoomDbService;
-import ds.upgrade.util.ConstantsWebSocket;
+import ds.upgrade.util.ConstantWebSocket;
 
 @Service
 public class RoomDbServiceImpl implements RoomDbService {
@@ -54,21 +54,28 @@ public class RoomDbServiceImpl implements RoomDbService {
    * check number of member, if it's more than 2, return null, else we join sender.
    */
   @Override
-  public RoomDb joinRoom(String name, SenderDb joinSender) {
+  public RoomDb joinRoom(String name, User joinUser) {
     RoomDb foundRoom = roomDbRepository.findByName(name);
     if (foundRoom != null) {
       Set<SenderDb> listSenderInRoom = foundRoom.getSenderDbs();
-      for (SenderDb s: listSenderInRoom) {
-        if (s.getId() == joinSender.getId()) 
-          return foundRoom;
-      }
-      if (listSenderInRoom.size() < ConstantsWebSocket.PARAM.ROOM_NUMBER_USER) {
-        listSenderInRoom.add(joinSender);
+      if (this.isUserInRoom(listSenderInRoom, joinUser)) 
+        return foundRoom;
+      if (listSenderInRoom.size() < ConstantWebSocket.PARAM.ROOM_NUMBER_USER) {
+        listSenderInRoom.add(joinUser.getSenderDbId());
         foundRoom.setSenderDbs(listSenderInRoom);
         return roomDbRepository.save(foundRoom);
       }
     }
     return null;
+  }
+
+  @Override
+  public boolean isUserInRoom(Set<SenderDb> senderInRoom, User user) {
+    for (SenderDb senderDb : senderInRoom) {
+      if (senderDb.getId() == user.getSenderDbId().getId()) 
+        return true;
+    }
+    return false;
   }
 
 }

@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.OrderStatus;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 public class OrderStatusSpecification implements Specification<OrderStatus> {
 
@@ -25,7 +25,7 @@ public class OrderStatusSpecification implements Specification<OrderStatus> {
     Predicate predicate = cb.conjunction();
     if (enabled != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(AppConstants.PARAM.ENABLED_PARAM), enabled));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.ENABLED_PARAM), enabled));
     }
     return predicate;
   }

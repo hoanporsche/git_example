@@ -1,5 +1,7 @@
 -- Schema donutstore
 -- -----------------------------------------------------
+drop database if exists `donutstore`;
+
 CREATE SCHEMA IF NOT EXISTS `donutstore` CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 USE `donutstore` ;
 
@@ -244,12 +246,10 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(100) NOT NULL UNIQUE,
   `password` VARCHAR(60) NOT NULL,
+  `picture` VARCHAR(255) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enabled` BOOLEAN not null,
-  `credentialsexpired` BOOLEAN not null,
-  `expired` BOOLEAN not null,
-  `locked` BOOLEAN not null,
   `store_id` BIGINT,
   PRIMARY KEY (`id`),
   FOREIGN KEY(`store_id`) references `donutstore`.`store`(`id`))

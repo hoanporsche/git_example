@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.RoomDb;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 public class RoomDbSpecification implements Specification<RoomDb> {
 
@@ -26,10 +26,10 @@ public class RoomDbSpecification implements Specification<RoomDb> {
     if (senderPhone != null) {
       predicate = cb.and(predicate,
           cb.equal(
-              root.join(AppConstants.PARAM.SENDER_DB_S_PARAM).get(AppConstants.PARAM.PHONE_PARAM),
+              root.join(AppConstant.PARAM.SENDER_DB_S_PARAM).get(AppConstant.PARAM.PHONE_PARAM),
               senderPhone));
     }
-    query.distinct(root.get(AppConstants.PARAM.ID_PARAM) != null);
+    query.distinct(root.get(AppConstant.PARAM.ID_PARAM) != null);
     return predicate;
   }
 

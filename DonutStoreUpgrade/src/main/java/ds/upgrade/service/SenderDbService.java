@@ -7,7 +7,7 @@ import ds.upgrade.model.support.Sender;
 
 public interface SenderDbService {
   
-  List<SenderDb> findAll();
+  List<Sender> findAllInternal();
 
   public SenderDb findByPhone(String phone);
   

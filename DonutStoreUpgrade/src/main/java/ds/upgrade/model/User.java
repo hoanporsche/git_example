@@ -47,6 +47,9 @@ public class User implements Serializable {
   @Size(max = 60)
   @Column(name = "password", nullable = false)
   private String password;
+  @NotNull
+  @Column(name = "picture")
+  private String picture;
 
   @ManyToMany
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
@@ -59,15 +62,6 @@ public class User implements Serializable {
   @NotNull
   @Column(name = "enabled")
   private boolean enabled = true;
-  @NotNull
-  @Column(name = "credentialsexpired")
-  private boolean credentialsexpired = false;
-  @NotNull
-  @Column(name = "expired")
-  private boolean expired = false;
-  @NotNull
-  @Column(name = "locked")
-  private boolean locked = false;
   @OneToOne
   @JoinColumn(name = "storeId", referencedColumnName = "id")
   private Store storeId;
@@ -144,28 +138,12 @@ public class User implements Serializable {
     this.enabled = enabled;
   }
 
-  public boolean isCredentialsexpired() {
-    return credentialsexpired;
+  public String getPicture() {
+    return picture;
   }
 
-  public void setCredentialsexpired(boolean credentialsexpired) {
-    this.credentialsexpired = credentialsexpired;
-  }
-
-  public boolean isExpired() {
-    return expired;
-  }
-
-  public void setExpired(boolean expired) {
-    this.expired = expired;
-  }
-
-  public boolean isLocked() {
-    return locked;
-  }
-
-  public void setLocked(boolean locked) {
-    this.locked = locked;
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
   public Store getStoreId() {

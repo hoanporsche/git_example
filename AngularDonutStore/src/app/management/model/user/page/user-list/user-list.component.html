@@ -124,6 +124,9 @@
                         <span placement="top" ngbTooltip="{{ user?.email }}">{{ user?.email | summary: 20}}</span>
                       </td>
                       <td>
+                        <span placement="top" ngbTooltip="{{ user?.picture }}">{{ user?.picture | summary: 20}}</span>
+                      </td>
+                      <td>
                         <span *ngFor="let role of user?.roles" placement="top" ngbTooltip="{{ role?.name }}">{{ role?.name | summary: 20}}</span>
                       </td>
                       <td>
@@ -140,18 +143,6 @@
                       <td>
                         <span *ngIf="user?.enabled" style="color: red">Active</span>
                         <span *ngIf="!user?.enabled" style="color: black">In-Active</span>
-                      </td>
-                      <td>
-                        <span *ngIf="user?.credentialsexpired" style="color: red">Credential's expired</span>
-                        <span *ngIf="!user?.credentialsexpired" style="color: black">Credential's not expired</span>
-                      </td>
-                      <td>
-                        <span *ngIf="user?.expired" style="color: red">Expired</span>
-                        <span *ngIf="!user?.expired" style="color: black">Not expired</span>
-                      </td>
-                      <td>
-                        <span *ngIf="user?.locked" style="color: red">Locked</span>
-                        <span *ngIf="!user?.locked" style="color: black">Not locked</span>
                       </td>
                       <td>
                         <i class="la la-edit" (click)="onDetail(user)" placement="top" ngbTooltip="View Detail">

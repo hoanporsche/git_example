@@ -1,6 +1,6 @@
 package ds.upgrade.util;
 
-public class ConstantsWebSocket {
+public class ConstantWebSocket {
   
   public static class RESPONSE {
     public static final String NEW_MESSAGE = "We have a new message in room ";

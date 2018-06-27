@@ -37,6 +37,7 @@ public class SenderDb implements Serializable {
   private Date lastConnect;
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
+  @JsonIgnore
   private User userId;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderDbId")
   @JsonIgnore

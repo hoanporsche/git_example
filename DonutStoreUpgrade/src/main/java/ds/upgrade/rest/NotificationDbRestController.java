@@ -14,10 +14,10 @@ import ds.upgrade.model.NotificationDb;
 import ds.upgrade.model.User;
 import ds.upgrade.service.NotificationDbService;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 @RestController
-@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.NOTIFICATION_DB_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.NOTIFICATION_DB_MODEL)
 public class NotificationDbRestController {
 
   @Autowired
@@ -25,28 +25,28 @@ public class NotificationDbRestController {
   @Autowired
   private UserService userService;
 
-  @GetMapping(AppConstants.API_URL.FIND_LIST)
+  @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable) {
     try {
       User currentUser = userService.findInfoUser();
       Page<NotificationDb> list = notificationDbService.findList(pageable, currentUser.getEmail());
       return new ResponseEntity<Page<NotificationDb>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @GetMapping(AppConstants.API_URL.USER_HAS_SEEN)
+  @GetMapping(AppConstant.API_URL.USER_HAS_SEEN)
   public ResponseEntity<?> userHasSeen(@RequestParam Long id) {
     try {
       NotificationDb seenNoti = notificationDbService.userHasSeen(id);
       if (seenNoti == null)
-        return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
+        return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
             HttpStatus.INTERNAL_SERVER_ERROR);
       return new ResponseEntity<NotificationDb>(seenNoti, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

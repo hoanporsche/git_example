@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Staff;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -39,15 +39,15 @@ public class StaffSpecification implements Specification<Staff> {
     Predicate predicate = cb.conjunction();
     if (enabled != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(AppConstants.PARAM.ENABLED_PARAM), enabled));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.ENABLED_PARAM), enabled));
     }
     if (storeId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Long>get(AppConstants.PARAM.STORE_ID_PARAM).get(AppConstants.PARAM.ID_PARAM), storeId));
+          cb.equal(root.<Long>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), storeId));
     }
     if (workingCalenderId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Long>get(AppConstants.PARAM.WORKING_CALENDER_ID_PARAM).get(AppConstants.PARAM.ID_PARAM), workingCalenderId));
+          cb.equal(root.<Long>get(AppConstant.PARAM.WORKING_CALENDER_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), workingCalenderId));
     }
     return predicate;
   }

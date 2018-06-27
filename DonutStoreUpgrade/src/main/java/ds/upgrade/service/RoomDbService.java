@@ -1,5 +1,7 @@
 package ds.upgrade.service;
 
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,5 +17,7 @@ public interface RoomDbService {
   
   RoomDb findByName(String name);
   
-  RoomDb joinRoom(String name, SenderDb joinSender);
+  RoomDb joinRoom(String name, User joinUser);
+  
+  boolean isUserInRoom(Set<SenderDb> senderInRoom, User user);
 }

@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Quantity;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -57,26 +57,26 @@ public class QuantitySpecification implements Specification<Quantity> {
   public Predicate toPredicate(Root<Quantity> root, CriteriaQuery<?> arg1, CriteriaBuilder cb) {
     Predicate predicate = cb.conjunction();
     if (storeId != null) {
-      predicate = cb.and(predicate, cb.equal(root.<Long>get(AppConstants.PARAM.ORDER_ID_PARAM)
-          .get(AppConstants.PARAM.STORE_ID_PARAM).get(AppConstants.PARAM.ID_PARAM), storeId));
+      predicate = cb.and(predicate, cb.equal(root.<Long>get(AppConstant.PARAM.ORDER_ID_PARAM)
+          .get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), storeId));
     }
     if (itemId != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(AppConstants.PARAM.ITEM_ID_PARAM).get(AppConstants.PARAM.ID_PARAM), itemId));
+          root.<Long>get(AppConstant.PARAM.ITEM_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), itemId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate, cb.greaterThanOrEqualTo(
-          root.<Date>get(AppConstants.PARAM.ORDER_ID_PARAM).get(AppConstants.PARAM.DATE_CREATED_PARAM),
+          root.<Date>get(AppConstant.PARAM.ORDER_ID_PARAM).get(AppConstant.PARAM.DATE_CREATED_PARAM),
           startDate));
     }
     if (endDate != null) {
       predicate = cb.and(predicate, cb.lessThanOrEqualTo(
-          root.<Date>get(AppConstants.PARAM.ORDER_ID_PARAM).get(AppConstants.PARAM.DATE_CREATED_PARAM),
+          root.<Date>get(AppConstant.PARAM.ORDER_ID_PARAM).get(AppConstant.PARAM.DATE_CREATED_PARAM),
           endDate));
     }
     if (isShipping != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(AppConstants.PARAM.ORDER_ID_PARAM).get(AppConstants.PARAM.IS_SHIPPING_PARAM), isShipping));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.ORDER_ID_PARAM).get(AppConstant.PARAM.IS_SHIPPING_PARAM), isShipping));
     }
     return predicate;
   }

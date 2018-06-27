@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.MessageDb;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 public class MessageDbSpecification implements Specification<MessageDb> {
 
@@ -32,12 +32,12 @@ public class MessageDbSpecification implements Specification<MessageDb> {
     Predicate predicate = cb.conjunction();
     if (roomName != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<String>get(AppConstants.PARAM.ROOM_DB_ID_PARAM).get(AppConstants.PARAM.NAME_PARAM),
+          root.<String>get(AppConstant.PARAM.ROOM_DB_ID_PARAM).get(AppConstant.PARAM.NAME_PARAM),
           roomName));
     }
     if (senderPhone != null) {
-      predicate = cb.and(predicate, cb.equal(root.<String>get(AppConstants.PARAM.SENDER_DB_ID_PARAM)
-          .get(AppConstants.PARAM.PHONE_PARAM), senderPhone));
+      predicate = cb.and(predicate, cb.equal(root.<String>get(AppConstant.PARAM.SENDER_DB_ID_PARAM)
+          .get(AppConstant.PARAM.PHONE_PARAM), senderPhone));
     }
     return predicate;
   }

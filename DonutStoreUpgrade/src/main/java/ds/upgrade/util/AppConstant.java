@@ -10,7 +10,7 @@ package ds.upgrade.util;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
-public class AppConstants {
+public class AppConstant {
 
   public static class REPONSE {
     public static final String NO_CONTENT = "We not found any content";
@@ -74,6 +74,7 @@ public class AppConstants {
     public static final String USER_HAS_SEEN = "/user-has-seen";
     public static final String JOIN_ROOM = "/join-room";
     public static final String SEND_MESSAGE = "/send-message";
+    public static final String FIND_ALL_INTERNAL = "/find-all-internal";
   }
   
   public static class MODEL {

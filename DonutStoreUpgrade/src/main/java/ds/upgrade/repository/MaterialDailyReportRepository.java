@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ds.upgrade.model.MaterialDailyReport;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.QueryConstant;
 
 /**
  * @description: .
@@ -23,8 +24,8 @@ import ds.upgrade.util.AppConstants;
 public interface MaterialDailyReportRepository extends JpaRepository<MaterialDailyReport, Long>,
     JpaSpecificationExecutor<MaterialDailyReport> {
 
-  @Query("SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId.name = :name ")
+  @Query(QueryConstant.MATERIAL_DAILY_REPORT.FIND_DAILY_REPORT)
   List<MaterialDailyReport> findDailyReport(
-      @Param(AppConstants.PARAM.DATE_CREATED_PARAM) String dateCreated,
-      @Param(AppConstants.PARAM.NAME_PARAM) String storeName);
+      @Param(AppConstant.PARAM.DATE_CREATED_PARAM) String dateCreated,
+      @Param(AppConstant.PARAM.NAME_PARAM) String storeName);
 }

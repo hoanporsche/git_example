@@ -9,39 +9,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.RoomDb;
-import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.User;
 import ds.upgrade.service.RoomDbService;
-import ds.upgrade.service.SenderDbService;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.AppConstants;
-import ds.upgrade.util.ConstantsWebSocket;
+import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.ConstantWebSocket;
 
 @RestController
-@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.ROOM_DB_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.ROOM_DB_MODEL)
 public class RoomDbRestController {
 
   @Autowired
   private RoomDbService roomDbService;
   @Autowired
-  private SenderDbService senderDbService;
-  @Autowired
   private UserService userService;
 
-  @GetMapping(AppConstants.API_URL.JOIN_ROOM)
+  @GetMapping(AppConstant.API_URL.JOIN_ROOM)
   public ResponseEntity<?> joinRoom(@RequestParam String name) {
     try {
       User userRequest = userService.findInfoUser();
-      SenderDb foundSenderByUser = senderDbService.findByPhone(userRequest.getStoreId().getPhone());
-      RoomDb joinedRoom = roomDbService.joinRoom(name, foundSenderByUser);
+      RoomDb joinedRoom = roomDbService.joinRoom(name, userRequest);
       
       if (joinedRoom == null)
-        return new ResponseEntity<String>(ConstantsWebSocket.RESPONSE.NOT_JOINED_ROOM,
+        return new ResponseEntity<String>(ConstantWebSocket.RESPONSE.NOT_JOINED_ROOM,
             HttpStatus.CONFLICT);
       
       return new ResponseEntity<RoomDb>(joinedRoom, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

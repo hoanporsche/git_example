@@ -28,7 +28,7 @@ import ds.upgrade.service.MessageDbService;
 import ds.upgrade.service.NotificationDbService;
 import ds.upgrade.service.RoomDbService;
 import ds.upgrade.service.SenderDbService;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 @Controller
 public class WebSocketController {
@@ -60,7 +60,7 @@ public class WebSocketController {
   @PostMapping("/create-room")
   public @ResponseBody ResponseEntity<?> createRoom(@RequestBody @Validated Sender sender, BindingResult result) {
     if (result.hasErrors())
-      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.BAD_REQUEST);
     try {
       SenderDb senderDb = senderDbService.createOrUpdate(sender);
       //Create new room from senderDb
@@ -70,7 +70,7 @@ public class WebSocketController {
       //send message to all user
       return new ResponseEntity<RoomDb>(roomDb, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER + e, HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

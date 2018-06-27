@@ -104,10 +104,10 @@ INSERT INTO `donutstore`.`timekeeping` VALUES
 ('1','1','2018-03-06','2018-03-06 08:20:00','2018-03-06 17:30:00', b'1');
 
 INSERT INTO `donutstore`.`user` VALUES 
-('1','admin@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
-('2','giangvo@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
-('3','staff@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',2),
-('4','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',2);
+('1','admin@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',1),
+('2','giangvo@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',1),
+('3','staff@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',2),
+('4','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',2);
 
 
 INSERT INTO `donutstore`.`user_role` VALUES 

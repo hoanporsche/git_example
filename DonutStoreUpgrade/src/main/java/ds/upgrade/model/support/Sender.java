@@ -18,11 +18,19 @@ public class Sender {
   @Size(max = 20)
   private String phone;
   
+  private String picture;
+  
   public Sender() {}
   
   public Sender(String name, String phone) {
     this.name = name;
     this.phone = phone;
+  }
+  
+  public Sender(String name, String phone, String picture) {
+    this.name = name;
+    this.phone = phone;
+    this.picture = picture;
   }
   
   public Sender(SenderDb senderDb) {
@@ -42,6 +50,14 @@ public class Sender {
   public void setPhone(String phone) {
     this.phone = phone;
   }
+  public String getPicture() {
+    return picture;
+  }
+
+  public void setPicture(String picture) {
+    this.picture = picture;
+  }
+
   @Override
   public String toString() {
     return "Sender [name=" + name + ", phone=" + phone + "]";

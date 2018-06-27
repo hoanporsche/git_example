@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.TimekeepingStatus;
 import ds.upgrade.service.TimekeepingStatusService;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: /api/timekeeping-status.
@@ -34,7 +34,7 @@ import ds.upgrade.util.AppConstants;
  */
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
-@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.TIMEKEEPING_STATUS_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.TIMEKEEPING_STATUS_MODEL)
 public class TimekeepingStatusRestController {
 
   @Autowired
@@ -48,17 +48,17 @@ public class TimekeepingStatusRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping(AppConstants.API_URL.FIND_ALL)
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<TimekeepingStatus> list = timekeepingStatusService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<TimekeepingStatus>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -70,20 +70,20 @@ public class TimekeepingStatusRestController {
    * @param id
    * @return
    */
-  @GetMapping(AppConstants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(AppConstants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstant.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       TimekeepingStatus timekeepingStatus = timekeepingStatusService.findOne(newId);
       if (timekeepingStatus != null)
         return new ResponseEntity<TimekeepingStatus>(timekeepingStatus, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -96,21 +96,21 @@ public class TimekeepingStatusRestController {
    * @param enabled
    * @return
    */
-  @GetMapping(AppConstants.API_URL.FIND_LIST)
+  @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = AppConstants.PARAM.ENABLED_PARAM, required = false) String enabled) {
+      @RequestParam(value = AppConstant.PARAM.ENABLED_PARAM, required = false) String enabled) {
     try {
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
       Page<TimekeepingStatus> list = timekeepingStatusService.findList(pageable, newEnabled);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<TimekeepingStatus>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -123,20 +123,20 @@ public class TimekeepingStatusRestController {
    * @param result
    * @return
    */
-  @PostMapping(AppConstants.API_URL.SAVE)
+  @PostMapping(AppConstant.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated TimekeepingStatus timekeepingStatus,
       BindingResult result) {
     try {
       if (result.hasErrors())
-        return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       timekeepingStatus = timekeepingStatusService.save(timekeepingStatus);
       if (timekeepingStatus != null)
         return new ResponseEntity<TimekeepingStatus>(timekeepingStatus, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
 
   /**
@@ -148,20 +148,20 @@ public class TimekeepingStatusRestController {
    * @param id
    * @return
    */
-  @GetMapping(AppConstants.API_URL.ENABLED_OR_NOT)
-  public ResponseEntity<?> showOrNot(@RequestParam(AppConstants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstant.API_URL.ENABLED_OR_NOT)
+  public ResponseEntity<?> showOrNot(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       TimekeepingStatus timekeepingStatus = timekeepingStatusService.enabledOrNot(newId);
       if (timekeepingStatus != null)
         return new ResponseEntity<TimekeepingStatus>(timekeepingStatus, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -173,16 +173,16 @@ public class TimekeepingStatusRestController {
    * @param name
    * @return
    */
-  @GetMapping(AppConstants.API_URL.FIND_BY_NAME)
-  public ResponseEntity<?> findByName(@RequestParam(AppConstants.PARAM.NAME_PARAM) String name) {
+  @GetMapping(AppConstant.API_URL.FIND_BY_NAME)
+  public ResponseEntity<?> findByName(@RequestParam(AppConstant.PARAM.NAME_PARAM) String name) {
     try {
       TimekeepingStatus timekeepingStatus = timekeepingStatusService.findByName(name);
       if (timekeepingStatus != null)
         return new ResponseEntity<TimekeepingStatus>(timekeepingStatus, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

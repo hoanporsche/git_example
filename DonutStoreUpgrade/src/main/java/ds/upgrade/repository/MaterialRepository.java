@@ -8,16 +8,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import ds.upgrade.model.Material;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.QueryConstant;
 
 public interface MaterialRepository
     extends JpaRepository<Material, Long>, JpaSpecificationExecutor<Material> {
   
-  @Query("SELECT m FROM Material m WHERE m.enabled = true")
+  @Query(QueryConstant.MATERIAL.FIND_ALL)
   List<Material> findAll();
   
   Material findByName(String name);
   
-  @Query("SELECT m FROM Material m WHERE m.supplyId.id = :id")
-  List<Material> findBySupply(@Param(AppConstants.PARAM.ID_PARAM) Long id);
+  @Query(QueryConstant.MATERIAL.FIND_BY_SUPPLY)
+  List<Material> findBySupply(@Param(AppConstant.PARAM.ID_PARAM) Long id);
 }

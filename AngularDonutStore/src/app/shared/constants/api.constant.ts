@@ -16,6 +16,7 @@ export const API_URL = Object.freeze({
     USER_HAS_SEEN: '/user-has-seen',
     JOIN_ROOM: '/join-room',
     SEND_MESSAGE: '/send-message',
+    FIND_ALL_INTERNAL: '/find-all-internal',
 });
 
 export const MODEL_URL= Object.freeze({
@@ -37,5 +38,6 @@ export const MODEL_URL= Object.freeze({
     NOTIFICATION: '/notification-db',
     ROOM_DB: '/room-db',
     MESSAGE_DB: '/message-db',
+    SENDER_DB: '/sender-db',
 });
 

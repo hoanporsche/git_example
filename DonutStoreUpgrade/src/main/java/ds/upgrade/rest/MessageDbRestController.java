@@ -14,58 +14,73 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.MessageDb;
+import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.User;
 import ds.upgrade.service.MessageDbService;
+import ds.upgrade.service.RoomDbService;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.AppConstants;
+import ds.upgrade.util.AppConstant;
 
 @RestController
-@RequestMapping(AppConstants.API_URL.MAIN_API + AppConstants.MODEL.MESSAGE_DB_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.MESSAGE_DB_MODEL)
 public class MessageDbRestController {
 
   @Autowired
   private MessageDbService messageDbService;
   @Autowired
+  private RoomDbService roomDbService;
+  @Autowired
   private UserService userService;
-  
-  @GetMapping(AppConstants.API_URL.FIND_ALL)
+
+  /** Get all message in a room, check user has in the room and check input of
+  * "roomName"
+  */
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll(@RequestParam String roomName, Pageable pageable) {
     try {
+      RoomDb foundRoom = roomDbService.findByName(roomName);
+      User userRequest = userService.findInfoUser();
+      /** Check input "roomName" and check user in the room, if conditions is the
+      * truth, return not_accept
+      */
+      if (foundRoom == null || roomDbService.isUserInRoom(foundRoom.getSenderDbs(), userRequest))
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
+            HttpStatus.NOT_ACCEPTABLE);
       Page<MessageDb> listMessage = messageDbService.findAll(pageable, roomName);
       if (listMessage.getContent() != null)
         return new ResponseEntity<Page<MessageDb>>(listMessage, HttpStatus.OK);
-      return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @GetMapping(AppConstants.API_URL.FIND_LIST)
+  @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(@RequestParam String roomName, Pageable pageable) {
     try {
       User user = userService.findInfoUser();
       Page<MessageDb> listMessage = messageDbService.findList(pageable, roomName, user);
       if (listMessage.getContent() != null)
         return new ResponseEntity<Page<MessageDb>>(listMessage, HttpStatus.OK);
-      return new ResponseEntity<String>(AppConstants.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @PostMapping(AppConstants.API_URL.SEND_MESSAGE + AppConstants.PATH_PARAM.ROOM_NAME)
+  @PostMapping(AppConstant.API_URL.SEND_MESSAGE + AppConstant.PATH_PARAM.ROOM_NAME)
   public ResponseEntity<?> sendMessage(@PathVariable String roomName, @RequestBody String text) {
     try {
       User user = userService.findInfoUser();
       MessageDb messageDb = messageDbService.save(user, roomName, text);
       if (messageDb != null)
         return new ResponseEntity<MessageDb>(messageDb, HttpStatus.OK);
-      return new ResponseEntity<String>(AppConstants.REPONSE.NOT_SAVE,
+      return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE,
           HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

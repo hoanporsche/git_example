@@ -57,8 +57,6 @@ public class MessageDbServiceImpl implements MessageDbService {
     Set<SenderDb> listSenderOfRoom = roomDb.getSenderDbs();
     for (SenderDb s : listSenderOfRoom) {
       if (s.getId() == senderDb.getId()) {
-        // MessageDb messageDb = new MessageDb(new SenderDb(senderDb.getId()),
-        // new RoomDb(roomDb.getId()), text.trim());
         MessageDb messageDb = new MessageDb(senderDb, roomDb, text.trim());
         return messageDbRepository.save(messageDb);
       }

@@ -16,7 +16,7 @@ import ds.upgrade.repository.NotificationDbRepository;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.NotificationDbSpecification;
 import ds.upgrade.service.NotificationDbService;
-import ds.upgrade.util.ConstantsWebSocket;
+import ds.upgrade.util.ConstantWebSocket;
 
 @Service
 public class NotificationDbServiceImpl implements NotificationDbService {
@@ -31,7 +31,7 @@ public class NotificationDbServiceImpl implements NotificationDbService {
   @Override
   public void pushToAllUser(RoomDb roomDb) {
     List<User> listUser = userRepository.findAll();
-    String text = ConstantsWebSocket.RESPONSE.NEW_MESSAGE + roomDb.getName();
+    String text = ConstantWebSocket.RESPONSE.NEW_MESSAGE + roomDb.getName();
     for (User user : listUser) {
       NotificationDb newNoti = new NotificationDb(user, text);
       newNoti = notificationDbRepository.save(newNoti);

@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from './services/local-storage.service';
 import { WebSocketService } from './services/web-socket.service';
+import { SenderService } from './services/sender.service';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { WebSocketService } from './services/web-socket.service';
     NotificationService,
     ChatFreeService,
     ChatInternalService,
+    SenderService,
   ]
 })
 export class CoreModule { }

@@ -1,5 +1,8 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,20 @@ public class SenderDbServiceImpl implements SenderDbService {
 
   @Autowired
   private SenderDbRepository senderDbRepository;
+
+  @Override
+  public List<Sender> findAllInternal() {
+    List<SenderDb> listSenderDb = senderDbRepository.findAllInternal();
+    if (listSenderDb != null) {
+      List<Sender> listSender = new ArrayList<>();
+      for (SenderDb senderDb : listSenderDb) {
+        Sender sender = new Sender(senderDb.getName(), senderDb.getPhone(), senderDb.getPhone());
+        listSender.add(sender);
+      }
+      return listSender;
+    }
+    return null;
+  }
   
   @Override
   public SenderDb findByPhone(String phone) {
