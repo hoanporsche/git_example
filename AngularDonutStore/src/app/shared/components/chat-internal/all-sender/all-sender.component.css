@@ -2,6 +2,7 @@
   color: black;
   font-family: Helvetica, Arial, sans-serif;
 }
+
 .ds-contacts {
   color: #4c4c4c !important;
   font-size: 11px;
@@ -10,4 +11,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 3% 0;
+}
+
+ul {
+  list-style-type: none;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
 }

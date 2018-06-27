@@ -2,7 +2,7 @@
   <div class="ds-contacts">
     CONTACTS
   </div>
-  <div class="row" *ngFor="let sender of listSender">
+  <!-- <div class="row" *ngFor="let sender of listSender">
     <div class="col-12">
       {{ sender.name }}
       <ul>
@@ -11,5 +11,12 @@
         </li>
       </ul>
     </div>
-  </div>
+  </div> -->
+  <ul>
+    <li *ngFor="let sender of listSender">
+      <a href="#">
+        {{ sender?.name }}
+      </a>
+    </li>
+  </ul>
 </div>

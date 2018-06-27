@@ -22,6 +22,7 @@ export class AllSenderComponent implements OnInit, OnDestroy {
     this.subFindAllInternal = this.senderService.findAllInternal()
       .subscribe(response => {
         this.listSender = response;
+        console.log(this.listSender)
       }, error => {
 
       });

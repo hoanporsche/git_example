@@ -28,6 +28,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     this.formUser = this.fb.group({
       email: ['',[Validators.required, Validators.email, CommonValidator.notEmpty], [UserValidator.shouldBeUnique(this.userService)]],
       password: ['', [Validators.required, CommonValidator.notEmpty]],
+      picture: [''],
       storeId: ['', Validators.required],
       roles: ['', [Validators.required]]
     });
@@ -46,6 +47,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
       const user = {
         email: this.email.value.trim(),
         password: this.password.value.trim(),
+        picture: this.picture.value.trim(),
         storeId: this.storeId.value,
         roles: [this.roles.value]
       }
@@ -71,6 +73,10 @@ export class UserCreateComponent implements OnInit, OnDestroy {
 
   get password() {
     return this.formUser.get('password');
+  }
+
+  get picture() {
+    return this.formUser.get('picture');
   }
 
   get storeId() {

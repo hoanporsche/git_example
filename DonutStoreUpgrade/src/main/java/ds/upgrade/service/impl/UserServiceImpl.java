@@ -100,9 +100,6 @@ public class UserServiceImpl implements UserService {
     }
     user.setDateUpdated(new Date());
     user.setEnabled(true);
-    user.setCredentialsexpired(false);
-    user.setExpired(false);
-    user.setLocked(false);
     return userRepository.save(user);
   }
 
