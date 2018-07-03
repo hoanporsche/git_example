@@ -63,6 +63,9 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   }
   closeBox() {
     this.isOpen = false;
+    this.currentUser = undefined;
+    // if (this.stompClient)
+    //   this.stompClient.disconnect();
   }
 
   ngOnDestroy(): void {

@@ -9,7 +9,7 @@
         <i class="fa fa-angle-down shrink_icon"></i>
       </a>
     </div>
-    <div class="ds-box" [ngClass]="{'ds-height-230-px': !currentUser, 'ds-height-415-px': currentUser}" *ngIf="isOpen">
+    <div class="ds-box" [ngClass]="{'ds-height-230-px': !roomName, 'ds-height-415-px': roomName}" *ngIf="isOpen">
       <app-all-sender *ngIf="!roomName" (emitAction)="emitAction($event)"></app-all-sender>
       <app-form-chat-internal *ngIf="roomName" (emitMessage)="emitMessage($event)" [allReceivedMessages]="allReceivedMessages" [roomName]="roomName"></app-form-chat-internal>
     </div>
