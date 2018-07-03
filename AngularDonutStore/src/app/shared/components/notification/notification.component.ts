@@ -55,7 +55,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   connect() {
-    this.stompClient = this.wsService.connect(this.chatUrl);
+    this.stompClient = this.wsService.createStomp(this.chatUrl);
     this.stompClient.connect({}, frame => {
       this.stompClient.subscribe(this.notificationUrl + this.currentUser.user_name, notification => {
         console.log(notification);

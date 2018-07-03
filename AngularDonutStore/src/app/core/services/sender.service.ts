@@ -9,12 +9,20 @@ import { environment } from '../../../environments/environment';
 export class SenderService extends BaseService {
 
   private findAllInternalUrl = environment.baseUrl + API_URL.API + MODEL_URL.SENDER_DB + API_URL.FIND_ALL_INTERNAL;
-
+  private findAllNotInternalTodayUrl = environment.baseUrl + API_URL.API + MODEL_URL.SENDER_DB + API_URL.FIND_ALL_NOT_INTERNAL_TODAY;
+  private findAllNotInternalUrl = environment.baseUrl + API_URL.API + MODEL_URL.SENDER_DB + API_URL.FIND_ALL_NOT_INTERNAL;
+  
   constructor(httpClient: HttpClient) {
     super(httpClient);
   }
 
-  findAllInternal(): Observable<any> {
-    return this.get(this.findAllInternalUrl);
+  findAllInternal(param: {}): Observable<any> {
+    return this.get(this.findAllInternalUrl, param);
+  }
+  findAllNotInternalToday(param: {}): Observable<any> {
+    return this.get(this.findAllNotInternalTodayUrl, param);
+  }
+  findAllNotInternal(param: {}): Observable<any> {
+    return this.get(this.findAllNotInternalUrl, param);
   }
 }

@@ -28,6 +28,8 @@ public class RoomDbRestController {
   public ResponseEntity<?> joinRoom(@RequestParam String name) {
     try {
       User userRequest = userService.findInfoUser();
+      if (userRequest.getSenderDbId() == null)
+        return new ResponseEntity<String>(AppConstant.REPONSE.HAVE_NOT_PERMISSION, HttpStatus.NOT_ACCEPTABLE);
       RoomDb joinedRoom = roomDbService.joinRoom(name, userRequest);
       
       if (joinedRoom == null)

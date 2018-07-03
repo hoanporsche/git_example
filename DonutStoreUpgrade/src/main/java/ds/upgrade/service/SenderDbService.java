@@ -1,13 +1,18 @@
 package ds.upgrade.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.support.Sender;
 
 public interface SenderDbService {
   
-  List<Sender> findAllInternal();
+  Page<SenderDb> findAllInternal(Pageable pageable);
+  
+  Page<SenderDb> findAllNotInternalToday(Pageable pageable);
+  
+  Page<SenderDb> findAllNotInternal(Pageable pageable);
 
   public SenderDb findByPhone(String phone);
   

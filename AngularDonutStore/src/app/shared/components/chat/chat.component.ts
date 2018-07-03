@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   connect() {
-    this.stompClient = this.wsService.connect(this.chatUrl);
+    this.stompClient = this.wsService.createStomp(this.chatUrl);
     this.stompClient.connect({}, frame => {
       this.stompClient.subscribe(this.roomChatUrl + this.roomName, messageOutput => {
         this.allReceivedMessages.push(JSON.parse(messageOutput.body));

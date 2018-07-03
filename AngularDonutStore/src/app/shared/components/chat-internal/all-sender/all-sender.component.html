@@ -2,20 +2,20 @@
   <div class="ds-contacts">
     CONTACTS
   </div>
-  <!-- <div class="row" *ngFor="let sender of listSender">
-    <div class="col-12">
-      {{ sender.name }}
-      <ul>
-        <li>
-          
-        </li>
-      </ul>
-    </div>
-  </div> -->
   <ul>
-    <li *ngFor="let sender of listSender">
+    <li *ngFor="let internalSender of listInternalSender">
       <a href="#">
-        {{ sender?.name }}
+        {{ internalSender?.name }}
+      </a>
+    </li>
+  </ul>
+  <div class="ds-contacts">
+    CUSTOMERS
+  </div>
+  <ul>
+    <li *ngFor="let notInternalSender of listNotInternalSender">
+      <a href="#">
+        {{ notInternalSender?.name }}
       </a>
     </li>
   </ul>

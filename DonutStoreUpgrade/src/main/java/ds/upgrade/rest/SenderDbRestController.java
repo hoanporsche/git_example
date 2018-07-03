@@ -1,15 +1,15 @@
 package ds.upgrade.rest;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ds.upgrade.model.support.Sender;
+import ds.upgrade.model.SenderDb;
 import ds.upgrade.service.SenderDbService;
 import ds.upgrade.util.AppConstant;
 
@@ -21,11 +21,37 @@ public class SenderDbRestController {
   private SenderDbService senderDbService;
 
   @GetMapping(AppConstant.API_URL.FIND_ALL_INTERNAL)
-  public ResponseEntity<?> findAllInternal() {
+  public ResponseEntity<?> findAllInternal(Pageable pageable) {
     try {
-      List<Sender> list = senderDbService.findAllInternal();
+      Page<SenderDb> list = senderDbService.findAllInternal(pageable);
       if (list != null)
-        return new ResponseEntity<List<Sender>>(list, HttpStatus.OK);
+        return new ResponseEntity<Page<SenderDb>>(list, HttpStatus.OK);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  
+  @GetMapping(AppConstant.API_URL.FIND_ALL_NOT_INTERNAL_TODAY)
+  public ResponseEntity<?> findAllNotInternalToday(Pageable pageable) {
+    try {
+      Page<SenderDb> list = senderDbService.findAllNotInternalToday(pageable);
+      if (list != null)
+        return new ResponseEntity<Page<SenderDb>>(list, HttpStatus.OK);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  
+  @GetMapping(AppConstant.API_URL.FIND_ALL_NOT_INTERNAL)
+  public ResponseEntity<?> findAllNotInternal(Pageable pageable) {
+    try {
+      Page<SenderDb> list = senderDbService.findAllNotInternal(pageable);
+      if (list != null)
+        return new ResponseEntity<Page<SenderDb>>(list, HttpStatus.OK);
       return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,

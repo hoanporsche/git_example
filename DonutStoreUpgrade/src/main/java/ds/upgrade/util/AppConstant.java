@@ -22,6 +22,7 @@ public class AppConstant {
     public static final String NOT_SAVE = "Saving content has error";
     public static final String NOT_DISABLED = "Please Make sure you have a replacement";
     public static final String WRONG_OLD_PASSWORD = "Wrong old password";
+    public static final String HAVE_NOT_PERMISSION = "You have not permission";
   }
   
   public static class PARAM {
@@ -52,6 +53,7 @@ public class AppConstant {
     public static final String SENDER_DB_ID_PARAM = "senderDbId";
     public static final String ROOM_DB_ID_PARAM = "roomDbId";
     public static final String SENDER_DB_S_PARAM = "senderDbs";
+    public static final String LAST_CONNECT = "lastConnect";
   }
   
   public static class PATH_PARAM {
@@ -75,6 +77,8 @@ public class AppConstant {
     public static final String JOIN_ROOM = "/join-room";
     public static final String SEND_MESSAGE = "/send-message";
     public static final String FIND_ALL_INTERNAL = "/find-all-internal";
+    public static final String FIND_ALL_NOT_INTERNAL_TODAY = "/find-all-not-internal-today";
+    public static final String FIND_ALL_NOT_INTERNAL = "/find-all-not-internal";
   }
   
   public static class MODEL {
