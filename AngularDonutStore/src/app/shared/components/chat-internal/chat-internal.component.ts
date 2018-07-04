@@ -16,9 +16,10 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   allReceivedMessages = [];
   listSender;
   isOpen = false;
+  senderName: string;
 
   params = {
-    roomName: this.roomName,
+    senderPhone: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
@@ -50,22 +51,32 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   sendMessage(text) {
     this.subSendMessage = this.chatInternalService.sendMessage(this.roomName, text)
       .subscribe(response => {
-
+        this.findList();
       }, error => {
 
       })
   }
+
+  getEmitSender(event) {
+    this.senderName = event.name;
+    this.params.senderPhone = event.phone;
+    this.findList();
+  }
   
   openBox() {
     this.isOpen = true;
-    console.log(this.roomName);
-    this.findList();
+    // console.log(this.roomName);
+    // this.findList();
   }
   closeBox() {
     this.isOpen = false;
     this.currentUser = undefined;
     // if (this.stompClient)
     //   this.stompClient.disconnect();
+  }
+  
+  emitMessage(event) {
+    this.sendMessage(event);
   }
 
   ngOnDestroy(): void {

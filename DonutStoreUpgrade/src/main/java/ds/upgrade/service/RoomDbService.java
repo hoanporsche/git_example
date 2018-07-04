@@ -19,5 +19,7 @@ public interface RoomDbService {
   
   RoomDb joinRoom(String name, User joinUser);
   
+  RoomDb findByUsersInRoom(String senderPhone, User user);
+  
   boolean isUserInRoom(Set<SenderDb> senderInRoom, User user);
 }

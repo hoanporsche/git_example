@@ -36,17 +36,18 @@ public class MessageDbRestController {
   * "roomName"
   */
   @GetMapping(AppConstant.API_URL.FIND_ALL)
-  public ResponseEntity<?> findAll(@RequestParam String roomName, Pageable pageable) {
+  public ResponseEntity<?> findAll(@RequestParam String senderPhone, Pageable pageable) {
     try {
-      RoomDb foundRoom = roomDbService.findByName(roomName);
+      User user = userService.findInfoUser();
+      RoomDb foundRoom = roomDbService.findByUsersInRoom(senderPhone, user);
       User userRequest = userService.findInfoUser();
       /** Check input "roomName" and check user in the room, if conditions is the
       * truth, return not_accept
       */
-      if (foundRoom == null || roomDbService.isUserInRoom(foundRoom.getSenderDbs(), userRequest))
+      if (foundRoom == null || !roomDbService.isUserInRoom(foundRoom.getSenderDbs(), userRequest))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
             HttpStatus.NOT_ACCEPTABLE);
-      Page<MessageDb> listMessage = messageDbService.findAll(pageable, roomName);
+      Page<MessageDb> listMessage = messageDbService.findAll(pageable, foundRoom.getName());
       if (listMessage.getContent() != null)
         return new ResponseEntity<Page<MessageDb>>(listMessage, HttpStatus.OK);
       return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);

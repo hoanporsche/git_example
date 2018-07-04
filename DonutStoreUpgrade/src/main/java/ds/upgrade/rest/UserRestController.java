@@ -34,13 +34,25 @@ import ds.upgrade.util.AppConstant;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.USER_MODEL)
 public class UserRestController {
 
   @Autowired
   private UserService userService;
+  
+  @GetMapping(AppConstant.API_URL.FIND_INFO)
+  public ResponseEntity<?> findInfo() {
+    try {
+      User user = userService.findInfoUser();
+      if (user != null)
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
 
   /**
    * @description: /find-all.
@@ -50,6 +62,7 @@ public class UserRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
@@ -72,6 +85,7 @@ public class UserRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.FIND_ONE)
   public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
@@ -97,6 +111,7 @@ public class UserRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.FIND_BY_EMAIL)
   public ResponseEntity<?> findByEmail(@RequestParam(AppConstant.PARAM.EMAIL_PARAM) String email) {
     try {
@@ -120,6 +135,7 @@ public class UserRestController {
    * @param enabled
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
       @RequestParam(value = AppConstant.PARAM.STORE_ID_PARAM, required = false) String storeId,
@@ -177,6 +193,7 @@ public class UserRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
@@ -203,6 +220,7 @@ public class UserRestController {
    * @param result
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(AppConstant.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated User user, BindingResult result) {
     try {

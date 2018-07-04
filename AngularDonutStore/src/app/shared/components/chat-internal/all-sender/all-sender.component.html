@@ -4,7 +4,7 @@
   </div>
   <ul>
     <li *ngFor="let internalSender of listInternalSender">
-      <a href="#">
+      <a href="#" (click)="getSender(internalSender)">
         {{ internalSender?.name }}
       </a>
     </li>
@@ -14,7 +14,7 @@
   </div>
   <ul>
     <li *ngFor="let notInternalSender of listNotInternalSender">
-      <a href="#">
+      <a href="#" (click)="getSender(notInternalSender)">
         {{ notInternalSender?.name }}
       </a>
     </li>

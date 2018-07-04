@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.SenderDb;
+import ds.upgrade.model.User;
 import ds.upgrade.util.AppConstant;
 
 public class SenderDbSpecification implements Specification<SenderDb> {
@@ -17,15 +18,30 @@ public class SenderDbSpecification implements Specification<SenderDb> {
   private Boolean isInternal;
   private Date startDate;
   private Date endDate;
+  private SenderDb senderDb;
+  private User user;
 
   public SenderDbSpecification(Boolean isInternal) {
     this.isInternal = isInternal;
+  }
+  
+  public SenderDbSpecification(Boolean isInternal, User user) {
+    this.isInternal = isInternal;
+    this.user = user;
   }
 
   public SenderDbSpecification(Date startDate, Date endDate, Boolean isInternal) {
     this.startDate = startDate;
     this.endDate = endDate;
     this.isInternal = isInternal;
+  }
+
+  public SenderDbSpecification(Date startDate, Date endDate, Boolean isInternal,
+      SenderDb senderDb) {
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.isInternal = isInternal;
+    this.senderDb = senderDb;
   }
 
   @Override
@@ -44,6 +60,16 @@ public class SenderDbSpecification implements Specification<SenderDb> {
     }
     if (isInternal.equals(Boolean.FALSE)) {
       predicate = cb.and(predicate, cb.isNull(root.get(AppConstant.PARAM.USER_ID_PARAM)));
+    }
+    if (senderDb != null) {
+      predicate = cb.and(predicate, cb.equal(
+          root.join(AppConstant.PARAM.ROOM_DB_S_PARAM).join(AppConstant.PARAM.SENDER_DB_S_PARAM).<Long>get(AppConstant.PARAM.ID_PARAM),
+          senderDb.getId()));
+    }
+    if (user != null) {
+      predicate = cb.and(predicate, cb.notEqual(
+          root.get(AppConstant.PARAM.USER_ID_PARAM).<Long>get(AppConstant.PARAM.ID_PARAM),
+          user.getId()));
     }
     return predicate;
   }

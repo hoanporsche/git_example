@@ -1,6 +1,7 @@
 package ds.upgrade.service.impl;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import ds.upgrade.model.Role;
 import ds.upgrade.model.SenderDb;
+import ds.upgrade.model.User;
 import ds.upgrade.model.support.Sender;
 import ds.upgrade.repository.SenderDbRepository;
 import ds.upgrade.repository.specification.SenderDbSpecification;
@@ -20,19 +23,26 @@ public class SenderDbServiceImpl implements SenderDbService {
   @Autowired
   private SenderDbRepository senderDbRepository;
 
+  /**
+   * @description: if user is ADMIN, find all. If it's not ADMIN, find all except this user.
+   * @author: VDHoan
+   * @created_date: Mar 6, 2018
+   */
   @Override
-  public Page<SenderDb> findAllInternal(Pageable pageable) {
-    Specification<SenderDb> spec = new SenderDbSpecification(Boolean.TRUE);
+  public Page<SenderDb> findAllInternal(User user, Pageable pageable) {
+    Specification<SenderDb> spec = null;
+    if (isAdmin(user.getRoles())) {
+      spec = new SenderDbSpecification(Boolean.TRUE);
+    } else {
+      spec = new SenderDbSpecification(Boolean.TRUE, user);
+    }
     return senderDbRepository.findAll(spec, pageable);
   }
 
   @Override
-  public Page<SenderDb> findAllNotInternalToday(Pageable pageable) {
-    Date todayDate = new Date();
-    @SuppressWarnings("deprecation")
-    Date startDate = new Date(todayDate.getYear(), todayDate.getMonth(), todayDate.getDate(), 0,0,0);
-    @SuppressWarnings("deprecation")
-    Date endDate = new Date(todayDate.getYear(), todayDate.getMonth(), todayDate.getDate(), 23, 59, 59);
+  public Page<SenderDb> findAllNotInternalIn24h(Pageable pageable) {
+    Date endDate = new Date();
+    Date startDate = new Date(endDate.getTime() - (1000 * 60 * 60 * 24));
     Specification<SenderDb> spec = new SenderDbSpecification(startDate, endDate, Boolean.FALSE);
     return senderDbRepository.findAll(spec, pageable);
   }
@@ -40,6 +50,14 @@ public class SenderDbServiceImpl implements SenderDbService {
   @Override
   public Page<SenderDb> findAllNotInternal(Pageable pageable) {
     Specification<SenderDb> spec = new SenderDbSpecification(Boolean.FALSE);
+    return senderDbRepository.findAll(spec, pageable);
+  }
+
+  @Override
+  public Page<SenderDb> findAllNotInternalIn24HInChargeOfUser(Pageable pageable, User user) {
+    Date endDate = new Date();
+    Date startDate = new Date(endDate.getTime() - (1000 * 60 * 60 * 24));
+    Specification<SenderDb> spec = new SenderDbSpecification(startDate, endDate, Boolean.FALSE, user.getSenderDbId());
     return senderDbRepository.findAll(spec, pageable);
   }
   
@@ -58,4 +76,11 @@ public class SenderDbServiceImpl implements SenderDbService {
     return senderDbRepository.save(senderDb);
   }
 
+  private boolean isAdmin(Set<Role> roles) {
+    for (Role role : roles) {
+      if (role.getId() == 1)
+        return true;
+    }
+    return false;
+  }
 }

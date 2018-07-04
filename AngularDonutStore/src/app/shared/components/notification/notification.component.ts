@@ -81,7 +81,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.subJoinRoom = this.chatInternalService.joinRoom({name: roomName})
       .subscribe(response => {
         console.log(response);
-        this.emitRoomName.emit(response.name);
+        // this.emitRoomName.emit(response.name);
       }, error => {
         alert(error.error);
       });

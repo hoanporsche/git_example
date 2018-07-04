@@ -13,6 +13,7 @@ import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.User;
 import ds.upgrade.repository.RoomDbRepository;
+import ds.upgrade.repository.SenderDbRepository;
 import ds.upgrade.repository.specification.RoomDbSpecification;
 import ds.upgrade.service.RoomDbService;
 import ds.upgrade.util.ConstantWebSocket;
@@ -22,6 +23,8 @@ public class RoomDbServiceImpl implements RoomDbService {
 
   @Autowired
   private RoomDbRepository roomDbRepository;
+  @Autowired
+  private SenderDbRepository senderDbRepository;
 
   @Override
   public Page<RoomDb> findList(Pageable pageable, User user) {
@@ -42,6 +45,22 @@ public class RoomDbServiceImpl implements RoomDbService {
   @Override
   public RoomDb findByName(String name) {
     return roomDbRepository.findByName(name);
+  }
+
+  @Override
+  public RoomDb findByUsersInRoom(String senderPhone, User user) {
+    SenderDb senderDb1 = user.getSenderDbId();
+    SenderDb senderDb2 = senderDbRepository.findByPhone(senderPhone);
+    if (senderDb2 != null) {
+      for (RoomDb roomDb1 : senderDb1.getRoomDbs()) {
+        for (RoomDb roomDb2 : senderDb2.getRoomDbs()) {
+          if (roomDb1.getId() == roomDb2.getId()) {
+            return roomDb2;
+          }
+        }
+      }
+    }
+    return null;
   }
 
   /**

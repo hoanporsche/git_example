@@ -54,6 +54,7 @@ public class AppConstant {
     public static final String ROOM_DB_ID_PARAM = "roomDbId";
     public static final String SENDER_DB_S_PARAM = "senderDbs";
     public static final String LAST_CONNECT = "lastConnect";
+    public static final String ROOM_DB_S_PARAM = "roomDbs";
   }
   
   public static class PATH_PARAM {
@@ -62,6 +63,7 @@ public class AppConstant {
   
   public static class API_URL {
     public static final String MAIN_API = "/api/";
+    public static final String FIND_INFO = "/find-info";
     public static final String FIND_ALL = "/find-all";
     public static final String FIND_ONE = "/find-one";
     public static final String FIND_LIST = "/find-list";
@@ -77,8 +79,9 @@ public class AppConstant {
     public static final String JOIN_ROOM = "/join-room";
     public static final String SEND_MESSAGE = "/send-message";
     public static final String FIND_ALL_INTERNAL = "/find-all-internal";
-    public static final String FIND_ALL_NOT_INTERNAL_TODAY = "/find-all-not-internal-today";
+    public static final String FIND_ALL_NOT_INTERNAL_IN_24H = "/find-all-not-internal-in-24h";
     public static final String FIND_ALL_NOT_INTERNAL = "/find-all-not-internal";
+    public static final String FIND_ALL_NOT_INTERNAL_IN_24H_IN_CHARGE_OF_USER = "/find-all-not-internal-in-24h-in-charge-of-user";
   }
   
   public static class MODEL {

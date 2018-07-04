@@ -17,8 +17,9 @@ export const API_URL = Object.freeze({
     JOIN_ROOM: '/join-room',
     SEND_MESSAGE: '/send-message',
     FIND_ALL_INTERNAL: '/find-all-internal',
-    FIND_ALL_NOT_INTERNAL_TODAY: '/find-all-not-internal-today',
+    FIND_ALL_NOT_INTERNAL_IN_24H: '/find-all-not-internal-in-24h',
     FIND_ALL_NOT_INTERNAL: '/find-all-not-internal',
+    FIND_ALL_NOT_INTERNAL_IN_24H_IN_CHARGE_OF_USER: '/find-all-not-internal-in-24h-in-charge-of-user',
 });
 
 export const MODEL_URL= Object.freeze({
