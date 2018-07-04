@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
+import ds.upgrade.model.support.UserJson;
 
 public interface UserService {
 
@@ -29,6 +30,8 @@ public interface UserService {
   User enabledOrNot(Long id);
   
   User findInfoUser();
+  
+  UserJson findJsonInfoUser();
   Boolean isAdmin(Set<Role> roles);
   Boolean isStore(Set<Role> roles);
   Boolean isStaff(Set<Role> roles);

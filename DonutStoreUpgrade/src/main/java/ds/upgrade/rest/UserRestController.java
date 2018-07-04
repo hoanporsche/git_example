@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.User;
+import ds.upgrade.model.support.UserJson;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
 
@@ -44,11 +45,11 @@ public class UserRestController {
   @GetMapping(AppConstant.API_URL.FIND_INFO)
   public ResponseEntity<?> findInfo() {
     try {
-      User user = userService.findInfoUser();
+      UserJson user = userService.findJsonInfoUser();
       if (user != null)
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<UserJson>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + " " +e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);

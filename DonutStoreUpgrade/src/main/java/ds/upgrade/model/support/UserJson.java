@@ -1,14 +1,27 @@
 package ds.upgrade.model.support;
 
+import java.util.HashSet;
 import java.util.Set;
 
-public class UserForm {
+import ds.upgrade.model.Role;
+import ds.upgrade.model.SenderDb;
+import ds.upgrade.model.User;
+
+public class UserJson {
 
   private String email;
   private String picture;
   private String senderName;
   private Set<String> roles;
   private Long storeId;
+
+  public UserJson(User user) {
+    this.setEmail(user.getEmail());
+    this.setPicture(user.getPicture());
+    this.setSenderName(user.getSenderDbId());
+    this.setStoreId(user.getStoreId().getId());
+    this.setRoles(user.getRoles());
+  }
 
   public String getEmail() {
     return email;
@@ -30,16 +43,20 @@ public class UserForm {
     return senderName;
   }
 
-  public void setSenderName(String senderName) {
-    this.senderName = senderName;
+  public void setSenderName(SenderDb senderDb) {
+    if (senderDb != null)
+      this.senderName = senderDb.getName();
   }
 
   public Set<String> getRoles() {
     return roles;
   }
 
-  public void setRoles(Set<String> roles) {
-    this.roles = roles;
+  public void setRoles(Set<Role> roles) {
+    this.roles = new HashSet<>();
+    for (Role role : roles) {
+      this.roles.add(role.getName());
+    }
   }
 
   public Long getStoreId() {

@@ -1,7 +1,6 @@
 package ds.upgrade.service.impl;
 
 import java.util.Date;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,19 +8,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import ds.upgrade.model.Role;
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.User;
 import ds.upgrade.model.support.Sender;
 import ds.upgrade.repository.SenderDbRepository;
 import ds.upgrade.repository.specification.SenderDbSpecification;
 import ds.upgrade.service.SenderDbService;
+import ds.upgrade.service.UserService;
 
 @Service
 public class SenderDbServiceImpl implements SenderDbService {
 
   @Autowired
   private SenderDbRepository senderDbRepository;
+  @Autowired
+  private UserService userService;
 
   /**
    * @description: if user is ADMIN, find all. If it's not ADMIN, find all except this user.
@@ -31,7 +32,7 @@ public class SenderDbServiceImpl implements SenderDbService {
   @Override
   public Page<SenderDb> findAllInternal(User user, Pageable pageable) {
     Specification<SenderDb> spec = null;
-    if (isAdmin(user.getRoles())) {
+    if (userService.isAdmin(user.getRoles())) {
       spec = new SenderDbSpecification(Boolean.TRUE);
     } else {
       spec = new SenderDbSpecification(Boolean.TRUE, user);
@@ -74,13 +75,5 @@ public class SenderDbServiceImpl implements SenderDbService {
       senderDb.setId(foundSender.getId());
     }
     return senderDbRepository.save(senderDb);
-  }
-
-  private boolean isAdmin(Set<Role> roles) {
-    for (Role role : roles) {
-      if (role.getId() == 1)
-        return true;
-    }
-    return false;
   }
 }

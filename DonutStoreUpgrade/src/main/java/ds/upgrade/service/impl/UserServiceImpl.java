@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
+import ds.upgrade.model.support.UserJson;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
 import ds.upgrade.service.UserService;
@@ -130,6 +131,11 @@ public class UserServiceImpl implements UserService {
     if (user == null)
       return null;
     return user;
+  }
+
+  @Override
+  public UserJson findJsonInfoUser() {
+    return new UserJson(findInfoUser());
   }
 
   /**
