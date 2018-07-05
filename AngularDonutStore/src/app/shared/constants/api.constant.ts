@@ -4,6 +4,7 @@ export const API_URL = Object.freeze({
     RESET_PASSWORD: '/reset-password',
     CHANGE_PASSWORD: '/change-password',
     FIND_ALL: '/find-all',
+    FIND_INFO: '/find-info',
     FIND_ONE: '/find-one',
     FIND_LIST: '/find-list',
     FIND_BY_NAME: '/find-by-name',

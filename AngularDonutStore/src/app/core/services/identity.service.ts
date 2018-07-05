@@ -1,3 +1,4 @@
+import { UserJson } from './../../management/model/user/user-json';
 import { LocalStorageService } from './local-storage.service';
 import { API_URL } from './../../shared/constants/api.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,15 +9,12 @@ import { ROLES } from '../../shared/constants/role.constant';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-import { Token } from '@angular/compiler';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt'; 
-import { User } from '../../management/model/user/user';
 
 @Injectable()
 export class IdentityService {
   // These 02 properties will be set right in AppComponent -> ngOnInit()
-  private currentUser;
-  private token: Token;
+  private currentUser: UserJson;
+  private token;
 
   constructor(
     private httpClient: HttpClient,
@@ -35,7 +33,8 @@ export class IdentityService {
   */
   initializeToken() {
     try {
-      this.token = <Token> JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));
+      // this.token = <Token> JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));
+      this.token = JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));
     } catch (err) {
       this.token = null;
       console.log('>>> Error parse token from localStorage:', err);
@@ -52,12 +51,12 @@ export class IdentityService {
   */
   initializeCurrentUser() {
     try {
-      // this.currentUser = <User>JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
-      const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
-      if (token){
-        const jwt = new JwtHelper();
-        this.currentUser = jwt.decodeToken(token);
-      }
+      this.currentUser = <UserJson>JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
+      // const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
+      // if (token){
+      //   const jwt = new JwtHelper();
+      //   this.currentUser = jwt.decodeToken(token);
+      // }
     } catch (err) {
       this.currentUser = null;
       console.log('>>> Error parse token from localStorage:', err);
@@ -71,11 +70,11 @@ export class IdentityService {
     return this.currentUser;
   }
 
-  setCurrentUser(currentUser: User) {
+  setCurrentUser(currentUser: UserJson) {
     this.currentUser = currentUser;
   }
 
-  setToken(token: Token) {
+  setToken(token) {
     this.token = token;
   }
 
@@ -104,7 +103,7 @@ export class IdentityService {
   }
   getStringRoles(): string[] {
     if (this.currentUser) {
-      return this.currentUser.authorities;
+      return this.currentUser.roles;
     }
     return [];
   }

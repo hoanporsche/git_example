@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.ItemSpecification;
 import ds.upgrade.service.ItemService;
@@ -29,8 +31,15 @@ public class ItemServiceImpl implements ItemService {
    * @return
    */
   @Override
-  public List<Item> findAll() {
-    return itemRepository.findAll();
+  public List<ItemJson> findAll() {
+    List<Item> listFound = itemRepository.findAll();
+    List<ItemJson> list = new ArrayList<>();
+    if (listFound != null && listFound.size() > 0) {
+      for (Item item : listFound) {
+        list.add(new ItemJson(item));
+      }
+    }
+    return null;
   }
 
   /**

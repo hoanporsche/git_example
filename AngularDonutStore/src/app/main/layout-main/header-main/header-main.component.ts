@@ -1,6 +1,7 @@
 import { IdentityService } from './../../../core/services/identity.service';
 import { NavigationService } from './../../../core/services/navigation.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserJson } from '../../../management/model/user/user-json';
 
 @Component({
   selector: 'app-header-main',
@@ -8,7 +9,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./header-main.component.css']
 })
 export class HeaderMainComponent implements OnInit {
-  currentUser;
+  currentUser: UserJson;
   constructor(
     private navigationService: NavigationService,
     private identityService: IdentityService,

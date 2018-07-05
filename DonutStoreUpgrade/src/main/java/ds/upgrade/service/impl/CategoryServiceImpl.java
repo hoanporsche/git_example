@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Category;
 import ds.upgrade.model.Item;
+import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.repository.CategoryRepository;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;
@@ -33,8 +35,16 @@ public class CategoryServiceImpl implements CategoryService {
    * @return
    */
   @Override
-  public List<Category> findAll() {
-    return categoryRepository.findAll();
+  public List<CategoryJson> findAll() {
+    List<Category> listFound = categoryRepository.findAll();
+    List<CategoryJson> listJson = new ArrayList<>();
+    if (listFound != null && listFound.size() > 0) {
+      for (Category category : listFound) {
+        listJson.add(new CategoryJson(category));
+      }
+      return listJson;
+    }
+    return null;
   }
 
   /**

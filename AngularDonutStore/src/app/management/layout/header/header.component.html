@@ -193,7 +193,7 @@
                 data-dropdown-toggle="click">
                 <a href="javascript: void(0);" class="m-nav__link m-dropdown__toggle">
                   <span class="m-topbar__userpic">
-                    <img src="{{ currentUser?.avatarUrl }}" alt="Sorry not avatar" class="m--img-rounded m--marginless m--img-centered" type="image/jpg"
+                    <img src="{{ currentUser?.picture }}" alt="Sorry not avatar" class="m--img-rounded m--marginless m--img-centered" type="image/jpg"
                       onError="this.onerror=null;this.src='./assets/app/media/img/misc/user-avatar-default.jpg';" />
                   </span>
                   <span class="m-topbar__username m--hide">
@@ -213,7 +213,7 @@
                         </div>
                         <div class="m-card-user__details">
                           <span class="m-card-user__name m--font-weight-500">
-                            {{ currentUser?.user_name }}
+                            {{ currentUser?.email }}
                           </span>
                           <!-- <a href="#" class="m-card-user__email m--font-weight-400 m-link">
 														{{ currentUser?.email }}

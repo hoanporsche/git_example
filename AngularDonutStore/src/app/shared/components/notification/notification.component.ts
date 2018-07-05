@@ -6,6 +6,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/cor
 import { Subscription } from 'rxjs';
 import { CONFIG } from '../../constants/configuration.constant';
 import { environment } from '../../../../environments/environment';
+import { UserJson } from '../../../management/model/user/user-json';
 
 @Component({
   selector: 'app-notification',
@@ -20,7 +21,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private notificationUrl = '/topic/notification/';
 
   listNotification: any[];
-  private currentUser;
+  private currentUser: UserJson;
   private stompClient;
 
   private subListNotification: Subscription;
@@ -57,7 +58,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   connect() {
     this.stompClient = this.wsService.createStomp(this.chatUrl);
     this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe(this.notificationUrl + this.currentUser.user_name, notification => {
+      this.stompClient.subscribe(this.notificationUrl + this.currentUser.email, notification => {
         console.log(notification);
         //push new noti on the top
         this.listNotification.splice(0,0,JSON.parse(notification.body));

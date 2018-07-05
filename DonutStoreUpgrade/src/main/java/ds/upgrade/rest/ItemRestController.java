@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.util.AppConstant;
 
@@ -49,9 +50,9 @@ public class ItemRestController {
   @GetMapping(AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
-      List<Item> list = itemService.findAll();
+      List<ItemJson> list = itemService.findAll();
       if (!list.isEmpty())
-        return new ResponseEntity<List<Item>>(list, HttpStatus.OK);
+        return new ResponseEntity<List<ItemJson>>(list, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);

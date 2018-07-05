@@ -1,3 +1,4 @@
+import { UserJson } from './../../model/user/user-json';
 import { User } from '../../model/user/user';
 import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ declare let mLayout: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  currentUser;
+  currentUser: UserJson;
   @Output() emitRoomName = new EventEmitter<string>();
   constructor(
     private router: Router,
