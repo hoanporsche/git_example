@@ -27,6 +27,7 @@ public class RoomDb implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
+  @JsonIgnore
   private Long id;
   @Column(name = "name")
   private String name;

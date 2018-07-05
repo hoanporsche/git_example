@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "message_db")
 public class MessageDb implements Serializable{
@@ -20,6 +22,7 @@ public class MessageDb implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
+  @JsonIgnore
   private Long id;
   @ManyToOne
   @JoinColumn(name = "sender_db_id", referencedColumnName = "id", nullable = true)

@@ -3,6 +3,7 @@ import { ChatInternalService } from './../../../core/services/chat-internal.serv
 import { IdentityService } from './../../../core/services/identity.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CONFIG } from '../../constants/configuration.constant';
+import { UserJson } from '../../../management/model/user/user-json';
 
 @Component({
   selector: 'app-chat-internal',
@@ -11,10 +12,9 @@ import { CONFIG } from '../../constants/configuration.constant';
 })
 export class ChatInternalComponent implements OnInit, OnDestroy {
 
-  currentUser;
+  currentUser: UserJson;
   @Input() roomName: string;
   allReceivedMessages = [];
-  listSender;
   isOpen = false;
   senderName: string;
 
@@ -38,17 +38,17 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
     this.currentUser = this.identityService.getCurrentUser();
   }
 
-  findList() {
+  private findList() {
     this.subFindAllMessage = this.chatInternalService.findAll(this.params)
       .subscribe(response => {
         this.allReceivedMessages = response.content;
-        console.log(this.allReceivedMessages);
+        this.roomName = this.allReceivedMessages[0].roomDbId.name;
       }, error => {
 
       });
   }
 
-  sendMessage(text) {
+  private sendMessage(text) {
     this.subSendMessage = this.chatInternalService.sendMessage(this.roomName, text)
       .subscribe(response => {
         this.findList();
@@ -70,7 +70,7 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   }
   closeBox() {
     this.isOpen = false;
-    this.currentUser = undefined;
+    this.reset();
     // if (this.stompClient)
     //   this.stompClient.disconnect();
   }
@@ -79,6 +79,12 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
     this.sendMessage(event);
   }
 
+  private reset() {
+    this.currentUser = undefined;
+    this.roomName = undefined;
+    this.senderName = undefined;
+    this.allReceivedMessages = [];
+  }
   ngOnDestroy(): void {
     if (this.currentUser)
       this.currentUser = undefined;

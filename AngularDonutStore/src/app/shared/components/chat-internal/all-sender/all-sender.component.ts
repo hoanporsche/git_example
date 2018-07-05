@@ -63,7 +63,6 @@ export class AllSenderComponent implements OnInit, OnDestroy {
   }
 
   getSender(sender) {
-    console.log(sender);
     this.emitSender.emit(sender);
   }
   ngOnDestroy(): void {

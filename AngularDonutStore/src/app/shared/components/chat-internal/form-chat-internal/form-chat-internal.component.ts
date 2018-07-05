@@ -1,4 +1,3 @@
-import { IdentityService } from './../../../../core/services/identity.service';
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { UserJson } from '../../../../management/model/user/user-json';
 
@@ -14,16 +13,12 @@ export class FormChatInternalComponent implements OnInit {
   @Input() allReceivedMessages= [];
   @Input() roomName;
   @Input() senderName;
-  currentUser: UserJson;
+  @Input() currentUser: UserJson;
 
-  constructor(
-    private identityService: IdentityService,
-  ) { 
-    this.currentUser = this.identityService.getCurrentUser();
+  constructor() { 
   }
 
   ngOnInit() {
-    console.log(this.currentUser)
   }
 
   sendMessage() {
