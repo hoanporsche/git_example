@@ -21,6 +21,7 @@ export const API_URL = Object.freeze({
     FIND_ALL_NOT_INTERNAL_IN_24H: '/find-all-not-internal-in-24h',
     FIND_ALL_NOT_INTERNAL: '/find-all-not-internal',
     FIND_ALL_NOT_INTERNAL_IN_24H_IN_CHARGE_OF_USER: '/find-all-not-internal-in-24h-in-charge-of-user',
+    FIND_BY_USERS_IN_ROOM: '/find-by-users-in-room',
 });
 
 export const MODEL_URL= Object.freeze({

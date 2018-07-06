@@ -33,6 +33,11 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
     this.sender = event;
     this.openChat = true;
   }
+  getEmitComeback(event) {
+    if (event) {
+      this.reset();
+    }
+  }
   
   openBox() {
     this.isOpen = true;
@@ -43,7 +48,6 @@ export class ChatInternalComponent implements OnInit, OnDestroy {
   }
 
   private reset() {
-    this.currentUser = undefined;
     this.sender = undefined;
     this.openChat = false
   }

@@ -82,6 +82,7 @@ public class AppConstant {
     public static final String FIND_ALL_NOT_INTERNAL_IN_24H = "/find-all-not-internal-in-24h";
     public static final String FIND_ALL_NOT_INTERNAL = "/find-all-not-internal";
     public static final String FIND_ALL_NOT_INTERNAL_IN_24H_IN_CHARGE_OF_USER = "/find-all-not-internal-in-24h-in-charge-of-user";
+    public static final String FIND_BY_USERS_IN_ROOM = "/find-by-users-in-room";
   }
   
   public static class MODEL {

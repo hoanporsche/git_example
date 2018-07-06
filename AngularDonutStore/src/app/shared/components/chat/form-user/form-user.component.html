@@ -1,4 +1,4 @@
-<form [formGroup]="formCurrentUser" (ngSubmit)="setCurrentUser()">
+<form [formGroup]="formChatUser" (ngSubmit)="setChatUser()">
   <div class="ds-form-group">
     <div class="input-group">
       <input type="text" class="m-input ds-input" formControlName="name" maxlength="20" placeholder="Enter your's name">
@@ -27,7 +27,7 @@
   </div>
   <div class="ds-form-group">
     <div style="text-align: center">
-      <button type="submit" [disabled]="formCurrentUser.invalid" class="btn btn-primary">
+      <button type="submit" [disabled]="formChatUser.invalid" class="btn btn-primary">
         Start chatting
       </button>
     </div>

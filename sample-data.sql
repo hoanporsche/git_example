@@ -132,7 +132,8 @@ INSERT INTO `donutstore`.`material_daily_report` VALUES
 
 INSERT INTO `donutstore`.`room_db` VALUES 
 ('1', 'Customer1'),
-('2', 'Customer2');
+('2', 'Customer2'),
+('3', 'Nuitruc-giangvo');
 
 INSERT INTO `donutstore`.`sender_db` VALUES
 ('1','giangvo','0943451794','2018-05-22','2'),
@@ -142,9 +143,11 @@ INSERT INTO `donutstore`.`sender_db` VALUES
 
 INSERT INTO `donutstore`.`sender_room_db` VALUES
 ('1','1'),
-('1','2'),
-('2','3'),
-('2','4');
+('1','3'),
+('2','2'),
+('2','4'),
+('3','1'),
+('3','2');
 
 INSERT INTO `donutstore`.`message_db` VALUES 
 ('1','3','Hello','2018-05-22 13:04;00', '1'),

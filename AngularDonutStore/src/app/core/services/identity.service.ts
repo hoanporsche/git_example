@@ -1,13 +1,8 @@
 import { UserJson } from './../../management/model/user/user-json';
-import { LocalStorageService } from './local-storage.service';
-import { API_URL } from './../../shared/constants/api.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BaseService } from './base.service';
-import { Observable } from 'rxjs/Observable';
 import { LOCAL_STORAGE } from '../../shared/constants/local-storage.constant';
 import { ROLES } from '../../shared/constants/role.constant';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -18,7 +13,6 @@ export class IdentityService {
 
   constructor(
     private httpClient: HttpClient,
-    localStorageService: LocalStorageService,
     private router: Router
   ) {
     this.initializeCurrentUser();
@@ -107,5 +101,4 @@ export class IdentityService {
     }
     return [];
   }
-
 }

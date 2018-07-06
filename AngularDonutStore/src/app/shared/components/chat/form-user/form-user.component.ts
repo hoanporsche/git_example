@@ -9,13 +9,13 @@ import { CommonValidator } from '../../../custom-validator/common.validator';
 })
 export class FormUserComponent implements OnInit {
 
-  @Output() emitAction = new EventEmitter<Object>();
-  formCurrentUser: FormGroup;
-  currentUser;
+  @Output() emitChatUser = new EventEmitter<Object>();
+  formChatUser: FormGroup;
+  chatUser;
   constructor(
     private fb: FormBuilder,
   ) {
-    this.formCurrentUser = fb.group({
+    this.formChatUser = fb.group({
       name: ['', [Validators.required, CommonValidator.notEmpty], []],
       phone: ['', [Validators.required, CommonValidator.notEmpty, CommonValidator.mustPhoneNumber], []],
     });
@@ -24,24 +24,24 @@ export class FormUserComponent implements OnInit {
   ngOnInit() {
   }
 
-  setCurrentUser() {
-    this.currentUser = {
+  setChatUser() {
+    this.chatUser = {
       name: this.name.value,
       phone: this.phone.value,
     }
-    this.emitAction.emit(this.currentUser);
+    this.emitChatUser.emit(this.chatUser);
   }
 
   setChatByFb() {
-    this.emitAction.emit('byFb');
+    this.emitChatUser.emit('byFb');
   }
 
   get name() {
-    return this.formCurrentUser.get('name');
+    return this.formChatUser.get('name');
   }
 
   get phone() {
-    return this.formCurrentUser.get('phone');
+    return this.formChatUser.get('phone');
   }
 
 }

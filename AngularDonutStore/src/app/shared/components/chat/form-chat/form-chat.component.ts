@@ -10,7 +10,7 @@ export class FormChatComponent implements OnInit {
   @Output() emitMessage = new EventEmitter<string>();
   message = '';
   @Input() allReceivedMessages= [];
-  @Input() currentUser= {};
+  @Input() chatUser;
 
   constructor() {
   }

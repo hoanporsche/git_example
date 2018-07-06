@@ -9,9 +9,10 @@
         <i class="fa fa-angle-down shrink_icon"></i>
       </a>
     </div>
-    <div class="ds-box" [ngClass]="{'ds-height-230-px': !senderName, 'ds-height-415-px': senderName}" *ngIf="isOpen">
+    <div class="ds-box" [ngClass]="{'ds-height-230-px': !openChat, 'ds-height-415-px': openChat}" *ngIf="isOpen">
       <app-all-sender *ngIf="!openChat" (emitSender)="getEmitSender($event)"></app-all-sender>
       <app-form-chat-internal *ngIf="openChat"
+        (emitComeback)="getEmitComeback($event)"
         [sender]="sender"
         [currentUser]="currentUser"></app-form-chat-internal>
     </div>

@@ -3,12 +3,24 @@
     <div class="ds-avatar_supporter">
       <img src="https://widget-css.subiz.com/v3/img/avatar-chat.png" alt="">
     </div>
-    <p>
-      <font class="ds-name_supporter">Phòng Chat: <b>{{ roomName }}</b></font>
-    </p>
-    <p>
-      <font class="ds-text_supporter">Người: <b>{{ sender?.name }}</b></font>
-    </p>
+    <div class="row">
+      <div class="col-9">
+        <p>
+          <font class="ds-name_supporter">Phòng Chat: <b>{{ roomName }}</b></font>
+        </p>
+        <p>
+          <font class="ds-text_supporter">Người: <b>{{ sender?.name }}</b></font>
+        </p>
+      </div>
+      <div class="col-3">
+        <a href="#" (click)="comeback()">
+          <i class="la la-backward"></i>
+        </a>
+        <a href="#" (click)="refresh()">
+          <i class="la la-refresh"></i>
+        </a>
+      </div>
+    </div>
   </div>
   <div class="ds-all-messages">
     <div class="col-12" *ngFor="let receivedMessage of allReceivedMessages">

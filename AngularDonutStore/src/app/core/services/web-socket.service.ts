@@ -10,13 +10,13 @@ export class WebSocketService {
   public createStomp(url) {
     let socket = new SockJS(url);
     let stompClient = Stomp.over(socket);
-    console.log("socket1", socket);
     return stompClient;
   }
 
   public closeConnection(stompClient) {
     const socket = stompClient.ws;
-    console.log("socket2", socket)
+    socket.close();
+    socket.onclose();
   }
   
 }

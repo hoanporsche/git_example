@@ -34,6 +34,10 @@ export class AllSenderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.refresh();
+  }
+
+  refresh() {
     this.subFindAllInternal = this.senderService.findAllInternal(this.param)
       .subscribe(response => {
         this.listInternalSender = response.content;

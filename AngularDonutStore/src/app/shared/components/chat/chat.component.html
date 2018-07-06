@@ -9,9 +9,11 @@
         <i class="fa fa-angle-down shrink_icon"></i>
       </a>
     </div>
-    <div class="ds-box" [ngClass]="{'ds-height-230-px': !currentUser, 'ds-height-415-px': currentUser}" *ngIf="isOpen">
-      <app-form-user *ngIf="!currentUser" (emitAction)="emitAction($event)"></app-form-user>
-      <app-form-chat *ngIf="currentUser" (emitMessage)="emitMessage($event)" [allReceivedMessages]="allReceivedMessages" [currentUser]="currentUser"></app-form-chat>
+    <div class="ds-box" [ngClass]="{'ds-height-230-px': !chatUser, 'ds-height-415-px': chatUser}" *ngIf="isOpen">
+      <app-form-user *ngIf="!chatUser" (emitChatUser)="getEmitChatUser($event)"></app-form-user>
+      <app-form-chat *ngIf="chatUser" (emitMessage)="emitMessage($event)" 
+        [allReceivedMessages]="allReceivedMessages"
+        [chatUser]="chatUser"></app-form-chat>
     </div>
     <div class="ds-box-footer" *ngIf="isOpen">
 

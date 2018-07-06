@@ -1,6 +1,9 @@
 <div class="container ds-all-sender">
   <div class="ds-contacts">
     CONTACTS
+    <a href="#" class="float-right" (click)="refresh()">
+      <i class="la la-refresh"></i>
+    </a>
   </div>
   <ul>
     <li *ngFor="let internalSender of listInternalSender">

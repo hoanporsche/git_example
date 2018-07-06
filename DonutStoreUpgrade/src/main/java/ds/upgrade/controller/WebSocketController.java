@@ -77,6 +77,6 @@ public class WebSocketController {
   @MessageMapping("/chat/room/{name}")
   public void chatRoom(@DestinationVariable String name, Message message) throws Exception {
     MessageDb messageDb = messageDbService.save(message.getSenderDb(), name, message.getText());
-    this.template.convertAndSend("/topic/room/" + name.trim(), new OutputMessage(messageDb));
+    this.template.convertAndSend("/topic/room/" + name.trim(), messageDb);
   }
 }

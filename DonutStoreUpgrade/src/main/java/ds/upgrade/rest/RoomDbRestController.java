@@ -29,16 +29,30 @@ public class RoomDbRestController {
     try {
       User userRequest = userService.findInfoUser();
       if (userRequest.getSenderDbId() == null)
-        return new ResponseEntity<String>(AppConstant.REPONSE.HAVE_NOT_PERMISSION, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(AppConstant.REPONSE.HAVE_NOT_PERMISSION,
+            HttpStatus.NOT_ACCEPTABLE);
       RoomDb joinedRoom = roomDbService.joinRoom(name, userRequest);
-      
+
       if (joinedRoom == null)
         return new ResponseEntity<String>(ConstantWebSocket.RESPONSE.NOT_JOINED_ROOM,
             HttpStatus.CONFLICT);
-      
+
       return new ResponseEntity<RoomDb>(joinedRoom, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping(AppConstant.API_URL.FIND_BY_USERS_IN_ROOM)
+  public ResponseEntity<?> findByUsersInRoom(@RequestParam String senderPhone) {
+    try {
+      RoomDb foundRoom = roomDbService.findByUsersInRoom(senderPhone, userService.findInfoUser());
+      if (foundRoom != null)
+        return new ResponseEntity<RoomDb>(foundRoom, HttpStatus.OK);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

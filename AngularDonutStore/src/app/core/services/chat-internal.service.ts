@@ -12,6 +12,7 @@ export class ChatInternalService extends BaseService {
   private sendMessageUrl = environment.baseUrl + API_URL.API + MODEL_URL.MESSAGE_DB + API_URL.SEND_MESSAGE;
   private findAllMessageUrl = environment.baseUrl + API_URL.API + MODEL_URL.MESSAGE_DB + API_URL.FIND_ALL;
   private findListMessageUrl = environment.baseUrl + API_URL.API + MODEL_URL.MESSAGE_DB + API_URL.FIND_LIST;
+  private findByUsersInRoomUrl = environment.baseUrl + API_URL.API + MODEL_URL.ROOM_DB + API_URL.FIND_BY_USERS_IN_ROOM;
 
   constructor(httpClient: HttpClient) {
     super(httpClient);
@@ -31,5 +32,9 @@ export class ChatInternalService extends BaseService {
 
   findList(param: {}): Observable<any> {
     return this.get(this.findListMessageUrl, param);
+  }
+
+  findByUsersInRoom(param): Observable<any> {
+    return this.get(this.findByUsersInRoomUrl, param);
   }
 }

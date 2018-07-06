@@ -17,18 +17,20 @@ export class FormChatInternalComponent implements OnInit, OnDestroy {
   private chatUrl = environment.baseUrl + CHAT_URL.CHAT;
   private topicRoomUrl = CHAT_URL.TOPIC_ROOM;
 
-  roomName;
+  @Output() emitComeback = new EventEmitter<any>();
   @Input() sender;
   @Input() currentUser: UserJson;
-  message = '';
-  allReceivedMessages= [];
-  stompClient;
+  roomName;
+  private message = '';
+  allReceivedMessages = [];
+  private stompClient;
 
   private subFindAllMessage: Subscription;
   private subSendMessage: Subscription;
+  private subFindByUsersInRoom: Subscription;
 
   params = {
-    senderPhone: '',
+    roomName: '',
     page: 0,
     size: CONFIG.PAGE_SIZE,
     sort: 'id,desc'
@@ -36,51 +38,93 @@ export class FormChatInternalComponent implements OnInit, OnDestroy {
 
   constructor(
     private chatInternalService: ChatInternalService,
-    private wsService: WebSocketService,  
-  ) { 
+    private wsService: WebSocketService,
+  ) {
     this.stompClient = this.wsService.createStomp(this.chatUrl);
   }
 
   ngOnInit() {
-    this.findListMessage();
+    if (this.stompClient) {
+      this.initMessage();
+    } 
+  }
+
+  refresh() {
+    this.wsService.closeConnection(this.stompClient);
+    this.stompClient.disconnect();
+    this.stompClient = undefined;
+    setTimeout(() => {
+      this.stompClient = this.wsService.createStomp(this.chatUrl);
+      if (this.stompClient) {
+        this.initMessage();
+      }
+    },500)
+  }
+
+  private initMessage() {
+    this.findRoom((a) => {
+      this.params.roomName = a.name;
+      this.roomName = a.name;
+      this.findListMessage()
+    });
+  }
+
+  private findRoom(callBackFindMessages) {
+    this.subFindByUsersInRoom = this.chatInternalService.findByUsersInRoom({ senderPhone: this.sender.phone })
+      .subscribe(response => {
+        return callBackFindMessages(response);
+      }, error => {
+        alert(error.error);
+      })
   }
 
   private connect() {
     this.stompClient.connect({}, frame => {
       this.stompClient.subscribe(this.topicRoomUrl + this.roomName, message => {
-        console.log(message);
         //push new noti on the top
-        // this.allReceivedMessages.push(message);
+        this.allReceivedMessages.push(JSON.parse(message.body));
       });
     });
   }
 
   private findListMessage() {
-    this.params.senderPhone = this.sender.phone;
     this.subFindAllMessage = this.chatInternalService.findAll(this.params)
       .subscribe(response => {
         this.allReceivedMessages = response.content;
         this.allReceivedMessages.reverse();
-        this.roomName = this.allReceivedMessages[0].roomDbId.name;
         this.connect();
       }, error => {
 
       });
   }
 
+  comeback() {
+    this.emitComeback.emit('goback');
+  }
+
   sendMessage() {
     this.subSendMessage = this.chatInternalService.sendMessage(this.roomName, this.message.trim())
       .subscribe(response => {
-        this.message = '';
+        this.reset();
       }, error => {
-
+        this.reset();
+        alert(error.error);
       })
   }
 
+  private reset() {
+    this.message = '';
+  }
   ngOnDestroy() {
     if (this.subSendMessage)
       this.subSendMessage.unsubscribe();
     if (this.subFindAllMessage)
       this.subFindAllMessage.unsubscribe();
+    if (this.stompClient) {
+      this.wsService.closeConnection(this.stompClient);
+      this.stompClient.disconnect();
+    }
+    if (this.subFindByUsersInRoom)
+      this.subFindByUsersInRoom.unsubscribe();
   }
 }

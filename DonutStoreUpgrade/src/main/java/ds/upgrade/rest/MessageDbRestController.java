@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.upgrade.model.MessageDb;
 import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.User;
+import ds.upgrade.model.support.JsonResponse;
 import ds.upgrade.service.MessageDbService;
 import ds.upgrade.service.RoomDbService;
 import ds.upgrade.service.UserService;
@@ -39,10 +40,9 @@ public class MessageDbRestController {
   * "roomName"
   */
   @GetMapping(AppConstant.API_URL.FIND_ALL)
-  public ResponseEntity<?> findAll(@RequestParam String senderPhone, Pageable pageable) {
+  public ResponseEntity<?> findAll(@RequestParam String roomName, Pageable pageable) {
     try {
-      User user = userService.findInfoUser();
-      RoomDb foundRoom = roomDbService.findByUsersInRoom(senderPhone, user);
+      RoomDb foundRoom = roomDbService.findByName(roomName);
       User userRequest = userService.findInfoUser();
       /** Check input "roomName" and check user in the room, if conditions is the
       * truth, return not_accept
@@ -53,7 +53,7 @@ public class MessageDbRestController {
       Page<MessageDb> listMessage = messageDbService.findAll(pageable, foundRoom.getName());
       if (listMessage.getContent() != null)
         return new ResponseEntity<Page<MessageDb>>(listMessage, HttpStatus.OK);
-      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,7 +67,7 @@ public class MessageDbRestController {
       Page<MessageDb> listMessage = messageDbService.findList(pageable, roomName, user);
       if (listMessage.getContent() != null)
         return new ResponseEntity<Page<MessageDb>>(listMessage, HttpStatus.OK);
-      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,7 +81,7 @@ public class MessageDbRestController {
       MessageDb messageDb = messageDbService.save(user, roomName, text);
       if (messageDb != null) {
         this.template.convertAndSend("/topic/room/" + roomName.trim(), messageDb);
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        return new ResponseEntity<JsonResponse>(new JsonResponse("OK"), HttpStatus.OK);
       }
       return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE,
           HttpStatus.INTERNAL_SERVER_ERROR);
