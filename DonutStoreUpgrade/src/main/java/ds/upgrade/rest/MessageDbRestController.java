@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,8 @@ import ds.upgrade.util.AppConstant;
 @RestController
 @RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.MESSAGE_DB_MODEL)
 public class MessageDbRestController {
+  @Autowired
+  private SimpMessagingTemplate template;
 
   @Autowired
   private MessageDbService messageDbService;
@@ -76,8 +79,10 @@ public class MessageDbRestController {
     try {
       User user = userService.findInfoUser();
       MessageDb messageDb = messageDbService.save(user, roomName, text);
-      if (messageDb != null)
-        return new ResponseEntity<MessageDb>(messageDb, HttpStatus.OK);
+      if (messageDb != null) {
+        this.template.convertAndSend("/topic/room/" + roomName.trim(), messageDb);
+        return new ResponseEntity<String>("OK", HttpStatus.OK);
+      }
       return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE,
           HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {

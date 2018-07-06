@@ -1,12 +1,13 @@
 import { ChatInternalService } from './../../../core/services/chat-internal.service';
 import { IdentityService } from './../../../core/services/identity.service';
-import { WebSocketService } from './../../../core/services/web-socket.service';
 import { NotificationService } from './../../../core/services/notification.service';
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CONFIG } from '../../constants/configuration.constant';
 import { environment } from '../../../../environments/environment';
 import { UserJson } from '../../../management/model/user/user-json';
+import { CHAT_URL } from '../../constants/api.constant';
+import { WebSocketService } from '../../../core/services/web-socket.service';
 
 @Component({
   selector: 'app-notification',
@@ -16,9 +17,8 @@ import { UserJson } from '../../../management/model/user/user-json';
 export class NotificationComponent implements OnInit, OnDestroy {
 
   @Output() emitRoomName = new EventEmitter<string>();
-
-  private chatUrl = environment.baseUrl + '/chat';
-  private notificationUrl = '/topic/notification/';
+  private chatUrl = environment.baseUrl + CHAT_URL.CHAT;
+  private topicNotificationUrl = CHAT_URL.TOPIC_NOTIFICATION;
 
   listNotification: any[];
   private currentUser: UserJson;
@@ -41,9 +41,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
   constructor(
     private notificationService: NotificationService,
     private identityService: IdentityService,
-    private wsService: WebSocketService,
     private chatInternalService: ChatInternalService,
-  ) { }
+    private wsService: WebSocketService,  
+  ) { 
+    this.stompClient = this.wsService.createStomp(this.chatUrl);
+  }
 
   ngOnInit() {
     this.subListNotification = this.notificationService.findList(this.params)
@@ -56,18 +58,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   connect() {
-    this.stompClient = this.wsService.createStomp(this.chatUrl);
     this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe(this.notificationUrl + this.currentUser.email, notification => {
+      this.stompClient.subscribe(this.topicNotificationUrl + this.currentUser.email, notification => {
         console.log(notification);
         //push new noti on the top
-        this.listNotification.splice(0,0,JSON.parse(notification.body));
+        this.listNotification.splice(0, 0, JSON.parse(notification.body));
       });
     });
   }
 
   onSeenNoti(id, index) {
-    this.subUserHasSeen = this.notificationService.userHasSeen({id: id})
+    this.subUserHasSeen = this.notificationService.userHasSeen({ id: id })
       .subscribe(response => {
         this.listNotification[index] = response;
         this.onJoinRoomChat(response);
@@ -75,11 +76,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   onJoinRoomChat(notification) {
-    // console.log(notification);
     const notiText = notification.text.toString();
     const roomName = notiText.substring(30, notiText.length + 1);
-    // console.log(roomName);
-    this.subJoinRoom = this.chatInternalService.joinRoom({name: roomName})
+    this.subJoinRoom = this.chatInternalService.joinRoom({ name: roomName })
       .subscribe(response => {
         console.log(response);
         // this.emitRoomName.emit(response.name);
@@ -92,5 +91,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
       this.subListNotification.unsubscribe();
     if (this.stompClient)
       this.stompClient.disconnect();
+    if (this.subUserHasSeen)
+      this.subUserHasSeen.unsubscribe();
+    if (this.subJoinRoom)
+      this.subJoinRoom.unsubscribe();
   }
 }

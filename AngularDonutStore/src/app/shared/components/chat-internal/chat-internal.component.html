@@ -10,11 +10,9 @@
       </a>
     </div>
     <div class="ds-box" [ngClass]="{'ds-height-230-px': !senderName, 'ds-height-415-px': senderName}" *ngIf="isOpen">
-      <app-all-sender *ngIf="!senderName" (emitSender)="getEmitSender($event)"></app-all-sender>
-      <app-form-chat-internal *ngIf="senderName" (emitMessage)="emitMessage($event)" 
-        [allReceivedMessages]="allReceivedMessages" 
-        [senderName]="senderName" 
-        [roomName]="roomName"
+      <app-all-sender *ngIf="!openChat" (emitSender)="getEmitSender($event)"></app-all-sender>
+      <app-form-chat-internal *ngIf="openChat"
+        [sender]="sender"
         [currentUser]="currentUser"></app-form-chat-internal>
     </div>
     <div class="ds-box-footer" *ngIf="isOpen">

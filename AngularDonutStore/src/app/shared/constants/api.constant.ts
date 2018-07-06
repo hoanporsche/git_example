@@ -45,3 +45,10 @@ export const MODEL_URL= Object.freeze({
     SENDER_DB: '/sender-db',
 });
 
+export const CHAT_URL = Object.freeze({
+    CHAT: '/chat',
+    APP_CHAT_ROOM: '/app/chat/room/',
+    TOPIC_ROOM: '/topic/room/',
+    TOPIC_NOTIFICATION: '/topic/notification/',
+})
+

@@ -1,3 +1,4 @@
+import { CHAT_URL } from './../../constants/api.constant';
 import { ChatFreeService } from './../../../core/services/chat-free.service';
 import { WebSocketService } from './../../../core/services/web-socket.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
@@ -17,10 +18,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   stompClient;
   allReceivedMessages = [];
 
-  private chatUrl = environment.baseUrl + '/chat';
+  // private chatUrl = environment.baseUrl + '/chat';
 
-  private appChatRoomUrl = '/app/chat/room/';
-  private roomChatUrl = '/topic/room/';
+  // private appChatRoomUrl = '/app/chat/room/';
+  // private roomChatUrl = '/topic/room/';
+  private chatUrl = environment.baseUrl + CHAT_URL.CHAT;
+  private appChatRoomUrl = CHAT_URL.APP_CHAT_ROOM;
+  private topicRoomUrl = CHAT_URL.TOPIC_ROOM;
   private roomName: string;
 
   private subCreateRoom: Subscription;
@@ -57,7 +61,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   connect() {
     this.stompClient = this.wsService.createStomp(this.chatUrl);
     this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe(this.roomChatUrl + this.roomName, messageOutput => {
+      this.stompClient.subscribe(this.topicRoomUrl + this.roomName, messageOutput => {
         this.allReceivedMessages.push(JSON.parse(messageOutput.body));
       })
     });
