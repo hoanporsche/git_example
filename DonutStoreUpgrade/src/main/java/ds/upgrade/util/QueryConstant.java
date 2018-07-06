@@ -25,7 +25,7 @@ public class QueryConstant {
   }
 
   public static class NOTIFICATION_DB {
-
+    public static final String COUNT_NOT_SEEN_NOTI = "SELECT COUNT(*) FROM NotificationDb WHERE userId.id = :id AND seen = false";
   }
 
   public static class ORDER {

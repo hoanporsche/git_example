@@ -17,7 +17,7 @@ declare let mLayout: any;
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   currentUser: UserJson;
-  @Output() emitRoomName = new EventEmitter<string>();
+  numberNotSeenNoti: number;
   constructor(
     private router: Router,
     private _script: ScriptLoaderService,
@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     $('#modal_change').modal({ show: true, backdrop: 'static' });
   }
 
-  getRoomName(event) {
-    this.emitRoomName.emit(event);
+  getEmitCountNotSeenNoti(event) {
+    this.numberNotSeenNoti = event;
   }
 }

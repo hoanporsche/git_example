@@ -10,6 +10,7 @@ export class NotificationService extends BaseService {
 
   private findListUrl = environment.baseUrl + API_URL.API + MODEL_URL.NOTIFICATION + API_URL.FIND_LIST;
   private userHasSeenUrl = environment.baseUrl + API_URL.API + MODEL_URL.NOTIFICATION + API_URL.USER_HAS_SEEN;
+  private countNotSeenNotiUrl = environment.baseUrl + API_URL.API + MODEL_URL.NOTIFICATION + API_URL.COUNT_NOT_SEEN_NOTI;
 
   constructor(
     httpClient: HttpClient,
@@ -23,5 +24,9 @@ export class NotificationService extends BaseService {
 
   userHasSeen(params: {}): Observable<any> {
     return this.get(this.userHasSeenUrl, params);
+  }
+
+  countNotSeenNoti(): Observable<any> {
+    return this.get(this.countNotSeenNotiUrl);
   }
 }

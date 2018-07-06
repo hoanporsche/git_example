@@ -47,20 +47,34 @@ public class RoomDbServiceImpl implements RoomDbService {
     return roomDbRepository.findByName(name);
   }
 
+  /**
+   * @description: find room
+   * @author: VDHoan
+   * @created_date: Jul 6, 2018
+   * @param name
+   * @param joinSender
+   * @return: find a room by 2 users in room, if the room is not exists, 
+   *          create a new room.
+   */
   @Override
   public RoomDb findByUsersInRoom(String senderPhone, User user) {
     SenderDb senderDb1 = user.getSenderDbId();
     SenderDb senderDb2 = senderDbRepository.findByPhone(senderPhone);
-    if (senderDb2 != null) {
-      for (RoomDb roomDb1 : senderDb1.getRoomDbs()) {
-        for (RoomDb roomDb2 : senderDb2.getRoomDbs()) {
-          if (roomDb1.getId() == roomDb2.getId()) {
-            return roomDb2;
-          }
+    if (senderDb2 == null) 
+      return null;
+    for (RoomDb roomDb1 : senderDb1.getRoomDbs()) {
+      for (RoomDb roomDb2 : senderDb2.getRoomDbs()) {
+        if (roomDb1.getId() == roomDb2.getId()) {
+          return roomDb2;
         }
       }
     }
-    return null;
+    RoomDb newRoom = new RoomDb(senderDb1.getName() + "-" + senderDb2.getName());
+    Set<SenderDb> list = new HashSet<>();
+    list.add(senderDb1);
+    list.add(senderDb2);
+    newRoom.setSenderDbs(list);
+    return roomDbRepository.save(newRoom);
   }
 
   /**
@@ -69,15 +83,16 @@ public class RoomDbServiceImpl implements RoomDbService {
    * @created_date: Jun 21, 2018
    * @param name
    * @param joinSender
-   * @return: if sender is joining room, return roomDb; else if sender's not joining, 
-   * check number of member, if it's more than 2, return null, else we join sender.
+   * @return: if sender is joining room, return roomDb; else if sender's not
+   *          joining, check number of member, if it's more than 2, return null,
+   *          else we join sender.
    */
   @Override
   public RoomDb joinRoom(String name, User joinUser) {
     RoomDb foundRoom = roomDbRepository.findByName(name);
     if (foundRoom != null) {
       Set<SenderDb> listSenderInRoom = foundRoom.getSenderDbs();
-      if (this.isUserInRoom(listSenderInRoom, joinUser)) 
+      if (this.isUserInRoom(listSenderInRoom, joinUser))
         return foundRoom;
       if (listSenderInRoom.size() < ConstantWebSocket.PARAM.ROOM_NUMBER_USER) {
         listSenderInRoom.add(joinUser.getSenderDbId());
@@ -91,7 +106,7 @@ public class RoomDbServiceImpl implements RoomDbService {
   @Override
   public boolean isUserInRoom(Set<SenderDb> senderInRoom, User user) {
     for (SenderDb senderDb : senderInRoom) {
-      if (senderDb.getId() == user.getSenderDbId().getId()) 
+      if (senderDb.getId() == user.getSenderDbId().getId())
         return true;
     }
     return false;

@@ -73,4 +73,10 @@ public class NotificationDbServiceImpl implements NotificationDbService {
     return null;
   }
 
+  @Override
+  public Integer countNotSeenNoti(long userId) {
+    Integer counted = notificationDbRepository.countNotSeenNoti(userId);
+    return (counted == null) ? 0 : counted;
+  }
+
 }

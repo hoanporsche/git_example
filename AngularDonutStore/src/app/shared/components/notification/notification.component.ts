@@ -16,7 +16,8 @@ import { WebSocketService } from '../../../core/services/web-socket.service';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
 
-  @Output() emitRoomName = new EventEmitter<string>();
+  @Output() emitCountNotSeenNoti = new EventEmitter<number>();
+  private numberNotSeenNoti: number;
   private chatUrl = environment.baseUrl + CHAT_URL.CHAT;
   private topicNotificationUrl = CHAT_URL.TOPIC_NOTIFICATION;
 
@@ -27,6 +28,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private subListNotification: Subscription;
   private subUserHasSeen: Subscription;
   private subJoinRoom: Subscription;
+  private subCountNotSeenNoti: Subscription;
 
   error = {
     isError: false,
@@ -53,35 +55,55 @@ export class NotificationComponent implements OnInit, OnDestroy {
         this.listNotification = response.content;
         //Connect to notification
         this.connect();
+        this.countNotSeenNoti();
       });
     this.currentUser = this.identityService.getCurrentUser();
-  }
-
-  connect() {
-    this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe(this.topicNotificationUrl + this.currentUser.email, notification => {
-        console.log(notification);
-        //push new noti on the top
-        this.listNotification.splice(0, 0, JSON.parse(notification.body));
-      });
-    });
   }
 
   onSeenNoti(id, index) {
     this.subUserHasSeen = this.notificationService.userHasSeen({ id: id })
       .subscribe(response => {
         this.listNotification[index] = response;
+        //subtract one noti
+        this.numberNotSeenNoti--;
+        this.emitNumberNotSeenNoti();
         this.onJoinRoomChat(response);
       });
   }
 
-  onJoinRoomChat(notification) {
+  private countNotSeenNoti() {
+    this.subCountNotSeenNoti = this.notificationService.countNotSeenNoti()
+      .subscribe(response => {
+        this.numberNotSeenNoti = response;
+        this.emitNumberNotSeenNoti();
+        console.log(response);
+      }, error => {
+        alert(error.error);
+      });
+  }
+
+  private emitNumberNotSeenNoti() {
+    this.emitCountNotSeenNoti.emit(this.numberNotSeenNoti);
+  }
+
+  private connect() {
+    this.stompClient.connect({}, frame => {
+      this.stompClient.subscribe(this.topicNotificationUrl + this.currentUser.email, notification => {
+        console.log(notification);
+        //push new noti on the top
+        this.listNotification.splice(0, 0, JSON.parse(notification.body));
+        //plus 1 noti
+        this.numberNotSeenNoti++;
+        this.emitNumberNotSeenNoti();
+      });
+    });
+  }
+
+  private onJoinRoomChat(notification) {
     const notiText = notification.text.toString();
     const roomName = notiText.substring(30, notiText.length + 1);
     this.subJoinRoom = this.chatInternalService.joinRoom({ name: roomName })
       .subscribe(response => {
-        console.log(response);
-        // this.emitRoomName.emit(response.name);
       }, error => {
         alert(error.error);
       });

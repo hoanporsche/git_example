@@ -50,4 +50,15 @@ public class NotificationDbRestController {
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @GetMapping(AppConstant.API_URL.COUNT_NOT_SEEN_NOTI)
+  public ResponseEntity<?> countNotSeenNoti() {
+    try {
+      return new ResponseEntity<Integer>(
+          notificationDbService.countNotSeenNoti(userService.findInfoUser().getId()), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

@@ -16,4 +16,6 @@ public interface NotificationDbService {
   public Page<NotificationDb> findList(Pageable pageable, String email);
   
   public NotificationDb userHasSeen(Long id);
+  
+  public Integer countNotSeenNoti(long userId);
 }
