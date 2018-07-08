@@ -49,6 +49,7 @@ export const MODEL_URL= Object.freeze({
 
 export const CHAT_URL = Object.freeze({
     CHAT: '/chat',
+    NOTIFICATION: '/notification',
     APP_CHAT_ROOM: '/app/chat/room/',
     TOPIC_ROOM: '/topic/room/',
     TOPIC_NOTIFICATION: '/topic/notification/',

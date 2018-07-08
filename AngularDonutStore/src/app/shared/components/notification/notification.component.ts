@@ -18,7 +18,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   @Output() emitCountNotSeenNoti = new EventEmitter<number>();
   private numberNotSeenNoti: number;
-  private chatUrl = environment.baseUrl + CHAT_URL.CHAT;
+  private notificationUrl = environment.baseUrl + CHAT_URL.NOTIFICATION;
   private topicNotificationUrl = CHAT_URL.TOPIC_NOTIFICATION;
 
   listNotification: any[];
@@ -46,7 +46,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     private chatInternalService: ChatInternalService,
     private wsService: WebSocketService,  
   ) { 
-    this.stompClient = this.wsService.createStomp(this.chatUrl);
+    this.stompClient = this.wsService.createStomp(this.notificationUrl);
   }
 
   ngOnInit() {
@@ -76,7 +76,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.numberNotSeenNoti = response;
         this.emitNumberNotSeenNoti();
-        console.log(response);
       }, error => {
         alert(error.error);
       });
@@ -117,5 +116,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
       this.subUserHasSeen.unsubscribe();
     if (this.subJoinRoom)
       this.subJoinRoom.unsubscribe();
+    if (this.subCountNotSeenNoti)
+      this.subCountNotSeenNoti.unsubscribe();
   }
 }

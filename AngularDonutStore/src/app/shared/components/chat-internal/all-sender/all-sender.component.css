@@ -20,11 +20,16 @@ ul {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   -webkit-padding-start: 40px;
+  display: block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 li {
   display: list-item;
   text-align: -webkit-match-parent;
+  margin: 3% 0;
 }
 
 a:hover {
@@ -35,4 +40,8 @@ a:active {
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+.one-sender {
+  height: 35px;
 }

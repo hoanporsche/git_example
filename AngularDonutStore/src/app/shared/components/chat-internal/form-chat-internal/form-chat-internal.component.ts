@@ -46,19 +46,13 @@ export class FormChatInternalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.stompClient) {
       this.initMessage();
-    } 
+    }
   }
 
   refresh() {
-    this.wsService.closeConnection(this.stompClient);
     this.stompClient.disconnect();
-    this.stompClient = undefined;
-    setTimeout(() => {
-      this.stompClient = this.wsService.createStomp(this.chatUrl);
-      if (this.stompClient) {
-        this.initMessage();
-      }
-    },500)
+    this.stompClient = this.wsService.createStomp(this.chatUrl);
+    this.initMessage();
   }
 
   private initMessage() {

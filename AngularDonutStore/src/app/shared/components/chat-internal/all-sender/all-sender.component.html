@@ -6,20 +6,22 @@
     </a>
   </div>
   <ul>
-    <li *ngFor="let internalSender of listInternalSender">
+    <li class="row one-sender" *ngFor="let internalSender of listInternalSender">
       <a href="#" (click)="getSender(internalSender)">
         {{ internalSender?.name }}
       </a>
+      - {{ internalSender?.phone }}
     </li>
   </ul>
   <div class="ds-contacts">
     CUSTOMERS
   </div>
   <ul>
-    <li *ngFor="let notInternalSender of listNotInternalSender">
+    <li class="row one-sender" *ngFor="let notInternalSender of listNotInternalSender">
       <a href="#" (click)="getSender(notInternalSender)">
         {{ notInternalSender?.name }}
       </a>
+      - {{ notInternalSender?.phone }}
     </li>
   </ul>
 </div>

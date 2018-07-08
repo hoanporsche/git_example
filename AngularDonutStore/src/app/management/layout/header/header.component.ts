@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.currentUser = this.identityService.getCurrentUser();
-    console.log(this.currentUser);
   }
 
   logout() {
