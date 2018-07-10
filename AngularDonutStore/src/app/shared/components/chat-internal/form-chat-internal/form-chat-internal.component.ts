@@ -50,6 +50,7 @@ export class FormChatInternalComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
+    this.wsService.closeConnection(this.stompClient);
     this.stompClient.disconnect();
     this.stompClient = this.wsService.createStomp(this.chatUrl);
     this.initMessage();
