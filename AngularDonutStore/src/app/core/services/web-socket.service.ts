@@ -15,7 +15,7 @@ export class WebSocketService {
 
   public closeConnection(stompClient) {
     const socket = stompClient.ws;
-    socket.onclose();
+    socket.close();
   }
   
 }

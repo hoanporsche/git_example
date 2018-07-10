@@ -6,8 +6,8 @@ INSERT INTO `donutstore`.`category` VALUES
 (3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
-(1,'Bánh rán mặn', './assets/img/donut-store/BR7.jpg','1','2018-01-02', '2018-02-03','3000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
-(2,'Bánh rán ngọt', './assets/img/donut-store/BR8.jpg','1','2018-01-02', '2018-02-03','3000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
+(1,'Bánh rán mặn', './assets/img/donut-store/BR7.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
+(2,'Bánh rán ngọt', './assets/img/donut-store/BR8.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
 (3,'Bánh mì pate trứng', './assets/img/donut-store/BM1.jpg','2','2018-01-02', '2018-02-03','12000', b'1','Bánh mì với nhân là pate, trứng chiên cùng các loại rau và sốt.'),
 (4,'Bánh mì pate xúc xích', './assets/img/donut-store/BM2.jpg','2','2018-01-02', '2018-02-03','15000', b'1','Bánh mì với nhân là pate, xúc xích rán cùng các loại rau và sốt.'),
 (5,'Bánh mì pate trứng xúc xích', './assets/img/donut-store/BM3.jpg','2','2018-01-02', '2018-02-03','18000', b'1','Bánh mì với nhân là pate, trứng chiên, xúc xích rán cùng các loại rau và sốt.'),

@@ -26730,7 +26730,7 @@ body.m-content--skin-light2 {
   -ms-transition: none;
   -o-transition: none;
   transition: none;
-  height: 70px;
+  height: 35px;
   width: 255px;
   padding: 0px 30px; }
   .m-brand--hidden .m-brand {
@@ -26972,7 +26972,7 @@ body.m-content--skin-light2 {
     bottom: auto; }
     .m-header--static.m-aside-left--fixed .m-brand .m-brand__tools,
     .m-header--static.m-aside-left--fixed .m-brand .m-brand__logo {
-      height: 70px !important;
+      height: 35px !important;
       -webkit-transition: none;
       -moz-transition: none;
       -ms-transition: none;
@@ -27001,7 +27001,7 @@ body.m-content--skin-light2 {
 
 @media (min-width: 993px) {
   .m-header {
-    height: 70px; }
+    height: 35px; }
     .m-header--fixed .m-header {
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
@@ -27031,7 +27031,7 @@ body.m-content--skin-light2 {
         transition: none;
         padding-left: 80px; }
     .m-header--fixed.m-header--hide .m-header {
-      height: 70px;
+      height: 35px;
       -webkit-transition: all 0.3s ease 0.5s;
       -moz-transition: all 0.3s ease 0.5s;
       -ms-transition: all 0.3s ease 0.5s;
@@ -27043,7 +27043,7 @@ body.m-content--skin-light2 {
       -o-transform: translateY(-100%);
       transform: translateY(-100%); }
     .m-header--fixed.m-header--show .m-header {
-      height: 70px;
+      height: 35px;
       -webkit-transition: all 0.3s ease;
       -moz-transition: all 0.3s ease;
       -ms-transition: all 0.3s ease;
@@ -27070,9 +27070,9 @@ body.m-content--skin-light2 {
       top: -100%;
       position: relative; }
     .m-header > .m-container > .m-grid {
-      height: 60px; }
+      height: 30px; }
       .m-header > .m-container > .m-grid > .m-grid__col {
-        height: 60px; }
+        height: 30px; }
     .m-header--fixed-mobile .m-header {
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
@@ -27094,7 +27094,7 @@ body.m-content--skin-light2 {
       -o-transform: translateY(-100%);
       transform: translateY(-100%); }
     .m-header--fixed-mobile.m-header--show .m-header {
-      height: 60px;
+      height: 30px;
       -webkit-transition: all 0.3s ease;
       -moz-transition: all 0.3s ease;
       -ms-transition: all 0.3s ease;

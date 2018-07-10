@@ -38,6 +38,7 @@ public class ItemServiceImpl implements ItemService {
       for (Item item : listFound) {
         list.add(new ItemJson(item));
       }
+      return list;
     }
     return null;
   }
