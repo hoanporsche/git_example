@@ -164,14 +164,6 @@ ngb-timepicker  input {
 .ds-card-margin {
     margin: 1%;
 }
-.ds-choose-item {
-    overflow-y: scroll;
-    max-height: 270px;
-}
-.ds-choose-category {
-    overflow-y: scroll;
-    max-height: 270px;
-}
 /* width */
 ::-webkit-scrollbar {
     width: 2px;
