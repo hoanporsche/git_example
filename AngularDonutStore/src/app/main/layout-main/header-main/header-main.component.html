@@ -3,31 +3,27 @@
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#" (click)="navHome()">
-    <img src="./assets/img/donut-store/BR6.jpg" class="img-thumbnail" style="width:80px; padding:0px;" />
+  <a class="navbar-brand" routerLink="/" (click)="navHome()">
+    <img src="./assets/img/donut-store/BR6.jpg" class="img-thumbnail" style="width:40px; padding:0px;" />
   </a>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="#" (click)="navHome()">Home
+        <a class="nav-link" routerLink="/" (click)="navHome()">Home
           <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" (click)="navOrder()">Order</a>
+        <a class="nav-link" routerLink="/order" (click)="navOrder()">Order</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" (click)="navContact()">Contact</a>
+        <a class="nav-link" routerLink="/contact" (click)="navContact()">Contact</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" (click)="navDetail()">Detail</a>
+        <a class="nav-link" routerLink="/detail" (click)="navDetail()">Detail</a>
       </li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
     <div class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-success my-2 my-sm-0" type="button" *ngIf="!currentUser" (click)="navLogin()">Login</button>
         <button class="btn btn-outline-success my-2 my-sm-0" type="button" *ngIf="currentUser" (click)="navManagement()">Management</button>
