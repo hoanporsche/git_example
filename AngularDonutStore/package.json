@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@agm/core": "^1.0.0-beta.2",
+    "@agm/core": "^1.0.0-beta.3",
     "@angular/animations": "^5.2.9",
     "@angular/cdk": "^5.2.2",
     "@angular/common": "^5.2.9",
@@ -30,7 +30,7 @@
     "@types/jquery": "^3.3.1",
     "ag-grid": "^15.0.0",
     "ag-grid-angular": "^15.0.0",
-    "agm-direction": "^0.5.1",
+    "agm-direction": "^0.6.0",
     "angular-font-awesome": "^3.1.2",
     "angular2-i18n": "^1.0.2",
     "angular2-jwt": "^0.2.3",

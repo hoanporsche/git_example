@@ -1,5 +1,4 @@
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NavigationService } from './core/services/navigation.service';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app.routing';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,8 +8,6 @@ import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ScriptLoaderService } from './core/services/script-loader.service';
-import { IdentityService } from './core/services/identity.service';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthGuard } from './auth/guards';
@@ -19,7 +16,7 @@ import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

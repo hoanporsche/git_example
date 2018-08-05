@@ -1,0 +1,10 @@
+<a class="ds-single-item" routerLink="#">
+  <div class="ds-single-item-image" [ngStyle]="{'background-image': 'url('+item.picture+')'}"></div>
+  <h4>{{ item.name }}</h4>
+  <p>{{ item.description }}</p>
+  <hr>
+  <span>
+    {{ item.singleValue }} đ
+  </span>
+  <button type="button" class="btn btn-success">Mua ngay</button>
+</a>
