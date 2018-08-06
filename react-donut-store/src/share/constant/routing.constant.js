@@ -1,9 +1,9 @@
+
 export const ROUTING_URL = Object.freeze({
-  CREATE: '/create',
-  DETAIL: '/detail',
-  CONTACT: '/contact',
-  ABOUT: '/about',
-  ORDER: '/order',
+  NOT_FOUND: '',
+  HOME: '/',
+  CONTACT: '/lien-he',
+  ORDER: '/dat-hang',
 });
 
 export const MODEL_ROUTING = Object.freeze({

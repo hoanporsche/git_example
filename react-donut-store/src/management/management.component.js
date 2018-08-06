@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import routes from './management.routing';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import HeaderManagementComponent from './layout-management/header-management/header-management.component';
 import FooterManagementComponent from './layout-management/footer-management/footer-management.component';
 
