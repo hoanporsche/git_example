@@ -53,7 +53,7 @@ class HeaderMain extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <NavLink className="navbar-brand" to="/">
-          <img src={BR6} className="img-thumbnail" style={{ width: 40, padding: 0 }} />
+          <img src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR6.jpg"} className="img-thumbnail" style={{ width: 40, padding: 0 }} />
         </NavLink>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />

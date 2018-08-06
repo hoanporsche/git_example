@@ -13,7 +13,7 @@ class SingleItem extends Component {
     return (
       <div className="col-sm-4">
         <NavLink className="ds-single-item" to="#">
-          {/* <div className="ds-single-item-image" style={{backgroundImage: `url(require("../../.${this.props.item.picture}"))`}} /> */}
+          <div className="ds-single-item-image" style={{backgroundImage: `url(${this.props.item.picture})`}} />
           <h4>{ this.props.item.name }</h4>
           <p>{ this.props.item.description }</p>
           <hr />

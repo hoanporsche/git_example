@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HeaderMain from '../../layout-main/header-main/HeaderMain';
 import FooterMain from '../../layout-main/footer-main/FooterMain';
-import { findAllCategory } from '../util/api-caller';
+import { findAllCategory, findAllStore } from '../util/api-caller';
 import { connect } from 'react-redux';
 import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
@@ -12,6 +12,7 @@ class Home extends Component {
     super(props);
     this.state = {
       listCategory: [],
+      listStore: [],
     }
     this.showCategory = this.showCategory.bind(this);
   }
@@ -21,11 +22,17 @@ class Home extends Component {
       this.setState({
         listCategory: data,
       });
-      console.log(data);
     }).catch((error) => {
       console.log(error);
     });
 
+    findAllStore().then(({ data }) => {
+      this.setState({
+        listStore: data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   showCategory() {
@@ -61,7 +68,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className="ds-main">
         <HeaderMain />
         <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
           <ol className="carousel-indicators">
