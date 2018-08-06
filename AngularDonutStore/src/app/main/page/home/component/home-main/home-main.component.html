@@ -55,14 +55,6 @@
       <div class="row">
         <div class="col-sm-4" *ngFor="let item of category?.items">
           <app-single-item [item]="item"></app-single-item>
-          <!-- <div class="card">
-            <h5 class="card-header">{{ item?.name }}</h5>
-            <div class="card-body">
-              <img class="ds-main-img" [src]="item?.picture">
-              <p class="card-text">{{ item?.description }}</p>
-              <a href="#" class="btn btn-primary">{{ item?.singleValue}} Đ</a>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>

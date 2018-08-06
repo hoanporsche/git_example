@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link, NavLink } from 'react-router-dom';
-import BR6 from '../../../asset/image/BR6.jpg';
+import BR6 from '../../../assets/img/donut-store/BR6.jpg';
 
 const menus = [
   {
