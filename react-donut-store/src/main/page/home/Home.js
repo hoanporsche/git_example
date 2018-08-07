@@ -5,6 +5,7 @@ import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
 import GGMaps from '../../component/gg-maps/GGMaps';
 import { actFetchCategory } from '../../../redux/action/category.constant';
+import { actFetchStore} from '../../../redux/action/store.constant';
 
 class Home extends Component {
 
@@ -28,20 +29,19 @@ class Home extends Component {
     });
 
     findAllStore().then(({ data }) => {
-      this.setState({
-        listStore: data,
-      });
+      // this.setState({
+      //   listStore: data,
+      // });
+      this.props.fetchAllStore(data);
     }).catch((error) => {
       console.log(error);
     });
-    console.log("componentDidMount");
-    console.log(this.state);
   }
 
-  showCategory() {
+  showCategory(listCategory) {
     let result = null;
-    if (this.state.listCategory.length > 0) {
-      result = this.state.listCategory.map((category, index) => {
+    if (listCategory.length > 0) {
+      result = listCategory.map((category, index) => {
         return (
           <div key={index} className="card ds-card-margin">
             <h5 className="card-header"><b>{category.name}</b></h5>
@@ -70,7 +70,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.state);
+    const { listCategory, listStore } = this.props;
     return (
       <div className="ds-main">
         <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
@@ -114,22 +114,23 @@ class Home extends Component {
 
           </div>
           <div className="col-sm-5">
-            <GGMaps listStore={this.state.listStore}/>
+            <GGMaps listStore={listStore}/>
           </div>
         </div>
       </div>
 
         <div className="container">
-          {this.showCategory()}
+          {this.showCategory(listCategory)}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     listCategory: state.categoryReducer,
+    listStore: state.storeReducer,
   }
 }
 
@@ -137,6 +138,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchAllCategory: (listCategory) => {
       dispatch(actFetchCategory(listCategory));
+    },
+    fetchAllStore: (listStore) => {
+      dispatch(actFetchStore(listStore));
     }
   }
 }
