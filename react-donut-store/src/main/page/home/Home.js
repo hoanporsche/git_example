@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import HeaderMain from '../../layout-main/header-main/HeaderMain';
-import FooterMain from '../../layout-main/footer-main/FooterMain';
 import { findAllCategory, findAllStore } from '../util/api-caller';
 import { connect } from 'react-redux';
 import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
+import GGMaps from '../../component/gg-maps/GGMaps';
+import { actFetchCategory } from '../../../redux/action/category.constant';
 
 class Home extends Component {
 
@@ -19,9 +19,10 @@ class Home extends Component {
 
   componentDidMount() {
     findAllCategory().then(({ data }) => {
-      this.setState({
-        listCategory: data,
-      });
+      // this.setState({
+      //   listCategory: data,
+      // });
+      this.props.fetchAllCategory(data);
     }).catch((error) => {
       console.log(error);
     });
@@ -33,6 +34,8 @@ class Home extends Component {
     }).catch((error) => {
       console.log(error);
     });
+    console.log("componentDidMount");
+    console.log(this.state);
   }
 
   showCategory() {
@@ -41,7 +44,7 @@ class Home extends Component {
       result = this.state.listCategory.map((category, index) => {
         return (
           <div key={index} className="card ds-card-margin">
-            <h5 className="card-header">{category.name}</h5>
+            <h5 className="card-header"><b>{category.name}</b></h5>
             <div className="card-body">
               <div className="row">
                 {this.showItem(category.items)}
@@ -67,9 +70,9 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="ds-main">
-        <HeaderMain />
         <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
           <ol className="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to={0} className="active" />
@@ -105,11 +108,20 @@ class Home extends Component {
           </a>
         </div>
 
+        <div className="container-fluid" style={{marginTop: '1em'}}>
+        <div className="col-12 col-sm-11 ds-second-div" style={{background: 'white'}}>
+          <div className="col-md-7">
+
+          </div>
+          <div className="col-sm-5">
+            <GGMaps listStore={this.state.listStore}/>
+          </div>
+        </div>
+      </div>
 
         <div className="container">
           {this.showCategory()}
         </div>
-        <FooterMain />
       </div>
     );
   }
@@ -117,7 +129,16 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    listItem: state.itemReducer,
+    listCategory: state.categoryReducer,
   }
 }
-export default connect(mapStateToProps, null)(Home);
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    fetchAllCategory: (listCategory) => {
+      dispatch(actFetchCategory(listCategory));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

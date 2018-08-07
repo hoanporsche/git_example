@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class NotFoundComponent extends Component {
+class NotFound extends Component {
 
   render() {
     return(
@@ -11,4 +11,4 @@ class NotFoundComponent extends Component {
   }
 }
 
-export default NotFoundComponent;
+export default NotFound;

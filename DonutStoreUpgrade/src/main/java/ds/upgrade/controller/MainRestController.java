@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ds.upgrade.model.Store;
 import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.support.StoreJson;
 import ds.upgrade.service.CategoryService;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.service.StoreService;
@@ -55,9 +55,9 @@ public class MainRestController {
   @GetMapping(AppConstant.MODEL.STORE_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllStore() {
     try {
-      List<Store> list = storeService.findAll();
+      List<StoreJson> list = storeService.findAll();
       if (!list.isEmpty())
-        return new ResponseEntity<List<Store>>(list, HttpStatus.OK);
+        return new ResponseEntity<List<StoreJson>>(list, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);

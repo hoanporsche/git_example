@@ -1,11 +1,10 @@
-import { ROUTING_URL } from './share/constant/routing.constant';
-
 import React from 'react';
-import Home from './main/page/home/Home';
-import Order from './main/page/order/Order';
-import Contact from './main/page/contact/Contact';
+import Home from './page/home/Home';
+import Order from './page/order/Order';
+import Contact from './page/contact/Contact';
+import { ROUTING_URL } from '../share/constant/routing.constant';
 
-const appRoutes = [
+const mainRoutes = [
   {
     path : ROUTING_URL.HOME,
     exact : true,
@@ -23,4 +22,4 @@ const appRoutes = [
   },
 ]
 
-export default appRoutes;
+export default mainRoutes;

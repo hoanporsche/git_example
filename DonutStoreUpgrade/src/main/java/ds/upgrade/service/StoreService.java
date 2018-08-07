@@ -6,10 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Store;
+import ds.upgrade.model.support.StoreJson;
 
 public interface StoreService {
 
-  List<Store> findAll();
+  List<StoreJson> findAll();
 
   Store findOne(Long id);
   

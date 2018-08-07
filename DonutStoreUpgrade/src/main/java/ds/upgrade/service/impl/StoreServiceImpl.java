@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Staff;
 import ds.upgrade.model.Store;
+import ds.upgrade.model.support.StoreJson;
 import ds.upgrade.repository.StaffRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.StoreSpecification;
@@ -33,8 +35,10 @@ public class StoreServiceImpl implements StoreService {
    * @return
    */
   @Override
-  public List<Store> findAll() {
-    return storeRepository.findAll();
+  public List<StoreJson> findAll() {
+    List<StoreJson> list = new ArrayList<StoreJson>();
+    storeRepository.findAll().forEach(store -> list.add(new StoreJson(store)));
+    return list;
   }
 
   /**

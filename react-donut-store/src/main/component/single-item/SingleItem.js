@@ -4,12 +4,7 @@ import './SingleItem.css';
 
 class SingleItem extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const imgUrl = ('../../.'+ this.props.item.picture).toString();
     return (
       <div className="col-sm-4">
         <NavLink className="ds-single-item" to="#">
