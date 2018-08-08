@@ -1,0 +1,27 @@
+.cart-segment {
+  margin-left: 1px;
+  position: relative;
+}
+
+.cart-head {
+  /* height: 60px; */
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.icon {
+  position: relative;
+}
+
+.detail-icon {
+  background-image: url(../../../assets/img/other/svg-grid.png);
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}

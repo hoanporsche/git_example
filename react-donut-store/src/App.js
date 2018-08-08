@@ -14,7 +14,7 @@ class App extends Component {
           <Switch>
             <Route path="/management" component={ManagementComponent} />
             <Route path="/" component={Main} />
-            <Route component={NotFound} />
+            <Route path="" component={NotFound} />
           </Switch>
         </div>
       </Router>

@@ -1,0 +1,64 @@
+.shopping-cart {
+  display: inline-block;
+  /* float: right; */
+  font-size: 14px;
+  padding-top: 12px;
+  margin-right: 20px;
+}
+
+.ds-my-account {
+  text-align: right;
+  position: relative;
+  float: left;
+}
+
+.ds-account-box {
+  background: #fec73b;
+  background-position: right center;
+  padding-right: 10px;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  max-width: 100%;
+  top: 0;
+  border-radius: 20px 0 0 20px;
+}
+
+.ds-your-account {
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 27px;
+  padding: 5px 9px 3px;
+  text-transform: uppercase;
+}
+
+.links {
+  visibility: hidden;
+  background-color: rgba(255, 255, 255, .95);
+  position: absolute;
+  top: 40px;
+  padding: 10px;
+  width: 180px;
+  right: -50px;
+  border-radius: 5px;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all .2s ease-in-out;
+}
+
+.first {
+  float: left;
+  width: 100%;
+  text-align: left;
+}
+
+.ds-mini-cart {
+  text-align: right;
+  position: relative;
+  background: url(https://pplay.vn/skin/frontend/rwd/pplay/images/cart-bg.png) no-repeat;
+  background-size: 85px auto;
+  height: 50px;
+  margin-top: -7px;
+}
