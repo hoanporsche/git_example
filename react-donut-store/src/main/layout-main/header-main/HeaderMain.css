@@ -16,12 +16,30 @@
 }
 
 .detail-icon {
-  background-image: url(../../../assets/img/other/svg-grid.png);
+  background-image: url(https://res.cloudinary.com/hitkeodog/image/upload/v1533781301/donut-store/svg-grid.png);
   width: 32px;
-  height: 32px;
+  height: 25px;
   display: inline-block;
   vertical-align: middle;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.quantity {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #fff;
+  line-height: 12px;
+  font-size: 10px;
+  padding-top: 3px;
+  text-align: center;
+  top: -6px;
+  right: -4px;
+  background: linear-gradient(25deg,#bd2a36,#9b4599,#214181);
+}
+span {
+  font-size: .875rem;
 }

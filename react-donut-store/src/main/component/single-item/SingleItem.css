@@ -6,6 +6,7 @@
   padding-bottom: 15px;
   margin-top: 20px;
   margin-bottom: 20px;
+  text-decoration: none;
 }
 
 .ds-single-item-image {
@@ -22,6 +23,7 @@
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 15px;
+  height: 3em;
 }
 
 .ds-single-item p {
@@ -29,6 +31,10 @@
   font-size: 13px;
   padding-left: 15px;
   padding-right: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 
 .ds-single-item hr {
@@ -45,4 +51,12 @@
   display: block;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.add-to-cart {
+  text-align: center;
+}
+
+.number-item {
+  width: 4em;
 }

@@ -23,6 +23,22 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  padding-top: 50px;
+  font-family: sans-serif;
+}
+
+@media only screen and (max-width: 576px) {
+  body {
+    padding-top: 63px;
+    font-family: sans-serif;
+  }
 }

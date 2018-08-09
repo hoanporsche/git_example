@@ -9,7 +9,6 @@ class ShoppingCart extends Component {
     console.log(quantities);
     return (
       <div >
-        <a className="btn btn-outline-success my-2 my-sm-0" href="/dang-nhap">Đăng nhập</a>
         {/* <div className="ds-shopping-cart">
           <div className="ds-my-account">
             <div className="ds-account-box">

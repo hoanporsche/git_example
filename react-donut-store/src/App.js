@@ -10,13 +10,11 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
           <Switch>
             <Route path="/management" component={ManagementComponent} />
             <Route path="/" component={Main} />
             <Route path="" component={NotFound} />
           </Switch>
-        </div>
       </Router>
     );
   }

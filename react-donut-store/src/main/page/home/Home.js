@@ -5,7 +5,7 @@ import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
 import GGMaps from '../../component/gg-maps/GGMaps';
 import { actFetchCategory } from '../../../redux/action/category.constant';
-import { actFetchStore} from '../../../redux/action/store.constant';
+import { actFetchStore } from '../../../redux/action/store.constant';
 
 class Home extends Component {
 
@@ -20,18 +20,12 @@ class Home extends Component {
 
   componentDidMount() {
     findAllCategory().then(({ data }) => {
-      // this.setState({
-      //   listCategory: data,
-      // });
       this.props.fetchAllCategory(data);
     }).catch((error) => {
       console.log(error);
     });
 
     findAllStore().then(({ data }) => {
-      // this.setState({
-      //   listStore: data,
-      // });
       this.props.fetchAllStore(data);
     }).catch((error) => {
       console.log(error);
@@ -83,19 +77,19 @@ class Home extends Component {
           </ol>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img className="d-block w-100" src={require('../../../assets/img/donut-store/BR1.jpg')} alt="First slide" />
+              <img className="d-block w-100" src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569767/donut-store/banh-ran/BR1.jpg"} alt="First slide" />
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={require("../../../assets/img/donut-store/BR2.jpg")} alt="Second slide" />
+              <img className="d-block w-100" src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569793/donut-store/banh-ran/BR2.jpg"} alt="Second slide" />
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={require("../../..//assets/img/donut-store/BR3.jpg")} alt="Third slide" />
+              <img className="d-block w-100" src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569771/donut-store/banh-ran/BR3.jpg"} alt="Third slide" />
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={require("../../..//assets/img/donut-store/BR4.jpg")} alt="Fourth slide" />
+              <img className="d-block w-100" src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR4.jpg"} alt="Fourth slide" />
             </div>
             <div className="carousel-item">
-              <img className="d-block w-100" src={require("../../..//assets/img/donut-store/BR5.jpg")} alt="Fifth slide" />
+              <img className="d-block w-100" src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569782/donut-store/banh-ran/BR5.jpg"} alt="Fifth slide" />
             </div>
           </div>
           <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -108,16 +102,18 @@ class Home extends Component {
           </a>
         </div>
 
-        <div className="container-fluid" style={{marginTop: '1em'}}>
-        <div className="col-12 col-sm-11 ds-second-div" style={{background: 'white'}}>
-          <div className="col-md-7">
-
-          </div>
-          <div className="col-sm-5">
-            <GGMaps listStore={listStore}/>
+        <div className="container-fluid" style={{ marginTop: '1em' }}>
+          <div className="col-12 col-sm-11 ds-second-div" style={{ background: 'white' }}>
+            <div className="row">
+              <div className="col-sm-5">
+                <GGMaps listStore={listStore} />
+              </div>
+              <div className="col-sm-7">
+                <div className="more-detail gg-maps"></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
         <div className="container">
           {this.showCategory(listCategory)}
