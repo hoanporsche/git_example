@@ -1,0 +1,37 @@
+.section-heading {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+h2 {
+  color: #bd0015;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+.has-arrow {
+  position: relative;
+  display: inline-block;
+  padding-left: 30px;
+  padding-right: 16px;
+  margin-left: -16px;
+  background-color: #fff;
+}
+
+.big-solid-yellow {
+  display: block;
+  height: 30px;
+  width: 1000000px;
+  background-color: #ffc423;
+  margin: -48px auto 0 -100000px;
+}
+
+hr {
+  max-width: 70px;
+  margin: 12px auto;
+  border-top-color: #ffc423;
+  border: 0;
+  border-top: 1px solid #eee;
+  height: 0;
+  box-sizing: content-box;
+}

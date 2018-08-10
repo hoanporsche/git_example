@@ -5,7 +5,8 @@ let initialState = [];
 const itemReducer = (state = initialState, action) => {
   switch(action.type) {
     case FETCH_ITEM : {
-      return action.body;
+      state = action.listItem;
+      return [...state];
     }
     default : return [...state];
   }

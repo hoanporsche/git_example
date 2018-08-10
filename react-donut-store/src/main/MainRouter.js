@@ -24,7 +24,7 @@ const mainRoutes = [
   {
     path : ROUTING_URL.DETAIL + '/:id',
     exact : true,
-    main : ({location}) => <Detail location={location}/>
+    main : ({location, match}) => <Detail location={location} match={match}/>
   }
 ]
 

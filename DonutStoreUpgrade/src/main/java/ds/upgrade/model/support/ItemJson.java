@@ -9,16 +9,26 @@ public class ItemJson implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
 
+  private String code;
   private String name;
   private String picture;
   private BigDecimal singleValue;
   private String description;
   
   public ItemJson(Item item) {
+    this.setCode(item.getCode());
     this.setName(item.getName());
     this.setPicture(item.getPicture());
     this.setSingleValue(item.getSingleValue());
     this.setDescription(item.getDescription());
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getName() {

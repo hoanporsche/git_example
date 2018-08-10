@@ -100,6 +100,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(10) NOT NULL,
   `name` VARCHAR(40) NOT NULL,
   `picture` VARCHAR(255),
   `category_id` BIGINT NOT NULL,
@@ -109,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`item` (
   `enabled` boolean not null,
   `description` VARCHAR(1000),
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  UNIQUE INDEX `name_UNIQUE, code_UNIQUE` (`name` ASC),
   FOREIGN KEY (`category_id`)
   REFERENCES `donutstore`.`category`(`id`))
 ENGINE = InnoDB

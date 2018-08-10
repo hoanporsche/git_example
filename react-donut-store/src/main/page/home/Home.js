@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { findAllCategory, findAllStore } from '../util/api-caller';
 import { connect } from 'react-redux';
 import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
 import GGMaps from '../../component/gg-maps/GGMaps';
-import { actFetchCategory } from '../../../redux/action/category.constant';
-import { actFetchStore } from '../../../redux/action/store.constant';
+import { fetAllCategory } from '../../../redux/action/category.constant';
+import { fetAllStore } from '../../../redux/action/store.constant';
 
 class Home extends Component {
 
@@ -19,17 +18,11 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    findAllCategory().then(({ data }) => {
-      this.props.fetchAllCategory(data);
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    findAllStore().then(({ data }) => {
-      this.props.fetchAllStore(data);
-    }).catch((error) => {
-      console.log(error);
-    });
+    let { listCategory, listStore } = this.props;
+    if (listCategory.length === 0) 
+      this.props.fetchAllCategory();
+    if (listStore.length === 0)
+      this.props.fetchAllStore();
   }
 
   showCategory(listCategory) {
@@ -37,19 +30,34 @@ class Home extends Component {
     if (listCategory.length > 0) {
       result = listCategory.map((category, index) => {
         return (
-          <div key={index} className="card ds-card-margin">
-            <h5 className="card-header"><b>{category.name}</b></h5>
-            <div className="card-body">
-              <div className="row">
-                {this.showItem(category.items)}
-              </div>
-            </div>
+
+          <div key={index} className="row ds-card-margin" >
+            {this.showItem(category.items)}
           </div>
         );
       });
     }
     return result;
   }
+
+  // showCategory(listCategory) {
+  //   let result = null;
+  //   if (listCategory.length > 0) {
+  //     result = listCategory.map((category, index) => {
+  //       return (
+  //         <div key={index} className="card ds-card-margin">
+  //           <h5 className="card-header"><b>{category.name}</b></h5>
+  //           <div className="card-body">
+  //             <div className="row">
+  //               {this.showItem(category.items)}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       );
+  //     });
+  //   }
+  //   return result;
+  // }
 
   showItem(items) {
     let result = null;
@@ -106,7 +114,13 @@ class Home extends Component {
           <div className="col-12 col-sm-11 ds-second-div" style={{ background: 'white' }}>
             <div className="row">
               <div className="col-sm-5">
-                <GGMaps listStore={listStore} />
+                {(() => {
+                  if (listStore.length > 0) {
+                    return (
+                      <GGMaps listStore={listStore} />
+                    )
+                  }
+                })()}
               </div>
               <div className="col-sm-7">
                 <div className="more-detail gg-maps"></div>
@@ -132,11 +146,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchAllCategory: (listCategory) => {
-      dispatch(actFetchCategory(listCategory));
+    fetchAllCategory: () => {
+      dispatch(fetAllCategory());
     },
-    fetchAllStore: (listStore) => {
-      dispatch(actFetchStore(listStore));
+    fetchAllStore: () => {
+      dispatch(fetAllStore());
     }
   }
 }

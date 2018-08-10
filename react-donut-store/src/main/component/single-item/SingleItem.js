@@ -5,14 +5,15 @@ import './SingleItem.css';
 class SingleItem extends Component {
 
   render() {
+    const to = `/chi-tiet-san-pham/${this.props.item.code}`;
     return (
       <div className="col-sm-3">
-        <NavLink className="ds-single-item" to="#">
+        <NavLink className="ds-single-item" to={to}>
           <div className="ds-single-item-image" style={{ backgroundImage: `url(${this.props.item.picture})` }} />
           <h4>{this.props.item.name}</h4>
           <p>{this.props.item.description}</p>
           <hr />
-          <button type="button" className="btn btn-success"><i class="fas fa-cart-plus"></i> Mua ngay</button>
+          <button type="button" className="btn btn-success"><i className="fas fa-cart-plus"></i> Mua ngay</button>
           <span>{this.props.item.singleValue} đ</span>
         </NavLink>
       </div>

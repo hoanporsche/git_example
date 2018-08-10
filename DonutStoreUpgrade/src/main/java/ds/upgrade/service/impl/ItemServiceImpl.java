@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.ItemSpecification;
 import ds.upgrade.service.ItemService;
+import ds.upgrade.util.AppConstant;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -76,11 +78,13 @@ public class ItemServiceImpl implements ItemService {
   public Item save(Item item) {
     if (item.getId() == null) {
       item.setDateCreated(new Date());
+      item.setCode(RandomStringUtils.random(10, AppConstant.FORMAT.RANDOM_STRING_BASIC));
     } else {
       Item foundItem = itemRepository.findOne(item.getId());
       if (foundItem == null)
         return null;
       item.setDateCreated(foundItem.getDateCreated());
+      item.setCode(foundItem.getCode());
     }
     item.setDateUpdated(new Date());
     item.setEnabled(true);

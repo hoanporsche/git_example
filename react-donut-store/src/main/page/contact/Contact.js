@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import SectionHeading from '../../component/section-heading/SectionHeading';
+import './Contact.css';
 
 class Contact extends Component {
 
   render() {
-    return(
-      <div>
-        Contact 
+    return (
+      <div className="wrapper">
+        <div className="container contain">
+          <SectionHeading title="Liên Hệ" />
+        </div>
       </div>
     );
   }
