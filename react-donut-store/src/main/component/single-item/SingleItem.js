@@ -7,7 +7,7 @@ class SingleItem extends Component {
   render() {
     const to = `/chi-tiet-san-pham/${this.props.item.code}`;
     return (
-      <div className="col-sm-3">
+      <div className="col-sm-4">
         <NavLink className="ds-single-item" to={to}>
           <div className="ds-single-item-image" style={{ backgroundImage: `url(${this.props.item.picture})` }} />
           <h4>{this.props.item.name}</h4>

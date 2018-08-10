@@ -44,7 +44,7 @@ class Contact extends Component {
         <div className="container contain">
           <SectionHeading title="Liên Hệ" />
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-6 ggmap-css">
               {this.showGGmaps()}
             </div>
             <div className="col-sm-6">

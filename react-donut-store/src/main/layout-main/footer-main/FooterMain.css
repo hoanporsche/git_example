@@ -40,3 +40,9 @@ footer{
   -o-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
 }
+
+@media only screen and (max-width: 576px) {
+  .adress {
+    padding: 0;
+  }
+}
