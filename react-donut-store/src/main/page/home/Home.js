@@ -15,20 +15,20 @@ class Home extends Component {
       listStore: [],
     }
     this.showCategory = this.showCategory.bind(this);
+    this.showGGmaps = this.showGGmaps.bind(this);
   }
 
   componentDidMount() {
-    let { listCategory, listStore } = this.props;
-    if (listCategory.length === 0) 
+    if (this.props.listCategory.length === 0) 
       this.props.fetchAllCategory();
-    if (listStore.length === 0)
+    if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
   }
 
-  showCategory(listCategory) {
+  showCategory() {
     let result = null;
-    if (listCategory.length > 0) {
-      result = listCategory.map((category, index) => {
+    if (this.props.listCategory.length > 0) {
+      result = this.props.listCategory.map((category, index) => {
         return (
 
           <div key={index} className="row ds-card-margin" >
@@ -71,8 +71,12 @@ class Home extends Component {
     return result;
   }
 
+  showGGmaps() {
+    if (this.props.listStore.length > 0) 
+      return <GGMaps listStore={this.props.listStore} defaultZoom={12} />
+  }
+
   render() {
-    const { listCategory, listStore } = this.props;
     return (
       <div className="ds-main">
         <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
@@ -114,13 +118,7 @@ class Home extends Component {
           <div className="col-12 col-sm-11 ds-second-div" style={{ background: 'white' }}>
             <div className="row">
               <div className="col-sm-5">
-                {(() => {
-                  if (listStore.length > 0) {
-                    return (
-                      <GGMaps listStore={listStore} />
-                    )
-                  }
-                })()}
+                { this.showGGmaps() }
               </div>
               <div className="col-sm-7">
                 <div className="more-detail gg-maps"></div>
@@ -130,7 +128,7 @@ class Home extends Component {
         </div>
 
         <div className="container">
-          {this.showCategory(listCategory)}
+          {this.showCategory()}
         </div>
       </div>
     );

@@ -1,8 +1,15 @@
 .wrapper {
-  background-color: cornflowerblue;
+  background-color: beige;
 }
 
 .contain {
-  padding: 3% 0 0 1%;
+  padding: 1% 5% 5% 5%;
   background-color: white;
+  align-items: center;
+}
+
+.bottom-button {
+  align-items: center;
+  text-align: center;
+  align-content: center;
 }

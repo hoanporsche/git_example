@@ -9,7 +9,7 @@ class SectionHeading extends Component {
       <div className="section-heading">
         <h2 className="has-arrow">{ title }</h2>
         <div className="big-solid-yellow"></div>
-        <hr />
+        <hr className="hr-section-heading"/>
       </div>
     )
   }

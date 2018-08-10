@@ -9,7 +9,7 @@ const StoreMaps = withScriptjs(withGoogleMap((props) => {
 
   const center = { lat: +props.listStore[0].lat, lng: +props.listStore[0].lng };
   return (
-    <GoogleMap defaultZoom={14}
+    <GoogleMap defaultZoom={+props.defaultZoom}
       center={center}>
       {markers}
     </GoogleMap>);
@@ -17,10 +17,10 @@ const StoreMaps = withScriptjs(withGoogleMap((props) => {
 
 class GGMaps extends Component {
 
-
   render() {
     return (
       <StoreMaps
+        defaultZoom={this.props.defaultZoom}
         listStore={this.props.listStore}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: `100%` }} />}
