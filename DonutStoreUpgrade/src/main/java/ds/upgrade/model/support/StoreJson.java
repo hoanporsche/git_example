@@ -3,7 +3,7 @@ package ds.upgrade.model.support;
 import ds.upgrade.model.Store;
 
 public class StoreJson {
-
+  private String code;
   private String name;
   private String picture;
   private String phone;
@@ -12,12 +12,21 @@ public class StoreJson {
   private String lng;
 
   public StoreJson(Store store) {
+    this.code = store.getCode();
     this.name = store.getName();
     this.picture = store.getPicture();
     this.phone = store.getPhone();
     this.address = store.getAddress();
     this.lat = store.getLat();
     this.lng = store.getLng();
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getName() {

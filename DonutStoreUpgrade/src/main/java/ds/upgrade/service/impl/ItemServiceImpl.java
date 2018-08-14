@@ -78,7 +78,7 @@ public class ItemServiceImpl implements ItemService {
   public Item save(Item item) {
     if (item.getId() == null) {
       item.setDateCreated(new Date());
-      item.setCode(RandomStringUtils.random(10, AppConstant.FORMAT.RANDOM_STRING_BASIC));
+      item.setCode("ITE" + RandomStringUtils.random(7, AppConstant.FORMAT.RANDOM_STRING_BASIC));
     } else {
       Item foundItem = itemRepository.findOne(item.getId());
       if (foundItem == null)

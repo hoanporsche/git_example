@@ -22,7 +22,7 @@ const mainRoutes = [
     main : () => <Contact />,
   },
   {
-    path : ROUTING_URL.DETAIL + '/:id',
+    path : ROUTING_URL.DETAIL + '/:code',
     exact : true,
     main : ({location, match}) => <Detail location={location} match={match}/>
   }

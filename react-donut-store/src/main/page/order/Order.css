@@ -1,0 +1,9 @@
+.wrapper {
+  background-color: beige;
+}
+
+.contain {
+  padding: 1% 5% 5% 5%;
+  background-color: white;
+  align-items: center;
+}

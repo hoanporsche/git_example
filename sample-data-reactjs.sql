@@ -6,14 +6,14 @@ INSERT INTO `donutstore`.`category` VALUES
 (3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
-(1,'dkqkrfpyhe','Bánh rán mặn', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569786/donut-store/banh-ran/BR7.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
-(2,'nuedcuvfdi','Bánh rán ngọt', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569777/donut-store/banh-ran/BR8.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
-(3,'taqwwkxlsb','Bánh mì pate trứng', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569683/donut-store/banh-mi/BM1.jpg','2','2018-01-02', '2018-02-03','12000', b'1','Bánh mì với nhân là pate, trứng chiên cùng các loại rau và sốt.'),
-(4,'wqwtjvvlhv','Bánh mì pate xúc xích', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569685/donut-store/banh-mi/BM2.png','2','2018-01-02', '2018-02-03','15000', b'1','Bánh mì với nhân là pate, xúc xích rán cùng các loại rau và sốt.'),
-(5,'gvdzpxtldd','Bánh mì pate trứng xúc xích', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569686/donut-store/banh-mi/BM3.jpg','2','2018-01-02', '2018-02-03','18000', b'1','Bánh mì với nhân là pate, trứng chiên, xúc xích rán cùng các loại rau và sốt.'),
-(6,'bohaefalcu','Trà đá', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569799/donut-store/do-uong/TRADA.jpg','3','2018-01-02', '2018-02-03','3000', b'1','Trà xanh ướp lạnh.'),
-(7,'lquffiqllw','Mirrinda', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569798/donut-store/do-uong/MIRRINDA.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Mirrinda ướp lạnh'),
-(8,'gtzuwhpeaj','Coca', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569798/donut-store/do-uong/COCA.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Coca ướp lạnh');
+(1,'ITEkrfpyhe','Bánh rán mặn', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569786/donut-store/banh-ran/BR7.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
+(2,'ITEdcuvfdi','Bánh rán ngọt', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569777/donut-store/banh-ran/BR8.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
+(3,'ITEwwkxlsb','Bánh mì pate trứng', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569683/donut-store/banh-mi/BM1.jpg','2','2018-01-02', '2018-02-03','12000', b'1','Bánh mì với nhân là pate, trứng chiên cùng các loại rau và sốt.'),
+(4,'ITEtjvvlhv','Bánh mì pate xúc xích', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569685/donut-store/banh-mi/BM2.png','2','2018-01-02', '2018-02-03','15000', b'1','Bánh mì với nhân là pate, xúc xích rán cùng các loại rau và sốt.'),
+(5,'ITEzpxtldd','Bánh mì pate trứng xúc xích', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569686/donut-store/banh-mi/BM3.jpg','2','2018-01-02', '2018-02-03','18000', b'1','Bánh mì với nhân là pate, trứng chiên, xúc xích rán cùng các loại rau và sốt.'),
+(6,'ITEaefalcu','Trà đá', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569799/donut-store/do-uong/TRADA.jpg','3','2018-01-02', '2018-02-03','3000', b'1','Trà xanh ướp lạnh.'),
+(7,'ITEffiqllw','Mirrinda', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569798/donut-store/do-uong/MIRRINDA.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Mirrinda ướp lạnh'),
+(8,'ITEuwhpeaj','Coca', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569798/donut-store/do-uong/COCA.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Coca ướp lạnh');
 
 INSERT INTO `donutstore`.`supply` VALUES 
 ('1','Chị Lý','0988888888','C4 Giảng Võ', '2018-01-02', '2018-02-03', b'1'),
@@ -60,8 +60,8 @@ INSERT INTO `donutstore`.`order_status` VALUES
 ('5','Cancel','Hủy',b'1');
 
 INSERT INTO `donutstore`.`store` VALUES 
-('1','Giảng Võ','','0943451794','D6 Giảng Võ','21.026846','105.821322','2018-01-02', '2018-02-03', b'1'),
-('2','Núi Trúc','','0969550954','135 Núi Trúc','21.026846','105.881322','2018-01-02', '2018-02-03', b'1');
+('1','STOsfgtjnm','Giảng Võ','','0943451794','D6 Giảng Võ','21.026846','105.821322','2018-01-02', '2018-02-03', b'1'),
+('2','STOqwdcvts','Núi Trúc','','0969550954','135 Núi Trúc','21.026846','105.881322','2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`orders` VALUES 
 ('ORN09EeE1G','2018-03-06','2018-03-06','3 Liếu giai','0914248833','1','4',b'1','Số 3 Liễu Giai','2.1',12000, 192000),

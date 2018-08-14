@@ -1,0 +1,32 @@
+.wrapper {
+  background-color: beige;
+}
+
+.contain {
+  padding: 1% 5% 5% 5%;
+  background-color: white;
+  align-items: center;
+}
+
+.item-picture {
+  height: 250px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
+}
+.detail-item p {
+  color: #666;
+  font-size: 13px;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+  display: block;
+}
+.detail-item span {
+  color: #e86a00;
+  font-size: 32px;
+  font-weight: bold;
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+}

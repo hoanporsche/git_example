@@ -1,7 +1,7 @@
-export const ADD_QUANTITES = "ADD_QUANTITES";
-export const REMOVE_QUANTITES = "REMOVE_QUANTITES";
+export const ADD_QUANTITES = "ADD_QUANTITY";
+export const REMOVE_QUANTITES = "REMOVE_QUANTITY";
 
-export const actAddQuantites = (quantity) => {
+export const actAddQuantity = (quantity) => {
   return {
     type : ADD_QUANTITES,
     quantity,

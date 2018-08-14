@@ -11,8 +11,8 @@ class App extends Component {
     return (
       <Router>
           <Switch>
-            <Route path="/management" component={ManagementComponent} />
             <Route path="/" component={Main} />
+            <Route path="/management" component={ManagementComponent} />
             <Route path="" component={NotFound} />
           </Switch>
       </Router>

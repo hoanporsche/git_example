@@ -184,6 +184,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `id` BIGINT NOT NULL AUTO_INCREMENT,
+ `code` VARCHAR(10) NOT NULL,
  `name` VARCHAR(20) NOT NULL,
  `picture` VARCHAR(255),
  `phone` VARCHAR(20) NOT NULL,
@@ -194,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`store` (
  `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  `enabled` BOOLEAN NOT NULL,
  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+  UNIQUE INDEX `name_UNIQUE, code_UNIQUE` (`name` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 

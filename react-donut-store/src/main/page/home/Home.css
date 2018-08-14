@@ -8,10 +8,6 @@
 	max-height: 250px;
 }
 
-.gg-maps {
-	height: 400px;
-	border-radius: 10px;
-}
 .more-detail {
 	background-image: url(https://res.cloudinary.com/hitkeodog/image/upload/v1533796074/donut-store/shipping-price.png);
 	background-position: center;
@@ -34,27 +30,6 @@
 		margin: 0 4.15%;
 		padding-bottom: 1em;
 		padding-top: 1em;
-		border-radius: 10px;
-	}
-}
-
-@media only screen and (max-width: 960px) {
-	.gg-maps {
-		height: 300px;
-		border-radius: 10px;
-	}
-}
-
-@media only screen and (max-width: 720px) {
-	.gg-maps {
-		height: 250px;
-		border-radius: 10px;
-	}
-}
-
-@media only screen and (max-width: 576px) {
-	.gg-maps {
-		height: 200px;
 		border-radius: 10px;
 	}
 }
