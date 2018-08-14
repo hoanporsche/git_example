@@ -4,7 +4,7 @@ export const ROUTING_URL = Object.freeze({
   HOME: '/',
   CONTACT: '/lien-he',
   ORDER: '/dat-hang',
-  DETAIL: '/chi-tiet-san-pham',
+  DETAIL: '/thuc-don',
 });
 
 export const MODEL_ROUTING = Object.freeze({

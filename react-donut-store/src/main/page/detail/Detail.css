@@ -2,18 +2,14 @@
   background-color: beige;
 }
 
-.contain {
+.contain-detail {
   padding: 1%;
-  background-color: white;
-  background-image: url("../../../assets/img/other/background-menu.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url('../../../assets/img/donut-store/main-background.jpg');
 }
 
 .contain-main {
   background-color: white;
-  padding-top: 10px;
+  padding-top: 1%;
   padding-bottom: 10px;
   margin-top: -20px;
 }
@@ -58,7 +54,6 @@
 .main-menu-category {
   padding-left: 0;
   list-style: none;
-  text-align: center;
 }
 
 .other-item {

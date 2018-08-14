@@ -41,7 +41,7 @@ class Contact extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="container contain">
+        <div className="container contain-contact">
           <SectionHeading title="Liên Hệ" />
           <div className="row">
             <div className="col-sm-6 ggmap-css">

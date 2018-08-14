@@ -22,8 +22,13 @@ const mainRoutes = [
     main : () => <Contact />,
   },
   {
-    path : ROUTING_URL.DETAIL + '/:code',
+    path : ROUTING_URL.DETAIL,
     exact : true,
+    main : () => <Detail />
+  },
+  {
+    path : ROUTING_URL.DETAIL + '/:code',
+    exact : false,
     main : ({location, match}) => <Detail location={location} match={match}/>
   }
 ]

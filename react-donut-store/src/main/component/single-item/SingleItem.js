@@ -5,7 +5,7 @@ import './SingleItem.css';
 class SingleItem extends Component {
 
   render() {
-    const to = `/chi-tiet-san-pham/${this.props.item.code}`;
+    const to = `/thuc-don/${this.props.item.code}`;
     return (
       <div className="col-sm-4">
         <NavLink className="ds-single-item" to={to}>

@@ -13,7 +13,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: this.props.match.params.code,
+      code: 'ITEkrfpyhe',
       quantity: 0,
       inValid: true,
       message: '',
@@ -27,6 +27,17 @@ class Detail extends Component {
     }
     if (this.props.listCategory.length === 0) {
       this.props.fetchAllCategory();
+    }
+  }
+
+  componentWillReceiveProps({match}) {
+    if (match !== undefined) {
+      this.setState({
+        code: match.params.code,
+        quantity: 0,
+        inValid: true,
+        message: '',
+      })
     }
   }
 
@@ -153,7 +164,7 @@ class Detail extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="container-fluid contain">
+        <div className="container-fluid contain-detail">
           {this.showMessage()}
           {this.showItem()}
         </div>

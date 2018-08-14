@@ -14,6 +14,10 @@ const menus = [
     to: '/dat-hang',
     exact: false,
   }, {
+    name: 'Thực đơn',
+    to: '/thuc-don',
+    exact: false,
+  }, {
     name: 'Liên hệ',
     to: '/lien-he',
     exact: false,
@@ -71,7 +75,7 @@ class HeaderMain extends Component {
         </div>
         <div className="form-inline my-2 my-lg-0">
           <a className="btn btn-sm btn-outline-secondary my-2 my-sm-0" href="/dang-nhap">Đăng nhập</a>
-          <a href="/dang-nhap">
+          <NavLink to="/dat-hang">
             <div className="cart-segment">
               <div className="segment-head">
                 <div className="icon">
@@ -80,7 +84,7 @@ class HeaderMain extends Component {
                 </div>
               </div>
             </div>
-          </a>
+          </NavLink>
         </div>
       </nav>
     );
