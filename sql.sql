@@ -85,12 +85,14 @@ VALUES
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(10) NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `picture` VARCHAR(1000) NOT NULL,
   `enabled` BOOLEAN NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC)
+  UNIQUE INDEX `name_UNIQUE, code_UNIQUE` (`name` ASC)
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;

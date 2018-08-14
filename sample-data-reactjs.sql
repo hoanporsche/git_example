@@ -1,9 +1,9 @@
 USE `donutstore` ;
 
 INSERT INTO `donutstore`.`category` VALUES 
-(1,'Bánh rán', '2018-01-02', '2018-02-03', b'1'),
-(2,'Bánh mì', '2018-01-02', '2018-02-03', b'1'),
-(3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
+(1,'CATltmdtvb','Bánh rán', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254307/donut-store/banh-ran/br-category.jpg', b'1'),
+(2,'CATyumxoqq','Bánh mì', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254448/donut-store/banh-ran/bm-category.jpg', b'1'),
+(3,'CATzcgnvwq','Đồ uống', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254449/donut-store/banh-ran/du-category.jpg', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
 (1,'ITEkrfpyhe','Bánh rán mặn', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569786/donut-store/banh-ran/BR7.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),

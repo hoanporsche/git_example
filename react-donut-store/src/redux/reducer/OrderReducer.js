@@ -18,20 +18,15 @@ const orderReducer = (state = initialState, action) => {
   switch(action.type) {
     case Types.ADD_QUANTITES: {
       const listOldQuantity = state.quantities;
-      let foundItem = listOldQuantity.find(i => i.itemCode === action.quantity.itemCode );
+      let foundItem = listOldQuantity.find(i => i.item.code === action.quantity.item.code );
       if (foundItem === undefined) {
         return Object.assign({}, state, {
           quantities: listOldQuantity.concat(action.quantity)
         });
       } else {
-        const plusedQuantity = foundItem.quantity + action.quantity.quantity;
-        if (plusedQuantity < 300) {
-          foundItem.quantity = plusedQuantity;
-        } else {
-          foundItem.quantity = 300;
-        }
+        foundItem.quantity = action.quantity.quantity;
         return Object.assign({}, state, {
-          quantities: listOldQuantity.filter(i => i.itemCode !== foundItem.itemCode).concat(foundItem)
+          quantities: listOldQuantity.filter(i => i.item.code !== foundItem.item.code).concat(foundItem)
         });
       }
     }case Types.REMOVE_QUANTITES: {
