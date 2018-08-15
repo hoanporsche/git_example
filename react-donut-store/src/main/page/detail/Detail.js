@@ -138,8 +138,10 @@ class Detail extends Component {
     const item = this.props.listItem.find(i => i.code === this.state.code);
     if (item !== undefined) {
       return (
-        <div className="container contain-detail">
-          <SectionHeading title={item.name} />
+        <div id="page-detail" className="container">
+          <div className="text-center">
+            <h1>{item.name}</h1>
+          </div>
           <div className="row">
             <div className="col-md-2 col-4">
               <div className="row">
@@ -158,7 +160,7 @@ class Detail extends Component {
                     <input type="number" name="quantity" className="form-control" value={this.state.quantity} onChange={this.onChange} />
                   </div>
                   <div className="col-3">
-                    <button className="btn btn-success" onClick={this.onClick} disabled={this.state.inValid}>Mua ngay</button>
+                    <button className="btn btn-success" onClick={this.onClick} disabled={this.state.inValid}>Mua hàng</button>
                   </div>
                 </div>
               </div>
@@ -174,11 +176,11 @@ class Detail extends Component {
     if (pictures.length > 0) {
       result = pictures.map((picture, index) => {
         let classBorder = '';
-        if ((this.state.picture === '' && index === 0) || this.state.picture === picture )
+        if ((this.state.picture === '' && index === 0) || this.state.picture === picture)
           classBorder = 'border-picture';
         return (
           <div className="col-12" key={index}>
-            <div className={`single-item-image ${classBorder}`} style={{ backgroundImage: `url(${picture})` }} onClick={ (e) => this.onChangePicture(picture, e) } />
+            <div className={`single-item-image ${classBorder}`} style={{ backgroundImage: `url(${picture})` }} onClick={(e) => this.onChangePicture(picture, e)} />
           </div>
         )
       })
