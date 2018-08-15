@@ -10,12 +10,12 @@ const menus = [
     to: '/',
     exact: true,
   }, {
-    name: 'Đặt hàng',
-    to: '/dat-hang',
-    exact: false,
-  }, {
     name: 'Thực đơn',
     to: '/thuc-don',
+    exact: false,
+  }, {
+    name: 'Đặt hàng',
+    to: '/dat-hang',
     exact: false,
   }, {
     name: 'Liên hệ',

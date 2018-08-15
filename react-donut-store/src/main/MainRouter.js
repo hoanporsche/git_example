@@ -12,14 +12,14 @@ const mainRoutes = [
     main : () => <Home />,
   },
   {
-    path : ROUTING_URL.ORDER,
-    exact : false,
-    main : () => <Order />,
-  },
-  {
     path : ROUTING_URL.CONTACT,
     exact : false,
     main : () => <Contact />,
+  },
+  {
+    path : ROUTING_URL.ORDER,
+    exact : false,
+    main : () => <Order />,
   },
   {
     path : ROUTING_URL.DETAIL,

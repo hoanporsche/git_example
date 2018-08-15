@@ -20,7 +20,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
+      <div className="ds-main">
         <HeaderMain />
         <Switch>
           { this.showRoute(mainRoutes) } 

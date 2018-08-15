@@ -18,10 +18,16 @@ class Detail extends Component {
       inValid: true,
       message: '',
       categoryCode: 'CATltmdtvb',
+      picture: '',
     }
   }
 
   componentDidMount() {
+    if (this.props.match !== undefined) {
+      this.setState({
+        code: this.props.match.params.code,
+      })
+    }
     if (this.props.listItem.length === 0) {
       this.props.fetchAllItem();
     }
@@ -30,14 +36,14 @@ class Detail extends Component {
     }
   }
 
-  componentWillReceiveProps({match}) {
+  componentWillReceiveProps({ match }) {
     if (match !== undefined) {
       this.setState({
         code: match.params.code,
         quantity: 0,
         inValid: true,
         message: '',
-      })
+      });
     }
   }
 
@@ -52,7 +58,7 @@ class Detail extends Component {
       this.setState({
         inValid: true,
         quantity: value
-      })
+      });
     }
   }
 
@@ -77,20 +83,72 @@ class Detail extends Component {
     })
   }
 
+  onReceivedCategoryCode = (emittedValue) => {
+    this.setState({
+      categoryCode: emittedValue.categoryCode,
+    });
+  }
+
+  showAllCategory = () => {
+    const { listCategory } = this.props;
+    let result = null;
+    if (listCategory.length > 0) {
+      result = listCategory.map((category, index) => {
+        let active = false;
+        if (this.state.categoryCode === category.code)
+          active = true;
+        return (
+          <SingleCategory key={index} category={category} active={active} emittedCategoryCode={this.onReceivedCategoryCode} />
+        );
+      });
+    }
+    return result;
+  }
+
+  showOtherItemByCategory = () => {
+    const { listCategory } = this.props;
+    let result = null;
+    if (listCategory.length > 0) {
+      const foundCategory = listCategory.find(i => i.code === this.state.categoryCode);
+      if (foundCategory !== undefined) {
+        const items = foundCategory.items.filter(i => i.code !== this.state.code);
+        result = items.map((item, index) => {
+          return (
+            <SingleItem key={index} item={item} />
+          )
+        });
+      }
+    }
+    return result;
+  }
+
+  showMessage = () => {
+    if (this.state.message !== '') {
+      return (
+        <div className="alert alert-warning">
+          <button type="button" className="close" onClick={this.onDismissMessage}>×</button>
+          <strong>{this.state.message}</strong>
+        </div>
+      )
+    }
+  }
+
   showItem = () => {
     const item = this.props.listItem.find(i => i.code === this.state.code);
     if (item !== undefined) {
       return (
-        <div className="container contain-main">
+        <div className="container contain-detail">
           <SectionHeading title={item.name} />
           <div className="row">
-            <div className="col-sm-1">
-              123
+            <div className="col-md-2 col-4">
+              <div className="row">
+                {this.showMiniItemPicture(item.picture)}
+              </div>
             </div>
-            <div className="col-sm-4">
-              <div className="item-picture" style={{ backgroundImage: `url(${item.picture})` }}></div>
+            <div className="col-md-5 col-8">
+              {this.showMainPicture(item.picture)}
             </div>
-            <div className="col-sm-7 padding-item">
+            <div className="col-md-5 col-12 padding-item">
               <div className="detail-item">
                 <span>{item.singleValue} đ</span>
                 <p>{item.description}</p>
@@ -110,89 +168,56 @@ class Detail extends Component {
     }
   }
 
-  onReceivedCategoryCode = (emittedValue) => {
-    this.setState({
-      categoryCode: emittedValue.categoryCode,
-    });
-  }
-
-  showAllCategory = () => {
-    const { listCategory } = this.props;
+  showMiniItemPicture(pictures) {
     let result = null;
-    if (listCategory.length > 0) {
-      result = listCategory.map((category, index) => {
-        let active = false;
-        if (this.state.categoryCode === category.code)
-          active = true;
+    if (pictures.length > 0) {
+      result = pictures.map((picture, index) => {
+        let classBorder = '';
+        if ((this.state.picture === '' && index === 0) || this.state.picture === picture )
+          classBorder = 'border-picture';
         return (
-          <SingleCategory key={index} category={category} active={active} emittedCategoryCode={this.onReceivedCategoryCode} />
+          <div className="col-12" key={index}>
+            <div className={`single-item-image ${classBorder}`} style={{ backgroundImage: `url(${picture})` }} onClick={ (e) => this.onChangePicture(picture, e) } />
+          </div>
         )
-
       })
     }
     return result;
   }
 
-  showOtherItemByCategory = () => {
-    const { listCategory } = this.props;
-    let result = null;
-    if (listCategory.length > 0) {
-      const foundCategory = listCategory.find(i => i.code === this.state.categoryCode);
-      if (foundCategory !== undefined) {
-        const items = foundCategory.items.filter(i => i.code !== this.state.code);
-        result = items.map((item, index) => {
-          return (
-            <SingleItem key={index} item={item} />
-          )
-        })
-      }
-    }
-    return result;
+  onChangePicture = (picture) => {
+    this.setState({
+      picture: picture,
+    })
   }
 
-  showMessage = () => {
-    if (this.state.message !== '') {
-      return (
-        <div className="alert alert-warning">
-          <button type="button" className="close" onClick={this.onDismissMessage}>×</button>
-          <strong>{this.state.message}</strong>
-        </div>
-      )
+  //Show default picture if aside mini picture has not been choose, we will take a first element of picture's array
+  showMainPicture(pictures) {
+    let picture = pictures[0];
+    if (this.state.picture !== '') {
+      picture = this.state.picture;
     }
+    return (
+      <div className="item-picture" style={{ backgroundImage: `url(${picture})` }}></div>
+    )
   }
 
   render() {
     return (
-      <div className="wrapper">
-        <div className="container-fluid contain-detail">
+      <div>
+        <div className="container-fluid">
           {this.showMessage()}
           {this.showItem()}
-        </div>
-        {/* <div className="container-fluid contain-fluid-menu">
-          <div className="container contain-menu" >
+          <div className="container contain-detail" style={{ textAlign: 'center' }} >
             <SectionHeading title="Thực đơn khác" />
             <ul className="row main-menu-category">
               {this.showAllCategory()}
             </ul>
-          </div>
-          
-        </div> */}
-        <div className="container-fluid other-item">
-          <div className="container contain-menu" >
-            <SectionHeading title="Thực đơn khác" />
-            <ul className="row main-menu-category">
-              {this.showAllCategory()}
-            </ul>
-            <hr/>
-            <div className="row" style={{ marginTop: '1%'}}>
+            <hr />
+            <div className="row" style={{ marginTop: '-20px' }}>
               {this.showOtherItemByCategory()}
             </div>
           </div>
-          {/* <div className="container">
-            <div className="row" style={{ marginTop: '1%'}}>
-              {this.showOtherItemByCategory()}
-            </div>
-          </div> */}
         </div>
       </div>
     );

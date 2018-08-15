@@ -1,29 +1,11 @@
-.wrapper {
-  background-color: beige;
-}
-
 .contain-detail {
-  padding: 1%;
-  background-image: url('../../../assets/img/donut-store/main-background.jpg');
+  background: white;
+  padding: 1% 1% 0% 1%;
 }
 
-.contain-main {
-  background-color: white;
-  padding-top: 1%;
-  padding-bottom: 10px;
-  margin-top: -20px;
-}
-.contain-menu {
-  background-color: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: -20px;
-  margin-bottom: -20px;
-  border-radius: 0px 0px 5px 5px;
-}
-
-.padding-item {
-  padding: 1%;
+.main-menu-category {
+  padding-left: 0;
+  list-style: none;
 }
 
 .item-picture {
@@ -51,12 +33,16 @@
   padding-right: 15px;
 }
 
-.main-menu-category {
-  padding-left: 0;
-  list-style: none;
+.single-item-image {
+  margin: 1% 0;
+  height: 130px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; 
+  opacity: 0.7;
 }
 
-.other-item {
-  text-align: center;
-  background-image: url('../../../assets/img/donut-store/main-background.jpg');
+.border-picture {
+  border: 3px solid black;
+  opacity: 1;
 }

@@ -10,10 +10,6 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      listCategory: [],
-      listStore: [],
-    }
     this.showCategory = this.showCategory.bind(this);
     this.showGGmaps = this.showGGmaps.bind(this);
   }
@@ -40,25 +36,6 @@ class Home extends Component {
     return result;
   }
 
-  // showCategory(listCategory) {
-  //   let result = null;
-  //   if (listCategory.length > 0) {
-  //     result = listCategory.map((category, index) => {
-  //       return (
-  //         <div key={index} className="card ds-card-margin">
-  //           <h5 className="card-header"><b>{category.name}</b></h5>
-  //           <div className="card-body">
-  //             <div className="row">
-  //               {this.showItem(category.items)}
-  //             </div>
-  //           </div>
-  //         </div>
-  //       );
-  //     });
-  //   }
-  //   return result;
-  // }
-
   showItem(items) {
     let result = null;
     if (items.length > 0) {
@@ -78,7 +55,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="ds-main">
+      <div>
         <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
           <ol className="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to={0} className="active" />

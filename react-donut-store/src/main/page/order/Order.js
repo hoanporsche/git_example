@@ -102,74 +102,68 @@ class Order extends Component {
 
   render() {
     return (
-      <div className="wrapper">
-        <div className="container contain">
-          <SectionHeading title="Đơn hàng mới" />
-          <div className="row">
-            <div className="col-sm-6">
-              <CustomInput type="text" name="nameCreated"
-                placeholder="Tên của bạn"
-                required={true}
-                maxLength={20}
-                value={this.state.nameCreated}
-                onEmittedValue={this.onReceivedValue} />
-            </div>
-            <div className="col-sm-6">
-              <CustomInput type="datetime-local" name="dateUpdated"
-                placeholder="Thời gian lấy hàng"
-                required={true}
-                value={this.state.dateUpdated}
-                onEmittedValue={this.onReceivedValue} />
-            </div>
+      <div className="container contain">
+        <SectionHeading title="Đơn hàng mới" />
+        <div className="row">
+          <div className="col-sm-6">
+            <CustomInput type="text" name="nameCreated"
+              placeholder="Tên của bạn"
+              required={true}
+              maxLength={20}
+              value={this.state.nameCreated}
+              onEmittedValue={this.onReceivedValue} />
           </div>
+          <div className="col-sm-6">
+            <CustomInput type="datetime-local" name="dateUpdated"
+              placeholder="Thời gian lấy hàng"
+              required={true}
+              value={this.state.dateUpdated}
+              onEmittedValue={this.onReceivedValue} />
+          </div>
+        </div>
 
-          <div className="row">
-            <div className="col-sm-6">
-              <CustomInput type="text" name="phone"
-                placeholder="Số điện thoại của bạn"
-                required={true}
-                maxLength={20}
-                value={this.state.phone}
-                onEmittedValue={this.onReceivedValue} />
-            </div>
-            <div className="col-sm-6">
-              <div className="row">
-                <div className="col-sm-6">
-                  <CustomSelect name="storeCode"
-                    placeholder="Cửa hàng"
-                    required={true}
-                    data={this.props.listStore}
-                    value={this.state.storeCode}
-                    onEmittedValue={this.onReceivedValue} />
-                </div>
-                <div className="col-sm-6">
-                  <CustomSelect name="isShipping"
-                    placeholder="Phương thức nhận hàng"
-                    required={true}
-                    data={CHOOSE_IS_SHIPPING}
-                    value={this.state.isShipping}
-                    onEmittedValue={this.onReceivedValue} />
-                </div>
+        <div className="row">
+          <div className="col-sm-6">
+            <CustomInput type="text" name="phone"
+              placeholder="Số điện thoại của bạn"
+              required={true}
+              maxLength={20}
+              value={this.state.phone}
+              onEmittedValue={this.onReceivedValue} />
+          </div>
+          <div className="col-sm-6">
+            <div className="row">
+              <div className="col-sm-6">
+                <CustomSelect name="storeCode"
+                  placeholder="Cửa hàng"
+                  required={true}
+                  data={this.props.listStore}
+                  value={this.state.storeCode}
+                  onEmittedValue={this.onReceivedValue} />
+              </div>
+              <div className="col-sm-6">
+                <CustomSelect name="isShipping"
+                  placeholder="Phương thức nhận hàng"
+                  required={true}
+                  data={CHOOSE_IS_SHIPPING}
+                  value={this.state.isShipping}
+                  onEmittedValue={this.onReceivedValue} />
               </div>
             </div>
           </div>
-
-          <div className="row">
-            <div className="col-sm-6">
-              {this.showGGMaps()}
-            </div>
-            <div className="col-sm-6">
-              {this.showSectionShipping()}
-            </div>
-          </div>
-
         </div>
+
+        <div className="row">
+          <div className="col-sm-6">
+            {this.showGGMaps()}
+          </div>
+          <div className="col-sm-6">
+            {this.showSectionShipping()}
+          </div>
+        </div>
+
       </div>
     );
-  }
-
-  componentWillUnmount() {
-    console.log("Unmount");
   }
 }
 

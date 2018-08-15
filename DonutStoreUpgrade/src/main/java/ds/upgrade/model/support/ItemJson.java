@@ -11,7 +11,7 @@ public class ItemJson implements Serializable {
 
   private String code;
   private String name;
-  private String picture;
+  private String[] picture;
   private BigDecimal singleValue;
   private String description;
   
@@ -39,12 +39,12 @@ public class ItemJson implements Serializable {
     this.name = name;
   }
 
-  public String getPicture() {
+  public String[] getPicture() {
     return picture;
   }
 
   public void setPicture(String picture) {
-    this.picture = picture;
+    this.picture = picture.split(",", 3);
   }
 
   public BigDecimal getSingleValue() {
