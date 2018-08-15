@@ -7,6 +7,7 @@ import CustomInput from '../../../share/common/custom-input/CustomInput';
 import CustomSelect from '../../../share/common/custom-select/CustomSelect';
 import { CHOOSE_IS_SHIPPING } from '../../../share/constant/common.constant';
 import GGMapsWithDirection from '../../component/gg-maps/GGMapsWithDirection';
+import EmptyCart from '../../component/empty-cart/EmptyCart';
 
 class Order extends Component {
 
@@ -100,10 +101,40 @@ class Order extends Component {
     }
   }
 
+  showShippingCart = () => {
+    if (this.props.listQuantity.quantities.length > 0) {
+      console.log(this.props.listQuantity.quantities);
+    } else {
+      return (
+        <EmptyCart />
+      )
+    }
+  }
+
   render() {
     return (
       <div className="container contain">
         <SectionHeading title="Đơn hàng mới" />
+        <div className="row">
+          <div className="col-12">
+            <div className="card bg-light text-dark">
+              <div className="card-header">Giỏ hàng ({this.props.listQuantity.quantities.length} Sản phẩm)</div>
+              <div className="card-body">
+                {this.showShippingCart()}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-12">
+            <div className="btn-wrap">
+              <input type="hidden" name="login-type" className="login-type-rad" defaultValue={0} defaultChecked />
+              <a className="btn btn-grd-border btn-pill" href="/"><div className="btn-inner">Tiếp tục mua hàng</div></a>
+              <a className="btn btn-grd-bg btn-pill btn-order-now" data-type={0} href="javascript:;">Tiến hành thanh toán</a>
+            </div>
+          </div>
+        </div>
         <div className="row">
           <div className="col-sm-6">
             <CustomInput type="text" name="nameCreated"

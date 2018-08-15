@@ -1,0 +1,18 @@
+.empty-cart-segment {
+  background: url(https://res.cloudinary.com/hitkeodog/image/upload/v1534315721/donut-store/null-cart.png) no-repeat center;
+  background-size: contain;
+  margin: 0 auto;
+  position: relative;
+  width: 545px;
+  height: 310px;
+}
+.empty-cart-segment .content-field {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  text-align: center;
+  max-width: 200px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+}

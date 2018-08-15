@@ -20,19 +20,25 @@ const orderReducer = (state = initialState, action) => {
       const listOldQuantity = state.quantities;
       let foundItem = listOldQuantity.find(i => i.item.code === action.quantity.item.code );
       if (foundItem === undefined) {
+        const newQuantity = {
+          item: action.quantity.item,
+          quantity: action.quantity.quantity,
+          price: action.quantity.quantity * action.quantity.item.singleValue,
+        }
         return Object.assign({}, state, {
-          quantities: listOldQuantity.concat(action.quantity)
+          quantities: listOldQuantity.concat(newQuantity)
         });
       } else {
         foundItem.quantity = action.quantity.quantity;
+        foundItem.price = action.quantity.quantity * foundItem.item.singleValue;
         return Object.assign({}, state, {
           quantities: listOldQuantity.filter(i => i.item.code !== foundItem.item.code).concat(foundItem)
         });
       }
-    }case Types.REMOVE_QUANTITES: {
-      const newList = state.quantities.filter(i => i !== action.quantity);
+    }
+    case Types.REMOVE_QUANTITES: {
       return Object.assign({}, state, {
-        quantities: newList,
+        quantities: state.quantities.filter(i => i !== action.quantity),
       });
     }
     default : return Object.assign({}, state);

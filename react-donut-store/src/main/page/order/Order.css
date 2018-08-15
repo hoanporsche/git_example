@@ -3,3 +3,42 @@
   background-color: white;
   align-items: center;
 }
+
+.btn-wrap {
+  text-align: right;
+}
+
+.btn-wrap .btn {
+  margin-left: 10px;
+}
+
+.btn-pill {
+  border-radius: 30px;
+}
+
+.btn-grd-border {
+  padding: 1px;
+  color: #333;
+  background: linear-gradient(90deg, #bd2a36, #9b4599, #214181);
+}
+
+.btn-grd-border .btn-inner {
+  display: flex;
+  height: 100%;
+  background: #fff;
+  -webkit-box-align: center;
+  align-items: center;
+  text-align: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 0 30px;
+}
+
+.btn-grd-bg {
+  background: linear-gradient(90deg, #bd2a36, #9b4599, #214181);
+  color: #fff;
+}
+
+.btn-wrap a {
+  text-decoration: none;
+}

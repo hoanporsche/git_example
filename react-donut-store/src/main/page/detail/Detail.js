@@ -43,6 +43,7 @@ class Detail extends Component {
         quantity: 0,
         inValid: true,
         message: '',
+        picture: '',
       });
     }
   }
