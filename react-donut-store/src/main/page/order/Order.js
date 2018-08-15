@@ -131,7 +131,7 @@ class Order extends Component {
             <div className="btn-wrap">
               <input type="hidden" name="login-type" className="login-type-rad" defaultValue={0} defaultChecked />
               <a className="btn btn-grd-border btn-pill" href="/"><div className="btn-inner">Tiếp tục mua hàng</div></a>
-              <a className="btn btn-grd-bg btn-pill btn-order-now" data-type={0} href="javascript:;">Tiến hành thanh toán</a>
+              <a className="btn btn-grd-bg btn-pill btn-order-now" data-type={0}>Tiến hành thanh toán</a>
             </div>
           </div>
         </div>

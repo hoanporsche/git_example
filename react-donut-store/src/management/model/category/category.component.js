@@ -3,9 +3,9 @@ import routes from './category.routing';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class CategoryComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   showRoute = (routes) => {
     let result = null;

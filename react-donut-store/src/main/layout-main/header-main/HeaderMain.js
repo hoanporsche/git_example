@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './HeaderMain.css';
 
 class HeaderMain extends Component {
 
   render() {
-    const { quantities } = this.props;
     return (
       <div id="header" className="container">
         <div id="header-search" className="one-third bm-remove">
@@ -21,7 +19,7 @@ class HeaderMain extends Component {
           </a>
         </div>
         <div id="header-cart" className="one-third bm-remove last">
-          <a href="/cart" target="_self"><i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span id="ajax-header-cart-item-count">0</span> <span id="ajax-header-cart-item-text">sản phẩm</span> - <span id="ajax-header-cart-total-price">0₫</span>)</a>
+          <a href="/cart" target="_self"><i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span id="ajax-header-cart-item-count">{this.props.quantities.length}</span> <span id="ajax-header-cart-item-text">sản phẩm</span> - <span id="ajax-header-cart-total-price">0₫</span>)</a>
         </div>
       </div>
     );
