@@ -6,8 +6,9 @@ class FooterMain extends Component {
 
   render() {
     return (
-      <footer>
+      <footer >
         <div className="container">
+        <hr/>
           <div className="row">
             <div className="col-sm-12 col-xl-8">
               <div className="row">

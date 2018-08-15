@@ -1,11 +1,15 @@
+#ds-item .ds-single-item {
+  text-decoration: none;
+
+}
+
 .ds-single-item {
   display: block;
   border-radius: 10px;
-	background-color: beige;
-  text-decoration: none;
   padding-bottom: 15px;
   margin-top: 20px;
   margin-bottom: 20px;
+  border: 0.5px solid black;
 }
 
 .ds-single-item-image {

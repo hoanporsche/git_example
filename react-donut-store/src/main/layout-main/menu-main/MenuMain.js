@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Route, Link } from 'react-router-dom';
 import './MenuMain.css';
 
 const menus = [
@@ -51,43 +50,24 @@ class HeaderMain extends Component {
     return result;
   }
   render() {
-    const { quantities } = this.props;
     return (
-      <nav className="navbar fixed-top py-0 bg-primary navbar-expand-lg py-md-0 navbar-light bg-light">
-        <NavLink className="navbar-brand" to="/">
-          <img src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR6.jpg"} className="img-thumbnail" style={{ width: '40px', padding: 0 }} alt="brand" />
-        </NavLink>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            {this.showMenu(menus)}
-          </ul>
+      <div className="container">
 
-        </div>
-        <div className="form-inline my-2 my-lg-0">
-          <a className="btn btn-sm btn-outline-secondary my-2 my-sm-0" href="/dang-nhap">Đăng nhập</a>
-          <NavLink to="/dat-hang">
-            <div className="cart-segment">
-              <div className="segment-head">
-                <div className="icon">
-                  <i className="detail-icon"></i>
-                  <span className="quantity">{quantities.length}</span>
-                </div>
-              </div>
-            </div>
-          </NavLink>
-        </div>
+        <nav id="navigation" className="navbar py-0 bg-primary navbar-expand-lg py-md-0 navbar-light bg-light menu-main">
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav text-center">
+              {this.showMenu(menus)}
+            </ul>
+
+          </div>
+
       </nav>
+      </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    quantities: state.orderReducer.quantities,
-  }
-}
-
-export default connect(mapStateToProps, null)(HeaderMain);
+export default HeaderMain;

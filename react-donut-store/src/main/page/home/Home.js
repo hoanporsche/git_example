@@ -15,7 +15,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.props.listCategory.length === 0) 
+    if (this.props.listCategory.length === 0)
       this.props.fetchAllCategory();
     if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
@@ -49,7 +49,7 @@ class Home extends Component {
   }
 
   showGGmaps() {
-    if (this.props.listStore.length > 0) 
+    if (this.props.listStore.length > 0)
       return <GGMaps listStore={this.props.listStore} defaultZoom={12} />
   }
 
@@ -91,22 +91,23 @@ class Home extends Component {
           </a>
         </div> */}
 
-        {/* <div className="container-fluid" style={{ marginTop: '1em' }}>
-          <div className="col-12 col-sm-11 ds-second-div" style={{ background: 'white' }}>
-            <div className="row">
+        <div className="container">
+          {this.showCategory()}
+          {/* <div className="col-12 col-sm-11" style={{ background: 'white' }}> */}
+            <div className="row ds-second-div">
               <div className="col-sm-5">
-                { this.showGGmaps() }
+                {this.showGGmaps()}
               </div>
               <div className="col-sm-7">
                 <div className="more-detail gg-maps"></div>
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </div>
 
-        <div className="container">
-          {this.showCategory()}
-        </div> */}
+        <div className="container" style={{ marginTop: '1em' }}>
+
+        </div>
       </div>
     );
   }

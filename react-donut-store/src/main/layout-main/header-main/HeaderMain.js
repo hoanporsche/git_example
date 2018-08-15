@@ -15,29 +15,18 @@ class HeaderMain extends Component {
     return (
       <header className="container">
         <div id="header" className="row">
-          <div className="col-sm-4">
-            <input type="text" name="q" className="inline-block w-small bm-remove" placeholder="Bạn cần tìm gì?" onKeyPress={this.onKeyPress} />
+          <div className="col-md-4 header-search">
+            <input type="text" name="q" className="inline-block w-small bm-remove" placeholder="Bạn cần tìm gì?" onKeyPress={this.onKeyPress} maxLength="255" autoComplete="off" defaultValue=""/>
           </div>
-          <div className="col-sm-4">
-            <NavLink to={"/"} className="image"></NavLink>
+          <div className="col-md-4 header-logo">
+            <NavLink to={"/"} className="image-logo">
+            <img src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR6.jpg"} className="image" alt="brand" />
+            </NavLink>
           </div>
-          <div className="col-sm-4">
-          <a href="/cart" target="_self"><i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span id="ajax-header-cart-item-count">{this.props.quantities.length}</span> <span id="ajax-header-cart-item-text">sản phẩm</span> - <span id="ajax-header-cart-total-price">0₫</span>)</a>
+          <div className="col-md-4 header-cart">
+            <NavLink to={"/gio-hang"} className="text-cart"><i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span>{this.props.quantities.length}</span> <span>sản phẩm</span> - <span id="ajax-header-cart-total-price">0₫</span>)</NavLink>
           </div>
-          {/* <div id="header-search" className="one-third bm-remove">
-            <div className="clearfix">
-              
-            </div>
-          </div> */}
-          {/* <div id="header-logo" className="one-third bm-remove">
-            
-          </div>
-          <div id="header-cart" className="one-third bm-remove last">
-            <a href="/cart" target="_self"><i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span id="ajax-header-cart-item-count">{this.props.quantities.length}</span> <span id="ajax-header-cart-item-text">sản phẩm</span> - <span id="ajax-header-cart-total-price">0₫</span>)</a>
-          </div> */}
-
         </div>
-
       </header>
     );
   }
