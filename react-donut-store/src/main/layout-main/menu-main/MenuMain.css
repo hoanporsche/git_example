@@ -18,9 +18,9 @@
   line-height: 25px;
 }
 
-@media only screen and (min-width: 992px) {
+/* @media only screen and (min-width: 992px) {
   #navigation ul {
     position: relative;
-    left: 35.5%;
+    left: 37%;
   }
-}
+} */

@@ -52,19 +52,16 @@ class HeaderMain extends Component {
   render() {
     return (
       <div className="container">
-
-        <nav id="navigation" className="navbar py-0 bg-primary navbar-expand-lg py-md-0 navbar-light bg-light menu-main">
+        <nav id="navigation" className="navbar py-0 bg-primary navbar-expand-lg py-md-0 navbar-light bg-light menu-main  text-center">
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav text-center">
+            <ul className="navbar-nav">
               {this.showMenu(menus)}
             </ul>
-
           </div>
-
-      </nav>
+        </nav>
       </div>
     );
   }

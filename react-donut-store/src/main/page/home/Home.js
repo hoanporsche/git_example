@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
-import GGMaps from '../../component/gg-maps/GGMaps';
-import { fetAllCategory } from '../../../redux/action/category.constant';
-import { fetAllStore } from '../../../redux/action/store.constant';
+import { fetAllItem } from '../../../redux/action/item.constant';
 
 class Home extends Component {
 
@@ -13,36 +11,17 @@ class Home extends Component {
     this.state = {
       findBy: "",
     }
-    this.showCategory = this.showCategory.bind(this);
-    this.showGGmaps = this.showGGmaps.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.listCategory.length === 0)
-      this.props.fetchAllCategory();
-    if (this.props.listStore.length === 0)
-      this.props.fetchAllStore();
+    if (this.props.listItem.length === 0)
+      this.props.fetchAllItem();
   }
 
-  showCategory() {
+  showItem = () => {
     let result = null;
-    if (this.props.listCategory.length > 0) {
-      result = this.props.listCategory.map((category, index) => {
-        return (
-
-          <div key={index} className="row ds-card-margin" >
-            {this.showItem(category.items)}
-          </div>
-        );
-      });
-    }
-    return result;
-  }
-
-  showItem(items) {
-    let result = null;
-    if (items.length > 0) {
-      result = items.map((item, index) => {
+    if (this.props.listItem.length > 0) {
+      result = this.props.listItem.map((item, index) => {
         return (
           <SingleItem key={index} item={item} />
         );
@@ -51,20 +30,17 @@ class Home extends Component {
     return result;
   }
 
-  showGGmaps() {
-    if (this.props.listStore.length > 0)
-      return <GGMaps listStore={this.props.listStore} defaultZoom={12} />
-  }
-
   render() {
     return (
-        <div className="container">
-          {/* <div className="row ds-second-div">
+      <div className="container">
+        {/* <div className="row ds-second-div">
             <div className="col-12">
               <div className="more-detail gg-maps"></div>
             </div>
           </div> */}
-          {this.showCategory()}
+        <div className="row text-center">
+          {this.showItem()}
+        </div>
       </div>
     );
   }
@@ -72,18 +48,14 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    listCategory: state.categoryReducer,
-    listStore: state.storeReducer,
+    listItem: state.itemReducer,
   }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchAllCategory: () => {
-      dispatch(fetAllCategory());
-    },
-    fetchAllStore: () => {
-      dispatch(fetAllStore());
+    fetchAllItem: () => {
+      dispatch(fetAllItem());
     }
   }
 }

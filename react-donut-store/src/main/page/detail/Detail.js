@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetAllItem } from '../../../redux/action/item.constant';
 import { fetAllCategory } from '../../../redux/action/category.constant';
-import SectionHeading from '../../component/section-heading/SectionHeading';
+import SectionHeader from '../../component/section-header/SectionHeader';
 import './Detail.css';
 import { actAddQuantity } from '../../../redux/action/order.constant';
 import SingleItem from '../../component/single-item/SingleItem';
 import SingleCategory from '../../component/single-category/SingleCategory';
+import NumberFormat from 'react-number-format';
 
 class Detail extends Component {
 
@@ -50,7 +51,7 @@ class Detail extends Component {
 
   onChange = (event) => {
     const value = +event.target.value;
-    if (value > 0 && value < 300) {
+    if (value > 0 && value < 301) {
       this.setState({
         inValid: false,
         quantity: value
@@ -64,14 +65,14 @@ class Detail extends Component {
   }
 
   onClick = () => {
-    if (0 < this.state.quantity < 300) {
+    if (0 < this.state.quantity < 301) {
+      this.setState({
+        message: "Thêm vào giỏ hàng thành công"
+      });
       const item = this.props.listItem.find(i => i.code === this.state.code);
       this.props.addOneQuantity({
         item: item,
         quantity: this.state.quantity,
-      });
-      this.setState({
-        message: "Thêm vào giỏ hàng thành công",
       });
     } else {
       alert("Vui lòng chọn số lượng");
@@ -138,22 +139,20 @@ class Detail extends Component {
     const item = this.props.listItem.find(i => i.code === this.state.code);
     if (item !== undefined) {
       return (
-        <div id="page-detail" className="container">
-          <div className="text-center">
-            <h1>{item.name}</h1>
-          </div>
+        <div className="container">
+          <SectionHeader title={item.name} />
           <div className="row">
-            <div className="col-md-2 col-4">
+            <div className="col-md-2 col-4 padding-top1">
               <div className="row">
                 {this.showMiniItemPicture(item.picture)}
               </div>
             </div>
-            <div className="col-md-5 col-8">
+            <div className="col-md-5 col-8 padding-top1">
               {this.showMainPicture(item.picture)}
             </div>
-            <div className="col-md-5 col-12 padding-item">
+            <div className="col-md-5 col-12 padding-top1">
               <div className="detail-item">
-                <span>{item.singleValue} đ</span>
+                <span><NumberFormat value={item.singleValue} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}đ</div>}/></span>
                 <p>{item.description}</p>
                 <div className="row" style={{ marginLeft: '0px' }}>
                   <div className="col-3">
@@ -211,13 +210,13 @@ class Detail extends Component {
         <div className="container-fluid">
           {this.showMessage()}
           {this.showItem()}
-          <div className="container contain-detail" style={{ textAlign: 'center' }} >
-            <SectionHeading title="Thực đơn khác" />
+          <div className="container text-center" style={{ marginTop: '40px'}}>
+            <SectionHeader title="Thực đơn khác" />
             <ul className="row main-menu-category">
               {this.showAllCategory()}
             </ul>
             <hr />
-            <div className="row" style={{ marginTop: '-20px' }}>
+            <div className="row">
               {this.showOtherItemByCategory()}
             </div>
           </div>

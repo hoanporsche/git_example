@@ -92,3 +92,11 @@ body {
   min-height: 100%;
   border: 5px solid #bfbfbf;
 }
+
+.border-black {
+  border: 1px solid black;
+}
+
+.padding-top1 {
+  padding-top: 1%;
+}

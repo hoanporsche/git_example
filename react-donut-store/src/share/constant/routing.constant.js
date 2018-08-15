@@ -3,7 +3,7 @@ export const ROUTING_URL = Object.freeze({
   NOT_FOUND: '',
   HOME: '/',
   CONTACT: '/lien-he',
-  ORDER: '/dat-hang',
+  ORDER: '/gio-hang',
   DETAIL: '/thuc-don',
 });
 

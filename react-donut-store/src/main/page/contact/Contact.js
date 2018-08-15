@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SectionHeading from '../../component/section-heading/SectionHeading';
+import SectionHeader from '../../component/section-header/SectionHeader';
 import './Contact.css';
 import { connect } from 'react-redux';
 import { fetAllStore } from '../../../redux/action/store.constant';
@@ -65,7 +65,7 @@ class Contact extends Component {
           </div>
         </div>
         <hr />
-        <SectionHeading title="Hòm thư góp ý" />
+        <SectionHeader title="Hòm thư góp ý" />
         <form className="row">
           <div className="col-sm-6">
             <div className="form-group">

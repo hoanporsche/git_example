@@ -27,10 +27,11 @@
   text-transform: uppercase;
   display: block;
   margin-top: 10px;
+  line-height: 1em;
 }
 
 .menu-item hr {
   width: 45px;
-  margin: auto;
+  margin: 15px auto;
   border-top: 3px solid #e86a00;
 }

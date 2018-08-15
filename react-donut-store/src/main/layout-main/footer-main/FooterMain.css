@@ -20,11 +20,9 @@ footer{
  display: block;
  text-transform: uppercase;
  font-size: 16px;
- letter-spacing: 3px;
 }
 .adress li a, .adress li p , .menu li a{
   color: black;
-  letter-spacing: 3px;
   text-decoration:none;
   font-size:12px;
 }

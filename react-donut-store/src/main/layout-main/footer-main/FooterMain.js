@@ -35,15 +35,15 @@ class FooterMain extends Component {
                 </li>
                 <li>
                   <p>
-                    <i className="fas fa-phone" aria-hidden="true" />094 345 1794</p>
+                    <i className="fas fa-phone" aria-hidden="true" /> 094 345 1794</p>
                 </li>
                 <li>
                   <p>
-                    <i className="fas fa-map-marker" aria-hidden="true" />Cơ sở chính: 113/D6 Giảng Võ</p>
+                    <i className="fas fa-map-marker" aria-hidden="true" /> Cơ sở chính: 113/D6 Giảng Võ</p>
                 </li>
                 <li>
                   <p>
-                    <i className="fas fa-envelope" aria-hidden="true" />banhranhoan@gmail.com</p>
+                    <i className="fas fa-envelope" aria-hidden="true" /> banhranhoan@gmail.com</p>
                 </li>
               </ul>
                 </div>

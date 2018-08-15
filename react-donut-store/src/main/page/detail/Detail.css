@@ -42,13 +42,3 @@
   border: 3px solid black;
   opacity: 1;
 }
-
-#page-detail h1 {
-  color: #0b8d44;
-  font-family: Open Sans;
-  font-size: 2em;
-  font-weight: 400;
-  font-variant: normal;
-  text-transform: uppercase;
-  letter-spacing: 0em;
-}
