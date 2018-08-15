@@ -56,7 +56,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+        {/* <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
           <ol className="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to={0} className="active" />
             <li data-target="#carouselExampleIndicators" data-slide-to={1} />
@@ -89,9 +89,9 @@ class Home extends Component {
             <span className="carousel-control-next-icon" aria-hidden="true" />
             <span className="sr-only">Next</span>
           </a>
-        </div>
+        </div> */}
 
-        <div className="container-fluid" style={{ marginTop: '1em' }}>
+        {/* <div className="container-fluid" style={{ marginTop: '1em' }}>
           <div className="col-12 col-sm-11 ds-second-div" style={{ background: 'white' }}>
             <div className="row">
               <div className="col-sm-5">
@@ -106,7 +106,7 @@ class Home extends Component {
 
         <div className="container">
           {this.showCategory()}
-        </div>
+        </div> */}
       </div>
     );
   }

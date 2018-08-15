@@ -1,45 +1,70 @@
-.cart-segment {
-  margin-left: 1px;
+#header-search {
+  height: 160px;
+  line-height: 160px;
+}
+
+.one-third {
+  margin-right: 20px;
   position: relative;
+  float: left;
+  transition: all 0.2s ease-in-out;
 }
 
-.cart-head {
-  /* height: 60px; */
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 0 5px;
+@media only screen and (min-width: 1200px) {
+  .container .one-third {
+    width: 300px;
+  }
 }
 
-.icon {
-  position: relative;
+.bm-remove {
+  margin-bottom: 0 !important;
 }
 
-.detail-icon {
-  background-image: url(https://res.cloudinary.com/hitkeodog/image/upload/v1533781301/donut-store/svg-grid.png);
-  width: 32px;
-  height: 25px;
-  display: inline-block;
-  vertical-align: middle;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+#header-search input {
+  border: 0;
+  padding: 0;
+  color: #050505;
 }
 
-.quantity {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  color: #fff;
-  line-height: 12px;
-  font-size: 10px;
-  padding-top: 3px;
+input.w-small, select.w-small, textarea.w-small {
+  width: 180px;
+  outline: none;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+#header #header-logo {
+  height: 160px;
+  font-family: Open Sans;
+  font-size: 2em;
+  font-weight: 400;
   text-align: center;
-  top: -6px;
-  right: -4px;
-  background: linear-gradient(25deg,#bd2a36,#9b4599,#214181);
+  line-height: 160px;
 }
-span {
-  font-size: .875rem;
+
+.container .one-third {
+  /* margin-right: 20px; */
+  position: relative;
+}
+
+#header #header-logo .image {
+  margin-top: 5%;
+  display: block;
+  color: #000000;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background: url(https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR6.jpg) no-repeat center;
+}
+
+#header #header-cart {
+  height: 160px;
+  text-align: right;
+  text-transform: uppercase;
+  line-height: 160px;
+}
+.one-third.last {
+  margin-right: 0px;
 }
