@@ -1,8 +1,5 @@
 #ds-quantity {
   border: 1px solid black;
-  border-radius: 10px;
-  /* margin-left: 20px;
-  margin-top: 10px; */
 }
 
 #ds-quantity p {
@@ -11,11 +8,8 @@
 }
 
 #ds-quantity button {
-  min-height: 30px;
-  font-size: 80%;
   margin: 0 0 20px;
   outline: none;
-  border: 1px solid #18a158;
   border-top-width: 0px;
   border-right-width: 0px;
   border-bottom-width: 0px;
@@ -26,9 +20,12 @@
   color: #ffffff;
   font-family: Open Sans;
   font-weight: 400;
-  font-variant: normal;
-  text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0em;
   line-height: normal;
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+#ds-quantity button:active {
+  opacity: 0.5;
 }

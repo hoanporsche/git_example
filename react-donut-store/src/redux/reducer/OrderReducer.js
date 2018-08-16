@@ -3,7 +3,7 @@ import { LOCAL_STORAGE } from '../../share/constant/local-storage.constant';
 
 let localState = JSON.parse(localStorage.getItem(LOCAL_STORAGE.ORDER));
 
-let initialState = (localState !== null) ?  localState : {
+let initialState = (localState !== null) ? localState : {
   quantities: [],
   totalPrice: 0,
 };
@@ -33,7 +33,7 @@ const orderReducer = (state = initialState, action) => {
       } else {
         foundItem.quantity = action.quantity.quantity;
         foundItem.price = action.quantity.quantity * foundItem.item.singleValue;
-        const newList = listOldQuantity.filter(i => i.item.code !== foundItem.item.code).concat(foundItem); 
+        const newList = listOldQuantity.filter(i => i.item.code !== foundItem.item.code).concat(foundItem);
         let totalPrice = 0;
         for (let i = 0; i < newList.length; i++) {
           totalPrice = totalPrice + newList[i].price;
@@ -47,9 +47,17 @@ const orderReducer = (state = initialState, action) => {
       }
     }
     case Types.REMOVE_QUANTITES: {
-      return Object.assign({}, state, {
-        quantities: state.quantities.filter(i => i !== action.quantity),
+      const newList = state.quantities.filter(i => i.item.code !== action.quantity.item.code);
+      let totalPrice = 0;
+      for (let i = 0; i < newList.length; i++) {
+        totalPrice = totalPrice + newList[i].price;
+      }
+      const newState = Object.assign({}, state, {
+        quantities: newList,
+        totalPrice
       });
+      localStorage.setItem(LOCAL_STORAGE.ORDER, JSON.stringify(newState));
+      return newState;
     }
     default: return Object.assign({}, state);
   }
