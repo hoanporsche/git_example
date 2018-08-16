@@ -31,34 +31,10 @@
   }
 }
 
-body {
-  /* padding-top: 50px; */
-  font-family: sans-serif;
-}
-
-/* @media only screen and (max-width: 576px) {
-  body {
-    padding-top: 63px;
-    font-family: sans-serif;
-  }
-} */
-
-.field-required {
-  color: red;
-  font-size: 0.7em;
-  padding-left: 1%;
-}
-
 .gg-maps {
   height: 400px;
   border-radius: 10px;
   border: solid beige 1px;
-}
-
-.config-input-searchbox {
-  left: 0.7em !important;
-  z-index: 1000 !important;
-  margin-top: 4em !important;
 }
 
 @media only screen and (max-width: 960px) {

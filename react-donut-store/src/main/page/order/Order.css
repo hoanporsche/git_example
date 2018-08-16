@@ -9,6 +9,9 @@
   font-size: 1.6em;
   font-weight: 400;
   line-height: normal;
+  text-transform: none;
+  letter-spacing: 0em;
+  font-variant: normal;
 }
 
 #box-order h1 {
@@ -28,4 +31,7 @@
   text-transform: uppercase;
   font-size: 120%;
   width: 100%;
+  letter-spacing: 0em;
+  font-variant: normal;
+  text-decoration: none;
 }

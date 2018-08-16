@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
 import { fetAllItem } from '../../../redux/action/item.constant';
+import queryString from 'query-string';
+import xoaDau from '../../../share/util/xoaDau';
 
 class Home extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      findBy: "",
+      searchString: '',
     }
   }
 
@@ -18,10 +20,35 @@ class Home extends Component {
       this.props.fetchAllItem();
   }
 
-  showItem = () => {
+  componentWillReceiveProps({ location }) {
+    const queryParam = queryString.parse(location.search);
+    if (queryParam.name !== undefined) {
+      this.setState({
+        searchString: queryParam.name
+      });
+    } else {
+      this.setState({
+        searchString: ''
+      });
+    }
+  }
+
+  searchItem() {
+    let { listItem } = this.props;
     let result = null;
-    if (this.props.listItem.length > 0) {
-      result = this.props.listItem.map((item, index) => {
+    if (listItem.length > 0) {
+      if (this.state.searchString !== '') {
+        listItem = listItem.filter(i => xoaDau(i.name.toLowerCase()).includes(xoaDau(this.state.searchString.toLowerCase())));
+      }
+      result = this.showItem(listItem);
+    }
+    return result;
+  }
+
+  showItem = (listItem) => {
+    let result = null;
+    if (listItem.length > 0) {
+      result = listItem.map((item, index) => {
         return (
           <SingleItem key={index} item={item} />
         );
@@ -39,7 +66,7 @@ class Home extends Component {
             </div>
           </div> */}
         <div className="row text-center">
-          {this.showItem()}
+          {this.searchItem()}
         </div>
       </div>
     );

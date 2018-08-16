@@ -24,6 +24,7 @@
   line-height: normal;
   -webkit-appearance: button;
   cursor: pointer;
+  font-size: 80%;
 }
 
 #ds-quantity button:active {

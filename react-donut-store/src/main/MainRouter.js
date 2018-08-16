@@ -9,7 +9,7 @@ const mainRoutes = [
   {
     path : ROUTING_URL.HOME,
     exact : true,
-    main : () => <Home />,
+    main : ({location}) => <Home location={location}/>,
   },
   {
     path : ROUTING_URL.CONTACT,

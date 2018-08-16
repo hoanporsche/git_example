@@ -70,14 +70,14 @@ class SingleQuantity extends Component {
             <SingleItem item={this.props.quantity.item} definedClass="col-12" />
             <div className="col-12">
               <p>Số lượng </p>
-              <div className="item-quantity">
+              {/* <div className="item-quantity">
                 <div className="input-quantity-container clearfix">
                   <button type="button" className="input-quantity-minus tip-t-fade" data-tooltip="Giảm"><i className="fa fa-minus fa-fw" /></button>
                   <input type="text" className="w-full bm-remove input-quantity" value={this.state.quantity} onChange={this.onChange} />
                   <button type="button" className="input-quantity-plus tip-t-fade" data-tooltip="Tăng" original-title="true"><i className="fa fa-plus fa-fw" /></button>
                 </div>
-              </div>
-              <input type="number" className="form-control" value={this.state.quantity} onChange={this.onChange} />
+              </div> */}
+              <input type="number" style={{ textAlign: 'center'}} className="form-control" value={this.state.quantity} onChange={this.onChange} />
             </div>
           </div>
           <div className="row">
