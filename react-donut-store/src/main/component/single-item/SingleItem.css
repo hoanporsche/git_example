@@ -28,6 +28,10 @@
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 
 .ds-single-item span {

@@ -4,6 +4,7 @@ import Order from './page/order/Order';
 import Contact from './page/contact/Contact';
 import Detail from './page/detail/Detail';
 import { ROUTING_URL } from '../share/constant/routing.constant';
+import NotFound from '../error/NotFound';
 
 const mainRoutes = [
   {
@@ -30,6 +31,11 @@ const mainRoutes = [
     path : ROUTING_URL.DETAIL + '/:code',
     exact : false,
     main : ({location, match}) => <Detail location={location} match={match}/>
+  },
+  {
+    path: "",
+    exact: false,
+    main: () => <NotFound />
   }
 ]
 

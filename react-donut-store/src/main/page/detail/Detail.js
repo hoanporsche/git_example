@@ -9,6 +9,7 @@ import { addNotification } from '../../../redux/action/notification.constant';
 import SingleItem from '../../component/single-item/SingleItem';
 import SingleCategory from '../../component/single-category/SingleCategory';
 import NumberFormat from 'react-number-format';
+import GoToCartNoti from '../../component/go-to-cart-noti/GoToCartNoti';
 
 class Detail extends Component {
 
@@ -18,7 +19,6 @@ class Detail extends Component {
       code: 'ITEkrfpyhe',
       quantity: 0,
       inValid: true,
-      message: '',
       categoryCode: 'CATltmdtvb',
       picture: '',
     }
@@ -44,7 +44,6 @@ class Detail extends Component {
         code: match.params.code,
         quantity: 0,
         inValid: true,
-        message: '',
         picture: '',
       });
     }
@@ -67,23 +66,21 @@ class Detail extends Component {
 
   onClick = () => {
     if (0 < this.state.quantity < 301) {
-      this.setState({
-        message: "Thêm vào giỏ hàng thành công"
-      });
       const item = this.props.listItem.find(i => i.code === this.state.code);
       this.props.addOneQuantity({
         item: item,
         quantity: this.state.quantity,
       });
+      this.props.addOneNotifi({
+        title: `${this.state.quantity} ${item.name}`,
+        message: "Đưa vào giỏ hàng thành công",
+        level: "success",
+        autoDismiss: 0,
+        children: <GoToCartNoti title={`${this.state.quantity} ${item.name}`}  message="Đưa vào giỏ hàng thành công" picture={item.picture[0]} />
+      });
     } else {
       alert("Vui lòng chọn số lượng");
     }
-  }
-
-  onDismissMessage = () => {
-    this.setState({
-      message: "",
-    })
   }
 
   onReceivedCategoryCode = (emittedValue) => {
@@ -125,17 +122,6 @@ class Detail extends Component {
     return result;
   }
 
-  showMessage = () => {
-    if (this.state.message !== '') {
-      return (
-        <div className="alert alert-warning">
-          <button type="button" className="close" onClick={this.onDismissMessage}>×</button>
-          <strong>{this.state.message}</strong>
-        </div>
-      )
-    }
-  }
-
   showItem = () => {
     const item = this.props.listItem.find(i => i.code === this.state.code);
     if (item !== undefined) {
@@ -153,7 +139,7 @@ class Detail extends Component {
             </div>
             <div className="col-md-5 col-12 padding-top1">
               <div className="detail-item">
-                <span><NumberFormat value={item.singleValue} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}đ</div>}/></span>
+                <span><NumberFormat value={item.singleValue} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}đ</div>} /></span>
                 <p>{item.description}</p>
                 <div className="row" style={{ marginLeft: '0px' }}>
                   <div className="col-3">
@@ -209,9 +195,8 @@ class Detail extends Component {
     return (
       <div>
         <div className="container-fluid">
-          {this.showMessage()}
           {this.showItem()}
-          <div className="container text-center" style={{ marginTop: '40px'}}>
+          <div className="container text-center" style={{ marginTop: '40px' }}>
             <SectionHeader title="Thực đơn khác" />
             <ul className="row main-menu-category">
               {this.showAllCategory()}
@@ -246,7 +231,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actAddQuantity(quantity));
     },
     addOneNotifi: (notifi) => {
-      dispatch(addNotification(notifi));
+      dispatch(addNotification(notifi.level, notifi.autoDismiss, notifi.children));
     }
   }
 }

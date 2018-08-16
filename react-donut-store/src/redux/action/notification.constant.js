@@ -1,9 +1,10 @@
 export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 
-export function addNotification(message, level) {
+export function addNotification(level, autoDismiss, children) {
   return {
     type: ADD_NOTIFICATION,
-    message,
-    level
+    level,
+    autoDismiss,
+    children
   };
 }

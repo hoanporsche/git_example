@@ -5,6 +5,7 @@ import './Home.css';
 import { fetAllItem } from '../../../redux/action/item.constant';
 import queryString from 'query-string';
 import xoaDau from '../../../share/util/xoaDau';
+import NotFound from '../../../error/NotFound';
 
 class Home extends Component {
 
@@ -42,7 +43,7 @@ class Home extends Component {
       }
       result = this.showItem(listItem);
     }
-    return result;
+    return (result === null) ? <NotFound title="Không có sản phẩm nào phù hợp" />: result;
   }
 
   showItem = (listItem) => {

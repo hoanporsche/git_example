@@ -4,6 +4,8 @@ import SingleItem from '../single-item/SingleItem';
 import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import { actAddQuantity, actRemoveQuantites } from '../../../redux/action/order.constant';
+import { addNotification } from '../../../redux/action/notification.constant';
+import GoToCartNoti from '../go-to-cart-noti/GoToCartNoti';
 
 class SingleQuantity extends Component {
 
@@ -12,7 +14,6 @@ class SingleQuantity extends Component {
     this.state = {
       quantity: +this.props.quantity.quantity,
       inValid: true,
-      message: '',
     }
   }
 
@@ -40,22 +41,30 @@ class SingleQuantity extends Component {
   }
 
   onDelete = () => {
-    this.setState({
-      message: "Xóa khỏi giỏ hàng thành công"
-    });
     this.props.removeOneQuantity({
       item: this.props.quantity.item,
+    });
+    this.props.addOneNotifi({
+      level: "success",
+      autoDismiss: 1,
+      children: <GoToCartNoti title={`${this.state.quantity} ${this.props.quantity.item.name}`} 
+                message="Xoá khỏi giỏ hàng thành công" 
+                picture={this.props.quantity.item.picture[0]}/>
     });
   }
 
   onUpdate = () => {
     if (0 < this.state.quantity < 301) {
-      this.setState({
-        message: "Thêm vào giỏ hàng thành công"
-      });
       this.props.addOneQuantity({
         item: this.props.quantity.item,
         quantity: this.state.quantity,
+      });
+      this.props.addOneNotifi({
+        level: "success",
+        autoDismiss: 1,
+        children: <GoToCartNoti title={`${this.state.quantity} ${this.props.quantity.item.name}`} 
+                  message="Cập nhật giỏ hàng thành công" 
+                  picture={this.props.quantity.item.picture[0]}/>
       });
     } else {
       alert("Vui lòng chọn số lượng");
@@ -111,6 +120,9 @@ const mapDispatchToProps = dispatch => {
     },
     removeOneQuantity: (quantity) => {
       dispatch(actRemoveQuantites(quantity));
+    },
+    addOneNotifi: (notifi) => {
+      dispatch(addNotification(notifi.level, notifi.autoDismiss, notifi.children));
     }
   }
 }

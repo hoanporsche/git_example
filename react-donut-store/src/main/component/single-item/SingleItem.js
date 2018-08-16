@@ -7,7 +7,7 @@ class SingleItem extends Component {
 
   render() {
     const to = `/thuc-don/${this.props.item.code}`;
-    const definedClass = (this.props.definedClass === undefined) ? "col-sm-3" :this.props.definedClass;
+    const definedClass = (this.props.definedClass === undefined) ? "col-sm-4 col-md-3" :this.props.definedClass;
     return (
       <div id="ds-item" className={definedClass}>
         <div className="ds-single-item">

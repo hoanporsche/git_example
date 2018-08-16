@@ -6,8 +6,9 @@ const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_NOTIFICATION: {
       return Object.assign({}, state, {
-        message: action.message,
-        level: action.level
+        level: action.level,
+        autoDismiss: action.autoDismiss,
+        children: action.children
       });
     }
     default: {

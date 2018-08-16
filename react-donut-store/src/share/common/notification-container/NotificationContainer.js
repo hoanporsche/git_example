@@ -1,4 +1,4 @@
-import React, { Component  } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addNotification } from '../../../redux/action/notification.constant';
@@ -7,19 +7,22 @@ import NotificationSystem from 'react-notification-system';
 class NotificationContainer extends Component {
 
   notificationSystem = null;
- 
+
   componentDidMount() {
     this.notificationSystem = this.refs.notificationSystem;
   }
- 
+
   componentWillReceiveProps(newProps) {
-    const { message, level } = newProps.notification;
-    this.notificationSystem.addNotification({
-      message,
-      level
-    });
+    const { level, autoDismiss, children } = newProps.notification;
+    if (level !== undefined) {
+      this.notificationSystem.addNotification({
+        level,
+        autoDismiss,
+        children
+      });
+    }
   }
- 
+
   render() {
     return (
       <NotificationSystem ref="notificationSystem" />
@@ -28,7 +31,7 @@ class NotificationContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  return { 
+  return {
     notification: state.notificationReducer,
   };
 }
