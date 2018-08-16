@@ -5,6 +5,7 @@ import { fetAllCategory } from '../../../redux/action/category.constant';
 import SectionHeader from '../../component/section-header/SectionHeader';
 import './Detail.css';
 import { actAddQuantity } from '../../../redux/action/order.constant';
+import { addNotification } from '../../../redux/action/notification.constant';
 import SingleItem from '../../component/single-item/SingleItem';
 import SingleCategory from '../../component/single-category/SingleCategory';
 import NumberFormat from 'react-number-format';
@@ -243,6 +244,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     addOneQuantity: (quantity) => {
       dispatch(actAddQuantity(quantity));
+    },
+    addOneNotifi: (notifi) => {
+      dispatch(addNotification(notifi));
     }
   }
 }
