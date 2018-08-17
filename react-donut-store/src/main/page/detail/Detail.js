@@ -10,6 +10,7 @@ import SingleItem from '../../component/single-item/SingleItem';
 import SingleCategory from '../../component/single-category/SingleCategory';
 import NumberFormat from 'react-number-format';
 import GoToCartNoti from '../../component/go-to-cart-noti/GoToCartNoti';
+import ChooseQuantity from '../../component/choose-quantity/ChooseQuantity';
 
 class Detail extends Component {
 
@@ -17,7 +18,7 @@ class Detail extends Component {
     super(props);
     this.state = {
       code: 'ITEkrfpyhe',
-      quantity: 0,
+      quantity: 1,
       inValid: true,
       categoryCode: 'CATltmdtvb',
       picture: '',
@@ -42,7 +43,7 @@ class Detail extends Component {
     if (match !== undefined) {
       this.setState({
         code: match.params.code,
-        quantity: 0,
+        quantity: 1,
         inValid: true,
         picture: '',
       });
@@ -50,7 +51,7 @@ class Detail extends Component {
   }
 
   onChange = (event) => {
-    const value = +event.target.value;
+    const value = event.value;
     if (value > 0 && value < 301) {
       this.setState({
         inValid: false,
@@ -75,7 +76,7 @@ class Detail extends Component {
         title: `${this.state.quantity} ${item.name}`,
         message: "Đưa vào giỏ hàng thành công",
         level: "success",
-        autoDismiss: 0,
+        autoDismiss: 1,
         children: <GoToCartNoti title={`${this.state.quantity} ${item.name}`}  message="Đưa vào giỏ hàng thành công" picture={item.picture[0]} />
       });
     } else {
@@ -142,8 +143,8 @@ class Detail extends Component {
                 <span><NumberFormat value={item.singleValue} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}đ</div>} /></span>
                 <p>{item.description}</p>
                 <div className="row" style={{ marginLeft: '0px' }}>
-                  <div className="col-3">
-                    <input type="number" name="quantity" className="form-control" value={this.state.quantity} onChange={this.onChange} />
+                  <div className="col-6">
+                    <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity}/>
                   </div>
                   <div className="col-3">
                     <button className="btn btn-success" onClick={this.onClick} disabled={this.state.inValid}>Mua hàng</button>

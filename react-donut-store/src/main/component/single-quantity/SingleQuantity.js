@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { actAddQuantity, actRemoveQuantites } from '../../../redux/action/order.constant';
 import { addNotification } from '../../../redux/action/notification.constant';
 import GoToCartNoti from '../go-to-cart-noti/GoToCartNoti';
+import ChooseQuantity from '../choose-quantity/ChooseQuantity';
 
 class SingleQuantity extends Component {
 
@@ -26,7 +27,7 @@ class SingleQuantity extends Component {
   }
 
   onChange = (event) => {
-    const value = +event.target.value;
+    const value = event.value;
     if (value > 0 && value < 301) {
       this.setState({
         inValid: false,
@@ -47,9 +48,9 @@ class SingleQuantity extends Component {
     this.props.addOneNotifi({
       level: "success",
       autoDismiss: 1,
-      children: <GoToCartNoti title={`${this.state.quantity} ${this.props.quantity.item.name}`} 
-                message="Xoá khỏi giỏ hàng thành công" 
-                picture={this.props.quantity.item.picture[0]}/>
+      children: <GoToCartNoti title={`${this.state.quantity} ${this.props.quantity.item.name}`}
+        message="Xoá khỏi giỏ hàng thành công"
+        picture={this.props.quantity.item.picture[0]} />
     });
   }
 
@@ -62,9 +63,9 @@ class SingleQuantity extends Component {
       this.props.addOneNotifi({
         level: "success",
         autoDismiss: 1,
-        children: <GoToCartNoti title={`${this.state.quantity} ${this.props.quantity.item.name}`} 
-                  message="Cập nhật giỏ hàng thành công" 
-                  picture={this.props.quantity.item.picture[0]}/>
+        children: <GoToCartNoti title={`${this.state.quantity} ${this.props.quantity.item.name}`}
+          message="Cập nhật giỏ hàng thành công"
+          picture={this.props.quantity.item.picture[0]} />
       });
     } else {
       alert("Vui lòng chọn số lượng");
@@ -79,14 +80,7 @@ class SingleQuantity extends Component {
             <SingleItem item={this.props.quantity.item} definedClass="col-12" />
             <div className="col-12">
               <p>Số lượng </p>
-              {/* <div className="item-quantity">
-                <div className="input-quantity-container clearfix">
-                  <button type="button" className="input-quantity-minus tip-t-fade" data-tooltip="Giảm"><i className="fa fa-minus fa-fw" /></button>
-                  <input type="text" className="w-full bm-remove input-quantity" value={this.state.quantity} onChange={this.onChange} />
-                  <button type="button" className="input-quantity-plus tip-t-fade" data-tooltip="Tăng" original-title="true"><i className="fa fa-plus fa-fw" /></button>
-                </div>
-              </div> */}
-              <input type="number" style={{ textAlign: 'center'}} className="form-control" value={this.state.quantity} onChange={this.onChange} />
+              <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity} />
             </div>
           </div>
           <div className="row">

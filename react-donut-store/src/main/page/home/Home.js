@@ -6,6 +6,7 @@ import { fetAllItem } from '../../../redux/action/item.constant';
 import queryString from 'query-string';
 import xoaDau from '../../../share/util/xoaDau';
 import NotFound from '../../../error/NotFound';
+import ModalSingleItem from '../../component/modal-single-item/ModalSingleItem';
 
 class Home extends Component {
 
@@ -13,6 +14,8 @@ class Home extends Component {
     super(props);
     this.state = {
       searchString: '',
+      showedModal: false,
+      showedItem: {},
     }
   }
 
@@ -43,7 +46,7 @@ class Home extends Component {
       }
       result = this.showItem(listItem);
     }
-    return (result === null) ? <NotFound title="Không có sản phẩm nào phù hợp" />: result;
+    return (result === null) ? <NotFound title="Không có sản phẩm nào phù hợp" /> : result;
   }
 
   showItem = (listItem) => {
@@ -51,14 +54,25 @@ class Home extends Component {
     if (listItem.length > 0) {
       result = listItem.map((item, index) => {
         return (
-          <SingleItem key={index} item={item} />
+          <SingleItem key={index} item={item} quickLook="true" onEmittedShowModal={this.onReceivedActionModal} />
         );
       });
     }
     return result;
   }
 
+  onReceivedActionModal = (event) => {
+    this.setState({
+      showedModal: event.showed,
+      showedItem: (event.item === undefined) ? {} : event.item,
+    })
+  }
+
+  showModalSingleItem = () => {
+  }
+
   render() {
+    console.log(this.state.showedModal);
     return (
       <div className="container">
         {/* <div className="row ds-second-div">
@@ -69,6 +83,7 @@ class Home extends Component {
         <div className="row text-center">
           {this.searchItem()}
         </div>
+        {(this.state.showedModal === true) ? <ModalSingleItem showed={this.state.showedModal} item={this.state.showedItem} onEmittedCloseModal={this.onReceivedActionModal} /> : ''}
       </div>
     );
   }

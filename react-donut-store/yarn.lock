@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@fancyapps/fancybox@^3.3.5":
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/@fancyapps/fancybox/-/fancybox-3.3.5.tgz#e0bead520450ff0af51d353a17ac6bf864ba0f49"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -4005,6 +4009,10 @@ jest@20.0.4:
   resolved "https://registry.yarnpkg.com/jest/-/jest-20.0.4.tgz#3dd260c2989d6dad678b1e9cc4d91944f6d602ac"
   dependencies:
     jest-cli "^20.0.4"
+
+jquery@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.9:
   version "2.4.8"
