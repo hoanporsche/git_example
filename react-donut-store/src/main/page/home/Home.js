@@ -26,7 +26,7 @@ class Home extends Component {
 
   componentWillReceiveProps({ location }) {
     const queryParam = queryString.parse(location.search);
-    if (queryParam.name !== undefined) {
+    if (queryParam.name) {
       this.setState({
         searchString: queryParam.name
       });
@@ -46,33 +46,25 @@ class Home extends Component {
       }
       result = this.showItem(listItem);
     }
-    return (result === null) ? <NotFound title="Không có sản phẩm nào phù hợp" /> : result;
+    return result ? result : <NotFound title="Không có sản phẩm nào phù hợp" />;
   }
 
   showItem = (listItem) => {
-    let result = null;
-    if (listItem.length > 0) {
-      result = listItem.map((item, index) => {
-        return (
-          <SingleItem key={index} item={item} quickLook="true" onEmittedShowModal={this.onReceivedActionModal} />
-        );
-      });
-    }
-    return result;
+    return (listItem.length > 0) ? listItem.map((item, index) => {
+      return (
+        <SingleItem key={index} item={item} quickLook={true} onEmittedShowModal={this.onReceivedActionModal} />
+      );
+    }) : null;
   }
 
   onReceivedActionModal = (event) => {
     this.setState({
       showedModal: event.showed,
-      showedItem: (event.item === undefined) ? {} : event.item,
+      showedItem: event.item ? event.item : {},
     })
   }
 
-  showModalSingleItem = () => {
-  }
-
   render() {
-    console.log(this.state.showedModal);
     return (
       <div className="container">
         {/* <div className="row ds-second-div">
@@ -83,7 +75,7 @@ class Home extends Component {
         <div className="row text-center">
           {this.searchItem()}
         </div>
-        {(this.state.showedModal === true) ? <ModalSingleItem showed={this.state.showedModal} item={this.state.showedItem} onEmittedCloseModal={this.onReceivedActionModal} /> : ''}
+        {this.state.showedModal ? <ModalSingleItem showed={this.state.showedModal} item={this.state.showedItem} onEmittedCloseModal={this.onReceivedActionModal} /> : ''}
       </div>
     );
   }

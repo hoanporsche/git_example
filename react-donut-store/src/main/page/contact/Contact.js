@@ -20,22 +20,18 @@ class Contact extends Component {
   }
 
   showGGmaps() {
-    if (this.props.listStore.length > 0)
-      return <GGMaps listStore={this.props.listStore} defaultZoom={12} />
+    return (this.props.listStore.length > 0) ?
+      <GGMaps listStore={this.props.listStore} defaultZoom={12} /> : null;
   }
 
   showListStore() {
-    let result = null;
-    if (this.props.listStore.length > 0) {
-      result = this.props.listStore.map((store, index) => {
-        return (
-          <li key={index}>
-            Cơ sở {index + 1}: {store.address} - Sđt: {store.phone}
-          </li>
-        )
-      })
-    }
-    return result;
+    return (this.props.listStore.length > 0) ? this.props.listStore.map((store, index) => {
+      return (
+        <li key={index}>
+          Cơ sở {index + 1}: {store.address} - Sđt: {store.phone}
+        </li>
+      )
+    }) : null;
   }
 
   render() {

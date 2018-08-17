@@ -19,43 +19,33 @@ class Order extends Component {
   }
 
   showShippingCart = () => {
-    if (this.props.order.quantities.length > 0) {
-      return (
-        <div className="row">
-          <div className="col-md-8 padding-top1">
-            <div className="row">
-              {this.showQuantities(this.props.order.quantities)}
-            </div>
+    return (this.props.order.quantities.length > 0) ? (
+      <div className="row">
+        <div className="col-md-8 padding-top1">
+          <div className="row">
+            {this.showQuantities(this.props.order.quantities)}
           </div>
-          <div className="col-md-4 padding-top1">
-            <div id="box-order">
-              <h3>Thanh toán</h3>
-              <hr />
-              <div className="text-center">
-                <h1>Tạm tính: <NumberFormat value={this.props.order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</h1>
-                <NavLink className="payment-click" to={"/payment"} >Tiến hành thanh toán</NavLink>
-              </div>
+        </div>
+        <div className="col-md-4 padding-top1">
+          <div id="box-order">
+            <h3>Thanh toán</h3>
+            <hr />
+            <div className="text-center">
+              <h1>Tạm tính: <NumberFormat value={this.props.order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</h1>
+              <NavLink className="payment-click" to={"/payment"} >Tiến hành thanh toán</NavLink>
             </div>
           </div>
         </div>
-      )
-    } else {
-      return (
-        <EmptyCart />
-      )
-    }
+      </div>
+    ) : <EmptyCart />
   }
 
   showQuantities = (quantities) => {
-    let result = null;
-    if (quantities.length > 0) {
-      result = quantities.map((quantity, index) => {
-        return (
-          <SingleQuantity key={index} quantity={quantity} />
-        )
-      })
-    }
-    return result;
+    return quantities.map((quantity, index) => {
+      return (
+        <SingleQuantity key={index} quantity={quantity} />
+      )
+    });
   }
 
   render() {

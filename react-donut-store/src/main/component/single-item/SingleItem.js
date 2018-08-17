@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './SingleItem.css';
 import NumberFormat from 'react-number-format';
+import ReactTooltip from 'react-tooltip';
 
 class SingleItem extends Component {
 
   showQuickLook = () => {
-    return (this.props.quickLook.toString() === 'false') ? null : (
-      <span className="quick-look auto-fade" onClick={this.onClick}>
+    return this.props.quickLook ? (
+      <span className="quick-look auto-fade" data-tip="Chi tiết" onClick={this.onClick}>
         <i className="fas fa-search"></i>
       </span>
-    )
+    ) : null;
   }
 
   onClick = () => {
@@ -20,7 +21,7 @@ class SingleItem extends Component {
 
   render() {
     const to = `/thuc-don/${this.props.item.code}`;
-    const fadeImage = (this.props.quickLook.toString() === 'true') ? 'fade-image' : '';
+    const fadeImage = this.props.quickLook ? 'fade-image' : '';
     return (
       <div id="ds-item" className={this.props.definedClass}>
         <div className="ds-single-item">
@@ -32,6 +33,7 @@ class SingleItem extends Component {
           </NavLink>
           <span><NumberFormat value={this.props.item.singleValue} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}₫</div>} /></span>
         </div>
+        <ReactTooltip />
       </div>
     );
   }
@@ -45,10 +47,10 @@ SingleItem.propTypes = {
     singleValue: PropTypes.number.isRequired
   }),
   definedClass: PropTypes.string,
-  quickLook: PropTypes.string
+  quickLook: PropTypes.bool
 }
 SingleItem.defaultProps = {
   definedClass: 'col-sm-4 col-md-3',
-  quickLook: 'false'
+  quickLook: false
 }
 export default SingleItem;

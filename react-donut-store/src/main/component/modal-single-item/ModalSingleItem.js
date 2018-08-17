@@ -15,38 +15,25 @@ class ModalSingleItem extends Component {
     super(props);
     this.state = {
       quantity: 1,
-      inValid: false,
     }
   }
 
   componentDidMount() {
-    $(this.getDOMNode()).modal('show');
-        // $(this.getDOMNode()).on('hidden.bs.modal', this.props.handleHideModal);
+    $('#open-modal-si').click();
   }
-  // componentWillReceiveProps() {
-  //   this.setState({
-  //     quantity: 1,
-  //     inValid: false,
-  //   })
-  // }
 
   showSlideImage = () => {
-    let result = null;
-    if (this.props.item.name !== undefined && this.props.item.picture.length > 0) {
-      result = this.props.item.picture.map((picture, index) => {
-        // const actived = (index === 0) ? 'active' : '';
-        return (
-          <div key={index} className={`carousel-item ${(index === 0) ? 'active' : ''}`}>
-            <img className="d-block w-100" height={'220px'} src={picture} alt="First slide" />
-          </div>
-        )
-      });
-    }
-    return result;
+    return this.props.item.picture.map((picture, index) => {
+      return (
+        <div key={index} className={`carousel-item ${(index === 0) ? 'active' : ''}`}>
+          <img className="d-block w-100" height={'220px'} src={picture} alt="First slide" />
+        </div>
+      )
+    });
   }
 
   showHeader = () => {
-    return (this.props.item.name === undefined) ? null : (
+    return (
       <div className="row">
         <div className="col-6">
           <h3>{this.props.item.name}</h3>
@@ -55,9 +42,12 @@ class ModalSingleItem extends Component {
           <div className="float-right">
             <h4 style={{ display: 'inline-block', marginTop: '4px' }}>
               <NumberFormat value={this.props.item.singleValue} displayType={'text'}
-                thousandSeparator={true} renderText={value => <div><span style={{ fontSize: '0.9em' }}>Chỉ từ </span><span style={{ fontSize: '1em' }}>{value}₫ </span><button type="button" className="close" onClick={this.onCloseModal}>
-                  <span aria-hidden="true"> ×</span>
-                </button></div>} />
+                thousandSeparator={true} renderText={value => <div><span style={{ fontSize: '0.9em' }}>Chỉ từ </span><span style={{ fontSize: '1em' }}>{value}₫ </span>
+                  {/* <button type="button" className="close" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"> ×</span>
+                  </button> */}
+                </div>}
+              />
             </h4>
           </div>
         </div>
@@ -74,12 +64,10 @@ class ModalSingleItem extends Component {
     const value = event.value;
     if (value > 0 && value < 301) {
       this.setState({
-        inValid: false,
         quantity: value
       });
     } else {
       this.setState({
-        inValid: true,
         quantity: value
       });
     }
@@ -106,48 +94,53 @@ class ModalSingleItem extends Component {
   }
 
   render() {
-    // const showed = (this.props.showed.toString() === 'true') ? 'show display-block' : 'display-none';
     return (
-      <div id="modal-single-item" className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-lg" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <div className="container ">
-                {this.showHeader()}
-                <hr />
-                <div className="row">
-                  <div className="col-md-4">
-                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                      <ol className="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to={0} className="active" />
-                        <li data-target="#carouselExampleIndicators" data-slide-to={1} />
-                        <li data-target="#carouselExampleIndicators" data-slide-to={2} />
-                      </ol>
-                      <div className="carousel-inner">
-                        {this.showSlideImage()}
+      <section>
+        <button style={{ visibility: 'hidden' }} type="button" id="open-modal-si" data-backdrop={'static'} className="btn btn-primary" data-toggle="modal" data-target="#modal-single-item">
+          Launch demo modal
+        </button>
+        <div id="modal-single-item" className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="container ">
+                  {this.showHeader()}
+                  <hr style={{ marginTop: '-10px' }} />
+                  <div className="row">
+                    <div className="col-sm-6 col-md-4">
+                      <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                        <ol className="carousel-indicators">
+                          <li data-target="#carouselExampleIndicators" data-slide-to={0} className="active" />
+                          <li data-target="#carouselExampleIndicators" data-slide-to={1} />
+                          <li data-target="#carouselExampleIndicators" data-slide-to={2} />
+                        </ol>
+                        <div className="carousel-inner">
+                          {this.showSlideImage()}
+                        </div>
+                        <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                          <span className="carousel-control-prev-icon" aria-hidden="true" />
+                          <span className="sr-only">Previous</span>
+                        </a>
+                        <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                          <span className="carousel-control-next-icon" aria-hidden="true" />
+                          <span className="sr-only">Next</span>
+                        </a>
                       </div>
-                      <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true" />
-                        <span className="sr-only">Previous</span>
-                      </a>
-                      <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true" />
-                        <span className="sr-only">Next</span>
-                      </a>
                     </div>
-                  </div>
-                  <div className="col-md-8">
-                    <p style={{ fontSize: '1.3em' }}>{this.props.item.description}</p>
-                    <div className="row">
-                      <div className="col-3">
-                        Số lượng:
+                    <div className="col-sm-6 col-md-8">
+                      <p style={{ fontSize: '1.3em' }}>{this.props.item.description}</p>
+                      <div className="row">
+                        <div className="col-3">
+                          Số lượng:
                       </div>
-                      <div className="col-9">
-                        <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity} />
-                      </div>
-                      <div className="col-12">
-                        <div className="float-right">
-                          <button className="btn btn-success" onClick={this.onClick}>Mua ngay</button>
+                        <div className="col-9">
+                          <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity} />
+                        </div>
+                        <div className="col-12">
+                          <div className="float-right">
+                            <button type="button" className="btn btn-light" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Quay lại</button>&nbsp;
+                            <button type="button" className="btn btn-success" onClick={this.onClick} data-dismiss="modal" aria-label="Close">Mua ngay</button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -157,7 +150,8 @@ class ModalSingleItem extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
     )
   }
 }
@@ -179,7 +173,6 @@ ModalSingleItem.propTypes = {
     picture: PropTypes.array,
     name: PropTypes.string,
     singleValue: PropTypes.number
-  }),
-  showed: PropTypes.bool.isRequired,
+  })
 }
 export default connect(null, mapDispatchToProps)(ModalSingleItem);

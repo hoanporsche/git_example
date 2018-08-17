@@ -16,6 +16,7 @@
 }
 
 .ds-single-item-image {
+  padding-top: 5em;
   height: 180px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -34,8 +35,8 @@
 }
 
 #ds-item .quick-look i {
-  margin-top: 13px;
-  margin-left: -3px;
+  margin-top: 12px;
+  margin-left: -2px;
   font-size: 1.5em;
 }
 

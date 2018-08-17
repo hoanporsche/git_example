@@ -1,6 +1,7 @@
 import * as Types from '../action/order.constant';
 import { LOCAL_STORAGE } from '../../share/constant/local-storage.constant';
 
+//Lấy danh sách ra từ localstorage trc
 let localState = JSON.parse(localStorage.getItem(LOCAL_STORAGE.ORDER));
 
 let initialState = (localState !== null) ? localState : {
@@ -10,9 +11,13 @@ let initialState = (localState !== null) ? localState : {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    /** Case này ta kiểm tra item có trùng k(đã tồn tại trong list), 
+    * sau đó add/update và lưu lại vào localstorage
+    */
     case Types.ADD_QUANTITES: {
       const listOldQuantity = state.quantities;
       let foundItem = listOldQuantity.find(i => i.item.code === action.quantity.item.code);
+      //Nếu k trùng thì thêm mới và tính lại tổng giá
       if (foundItem === undefined) {
         const newQuantity = {
           item: action.quantity.item,
@@ -30,6 +35,7 @@ const orderReducer = (state = initialState, action) => {
         });
         localStorage.setItem(LOCAL_STORAGE.ORDER, JSON.stringify(newState));
         return newState;
+        //Còn trùng thì update lại item với số lượng và tính lại tổng giá
       } else {
         foundItem.quantity = action.quantity.quantity;
         foundItem.price = action.quantity.quantity * foundItem.item.singleValue;

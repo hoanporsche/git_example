@@ -10,7 +10,7 @@ class SingleCategory extends Component {
   }
 
   render() {
-    const active = (this.props.active.toString() === 'true') ? 'active' : '';
+    const active = this.props.active ? 'active' : '';
     const classname = `col-4 ${active}`;
     return(
       <li className={classname} onClick={this.onClickCategory}>

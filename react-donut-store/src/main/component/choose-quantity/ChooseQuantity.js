@@ -4,7 +4,7 @@ import './ChooseQuantity.css';
 class ChooseQuantity extends Component {
 
   onChange = (event) => {
-    const value = (event.target.value !== '' && isNaN(event.target.value) === false ) ? event.target.value : 1;
+    const value = (event.target.value === '' && isNaN(event.target.value)) ? 1 : event.target.value;
 
     if (value > 0 && value < 301) {
       this.onEmittedValue(value);
