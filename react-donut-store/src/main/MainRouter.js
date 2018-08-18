@@ -3,6 +3,7 @@ import Home from './page/home/Home';
 import Order from './page/order/Order';
 import Contact from './page/contact/Contact';
 import Detail from './page/detail/Detail';
+import Checkout from './page/checkout/Checkout';
 import { ROUTING_URL } from '../share/constant/routing.constant';
 import NotFound from '../error/NotFound';
 
@@ -21,6 +22,11 @@ const mainRoutes = [
     path : ROUTING_URL.ORDER,
     exact : false,
     main : () => <Order />,
+  },
+  {
+    path : ROUTING_URL.CHECKOUT,
+    exact : false,
+    main : () => <Checkout />
   },
   {
     path : ROUTING_URL.DETAIL,

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import './SingleItem.css';
 import NumberFormat from 'react-number-format';
 import ReactTooltip from 'react-tooltip';
+import { ROUTING_URL } from '../../../share/constant/routing.constant';
 
 class SingleItem extends Component {
 
@@ -20,7 +21,7 @@ class SingleItem extends Component {
   }
 
   render() {
-    const to = `/thuc-don/${this.props.item.code}`;
+    const to = `${ROUTING_URL.DETAIL}/${this.props.item.code}`;
     const fadeImage = this.props.quickLook ? 'fade-image' : '';
     return (
       <div id="ds-item" className={this.props.definedClass}>

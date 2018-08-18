@@ -4,6 +4,7 @@ export const ROUTING_URL = Object.freeze({
   HOME: '/',
   CONTACT: '/lien-he',
   ORDER: '/gio-hang',
+  CHECKOUT: '/check-out',
   DETAIL: '/thuc-don',
 });
 

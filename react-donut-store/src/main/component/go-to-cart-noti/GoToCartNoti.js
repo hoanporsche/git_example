@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import './GoToCartNoti.css';
+import { ROUTING_URL } from '../../../share/constant/routing.constant';
 
 class GoToCartNoti extends Component {
 
@@ -16,7 +17,7 @@ class GoToCartNoti extends Component {
             <p>{this.props.message}</p>
           </div>
           <div className="col-12 text-center">
-            <NavLink className="nav-to-cart" to={'/gio-hang'} ><span>Kiểm tra giỏ hàng</span></NavLink>
+            <NavLink className="nav-to-cart" to={ROUTING_URL.ORDER} ><span>Kiểm tra giỏ hàng</span></NavLink>
           </div>
         </div>
       </div>

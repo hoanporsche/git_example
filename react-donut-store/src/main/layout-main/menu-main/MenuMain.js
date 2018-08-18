@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import './MenuMain.css';
+import { ROUTING_URL } from '../../../share/constant/routing.constant';
 
 const menus = [
   {
     name: 'Trang chủ',
-    to: '/',
+    to: ROUTING_URL.HOME,
     exact: true,
   }, {
     name: 'Thực đơn',
-    to: '/thuc-don',
+    to: ROUTING_URL.DETAIL,
     exact: false,
   }, {
     name: 'Liên hệ',
-    to: '/lien-he',
+    to: ROUTING_URL.CONTACT,
     exact: false,
   }
 ];
