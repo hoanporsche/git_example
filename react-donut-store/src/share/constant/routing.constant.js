@@ -26,3 +26,12 @@ export const MODEL_ROUTING = Object.freeze({
   USER: '/user',
   WORKING_CALENDER: '/working-calender',
 });
+
+export const MENU_NAME = Object.freeze({
+  NOT_FOUND: '',
+  HOME: 'Trang chủ',
+  CONTACT: 'Liên hệ',
+  ORDER: 'Giỏ hàng',
+  CHECKOUT: 'Thông tin giao hàng',
+  DETAIL: 'Thực đơn',
+});

@@ -76,3 +76,14 @@
 .padding-top1 {
   padding-top: 1%;
 }
+
+.custom-breadcrumb {
+  background-color: white;
+  padding-left: 0px;
+  font-size: 0.85714em;
+  margin-bottom: 0px;
+}
+
+.field-required {
+  color: red;
+}

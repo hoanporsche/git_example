@@ -26,7 +26,8 @@ class ModalSingleItem extends Component {
     return this.props.item.picture.map((picture, index) => {
       return (
         <div key={index} className={`carousel-item ${(index === 0) ? 'active' : ''}`}>
-          <img className="d-block w-100" height={'220px'} src={picture} alt="First slide" />
+          {/* <img className="d-block w-100" height={'220px'} src={picture} alt="First slide" /> */}
+          <div className="d-block w-100 slide-div" style={{ backgroundImage: `url(${picture})`}}></div>
         </div>
       )
     });
@@ -96,7 +97,9 @@ class ModalSingleItem extends Component {
   render() {
     return (
       <section>
-        <button style={{ visibility: 'hidden' }} type="button" id="open-modal-si" data-backdrop={'static'} className="btn btn-primary" data-toggle="modal" data-target="#modal-single-item">
+        <button style={{ display: 'none' }} type="button" id="open-modal-si" 
+        data-backdrop={'static'} data-keyboard={false} className="btn btn-primary" 
+        data-toggle="modal" data-target="#modal-single-item">
           Launch demo modal
         </button>
         <div id="modal-single-item" className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

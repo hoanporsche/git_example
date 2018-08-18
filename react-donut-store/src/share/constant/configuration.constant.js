@@ -3,4 +3,5 @@ export const CONFIG = {
     REQUEST_TITLE_MAX_LENGTH: 50,
     PAGE_SIZE: 15,
     PAGE_MAX_SIZE: 2000,
+    MIN_TOTAL_PRICE: 80000,
 };

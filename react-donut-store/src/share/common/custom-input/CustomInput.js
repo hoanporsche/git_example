@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-/**
- * props: placeHolder, value, validate, required,maxLength
- */
 class CustomInput extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      required : false,
+      required: false,
     };
-    
     this.onChange = this.onChange.bind(this);
     this.showRequired = this.showRequired.bind(this);
   }
 
   onChange(event) {
     let target = event.target;
-    let value = target.type === 'checkbox' ? target.checked : target.value;
+    let value = target.type === 'checkbox' ? target.checked : target.value.toString().trim();
     this.setState({
-      required : false,
+      required: false,
     });
     if ((value.toString().trim() === '' || value === false) && this.props.required === true) {
       this.setState({
-        required : true,
+        required: true,
       });
-    } 
-    this.props.onEmittedValue(target);
+    }
+    this.props.onEmittedValue({
+      name: target.name,
+      value: value,
+    });
   }
 
   showRequired = () => {
@@ -56,4 +56,12 @@ class CustomInput extends Component {
   }
 }
 
+CustomInput.propType = {
+  type: PropTypes.string.isRequired,
+  required: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+  maxLength: PropTypes.number.isRequired,
+}
 export default CustomInput;

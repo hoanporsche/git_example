@@ -35,3 +35,7 @@
   font-variant: normal;
   text-decoration: none;
 }
+
+#box-order .payment-click:hover {
+  opacity: 0.8;
+}

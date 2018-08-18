@@ -7,6 +7,8 @@ import EmptyCart from '../../component/empty-cart/EmptyCart';
 import NumberFormat from 'react-number-format';
 import { NavLink } from 'react-router-dom';
 import SingleQuantity from '../../component/single-quantity/SingleQuantity';
+import { CONFIG } from '../../../share/constant/configuration.constant';
+import { ROUTING_URL } from '../../../share/constant/routing.constant';
 
 class Order extends Component {
 
@@ -32,7 +34,7 @@ class Order extends Component {
             <hr />
             <div className="text-center">
               <h1>Tạm tính: <NumberFormat value={this.props.order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</h1>
-              <NavLink className="payment-click" to={"/payment"} >Tiến hành thanh toán</NavLink>
+              {this.canCheckOut()}
             </div>
           </div>
         </div>
@@ -48,6 +50,13 @@ class Order extends Component {
     });
   }
 
+  canCheckOut() {
+    return this.props.order.totalPrice >= CONFIG.MIN_TOTAL_PRICE ? (
+      <NavLink className="payment-click" to={ROUTING_URL.CHECKOUT} >Tiến hành thanh toán</NavLink>
+    ) : (
+      <p>Chúng tôi không thể giao hàng với đơn giá trị dưới <NumberFormat value={CONFIG.MIN_TOTAL_PRICE} displayType={'text'} thousandSeparator={true}/>₫</p>
+    );
+  }
   render() {
     return (
       <div className="container">

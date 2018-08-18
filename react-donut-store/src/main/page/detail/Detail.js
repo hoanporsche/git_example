@@ -19,7 +19,6 @@ class Detail extends Component {
     this.state = {
       code: 'ITEkrfpyhe',
       quantity: 1,
-      inValid: true,
       categoryCode: 'CATltmdtvb',
       picture: '',
     }
@@ -44,7 +43,6 @@ class Detail extends Component {
       this.setState({
         code: match.params.code,
         quantity: 1,
-        inValid: true,
         picture: '',
       });
     }
@@ -54,12 +52,10 @@ class Detail extends Component {
     const value = event.value;
     if (value > 0 && value < 301) {
       this.setState({
-        inValid: false,
         quantity: value
       });
     } else {
       this.setState({
-        inValid: true,
         quantity: value
       });
     }
@@ -147,7 +143,7 @@ class Detail extends Component {
                     <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity}/>
                   </div>
                   <div className="col-3">
-                    <button className="btn btn-success" onClick={this.onClick} disabled={this.state.inValid}>Mua hàng</button>
+                    <button className="btn btn-success" onClick={this.onClick}>Mua hàng</button>
                   </div>
                 </div>
               </div>

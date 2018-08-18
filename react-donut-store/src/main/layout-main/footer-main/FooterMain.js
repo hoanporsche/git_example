@@ -53,6 +53,11 @@ class FooterMain extends Component {
               <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbrgiangvo%2F&tabs=timeline&width=340px&height=200px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2150713538567990" width={"340px"} height={"200px"} style={{ "border": "none", "overflow": "hidden" }} scrolling={"no"} frameBorder={"0"} allowtransparency={"true"} allow={"encrypted-media"} title="home-page"></iframe>
             </div>
           </div>
+          <div className="row">
+            <div className="col-12">
+              <p>Developed by <a href="https://www.facebook.com/vu.hoan.39">Vũ Hoàn</a> @2018</p>
+            </div>
+          </div>
         </div>
       </footer>
     );
