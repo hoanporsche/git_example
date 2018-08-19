@@ -5,7 +5,7 @@ import './ModalSingleItem.css';
 import ChooseQuantity from '../choose-quantity/ChooseQuantity';
 import GoToCartNoti from '../go-to-cart-noti/GoToCartNoti';
 import { connect } from 'react-redux';
-import { actAddQuantity } from '../../../redux/action/order.constant';
+import { actAddQuantity } from '../../../redux/action/quantity.constant';
 import { addNotification } from '../../../redux/action/notification.constant';
 import $ from 'jquery';
 

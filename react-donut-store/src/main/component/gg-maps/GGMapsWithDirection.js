@@ -18,7 +18,7 @@ const GGMapsWithDirection = compose(
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div className="gg-maps" />,
-    mapElement: <div style={{ height: `90%` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,
   withGoogleMap,

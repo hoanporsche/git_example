@@ -22,7 +22,7 @@ class HeaderMain extends Component {
           </div>
           <div className="col-md-5 header-cart">
             <NavLink to={"/gio-hang"} className="text-cart">
-              <i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span>{this.props.order.quantities.length}</span> <span>sản phẩm</span> - <span><NumberFormat value={this.props.order.totalPrice} displayType={'text'} thousandSeparator={true}/>₫</span>)
+              <i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span>{this.props.quantity.quantities.length}</span> <span>sản phẩm</span> - <span><NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true}/>₫</span>)
             </NavLink>
           </div>
         </div>
@@ -33,7 +33,7 @@ class HeaderMain extends Component {
 
 const mapStateToProps = state => {
   return {
-    order: state.orderReducer,
+    quantity: state.quantityReducer,
   }
 }
 

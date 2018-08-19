@@ -3,7 +3,7 @@ import './SingleQuantity.css';
 import SingleItem from '../single-item/SingleItem';
 import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
-import { actAddQuantity, actRemoveQuantites } from '../../../redux/action/order.constant';
+import { actAddQuantity, actRemoveQuantites } from '../../../redux/action/quantity.constant';
 import { addNotification } from '../../../redux/action/notification.constant';
 import GoToCartNoti from '../go-to-cart-noti/GoToCartNoti';
 import ChooseQuantity from '../choose-quantity/ChooseQuantity';

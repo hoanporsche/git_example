@@ -1,4 +1,4 @@
-import * as Types from '../action/order.constant';
+import * as Types from '../action/quantity.constant';
 import { LOCAL_STORAGE } from '../../share/constant/local-storage.constant';
 
 //Lấy danh sách ra từ localstorage trc
@@ -9,7 +9,7 @@ let initialState = (localState !== null) ? localState : {
   totalPrice: 0,
 };
 
-const orderReducer = (state = initialState, action) => {
+const quantityReducer = (state = initialState, action) => {
   switch (action.type) {
     /** Case này ta kiểm tra item có trùng k(đã tồn tại trong list), 
     * sau đó add/update và lưu lại vào localstorage
@@ -69,4 +69,4 @@ const orderReducer = (state = initialState, action) => {
   }
 }
 
-export default orderReducer;
+export default quantityReducer;

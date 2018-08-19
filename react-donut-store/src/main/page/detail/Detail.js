@@ -4,7 +4,7 @@ import { fetAllItem } from '../../../redux/action/item.constant';
 import { fetAllCategory } from '../../../redux/action/category.constant';
 import SectionHeader from '../../component/section-header/SectionHeader';
 import './Detail.css';
-import { actAddQuantity } from '../../../redux/action/order.constant';
+import { actAddQuantity } from '../../../redux/action/quantity.constant';
 import { addNotification } from '../../../redux/action/notification.constant';
 import SingleItem from '../../component/single-item/SingleItem';
 import SingleCategory from '../../component/single-category/SingleCategory';

@@ -21,11 +21,11 @@ class Order extends Component {
   }
 
   showShippingCart = () => {
-    return (this.props.order.quantities.length > 0) ? (
+    return (this.props.quantity.quantities.length > 0) ? (
       <div className="row">
         <div className="col-md-8 padding-top1">
           <div className="row">
-            {this.showQuantities(this.props.order.quantities)}
+            {this.showQuantities(this.props.quantity.quantities)}
           </div>
         </div>
         <div className="col-md-4 padding-top1">
@@ -33,7 +33,7 @@ class Order extends Component {
             <h3>Thanh toán</h3>
             <hr />
             <div className="text-center">
-              <h1>Tạm tính: <NumberFormat value={this.props.order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</h1>
+              <h1>Tạm tính: <NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true} />₫</h1>
               {this.canCheckOut()}
             </div>
           </div>
@@ -51,7 +51,7 @@ class Order extends Component {
   }
 
   canCheckOut() {
-    return this.props.order.totalPrice >= CONFIG.MIN_TOTAL_PRICE ? (
+    return this.props.quantity.totalPrice >= CONFIG.MIN_TOTAL_PRICE ? (
       <NavLink className="payment-click" to={ROUTING_URL.CHECKOUT} >Tiến hành thanh toán</NavLink>
     ) : (
       <p>Chúng tôi không thể giao hàng với đơn giá trị dưới <NumberFormat value={CONFIG.MIN_TOTAL_PRICE} displayType={'text'} thousandSeparator={true}/>₫</p>
@@ -61,7 +61,7 @@ class Order extends Component {
     return (
       <div className="container">
         <SectionHeader title="Giỏ hàng của bạn" />
-        <p className="text-center">Giỏ hàng ({this.props.order.quantities.length} Sản phẩm - <NumberFormat value={this.props.order.totalPrice} displayType={'text'} thousandSeparator={true} />₫)</p>
+        <p className="text-center">Giỏ hàng ({this.props.quantity.quantities.length} Sản phẩm - <NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true} />₫)</p>
         {this.showShippingCart()}
       </div>
     );
@@ -70,7 +70,7 @@ class Order extends Component {
 
 const mapStateToProps = state => {
   return {
-    order: state.orderReducer,
+    quantity: state.quantityReducer,
   }
 }
 

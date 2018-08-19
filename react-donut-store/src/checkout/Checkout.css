@@ -5,11 +5,12 @@
 }
 
 #check-out .slide-item {
-  background-color: beige;
+  background-color: #fafafa;
   width: 100%;
   padding-top: 4em;
   position: relative;
   color: #717171;
+  box-shadow: 1px 0 0 #e1e1e1 inset;
 }
 
 #check-out .buyer-info {
@@ -18,7 +19,7 @@
 }
 
 #check-out h4 {
-  font-size: 2em;
+  font-size: 2.3em;
   font-weight: normal;
   line-height: 1em;
 }
@@ -50,7 +51,57 @@
     float: right;
     width: 45%;
     display: block;
-    padding-right: 20%;
+    padding-right: 10%;
+    background-position: left top;
+  }
+  #check-out .buyer-info {
+    float: left;
+    width: 55%;
+    display: block;
+    padding-left: 13%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #check-out .buyer-info {
+    display: block;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  #check-out .slide-item {
+    display: block;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 1em;
+    right: -15px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  #check-out .buyer-info {
+    display: block;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  #check-out .slide-item {
+    display: block;
+    width: 100%;
+    padding-left: 9%;
+    padding-right: 9%;
+    padding-top: 1em;
+    right: -15px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  #check-out .slide-item {
+    float: right;
+    width: 45%;
+    display: block;
+    padding-right: 18%;
     background-position: left top;
   }
   #check-out .buyer-info {
@@ -60,18 +111,23 @@
     padding-left: 20%;
   }
 }
+#check-out hr {
+  margin-top: 0em;
+}
 
-@media only screen and (max-width: 768px) {
-  #check-out .slide-item {
-    display: block;
-    width: 100%;
-    padding-left: 15%;
-    padding-right: 15%;
-  }
-  #check-out .buyer-info {
-    display: block;
-    width: 100%;
-    padding-left: 15%;
-    padding-right: 15%;
-  }
+#check-out .quantity-item {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 64px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+#check-out .single-row {
+  padding-bottom: 1em;
+}
+
+#check-out .slide-item hr {
+  margin-left: -15px;
 }
