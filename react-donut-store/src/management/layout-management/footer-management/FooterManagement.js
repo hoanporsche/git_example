@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class FooterManagementComponent extends Component {
+class FooterManagement extends Component {
 
   render() {
     return(
@@ -11,4 +11,4 @@ class FooterManagementComponent extends Component {
   }
 }
 
-export default FooterManagementComponent;
+export default FooterManagement;

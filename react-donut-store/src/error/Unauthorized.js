@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
-class UnAuthorizedComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
+class Unauthorized extends Component {
 
   render() {
     return(
@@ -14,4 +11,4 @@ class UnAuthorizedComponent extends Component {
   }
 }
 
-export default UnAuthorizedComponent;
+export default Unauthorized;

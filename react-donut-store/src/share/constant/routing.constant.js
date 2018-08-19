@@ -6,6 +6,9 @@ export const ROUTING_URL = Object.freeze({
   ORDER: '/gio-hang',
   CHECKOUT: '/check-out',
   DETAIL: '/thuc-don',
+  LOGIN: '/dang-nhap',
+  FORGOT_PASSWORD: '/quen-mat-khau',
+  UNAUTHORIZED: '/unauthorized',
 });
 
 export const MODEL_ROUTING = Object.freeze({
@@ -34,4 +37,6 @@ export const MENU_NAME = Object.freeze({
   ORDER: 'Giỏ hàng',
   CHECKOUT: 'Thông tin giao hàng',
   DETAIL: 'Thực đơn',
+  LOGIN: 'Đăng nhập',
+  FORGOT_PASSWORD: 'Quên mật khẩu',
 });

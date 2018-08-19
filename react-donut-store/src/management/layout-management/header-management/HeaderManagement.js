@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class HeaderManagementComponent extends Component {
+class HeaderManagement extends Component {
 
   render() {
     return (
@@ -25,4 +25,4 @@ class HeaderManagementComponent extends Component {
   }
 }
 
-export default HeaderManagementComponent;
+export default HeaderManagement;

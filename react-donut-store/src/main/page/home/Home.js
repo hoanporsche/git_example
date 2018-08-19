@@ -40,13 +40,16 @@ class Home extends Component {
   searchItem() {
     let { listItem } = this.props;
     let result = null;
+    const { searchString } = this.state;
     if (listItem.length > 0) {
-      if (this.state.searchString !== '') {
-        listItem = listItem.filter(i => xoaDau(i.name.toLowerCase()).includes(xoaDau(this.state.searchString.toLowerCase())));
+      if (searchString !== '') {
+        listItem = listItem.filter(i => xoaDau(i.name.toLowerCase()).includes(xoaDau(searchString.toLowerCase())));
       }
       result = this.showItem(listItem);
     }
-    return result ? result : <NotFound title="Không có sản phẩm nào phù hợp" />;
+    return result ? result : (
+      (searchString === '') ? '' : <NotFound title="Không có sản phẩm nào phù hợp" />
+    );
   }
 
   showItem = (listItem) => {
