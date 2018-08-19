@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { ROUTING_URL, MENU_NAME } from '../share/constant/routing.constant';
 import Breadcrumb from '../main/component/bread-crumb/Breadcrumb';
 import CustomInput from '../share/common/custom-input/CustomInput';
+import CustomSelect from '../share/common/custom-select/CustomSelect';
+import { fetAllStore } from '../redux/action/store.constant';
+import GGMapsWithDirection from '../main/component/gg-maps/GGMapsWithDirection';
 
 const listBreadcrumb = [
   {
@@ -22,6 +25,7 @@ const listBreadcrumb = [
     activeOnlyWhenExact: false,
   },
 ]
+
 class Checkout extends Component {
 
   constructor(props) {
@@ -30,20 +34,59 @@ class Checkout extends Component {
       dateUpdated: '',
       nameCreated: '',
       phone: '',
-      storeId: '',
+      storeCode: 'STOsfgtjnm',
       addressShipping: '',
       distance: '',
       shippingPrice: '',
       totalPrice: '',
+      showMap: true,
     }
   }
 
-  onReceivedValue = (event) => {
-    // console.log(event);
-    this.setState({
-      [event.name]: event.value
-    })
+  componentDidMount() {
+    if (this.props.listStore.length === 0)
+      this.props.fetchAllStore();
   }
+
+  onReceivedValue = (event) => {
+    this.setState({
+      [event.name]: event.value,
+    });
+  }
+
+  showGGMaps = () => {
+    const { listStore } = this.props;
+    // let result = null;
+    // if (listStore.length > 0 && this.state.storeCode !== '') {
+    //   const store = listStore.find(i => i.code === this.state.storeCode);
+    //   console.log(store);
+    //   result = (<div>123</div>)
+    // }
+    // return result;
+    return (this.state.showMap && this.state.storeCode === '' && listStore.length === 0) ? null : (
+      <div className="col-12 col-md-11">
+        <GGMapsWithDirection store={listStore.find(i => i.code === this.state.storeCode)} 
+          onEmittedAddress={this.onReceivedValue} onEmittedDistance={this.onReceivedValue} onEmittedShippingPrice={this.onReceivedValue}/>
+      </div>
+    );
+  }
+
+  onReceivedSelectValue = (event) => {
+    this.setState({
+      storeCode: event.value,
+      addressShipping: '',
+      distance: '',
+      shippingPrice: '',
+      showMap: false,
+    });
+    setTimeout(() => {
+      console.log('timeout',event);
+      this.setState({
+        showMap: true,
+      });
+    },1000);
+  }
+
   render() {
     return (
       <div id="check-out" className="container-fluid">
@@ -65,18 +108,22 @@ class Checkout extends Component {
               </div>
               <div className="col-12 col-md-11">
                 <div className="row">
-                  <div className="col-12 col-md-7">
-                    <CustomInput type='datetime-local' required={true}
+                  <div className="col-12 col-md-6">
+                    {/* <CustomInput type='datetime-local' required={true}
                       placeholder="Thời gian giao hàng" name="dateUpdated" value={this.state.dateUpdated}
-                      maxLength={12} onEmittedValue={this.onReceivedValue} />
+                      maxLength={12} onEmittedValue={this.onReceivedValue} /> */}
+                    <CustomSelect required={true}
+                      placeholder="Tại cửa hàng" name="storeCode" value={this.state.storeCode}
+                      data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
                   </div>
-                  <div className="col-12 col-md-5">
+                  <div className="col-12 col-md-6">
                     <CustomInput type='text' required={true}
                       placeholder="Số điện thoại" name="phone" value={this.state.phone}
                       maxLength={12} onEmittedValue={this.onReceivedValue} />
                   </div>
                 </div>
               </div>
+              {this.showGGMaps()}
             </div>
           </div>
 
@@ -93,6 +140,14 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     order: state.orderReducer,
+    listStore: state.storeReducer,
   }
 }
-export default connect(mapStateToProps, null)(Checkout);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAllStore: () => {
+      dispatch(fetAllStore());
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

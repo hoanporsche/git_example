@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import _ from "lodash";
 import { compose, withProps, lifecycle } from "recompose";
 import {
@@ -171,4 +171,11 @@ const calculatedDistance = (distance) => {
   return calculated;
 }
 
+GGMapsWithDirection.propTypes = {
+  store: PropTypes.shape({
+    lat: PropTypes.any.isRequired,
+    lng: PropTypes.any.isRequired,
+    address: PropTypes.string.isRequired,
+  }).isRequired,
+}
 export default GGMapsWithDirection;

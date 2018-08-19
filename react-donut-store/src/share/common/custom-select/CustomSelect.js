@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class CustomSelect extends Component {
 
@@ -28,15 +29,11 @@ class CustomSelect extends Component {
   }
 
   showRequired = () => {
-    if (this.state.required === true) {
-      return (
-        <span className="field-required">
-          *Xin hãy chọn {this.props.placeholder}
-        </span>
-      )
-    } else {
-      return null;
-    }
+    return this.state.required ? (
+      <span className="field-required">
+        *Xin hãy chọn {this.props.placeholder}
+      </span>
+    ) : null;
   }
 
   showOption() {
@@ -72,4 +69,11 @@ class CustomSelect extends Component {
   }
 }
 
+CustomSelect.propTypes = {
+  required: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+  name: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired,
+}
 export default CustomSelect;
