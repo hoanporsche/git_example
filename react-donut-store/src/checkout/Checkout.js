@@ -9,6 +9,7 @@ import CustomSelect from '../share/common/custom-select/CustomSelect';
 import { fetAllStore } from '../redux/action/store.constant';
 import GGMapsWithDirection from '../main/component/gg-maps/GGMapsWithDirection';
 import NumberFormat from 'react-number-format';
+import { isFormValid } from '../share/common/custom-validation';
 
 const listBreadcrumb = [
   {
@@ -34,14 +35,15 @@ class Checkout extends Component {
     super(props);
     this.state = {
       dateUpdated: '',
-      nameCreated: '',
-      phone: '',
-      storeCode: 'STOsfgtjnm',
-      addressShipping: '',
-      distance: '',
-      shippingPrice: '',
-      totalPrice: '',
+      nameCreated: { value: '', valid: false },
+      phone: { value: '', valid: false },
+      storeCode: { value: 'STOsfgtjnm', valid: false },
+      addressShipping: { value: '', valid: false },
+      distance: { value: '', valid: false },
+      shippingPrice: { value: '', valid: false },
+      totalPrice: +this.props.quantity.totalPrice,
       showMap: true,
+      wasSubmitted: false,
     }
   }
 
@@ -52,15 +54,16 @@ class Checkout extends Component {
 
   onReceivedValue = (event) => {
     this.setState({
-      [event.name]: event.value,
+      [event.name]: { value: event.value, valid: event.valid },
+      wasSubmitted: false,
     });
   }
 
   showGGMaps = () => {
     const { listStore } = this.props;
-    return (listStore.length > 0 && this.state.storeCode !== '' && this.state.showMap) ? (
+    return (listStore.length > 0 && this.state.storeCode.value !== '' && this.state.showMap) ? (
       <div className="col-12 col-lg-11">
-        <GGMapsWithDirection store={listStore.find(i => i.code === this.state.storeCode)}
+        <GGMapsWithDirection store={listStore.find(i => i.code === this.state.storeCode.value)}
           onEmittedAddress={this.onReceivedValue} onEmittedDistance={this.onReceivedValue} onEmittedShippingPrice={this.onReceivedValue} />
       </div>
     ) : null;
@@ -68,25 +71,25 @@ class Checkout extends Component {
 
   onReceivedSelectValue = (event) => {
     this.setState({
-      storeCode: event.value,
-      addressShipping: '',
-      distance: '',
-      shippingPrice: '',
+      storeCode: { value: event.value, valid: event.valid },
+      addressShipping: { value: '', valid: false },
+      distance: { value: '', valid: false },
+      shippingPrice: { value: '', valid: false },
       showMap: false,
-    });
-    setTimeout(() => {
+    }, () => {
       this.setState({
         showMap: true,
+        wasSubmitted: false,
       });
-    }, 100);
+    });
   }
 
   showInfoShipment = () => {
-    return (this.state.addressShipping !== '') ? (
+    return (this.state.addressShipping.value !== '') ? (
       <div className="row">
-        <p className="col-12">Địa chỉ: {this.state.addressShipping}</p>
-        <p className="col-6">Phí vận chuyển: <NumberFormat value={this.state.shippingPrice} displayType={'text'} thousandSeparator={true} />₫</p>
-        <p className="col-6">Khoảng cách: {this.state.distance}</p>
+        <p className="col-12">Địa chỉ: {this.state.addressShipping.value}</p>
+        <p className="col-6">Phí vận chuyển: <NumberFormat value={this.state.shippingPrice.value} displayType={'text'} thousandSeparator={true} />₫</p>
+        <p className="col-6">Khoảng cách: {this.state.distance.value}</p>
       </div>
     ) : null;
   }
@@ -115,17 +118,16 @@ class Checkout extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
-    
-  }
-
-  checkFormValid = () => {
-    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice, totalPrice} = this.state;
-    // if 
+    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice, totalPrice } = this.state;
+    if(!isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
+      this.setState({
+        wasSubmitted: true
+      })
+    };
   }
 
   render() {
-    const totalPrice = +this.props.quantity.totalPrice + +this.state.shippingPrice;
+    const totalPrice = +this.props.quantity.totalPrice + +this.state.shippingPrice.value;
     return (
       <div id="check-out" className="container-fluid">
         <div className="row">
@@ -140,21 +142,21 @@ class Checkout extends Component {
                 <h5>Thông tin giao hàng</h5>
               </div>
               <div className="col-12 col-lg-11">
-                <CustomInput type='text' placeholder="Tên của bạn" name="nameCreated" value={this.state.nameCreated}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} />
+                <CustomInput type='text' placeholder="Tên của bạn" name="nameCreated" value={this.state.nameCreated.value}
+                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted}/>
               </div>
               <div className="col-12 col-lg-11">
                 <div className="row">
                   <div className="col-12 col-md-6">
-                    <CustomInput type='text' placeholder="Số điện thoại" name="phone" value={this.state.phone}
-                      maxLength={12} onEmittedValue={this.onReceivedValue} />
+                    <CustomInput type='text' placeholder="Số điện thoại" name="phone" value={this.state.phone.value}
+                      maxLength={12} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted}/>
                   </div>
                   <div className="col-12 col-md-6">
                     {/* <CustomInput type='datetime-local' required={true}
                       placeholder="Thời gian giao hàng" name="dateUpdated" value={this.state.dateUpdated}
                       maxLength={12} onEmittedValue={this.onReceivedValue} /> */}
-                    <CustomSelect placeholder="Tại cửa hàng" name="storeCode" value={this.state.storeCode}
-                      data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
+                    <CustomSelect placeholder="Tại cửa hàng" name="storeCode" value={this.state.storeCode.value}
+                      data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} wasSubmitted={this.state.wasSubmitted}/>
                   </div>
                 </div>
               </div>
@@ -164,7 +166,7 @@ class Checkout extends Component {
               {this.showGGMaps()}
               <div className="col-12 col-lg-11 padding-top1">
                 <div className="row">
-                  <div className="col-6" style={{paddingTop: '10px'}}>
+                  <div className="col-6" style={{ paddingTop: '10px' }}>
                     <NavLink to={ROUTING_URL.ORDER}><span><i className="fas fa-angle-left"></i> {MENU_NAME.ORDER}</span></NavLink>
                   </div>
                   <div className="col-6">
@@ -188,7 +190,7 @@ class Checkout extends Component {
                 </div>
                 <div className="row">
                   <div className="col-6"><span>Phí vận chuyển:</span></div>
-                  <div className="col-6"><span className="float-right"><NumberFormat value={(this.state.shippingPrice === '') ? 0 : this.state.shippingPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
+                  <div className="col-6"><span className="float-right"><NumberFormat value={(this.state.shippingPrice.value === '') ? 0 : this.state.shippingPrice.value} displayType={'text'} thousandSeparator={true} />₫</span></div>
                 </div>
                 <hr />
                 <div className="row" style={{ color: 'black' }}>

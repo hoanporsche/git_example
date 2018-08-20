@@ -8,3 +8,11 @@ export const isPhoneNumber = (value) => {
           'Số điện thoại phải từ 8 đến 11 ký tự và bắt đầu bằng số 0' : true;
      
 }
+
+export const isFormValid = (formArray) => {
+  let fieldNotValid = 0;
+  formArray.forEach(i => {
+    if (!i.valid) fieldNotValid++;
+  });
+  return (fieldNotValid === 0) ? true : false;
+}

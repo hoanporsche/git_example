@@ -94,3 +94,7 @@ input, select {
 .field-required {
   color: red;
 }
+
+.border-field-required {
+  border: 2px solid red;
+}

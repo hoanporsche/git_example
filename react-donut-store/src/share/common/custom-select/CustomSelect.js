@@ -8,6 +8,7 @@ class CustomSelect extends Component {
     this.state = {
       valid: true,
       stringError: '',
+      value: '',
     };
   }
 
@@ -21,6 +22,7 @@ class CustomSelect extends Component {
       stringError = this.props.placeholder;
     }
     this.setState({
+      value: target.name,
       valid: valid,
       stringError: stringError,
     }, () => {
@@ -32,6 +34,15 @@ class CustomSelect extends Component {
     });
   }
 
+  componentWillReceiveProps({ wasSubmitted }) {
+    //Dùng để xác định khi form đã ấn submit nhưng chưa nhập value, khi đó giá trị trống, ta sẽ thông báo từng thẻ input lỗi 1 ra view
+    //Khi nhập lại giá trị thì tự giác mất cảnh báo
+    if (wasSubmitted && this.state.value.toString().trim() === '') {
+      this.setState({
+        valid: false,
+      })
+    }
+  }
   showRequired = () => {
     return this.state.valid ? null : (
       <span className="field-required">
@@ -59,7 +70,7 @@ class CustomSelect extends Component {
   render() {
     return (
       <div className="form-group">
-        <select className="form-control"
+        <select className={`form-control ${!this.state.valid ? 'border-field-required' : ''}`}
           onChange={this.onChange}
           value={this.props.value}
           name={this.props.name}>
