@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.support.OrderJson;
 import ds.upgrade.model.support.StoreJson;
 import ds.upgrade.service.CategoryService;
 import ds.upgrade.service.ItemService;
@@ -63,5 +66,17 @@ public class MainRestController {
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+  
+  @PostMapping(AppConstant.MODEL.ORDER_MODEL + AppConstant.API_URL.CREATE)
+  public ResponseEntity<?> createNewOrder(@RequestBody OrderJson orderJson) {
+    try {
+      
+        return new ResponseEntity<OrderJson>(orderJson, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+//    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

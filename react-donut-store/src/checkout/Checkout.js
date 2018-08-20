@@ -10,6 +10,7 @@ import { fetAllStore } from '../redux/action/store.constant';
 import GGMapsWithDirection from '../main/component/gg-maps/GGMapsWithDirection';
 import NumberFormat from 'react-number-format';
 import { isFormValid } from '../share/common/custom-validation';
+import { createOrder } from './OrderApiCaller';
 
 const listBreadcrumb = [
   {
@@ -37,11 +38,10 @@ class Checkout extends Component {
       dateUpdated: '',
       nameCreated: { value: '', valid: false },
       phone: { value: '', valid: false },
-      storeCode: { value: 'STOsfgtjnm', valid: false },
+      storeCode: { value: 'STOsfgtjnm', valid: true },
       addressShipping: { value: '', valid: false },
       distance: { value: '', valid: false },
       shippingPrice: { value: '', valid: false },
-      totalPrice: +this.props.quantity.totalPrice,
       showMap: true,
       wasSubmitted: false,
     }
@@ -55,7 +55,6 @@ class Checkout extends Component {
   onReceivedValue = (event) => {
     this.setState({
       [event.name]: { value: event.value, valid: event.valid },
-      wasSubmitted: false,
     });
   }
 
@@ -79,17 +78,20 @@ class Checkout extends Component {
     }, () => {
       this.setState({
         showMap: true,
-        wasSubmitted: false,
       });
     });
   }
 
   showInfoShipment = () => {
-    return (this.state.addressShipping.value !== '') ? (
+    return this.state.addressShipping.valid ? (
       <div className="row">
         <p className="col-12">Địa chỉ: {this.state.addressShipping.value}</p>
         <p className="col-6">Phí vận chuyển: <NumberFormat value={this.state.shippingPrice.value} displayType={'text'} thousandSeparator={true} />₫</p>
         <p className="col-6">Khoảng cách: {this.state.distance.value}</p>
+      </div>
+    ) : (!this.state.addressShipping.valid && this.state.wasSubmitted) ? (
+      <div className="row">
+        <p className="col-12 field-required">Vui lòng nhập địa chỉ của bạn</p>
       </div>
     ) : null;
   }
@@ -118,11 +120,26 @@ class Checkout extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice, totalPrice } = this.state;
-    if(!isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
+    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
+    if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
+      const newOrder = {
+        nameCreated: nameCreated.value,
+        phone: phone.value,
+        storeCode: storeCode.value,
+        addressShipping: addressShipping.value,
+        distance: distance.value,
+        shippingPrice: shippingPrice.value,
+        totalPrice: +this.props.quantity.totalPrice + +this.state.shippingPrice.value,
+      }
+      createOrder(newOrder).then((response) => {
+        console.log(response);
+      }).catch(e => {
+        console.log(e);
+      });
+    } else {
       this.setState({
-        wasSubmitted: true
-      })
+        wasSubmitted: true,
+      });
     };
   }
 
@@ -143,20 +160,20 @@ class Checkout extends Component {
               </div>
               <div className="col-12 col-lg-11">
                 <CustomInput type='text' placeholder="Tên của bạn" name="nameCreated" value={this.state.nameCreated.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted}/>
+                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
               </div>
               <div className="col-12 col-lg-11">
                 <div className="row">
                   <div className="col-12 col-md-6">
                     <CustomInput type='text' placeholder="Số điện thoại" name="phone" value={this.state.phone.value}
-                      maxLength={12} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted}/>
+                      maxLength={12} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
                   </div>
                   <div className="col-12 col-md-6">
                     {/* <CustomInput type='datetime-local' required={true}
                       placeholder="Thời gian giao hàng" name="dateUpdated" value={this.state.dateUpdated}
                       maxLength={12} onEmittedValue={this.onReceivedValue} /> */}
                     <CustomSelect placeholder="Tại cửa hàng" name="storeCode" value={this.state.storeCode.value}
-                      data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} wasSubmitted={this.state.wasSubmitted}/>
+                      data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} wasSubmitted={this.state.wasSubmitted} />
                   </div>
                 </div>
               </div>

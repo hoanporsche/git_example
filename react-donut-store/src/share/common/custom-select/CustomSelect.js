@@ -8,7 +8,7 @@ class CustomSelect extends Component {
     this.state = {
       valid: true,
       stringError: '',
-      value: '',
+      value: this.props.value,
     };
   }
 
@@ -84,6 +84,7 @@ class CustomSelect extends Component {
 }
 
 CustomSelect.propTypes = {
+  wasSubmitted: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,

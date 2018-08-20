@@ -74,6 +74,7 @@ const GGMapsWithDirection = compose(
           this.props.onEmittedAddress({
             name: 'addressShipping',
             value: nextMarkers[0].address,
+            valid: true,
           })
           const origin = new window.google.maps.LatLng(+marker1.position.lat, +marker1.position.lng);
           const destination = new window.google.maps.LatLng(+nextMarkers[0].position.lat(), +nextMarkers[0].position.lng());
@@ -105,11 +106,13 @@ const GGMapsWithDirection = compose(
               //Emitted values
               this.props.onEmittedDistance({
                 name: 'distance',
-                value: distance.text
+                value: distance.text,
+                valid: true,
               });
               this.props.onEmittedShippingPrice({
                 name: 'shippingPrice',
                 value: calculatedDistance(distance),
+                valid: true,
               })
             } else {
               console.log('error calculating distance', result);
@@ -136,7 +139,7 @@ const GGMapsWithDirection = compose(
     >
       <input
         type="text"
-        placeholder="Vui lòng chọn địa chỉ của bạn"
+        placeholder="*Vui lòng chọn địa chỉ của bạn"
         style={{
           boxSizing: `border-box`,
           border: `1px solid transparent`,

@@ -71,6 +71,7 @@ class CustomInput extends Component {
 }
 
 CustomInput.propType = {
+  wasSubmitted: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
