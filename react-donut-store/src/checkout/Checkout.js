@@ -59,7 +59,7 @@ class Checkout extends Component {
   showGGMaps = () => {
     const { listStore } = this.props;
     return (listStore.length > 0 && this.state.storeCode !== '' && this.state.showMap) ? (
-      <div className="col-12 col-xl-11">
+      <div className="col-12 col-lg-11">
         <GGMapsWithDirection store={listStore.find(i => i.code === this.state.storeCode)}
           onEmittedAddress={this.onReceivedValue} onEmittedDistance={this.onReceivedValue} onEmittedShippingPrice={this.onReceivedValue} />
       </div>
@@ -97,23 +97,36 @@ class Checkout extends Component {
       quantities.map((quantity, index) => {
         return (
           <div key={index} className="row single-row">
-            <div className="col-3 quantity-item" style={{ backgroundImage: `url(${quantity.item.picture[0]})` }}></div>
-            <div className="col-6 quantity-item"><span>{quantity.item.name}</span></div>
-            <div className="col-3 quantity-item float-right"><span><NumberFormat value={quantity.price} displayType={'text'} thousandSeparator={true} />₫</span></div>
+            <div className="col-3">
+              <div className="quantity-item" style={{ backgroundImage: `url(${quantity.item.picture[0]})` }}>
+                <span className="product-thumbnail-quantity" aria-hidden="true">{quantity.quantity}</span>
+              </div>
+            </div>
+            <div className="col-6">
+              <h5>{quantity.item.name}</h5>
+              <p>{quantity.item.description}</p>
+            </div>
+            <div className="col-3"><span className="float-right"><NumberFormat value={quantity.price} displayType={'text'} thousandSeparator={true} />₫</span></div>
           </div>
         )
       })
     ) : null;
   }
 
+  onSubmit = (event) => {
+    event.preventDefault();
+    console.log(this.state);
+  }
+
   render() {
+    const totalPrice = +this.props.quantity.totalPrice + +this.state.shippingPrice;
     return (
       <div id="check-out" className="container-fluid">
         <div className="row">
 
-          <div className="container buyer-info">
+          <form onSubmit={this.onSubmit} className="container buyer-info">
             <div className="buyer-header">
-              <h4>Bánh rán Hoàn</h4>
+              <h3>Bánh rán Hoàn</h3>
               <Breadcrumb listBreadcrumb={listBreadcrumb} />
             </div>
             <div className="row buyer-step">
@@ -143,39 +156,41 @@ class Checkout extends Component {
                 </div>
               </div>
               <div className="col-12 col-lg-11">
-                <hr />
                 {this.showInfoShipment()}
               </div>
               {this.showGGMaps()}
-              <div className="col-12 col-lg-11">
+              <div className="col-12 col-lg-11 padding-top1">
                 <div className="row">
-                  <div className="col-6">
-                    <NavLink to={ROUTING_URL.ORDER}><i className="fas fa-angle-left"></i> {MENU_NAME.ORDER}</NavLink>
+                  <div className="col-6" style={{paddingTop: '10px'}}>
+                    <NavLink to={ROUTING_URL.ORDER}><span><i className="fas fa-angle-left"></i> {MENU_NAME.ORDER}</span></NavLink>
                   </div>
                   <div className="col-6">
+                    <div className="float-right">
+                      <button type="submit" className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
 
-          <div className="row slide-item">
+          <div className="container slide-item">
             <div className="row">
               <div className="col-12 col-lg-11 offset-lg-1">
                 {this.showQuantites()}
                 <hr />
                 <div className="row">
-                  <div className="col-6">Tạm tính:</div>
-                  <div className="col-6"><span><NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
+                  <div className="col-6"><span>Tạm tính:</span></div>
+                  <div className="col-6"><span className="float-right"><NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
                 </div>
                 <div className="row">
-                  <div className="col-6">Phí vận chuyển:</div>
-                  <div className="col-6"><span><NumberFormat value={(this.state.shippingPrice === '') ? 0 : this.state.shippingPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
+                  <div className="col-6"><span>Phí vận chuyển:</span></div>
+                  <div className="col-6"><span className="float-right"><NumberFormat value={(this.state.shippingPrice === '') ? 0 : this.state.shippingPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
                 </div>
                 <hr />
-                <div className="row">
-                  <div className="col-6">Tổng cộng:</div>
-                  <div className="col-6"><span><NumberFormat value={(this.state.totalPrice === '') ? 0 : this.state.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
+                <div className="row" style={{ color: 'black' }}>
+                  <div className="col-6"><h5>Tổng cộng:</h5></div>
+                  <div className="col-6"><h5 className="float-right"><NumberFormat value={totalPrice} displayType={'text'} thousandSeparator={true} />₫</h5></div>
                 </div>
               </div>
             </div>

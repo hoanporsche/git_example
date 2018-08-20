@@ -17,7 +17,7 @@ const GGMapsWithDirection = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div className="gg-maps" />,
+    containerElement: <div className="gg-maps-checkout" />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,
@@ -162,7 +162,7 @@ const GGMapsWithDirection = compose(
 
 const calculatedDistance = (distance) => {
   let calculated = 0;
-  if (distance.value < 4000) {
+  if (distance.value > 3000 && distance.value < 4000) {
     calculated = 12000;
   }
   if (distance.value > 4000) {

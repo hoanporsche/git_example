@@ -68,11 +68,6 @@ input, select {
     height: 200px;
     border-radius: 10px;
   }
-  .config-input-searchbox {
-    left: 0.7em !important;
-    z-index: 1000 !important;
-    margin-top: 1em !important;
-  }
 }
 
 .page-border {
