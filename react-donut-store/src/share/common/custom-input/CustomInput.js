@@ -1,51 +1,50 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isPhoneNumber } from '../custom-validation';
 
 class CustomInput extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      required: false,
+      valid: true,
+      stringError: '',
     };
-    this.onChange = this.onChange.bind(this);
-    this.showRequired = this.showRequired.bind(this);
   }
 
-  onChange(event) {
-    let target = event.target;
-    let value = target.type === 'checkbox' ? target.checked : target.value.toString().trim();
-    this.setState({
-      required: false,
-    });
-    if ((value.toString().trim() === '' || value === false) && this.props.required === true) {
-      this.setState({
-        required: true,
-      });
+  onChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value.toString().trim();
+    let valid = true;
+    let stringError = '';
+    if ((value.toString().trim() === '') || (target.name === 'phone' && isPhoneNumber(value) !== true)) {
+      valid = false;
+      stringError = (target.name === 'phone' && isPhoneNumber(value) !== true) ? isPhoneNumber(value) : this.props.placeholder;
     }
-    this.props.onEmittedValue({
-      name: target.name,
-      value: value,
+    this.setState({
+      valid: valid,
+      stringError: stringError,
+    },() => {
+      this.props.onEmittedValue({
+        name: target.name,
+        value: value,
+        valid: this.state.valid,
+      });
     });
   }
 
   showRequired = () => {
-    if (this.state.required === true) {
-      return (
+    return this.state.valid ? null : (
         <span className="field-required">
-          *Xin hãy nhập {this.props.placeholder}
+          *Xin hãy nhập {this.state.stringError}
         </span>
-      )
-    } else {
-      return null;
-    }
+      );
   }
   render() {
-    const iconRequired = this.props.required ? '*' : '';
     return (
       <div className="form-group">
         <input type={this.props.type} className="form-control"
-          placeholder={iconRequired + this.props.placeholder}
+          placeholder={'*' + this.props.placeholder}
           onChange={this.onChange}
           name={this.props.name}
           value={this.props.value}
@@ -58,7 +57,6 @@ class CustomInput extends Component {
 
 CustomInput.propType = {
   type: PropTypes.string.isRequired,
-  required: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,

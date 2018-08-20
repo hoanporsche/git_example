@@ -116,6 +116,12 @@ class Checkout extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
+    
+  }
+
+  checkFormValid = () => {
+    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice, totalPrice} = this.state;
+    // if 
   }
 
   render() {
@@ -134,23 +140,20 @@ class Checkout extends Component {
                 <h5>Thông tin giao hàng</h5>
               </div>
               <div className="col-12 col-lg-11">
-                <CustomInput type='text' required={true}
-                  placeholder="Tên của bạn" name="nameCreated" value={this.state.nameCreated}
+                <CustomInput type='text' placeholder="Tên của bạn" name="nameCreated" value={this.state.nameCreated}
                   maxLength={20} onEmittedValue={this.onReceivedValue} />
               </div>
               <div className="col-12 col-lg-11">
                 <div className="row">
                   <div className="col-12 col-md-6">
-                    <CustomInput type='text' required={true}
-                      placeholder="Số điện thoại" name="phone" value={this.state.phone}
+                    <CustomInput type='text' placeholder="Số điện thoại" name="phone" value={this.state.phone}
                       maxLength={12} onEmittedValue={this.onReceivedValue} />
                   </div>
                   <div className="col-12 col-md-6">
                     {/* <CustomInput type='datetime-local' required={true}
                       placeholder="Thời gian giao hàng" name="dateUpdated" value={this.state.dateUpdated}
                       maxLength={12} onEmittedValue={this.onReceivedValue} /> */}
-                    <CustomSelect required={true}
-                      placeholder="Tại cửa hàng" name="storeCode" value={this.state.storeCode}
+                    <CustomSelect placeholder="Tại cửa hàng" name="storeCode" value={this.state.storeCode}
                       data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
                   </div>
                 </div>

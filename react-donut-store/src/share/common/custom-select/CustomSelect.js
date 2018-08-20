@@ -6,37 +6,41 @@ class CustomSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      required: false,
+      valid: true,
+      stringError: '',
     };
-
-    this.onChange = this.onChange.bind(this);
-    this.showRequired = this.showRequired.bind(this);
-    this.showOption = this.showOption.bind(this);
   }
 
-  onChange(event) {
-    let target = event.target;
-    let value = target.value;
-    this.setState({
-      required: false,
-    });
-    if (value.toString().trim() === '' && this.props.required === true) {
-      this.setState({
-        required: true,
-      });
+  onChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value.toString().trim();
+    let valid = true;
+    let stringError = '';
+    if (value.toString().trim() === '') {
+      valid = false;
+      stringError = this.props.placeholder;
     }
-    this.props.onEmittedValue(target);
+    this.setState({
+      valid: valid,
+      stringError: stringError,
+    }, () => {
+      this.props.onEmittedValue({
+        name: target.name,
+        value: value,
+        valid: this.state.valid,
+      });
+    });
   }
 
   showRequired = () => {
-    return this.state.required ? (
+    return this.state.valid ? null : (
       <span className="field-required">
         *Xin hãy chọn {this.props.placeholder}
       </span>
-    ) : null;
+    );
   }
 
-  showOption() {
+  showOption = () => {
     let result = null;
     if (this.props.data.length > 0) {
       result = this.props.data.map((data, index) => {
@@ -53,14 +57,13 @@ class CustomSelect extends Component {
     return result;
   }
   render() {
-    const iconRequired = this.props.required ? '*' : '';
     return (
       <div className="form-group">
         <select className="form-control"
           onChange={this.onChange}
           value={this.props.value}
           name={this.props.name}>
-          <option value="">{iconRequired + this.props.placeholder}</option>
+          <option value="">{'*' + this.props.placeholder}</option>
           {this.showOption()}
         </select>
         {this.showRequired()}
@@ -70,7 +73,6 @@ class CustomSelect extends Component {
 }
 
 CustomSelect.propTypes = {
-  required: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
