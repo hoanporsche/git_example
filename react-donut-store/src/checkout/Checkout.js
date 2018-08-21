@@ -11,6 +11,8 @@ import GGMapsWithDirection from '../main/component/gg-maps/GGMapsWithDirection';
 import NumberFormat from 'react-number-format';
 import { isFormValid } from '../share/common/custom-validation';
 import { createOrder } from './OrderApiCaller';
+import { Helper } from '../share/common/loader/Loader';
+import { capchaKey } from './../enviroment';
 
 const listBreadcrumb = [
   {
@@ -44,6 +46,7 @@ class Checkout extends Component {
       shippingPrice: { value: '', valid: false },
       showMap: true,
       wasSubmitted: false,
+      isSubmitting: false,
     }
   }
 
@@ -123,6 +126,7 @@ class Checkout extends Component {
     const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
     if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
       const newOrder = {
+        capchaKey: capchaKey,
         nameCreated: nameCreated.value,
         phone: phone.value,
         storeCode: storeCode.value,
@@ -131,7 +135,15 @@ class Checkout extends Component {
         shippingPrice: shippingPrice.value,
         totalPrice: +this.props.quantity.totalPrice + +this.state.shippingPrice.value,
       }
+      Helper(true);
+      this.setState({
+        isSubmitting: true,
+      })
       createOrder(newOrder).then((response) => {
+        this.setState({
+          isSubmitting: false,
+        })
+        Helper(false);
         console.log(response);
       }).catch(e => {
         console.log(e);
@@ -150,6 +162,10 @@ class Checkout extends Component {
         <div className="row">
 
           <form onSubmit={this.onSubmit} className="container buyer-info">
+            <div id='recaptcha' className="g-recaptcha"
+              data-sitekey="6LfDFmsUAAAAALh_ZjiQ6P7sYDOp3B55TQvolf5Z"
+              data-callback="onCallReCapcha"
+              data-size="invisible"></div>
             <div className="buyer-header">
               <h3>Bánh rán Hoàn</h3>
               <Breadcrumb listBreadcrumb={listBreadcrumb} />
@@ -188,7 +204,7 @@ class Checkout extends Component {
                   </div>
                   <div className="col-6">
                     <div className="float-right">
-                      <button type="submit" className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
+                      <button type="submit" disabled={this.state.isSubmitting} className="g-recaptcha btn btn-primary" data-sitekey="6LfDFmsUAAAAALh_ZjiQ6P7sYDOp3B55TQvolf5Z" data-size="invisible" data-callback="onCallReCapcha"><span>Xác nhận đặt hàng</span></button>
                     </div>
                   </div>
                 </div>

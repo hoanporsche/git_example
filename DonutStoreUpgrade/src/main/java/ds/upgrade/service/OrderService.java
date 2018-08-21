@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Order;
+import ds.upgrade.model.support.OrderJson;
 
 public interface OrderService {
 
@@ -15,4 +16,6 @@ public interface OrderService {
   Order findOne(Long id);
   
   Order createOrUpdate(Order order);
+  
+  Order create(OrderJson orderJson);
 }

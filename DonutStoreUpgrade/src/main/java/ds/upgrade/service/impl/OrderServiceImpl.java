@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Order;
+import ds.upgrade.model.support.OrderJson;
 import ds.upgrade.repository.OrderRepository;
 import ds.upgrade.repository.specification.OrderSpecification;
 import ds.upgrade.service.OrderService;
@@ -69,6 +70,11 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Order createOrUpdate(Order order) {
     // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Order create(OrderJson orderJson) {
     return null;
   }
 

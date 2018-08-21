@@ -2,17 +2,36 @@ package ds.upgrade.model.support;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class OrderJson implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
 
+  @NotEmpty
+  private String capchaKey;
+  @NotEmpty
   private String nameCreated;
+  @NotEmpty
   private String phone;
+  @NotEmpty
   private String storeCode;
+  @NotEmpty
   private String addressShipping;
+  @NotEmpty
   private String distance;
+  @NotEmpty
   private String shippingPrice;
+  @NotEmpty
   private String totalPrice;
+
+  public String getCapchaKey() {
+    return capchaKey;
+  }
+
+  public void setCapchaKey(String capchaKey) {
+    this.capchaKey = capchaKey;
+  }
 
   public String getNameCreated() {
     return nameCreated;

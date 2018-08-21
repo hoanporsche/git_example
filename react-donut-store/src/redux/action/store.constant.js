@@ -8,7 +8,7 @@ export const fetAllStore = () => {
     Helper(true);
     findAllStore().then(({data}) => {
       dispatch(actFetchStore(data));
-      Helper(true);
+      Helper(false);
     }).catch(error => console.log(error));
   }
 }
