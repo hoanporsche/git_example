@@ -15,6 +15,9 @@ import * as Helper from '../share/common/helper/Helper';
 import { capchaKey } from '../enviroment';
 import { LOCAL_STORAGE } from '../share/constant/local-storage.constant';
 import RedirectQueryParams from '../share/util/RedirectQueryParams';
+import ReCAPTCHA from "react-google-recaptcha";
+
+const recaptchaRef = React.createRef();
 
 const listBreadcrumb = [
   {
@@ -35,18 +38,7 @@ const listBreadcrumb = [
 ]
 
 class Checkout extends Component {
-  onLoad = () => {
-    if (window.grecaptcha) {
-      window.grecaptcha.render("recaptcha", {
-        sitekey: capchaKey,
-        size: "invisible",
-        callback: this.onCaptcheCompleted,
-        render: "explicit",
-      });
-    }
-  };
-  onCaptcheCompleted = e => {
-    //do what ever you want
+  onCaptchaCompleted = e => {
     const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
     const newOrder = {
       uvresp: e,
@@ -65,7 +57,7 @@ class Checkout extends Component {
       })
       Helper.setLoading(false);
       localStorage.removeItem(LOCAL_STORAGE.ORDER);
-      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{name: 'orderCode', value: data}]));
+      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: data }]));
     }).catch(e => {
       console.log(e);
       Helper.setLoading(false);
@@ -94,7 +86,6 @@ class Checkout extends Component {
   componentDidMount() {
     if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
-    this.onLoad();
   }
 
   onReceivedValue = (event) => {
@@ -172,7 +163,6 @@ class Checkout extends Component {
         isSubmitting: true,
       });
       window.grecaptcha.execute();
-
     } else {
       this.setState({
         wasSubmitted: true,
@@ -185,7 +175,6 @@ class Checkout extends Component {
     return (
       <div id="check-out" className="container-fluid">
         <div className="row">
-          <div id='recaptcha'></div>
           <form onSubmit={this.onSubmit} className="container buyer-info">
             <div className="buyer-header">
               <h3>Bánh rán Hoàn</h3>
@@ -236,6 +225,12 @@ class Checkout extends Component {
           <div className="container slide-item">
             <div className="row">
               <div className="col-12 col-lg-11 offset-lg-1">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  size="invisible"
+                  sitekey={capchaKey}
+                  onChange={this.onCaptchaCompleted}
+                />
                 {this.showQuantites()}
                 <hr />
                 <div className="row">
