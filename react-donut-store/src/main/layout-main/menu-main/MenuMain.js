@@ -16,7 +16,11 @@ const menus = [
     name: MENU_NAME.CONTACT,
     to: ROUTING_URL.CONTACT,
     exact: false,
-  }
+  },{
+    name: MENU_NAME.DETAIL_ORDER,
+    to: ROUTING_URL.DETAIL_ORDER,
+    exact: false,
+  },
 ];
 
 // Viết như này thể hiện là 1 thẻ jsx,không phải là 1 function

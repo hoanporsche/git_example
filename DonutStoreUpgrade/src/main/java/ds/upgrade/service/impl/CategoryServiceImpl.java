@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +17,7 @@ import ds.upgrade.repository.CategoryRepository;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;
 import ds.upgrade.service.CategoryService;
-import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.service.CommonMethod;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -27,6 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
   private CategoryRepository categoryRepository;
   @Autowired
   private ItemRepository itemRepository;
+  @Autowired
+  private CommonMethod commonMethod;
 
   /**
    * @description: .
@@ -82,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService {
   public Category save(Category category) {
     if (category.getId() == null) {
       category.setDateCreated(new Date());
-      category.setCode("CAT" + RandomStringUtils.random(7, AppConstant.FORMAT.RANDOM_STRING_BASIC));
+      category.setCode(commonMethod.createCategoryCode());
     } else {
       Category foundCategory = categoryRepository.findOne(category.getId());
       if (foundCategory == null)

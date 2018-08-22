@@ -106,7 +106,7 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
   private List<MaterialDailyReport> saveOneByOneReport(List<MaterialDailyReport> listReport,
       String storeName) {
     List<MaterialDailyReport> listSavedReport = new ArrayList<>();
-    Store store = storeRepository.findByName(storeName);
+    Store store = storeRepository.findByname(storeName);
     for (int i = 0; i < listReport.size(); i++) {
       MaterialDailyReport savedReport = listReport.get(i);
       savedReport.setDateCreated(new Date());

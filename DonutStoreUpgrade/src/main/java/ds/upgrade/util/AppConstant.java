@@ -133,4 +133,11 @@ public class AppConstant {
     public static final int PHONE_MIN_LENGTH = 8;
     public static final String PHONE_FIRST_CHAR = "0";
   }
+  
+  public static class PREFIX_CODE {
+    public static final String ORDER_PREFIX = "ORD";
+    public static final String ITEM_PREFIX = "ITE";
+    public static final String CATEGORY_PREFIX = "CAT";
+    public static final String STORE_PREFIX = "STO";
+  }
 }

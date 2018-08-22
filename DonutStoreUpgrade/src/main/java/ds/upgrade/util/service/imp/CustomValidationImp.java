@@ -15,8 +15,8 @@ public class CustomValidationImp implements CustomValidation {
   public Boolean isPhoneNumber(String phone) {
     final String newValue = phone.trim();
 
-    return (newValue.length() > AppConstant.VALIDATION.PHONE_MIN_LENGTH
-        && newValue.length() < AppConstant.VALIDATION.PHONE_MAX_LENGTH
+    return (newValue.length() >= AppConstant.VALIDATION.PHONE_MIN_LENGTH
+        && newValue.length() <= AppConstant.VALIDATION.PHONE_MAX_LENGTH
         && AppConstant.VALIDATION.PHONE_FIRST_CHAR.equals(newValue.substring(0, 1))
         && StringUtils.isNumeric(newValue));
   }

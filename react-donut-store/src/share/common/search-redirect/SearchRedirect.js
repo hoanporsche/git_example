@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import RedirectQueryParams from '../../util/RedirectQueryParams';
+import { ROUTING_URL } from '../../constant/routing.constant';
 
 const SearchRedirect = () => (
   <Route render={({ history }) => (
@@ -9,7 +10,7 @@ const SearchRedirect = () => (
         placeholder="Bạn cần tìm gì?" maxLength="255" autoComplete="off" defaultValue=""
         onKeyPress={(event) => {
           if (event.key === 'Enter') {
-            history.push(RedirectQueryParams('', [
+            history.push(RedirectQueryParams(ROUTING_URL.HOME, [
               {
                 name: 'name',
                 value: event.target.value

@@ -3,7 +3,9 @@ package ds.upgrade.model.support;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -14,16 +16,21 @@ public class OrderJson implements Serializable {
   @NotEmpty
   private String uvresp;
   @NotEmpty
+  @Size(max = 40)
   private String nameCreated;
   @NotEmpty
+  @Size(max = 11)
   private String phone;
   @NotEmpty
   private String storeCode;
   @NotEmpty
+  @Size(max = 255)
   private String addressShipping;
   @NotEmpty
+  @Size(max = 20)
   private String distance;
   @NotNull
+  @Max(100000)
   private Long shippingPrice;
   @NotNull
   private Long totalPrice;

@@ -1,5 +1,8 @@
+/**
+ * Dang params la 1 array vi du: { name: 'code', value: 'abc'}
+ */
 const RedirectQueryParams = (to, params) => {
-  let url = `/${to}?`;
+  let url = `${to}?`;
   if (params.length > 0) {
     for (let i = 0; i < params.length; i++) {
       const suffix = (i === (params.length - 1)) ? '' : '&';

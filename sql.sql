@@ -205,19 +205,19 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- Table `donutstore`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
-  `id` VARCHAR(60) NOT NULL,
+  `code` VARCHAR(20) NOT NULL,
   `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `name_created` VARCHAR(40) NOT NULL,
   `phone` VARCHAR(18) NULL DEFAULT NULL,
   `store_id` BIGINT NOT NULL,
   `status_id` BIGINT NOT NULL,
-  `is_shipping` BOOLEAN NOT NULL,
+  `shipping` BOOLEAN NOT NULL,
   `address_shipping` VARCHAR(60) NULL DEFAULT NULL,
-  `distance` FLOAT,
-  `shipping_price` DECIMAL(10,0) NULL DEFAULT NULL,
-  `total_price` DECIMAL(10,0) NOT NULL,
-  PRIMARY KEY (`id`),
+  `distance` VARCHAR(20),
+  `shipping_price` BIGINT NULL DEFAULT NULL,
+  `total_price` BIGINT NOT NULL,
+  PRIMARY KEY (`code`),
   FOREIGN KEY (`status_id`) REFERENCES `donutstore`.`order_status`(`id`),
   FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`))
 ENGINE = InnoDB
@@ -228,12 +228,12 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 -- Table `donutstore`.`quantity`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`quantity` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `order_id` VARCHAR(60) NOT NULL,
+  `code` VARCHAR(22) NOT NULL,
+  `order_code` VARCHAR(20) NOT NULL,
   `item_id` BIGINT NOT NULL,
   `quantity` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`order_id`) REFERENCES `donutstore`.`orders`(`id`),
+  PRIMARY KEY (`code`),
+  FOREIGN KEY (`order_code`) REFERENCES `donutstore`.`orders`(`code`),
   FOREIGN KEY (`item_id`) REFERENCES `donutstore`.`item`(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;

@@ -1,6 +1,8 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,12 +12,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import ds.upgrade.model.Item;
 import ds.upgrade.model.Order;
+import ds.upgrade.model.OrderStatus;
+import ds.upgrade.model.Quantity;
+import ds.upgrade.model.Store;
 import ds.upgrade.model.support.OrderJson;
+import ds.upgrade.model.support.QuantityJson;
+import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.OrderRepository;
+import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.OrderSpecification;
 import ds.upgrade.service.OrderService;
+import ds.upgrade.service.QuantityService;
 import ds.upgrade.util.service.CapchaService;
+import ds.upgrade.util.service.CommonMethod;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -24,6 +35,14 @@ public class OrderServiceImpl implements OrderService {
   private OrderRepository orderRepository;
   @Autowired
   private CapchaService capchaService;
+  @Autowired
+  private CommonMethod commonMethod;
+  @Autowired
+  private StoreRepository storeRepository;
+  @Autowired
+  private ItemRepository itemRepository;
+  @Autowired
+  private QuantityService quantityService;
 
   /**
    * @description: .
@@ -79,22 +98,60 @@ public class OrderServiceImpl implements OrderService {
     return null;
   }
 
-  @SuppressWarnings("deprecation")
+  /**
+   * @description: save order. Kiểm tra có tồn tại store không, kiểm tra có tồn tại các item có tồn tại k
+   * kiểm tra save order có thành công không, kiểm tra các quantity có lưu thành công không.
+   * @author: VDHoan
+   * @created_date: Aug 22, 2018
+   * @param orderJson
+   * @param request
+   * @return nếu tất cả thành công thì trả về code của order, ngược lại trả ra null
+   */
   @Override
-  public Order create(OrderJson orderJson, HttpServletRequest request) {
+  public String createNewShipping(OrderJson orderJson, HttpServletRequest request) {
+    Order order = new Order();
     if (capchaService.checkCapcha(orderJson.getUvresp(), request)) {
       Date newDate = new Date();
-      Order order = new Order();
-      System.out.println(newDate.getYear());
-      order.setCode("ORD" + newDate.getYear()
-          + ((newDate.getMonth()+1) < 10 ? ("0" + (newDate.getMonth()+1)) : (newDate.getMonth()+1))
-          + (newDate.getDate() < 10 ? ("0" + newDate.getDate()) : newDate.getDate())
-          + (newDate.getHours() < 10 ? ("0" + newDate.getHours()) : newDate.getHours())
-          + (newDate.getMinutes() < 10 ? ("0" + newDate.getMinutes()) : newDate.getMinutes())
-          + (newDate.getSeconds() < 10 ? ("0" + newDate.getSeconds()) : newDate.getSeconds()));
-      System.out.println(order.getCode());
+      order.setCode(commonMethod.createOrderCode(newDate));
+      order.setDateCreated(newDate);
+      order.setDateUpdated(newDate);
+      order.setNameCreated(orderJson.getNameCreated().trim());
+      order.setPhone(orderJson.getPhone().trim());
+      
+      Store foundStore = storeRepository.findBycode(orderJson.getStoreCode());
+      if (foundStore == null || !foundStore.isEnabled())
+        return null;
+      order.setStoreId(foundStore);
+
+      order.setStatusId(new OrderStatus(1L));
+      order.setShipping(true);
+      order.setAddressShipping(orderJson.getAddressShipping().trim());
+      order.setDistance(orderJson.getDistance().trim());
+      order.setShippingPrice(orderJson.getShippingPrice());
+      order.setTotalPrice(orderJson.getTotalPrice());
+      
+      List<Quantity> listQuantity = new ArrayList<>();
+      List<QuantityJson> list = orderJson.getQuantities();
+      for(int i = 0; i < list.size(); i++ ) {
+       Item foundItem = itemRepository.findBycode(list.get(i).getItem().getCode());
+       if (foundItem == null || !foundItem.isEnabled()) {
+         return null;
+       } else {
+         Quantity quantity = new Quantity();
+         quantity.setCode(commonMethod.createQuantityCode(order.getCode(), i));
+         quantity.setItemId(foundItem);
+         quantity.setOrderCode(new Order(order.getCode()));
+         quantity.setQuantity(list.get(i).getQuantity());
+         listQuantity.add(quantity);
+       }
+      }
+      
+      order = orderRepository.save(order);
+      if (order == null) return null;
+      Boolean success = quantityService.saveList(listQuantity);
+      if (!success) return null;
     }
-    return null;
+    return order.getCode();
   }
 
 }

@@ -19,5 +19,5 @@ public interface OrderService {
   
   Order createOrUpdate(Order order);
   
-  Order create(OrderJson orderJson, HttpServletRequest request);
+  String createNewShipping(OrderJson orderJson, HttpServletRequest request);
 }

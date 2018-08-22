@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ds.upgrade.model.Order;
 import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.model.support.OrderJson;
@@ -86,8 +85,8 @@ public class MainRestController {
       if (result.hasErrors() || !customValidation.verifyOrderJson(orderJson))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
             HttpStatus.NOT_ACCEPTABLE);
-      Order order = orderService.create(orderJson, request);
-      return new ResponseEntity<Order>(order, HttpStatus.OK);
+      String orderCode = orderService.createNewShipping(orderJson, request);
+      return new ResponseEntity<String>(orderCode, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);

@@ -17,6 +17,7 @@ import ds.upgrade.repository.StaffRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.StoreSpecification;
 import ds.upgrade.service.StoreService;
+import ds.upgrade.util.service.CommonMethod;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -25,6 +26,8 @@ public class StoreServiceImpl implements StoreService {
   private StoreRepository storeRepository;
   @Autowired
   private StaffRepository staffRepository;
+  @Autowired
+  private CommonMethod commonMethod;
   
   /**
    * @description: .
@@ -84,11 +87,13 @@ public class StoreServiceImpl implements StoreService {
   public Store save(Store store) {
     if (store.getId() == null) {
       store.setDateCreated(new Date());
+      store.setCode(commonMethod.createStoreCode());
     } else {
       Store foundStore = storeRepository.findOne(store.getId());
       if (foundStore == null)
         return null;
       store.setDateCreated(foundStore.getDateCreated());
+      store.setCode(foundStore.getCode());
     }
     store.setDateUpdated(new Date());
     store.setEnabled(true);
@@ -132,7 +137,7 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Store findByName(String name) {
-    return storeRepository.findByName(name);
+    return storeRepository.findByname(name);
   }
 
 }

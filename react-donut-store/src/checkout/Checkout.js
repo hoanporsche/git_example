@@ -13,6 +13,8 @@ import { isFormValid } from '../share/common/custom-validation';
 import { createOrder } from './OrderApiCaller';
 import * as Helper from '../share/common/helper/Helper';
 import { capchaKey } from '../enviroment';
+import { LOCAL_STORAGE } from '../share/constant/local-storage.constant';
+import RedirectQueryParams from '../share/util/RedirectQueryParams';
 
 const listBreadcrumb = [
   {
@@ -57,15 +59,19 @@ class Checkout extends Component {
       totalPrice: +this.props.quantity.totalPrice + +this.state.shippingPrice.value,
       quantities: this.props.quantity.quantities,
     }
-    console.log(newOrder);
-    createOrder(newOrder).then((response) => {
+    createOrder(newOrder).then(({ data }) => {
       this.setState({
         isSubmitting: false,
       })
       Helper.setLoading(false);
-      console.log(response);
+      localStorage.removeItem(LOCAL_STORAGE.ORDER);
+      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{name: 'orderCode', value: data}]));
     }).catch(e => {
       console.log(e);
+      Helper.setLoading(false);
+      this.setState({
+        isSubmitting: false,
+      })
     });
   };
 
