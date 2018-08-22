@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export const Helper = (enable) => {
+export const setLoading = (enable) => {
   let body = $('body');
   if (enable) {
     $(body).addClass('m-page--loading-non-block')

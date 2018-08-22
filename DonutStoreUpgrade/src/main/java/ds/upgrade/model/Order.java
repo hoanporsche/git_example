@@ -24,6 +24,9 @@ public class Order implements Serializable {
   @Column(name = "id", nullable = false)
   private String id;
   
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
+  
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
 
@@ -77,6 +80,18 @@ public class Order implements Serializable {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public void setShipping(boolean isShipping) {
+    this.isShipping = isShipping;
   }
 
   public Date getDateCreated() {

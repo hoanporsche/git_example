@@ -1,14 +1,14 @@
 import { findAllItem } from '../../main/page/util/api-caller';
-import { Helper } from '../../share/common/loader/Loader';
+import * as Helper from '../../share/common/helper/Helper';
 
 export const FETCH_ITEM = 'FETCH_ITEM';
 
 export const fetAllItem = () => {
   return (dispatch) => {
-    Helper(true);
+    Helper.setLoading(true);
     return findAllItem().then(({data}) => {
       dispatch(actFetchItem(data));
-      Helper(false);
+      Helper.setLoading(false);
     }).catch(error => console.log(error));
   }
 }

@@ -1,14 +1,14 @@
 import { findAllCategory } from '../../main/page/util/api-caller';
-import { Helper } from '../../share/common/loader/Loader';
+import * as Helper from '../../share/common/helper/Helper';
 
 export const FETCH_CATEGORY = 'FETCH_CATEGORY';
 
 export const fetAllCategory = () => {
   return (dispatch) => {
-    Helper(true);
+    Helper.setLoading(true);
     return findAllCategory().then(({data}) => {
       dispatch(actFetchCategory(data));
-      Helper(false);
+      Helper.setLoading(false);
     }).catch(error => console.log(error));
   }
 }

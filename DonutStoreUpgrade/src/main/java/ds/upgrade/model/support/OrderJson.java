@@ -1,6 +1,9 @@
 package ds.upgrade.model.support;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,7 +12,7 @@ public class OrderJson implements Serializable {
   private static final long serialVersionUID = 4197942078910386097L;
 
   @NotEmpty
-  private String capchaKey;
+  private String uvresp;
   @NotEmpty
   private String nameCreated;
   @NotEmpty
@@ -20,17 +23,18 @@ public class OrderJson implements Serializable {
   private String addressShipping;
   @NotEmpty
   private String distance;
-  @NotEmpty
-  private String shippingPrice;
-  @NotEmpty
-  private String totalPrice;
+  @NotNull
+  private Long shippingPrice;
+  @NotNull
+  private Long totalPrice;
+  private List<QuantityJson> quantities;
 
-  public String getCapchaKey() {
-    return capchaKey;
+  public String getUvresp() {
+    return uvresp;
   }
 
-  public void setCapchaKey(String capchaKey) {
-    this.capchaKey = capchaKey;
+  public void setUvresp(String uvresp) {
+    this.uvresp = uvresp;
   }
 
   public String getNameCreated() {
@@ -73,27 +77,35 @@ public class OrderJson implements Serializable {
     this.distance = distance;
   }
 
-  public String getShippingPrice() {
+  public Long getShippingPrice() {
     return shippingPrice;
   }
 
-  public void setShippingPrice(String shippingPrice) {
+  public void setShippingPrice(Long shippingPrice) {
     this.shippingPrice = shippingPrice;
   }
 
-  public String getTotalPrice() {
+  public Long getTotalPrice() {
     return totalPrice;
   }
 
-  public void setTotalPrice(String totalPrice) {
+  public void setTotalPrice(Long totalPrice) {
     this.totalPrice = totalPrice;
+  }
+
+  public List<QuantityJson> getQuantities() {
+    return quantities;
+  }
+
+  public void setQuantities(List<QuantityJson> quantities) {
+    this.quantities = quantities;
   }
 
   @Override
   public String toString() {
-    return "OrderJson [nameCreated=" + nameCreated + ", phone=" + phone + ", storeCode=" + storeCode
-        + ", addressShipping=" + addressShipping + ", distance=" + distance + ", shippingPrice="
-        + shippingPrice + ", totalPrice=" + totalPrice + "]";
+    return "OrderJson [uvresp=" + uvresp + ", nameCreated=" + nameCreated + ", phone=" + phone
+        + ", storeCode=" + storeCode + ", addressShipping=" + addressShipping + ", distance="
+        + distance + ", shippingPrice=" + shippingPrice + ", totalPrice=" + totalPrice
+        + ", quantities=" + quantities + "]";
   }
-
 }

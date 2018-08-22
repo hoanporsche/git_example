@@ -10,6 +10,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-google-maps": "^9.4.5",
+    "react-google-recaptcha": "^1.0.0",
     "react-notification-system": "^0.2.17",
     "react-number-format": "^3.5.1",
     "react-redux": "^5.0.7",

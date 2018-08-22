@@ -22,6 +22,8 @@ public class ItemJson implements Serializable {
     this.setSingleValue(item.getSingleValue());
     this.setDescription(item.getDescription());
   }
+  
+  public ItemJson() {}
 
   public String getCode() {
     return code;

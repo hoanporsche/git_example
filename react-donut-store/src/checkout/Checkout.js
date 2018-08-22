@@ -11,8 +11,8 @@ import GGMapsWithDirection from '../main/component/gg-maps/GGMapsWithDirection';
 import NumberFormat from 'react-number-format';
 import { isFormValid } from '../share/common/custom-validation';
 import { createOrder } from './OrderApiCaller';
-import { Helper } from '../share/common/loader/Loader';
-import { capchaKey } from './../enviroment';
+import * as Helper from '../share/common/helper/Helper';
+import { capchaKey } from '../enviroment';
 
 const listBreadcrumb = [
   {
@@ -33,6 +33,41 @@ const listBreadcrumb = [
 ]
 
 class Checkout extends Component {
+  onLoad = () => {
+    if (window.grecaptcha) {
+      window.grecaptcha.render("recaptcha", {
+        sitekey: capchaKey,
+        size: "invisible",
+        callback: this.onCaptcheCompleted,
+        render: "explicit",
+      });
+    }
+  };
+  onCaptcheCompleted = e => {
+    //do what ever you want
+    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
+    const newOrder = {
+      uvresp: e,
+      nameCreated: nameCreated.value,
+      phone: phone.value,
+      storeCode: storeCode.value,
+      addressShipping: addressShipping.value,
+      distance: distance.value,
+      shippingPrice: shippingPrice.value,
+      totalPrice: +this.props.quantity.totalPrice + +this.state.shippingPrice.value,
+      quantities: this.props.quantity.quantities,
+    }
+    console.log(newOrder);
+    createOrder(newOrder).then((response) => {
+      this.setState({
+        isSubmitting: false,
+      })
+      Helper.setLoading(false);
+      console.log(response);
+    }).catch(e => {
+      console.log(e);
+    });
+  };
 
   constructor(props) {
     super(props);
@@ -53,6 +88,7 @@ class Checkout extends Component {
   componentDidMount() {
     if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
+    this.onLoad();
   }
 
   onReceivedValue = (event) => {
@@ -125,34 +161,17 @@ class Checkout extends Component {
     event.preventDefault();
     const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
     if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
-      const newOrder = {
-        capchaKey: capchaKey,
-        nameCreated: nameCreated.value,
-        phone: phone.value,
-        storeCode: storeCode.value,
-        addressShipping: addressShipping.value,
-        distance: distance.value,
-        shippingPrice: shippingPrice.value,
-        totalPrice: +this.props.quantity.totalPrice + +this.state.shippingPrice.value,
-      }
-      Helper(true);
+      Helper.setLoading(true);
       this.setState({
         isSubmitting: true,
-      })
-      createOrder(newOrder).then((response) => {
-        this.setState({
-          isSubmitting: false,
-        })
-        Helper(false);
-        console.log(response);
-      }).catch(e => {
-        console.log(e);
       });
+      window.grecaptcha.execute();
+
     } else {
       this.setState({
         wasSubmitted: true,
       });
-    };
+    }
   }
 
   render() {
@@ -160,12 +179,8 @@ class Checkout extends Component {
     return (
       <div id="check-out" className="container-fluid">
         <div className="row">
-
+          <div id='recaptcha'></div>
           <form onSubmit={this.onSubmit} className="container buyer-info">
-            <div id='recaptcha' className="g-recaptcha"
-              data-sitekey="6LfDFmsUAAAAALh_ZjiQ6P7sYDOp3B55TQvolf5Z"
-              data-callback="onCallReCapcha"
-              data-size="invisible"></div>
             <div className="buyer-header">
               <h3>Bánh rán Hoàn</h3>
               <Breadcrumb listBreadcrumb={listBreadcrumb} />
@@ -204,7 +219,7 @@ class Checkout extends Component {
                   </div>
                   <div className="col-6">
                     <div className="float-right">
-                      <button type="submit" disabled={this.state.isSubmitting} className="g-recaptcha btn btn-primary" data-sitekey="6LfDFmsUAAAAALh_ZjiQ6P7sYDOp3B55TQvolf5Z" data-size="invisible" data-callback="onCallReCapcha"><span>Xác nhận đặt hàng</span></button>
+                      <button type="submit" disabled={this.state.isSubmitting} className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
                     </div>
                   </div>
                 </div>

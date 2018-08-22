@@ -1,14 +1,14 @@
 import { findAllStore } from '../../main/page/util/api-caller';
-import { Helper } from '../../share/common/loader/Loader';
+import * as Helper from '../../share/common/helper/Helper';
 
 export const FETCH_STORE = 'FETCH_STORE';
 
 export const fetAllStore = () => {
   return (dispatch) => {
-    Helper(true);
+    Helper.setLoading(true);
     findAllStore().then(({data}) => {
       dispatch(actFetchStore(data));
-      Helper(false);
+      Helper.setLoading(false);
     }).catch(error => console.log(error));
   }
 }

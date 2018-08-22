@@ -122,4 +122,15 @@ public class AppConstant {
     public static final String ROLE_STORE = "ROLE_STORE";
     public static final String ROLE_STAFF = "ROLE_STAFF";
   }
+  
+  public static class CAPCHA {
+    public static final String CAPCHA_SECRET = "6LdRSWsUAAAAABByikwRlRTTH1bYSM_OKDVd6-ES";
+    public static final String URL_SERVER_VERIFY_FORMAT = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s&remoteip=%s";
+  }
+  
+  public static class VALIDATION {
+    public static final int PHONE_MAX_LENGTH = 11;
+    public static final int PHONE_MIN_LENGTH = 8;
+    public static final String PHONE_FIRST_CHAR = "0";
+  }
 }

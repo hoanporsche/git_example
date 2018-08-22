@@ -2,15 +2,17 @@ package ds.upgrade.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import ds.upgrade.model.Order;
 import ds.upgrade.model.support.CategoryJson;
@@ -22,10 +24,11 @@ import ds.upgrade.service.ItemService;
 import ds.upgrade.service.OrderService;
 import ds.upgrade.service.StoreService;
 import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.service.CustomValidation;
 
 @RestController
 public class MainRestController {
-  
+
   @Autowired
   private CategoryService categoryService;
   @Autowired
@@ -35,8 +38,8 @@ public class MainRestController {
   @Autowired
   private OrderService orderService;
   @Autowired
-  private RestTemplate restTemplate;
-  
+  private CustomValidation customValidation;
+
   @GetMapping(AppConstant.MODEL.CATEGORY_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllCategory() {
     try {
@@ -49,7 +52,7 @@ public class MainRestController {
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
-  
+
   @GetMapping(AppConstant.MODEL.ITEM_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllItem() {
     try {
@@ -62,7 +65,7 @@ public class MainRestController {
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
-  
+
   @GetMapping(AppConstant.MODEL.STORE_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllStore() {
     try {
@@ -75,19 +78,19 @@ public class MainRestController {
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
-  
+
   @PostMapping(AppConstant.MODEL.ORDER_MODEL + AppConstant.API_URL.CREATE)
-  public ResponseEntity<?> createNewOrder(@RequestBody OrderJson orderJson, BindingResult result) {
+  public ResponseEntity<?> createNewOrder(@RequestBody @Validated OrderJson orderJson,
+      BindingResult result, HttpServletRequest request) {
     try {
-        Thread.sleep(3000);
-        if (result.hasErrors()) 
-          return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
-        Order order = orderService.create(orderJson);
-        return new ResponseEntity<OrderJson>(orderJson, HttpStatus.OK);
+      if (result.hasErrors() || !customValidation.verifyOrderJson(orderJson))
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
+            HttpStatus.NOT_ACCEPTABLE);
+      Order order = orderService.create(orderJson, request);
+      return new ResponseEntity<Order>(order, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-//    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }
