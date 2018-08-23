@@ -17,8 +17,9 @@ import ds.upgrade.model.Order;
 import ds.upgrade.model.OrderStatus;
 import ds.upgrade.model.Quantity;
 import ds.upgrade.model.Store;
+import ds.upgrade.model.support.OrderForm;
 import ds.upgrade.model.support.OrderJson;
-import ds.upgrade.model.support.QuantityJson;
+import ds.upgrade.model.support.QuantityForm;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.OrderRepository;
 import ds.upgrade.repository.StoreRepository;
@@ -102,16 +103,18 @@ public class OrderServiceImpl implements OrderService {
   }
 
   /**
-   * @description: save order. Kiểm tra có tồn tại store không, kiểm tra có tồn tại các item có tồn tại k
-   * kiểm tra save order có thành công không, kiểm tra các quantity có lưu thành công không.
+   * @description: save order. Kiểm tra có tồn tại store không, kiểm tra có tồn
+   *               tại các item có tồn tại k kiểm tra save order có thành công
+   *               không, kiểm tra các quantity có lưu thành công không.
    * @author: VDHoan
    * @created_date: Aug 22, 2018
    * @param orderJson
    * @param request
-   * @return nếu tất cả thành công thì trả về code của order, ngược lại trả ra null
+   * @return nếu tất cả thành công thì trả về code của order, ngược lại trả ra
+   *         null
    */
   @Override
-  public String createNewShipping(OrderJson orderJson, HttpServletRequest request) {
+  public String createNewShipping(OrderForm orderJson, HttpServletRequest request) {
     Order order = new Order();
     if (capchaService.checkCapcha(orderJson.getUvresp(), request)) {
       Date newDate = new Date();
@@ -120,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
       order.setDateUpdated(newDate);
       order.setNameCreated(orderJson.getNameCreated().trim());
       order.setPhone(orderJson.getPhone().trim());
-      
+
       Store foundStore = storeRepository.findBycode(orderJson.getStoreCode());
       if (foundStore == null || !foundStore.isEnabled())
         return null;
@@ -132,46 +135,53 @@ public class OrderServiceImpl implements OrderService {
       order.setDistance(orderJson.getDistance().trim());
       order.setShippingPrice(orderJson.getShippingPrice());
       order.setTotalPrice(orderJson.getTotalPrice());
-      
+
       List<Quantity> listQuantity = new ArrayList<>();
-      List<QuantityJson> list = orderJson.getQuantities();
-      for(int i = 0; i < list.size(); i++ ) {
-       Item foundItem = itemRepository.findBycode(list.get(i).getItem().getCode());
-       if (foundItem == null || !foundItem.isEnabled()) {
-         return null;
-       } else {
-         Quantity quantity = new Quantity();
-         quantity.setCode(commonMethod.createQuantityCode(order.getCode(), i));
-         quantity.setItemId(foundItem);
-         quantity.setOrderCode(new Order(order.getCode()));
-         quantity.setQuantity(list.get(i).getQuantity());
-         listQuantity.add(quantity);
-       }
+      List<QuantityForm> list = orderJson.getQuantities();
+      for (int i = 0; i < list.size(); i++) {
+        Item foundItem = itemRepository.findBycode(list.get(i).getItem().getCode());
+        if (foundItem == null || !foundItem.isEnabled()) {
+          return null;
+        } else {
+          Quantity quantity = new Quantity();
+          quantity.setCode(commonMethod.createQuantityCode(order.getCode(), i));
+          quantity.setItemId(foundItem);
+          quantity.setOrderCode(new Order(order.getCode()));
+          quantity.setQuantity(list.get(i).getQuantity());
+          listQuantity.add(quantity);
+        }
       }
-      
+
       order = orderRepository.save(order);
-      if (order == null) return null;
+      if (order == null)
+        return null;
       Boolean success = quantityService.saveList(listQuantity);
-      if (!success) return null;
+      if (!success)
+        return null;
     }
     return order.getCode();
   }
 
   @Override
-  public List<Order> findList(String orderCode, String uvresp, HttpServletRequest request) {
+  public List<OrderJson> findList(String orderCode, String uvresp, HttpServletRequest request) {
+    List<OrderJson> list = new ArrayList<>();
     if (capchaService.checkCapcha(uvresp, request)) {
       Date now = new Date();
       Date startDate = commonMethod.createStartDate(now);
       Date endDate = commonMethod.createEndDate(now);
       if (customValidation.isPhoneNumber(orderCode)) {
         Specification<Order> spec = new OrderSpecification(startDate, endDate, orderCode);
-        return orderRepository.findAll(spec);
+        orderRepository.findAll(spec).forEach(order -> {
+          list.add(new OrderJson(order));
+        });
       } else {
         Specification<Order> spec = new OrderSpecification(orderCode, startDate, endDate);
-        return orderRepository.findAll(spec);
+        orderRepository.findAll(spec).forEach(order -> {
+          list.add(new OrderJson(order));
+        });
       }
     }
-    return null;
+    return list;
   }
 
 }

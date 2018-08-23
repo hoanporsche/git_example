@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Order;
+import ds.upgrade.model.support.OrderForm;
 import ds.upgrade.model.support.OrderJson;
 
 public interface OrderService {
@@ -16,11 +17,11 @@ public interface OrderService {
   Page<Order> findList(Pageable pageable, Long statusId, Long storeId, Boolean isShipping,
       Date startDate, Date endDate);
 
-  List<Order> findList(String orderCode, String uvresp, HttpServletRequest request);
+  List<OrderJson> findList(String orderCode, String uvresp, HttpServletRequest request);
   
   Order findOne(Long id);
   
   Order createOrUpdate(Order order);
   
-  String createNewShipping(OrderJson orderJson, HttpServletRequest request);
+  String createNewShipping(OrderForm orderJson, HttpServletRequest request);
 }

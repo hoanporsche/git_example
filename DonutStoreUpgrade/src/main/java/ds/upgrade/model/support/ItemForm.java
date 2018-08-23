@@ -2,7 +2,7 @@ package ds.upgrade.model.support;
 
 import java.util.Arrays;
 
-public class ReceivedItem {
+public class ItemForm {
   private String code;
   private String name;
   private String[] picture;

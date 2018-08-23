@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ds.upgrade.model.support.OrderJson;
-import ds.upgrade.model.support.QuantityJson;
+import ds.upgrade.model.support.OrderForm;
+import ds.upgrade.model.support.QuantityForm;
 import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.util.AppConstant;
 import ds.upgrade.util.service.CustomValidation;
@@ -32,10 +32,10 @@ public class CustomValidationImp implements CustomValidation {
    * tiền giao hàng không. Kiểm tra phone có phù hợp không
    */
   @Override
-  public Boolean verifyOrderJson(OrderJson orderJson) {
+  public Boolean verifyOrderJson(OrderForm orderJson) {
     if (orderJson.getQuantities().size() > 0) {
       Long totalPrice = 0L;
-      for (QuantityJson quantityJson : orderJson.getQuantities()) {
+      for (QuantityForm quantityJson : orderJson.getQuantities()) {
         Long singleValue = quantityJson.getItem().getSingleValue();
         int quantity = quantityJson.getQuantity();
         Long price = quantityJson.getPrice();

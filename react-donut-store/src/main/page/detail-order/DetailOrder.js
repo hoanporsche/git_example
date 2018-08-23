@@ -16,31 +16,39 @@ class DetailOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orderCode: '',
       searchString: '',
       listOrder: [],
       isSubmitting: false,
     }
   }
+  componentDidMount() {
+    const queryParam = queryString.parse(this.props.location.search);
+    if (queryParam.orderCode) {
+      this.setState({
+        searchString: queryParam.orderCode,
+      });
+    }
+  }
+
   componentWillReceiveProps({ location }) {
     const queryParam = queryString.parse(location.search);
-    console.log(queryParam);
-    this.setState({
-      orderCode: queryParam.orderCode,
-      listOrder: [],
-      isSubmitting: true,
-      searchString: queryParam.orderCode,
-    });
-    window.grecaptcha.execute();
+    window.grecaptcha.reset();
+    if (queryParam.orderCode) {
+      this.setState({
+        listOrder: [],
+        isSubmitting: true,
+        searchString: queryParam.orderCode,
+      });
+      window.grecaptcha.execute();
+    }
   }
   onCaptchaCompleted = e => {
-    findTodayListOrder(this.state.orderCode, e).then(({ data }) => {
+    findTodayListOrder(this.state.searchString, e).then(({ data }) => {
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
         listOrder: data
       });
-      console.log(data);
     }).catch(e => {
       console.log(e);
       Helper.setLoading(false);
@@ -68,7 +76,7 @@ class DetailOrder extends Component {
       return (
         <SingleOrder key={index} order={order}/>
       )
-    }) : null;
+    }) : <SingleOrder />;
   }
   render() {
     return (

@@ -61,7 +61,7 @@ class FooterMain extends Component {
                     </li>
                     <li>
                       <p>
-                        <i className="fas fa-phone" aria-hidden="true" />{this.findHotLine()}</p>
+                        <i className="fas fa-phone" aria-hidden="true" /> {this.findHotLine()}</p>
                     </li>
                     <li>
                       <p>

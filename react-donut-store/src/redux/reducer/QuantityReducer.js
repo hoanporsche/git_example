@@ -65,6 +65,13 @@ const quantityReducer = (state = initialState, action) => {
       localStorage.setItem(LOCAL_STORAGE.ORDER, JSON.stringify(newState));
       return newState;
     }
+    case Types.CLEAR_QUANTITES: {
+      localStorage.removeItem(LOCAL_STORAGE.ORDER);
+      return Object.assign({}, {
+        quantities: [],
+        totalPrice: 0,
+      });
+    }
     default: return Object.assign({}, state);
   }
 }

@@ -7,6 +7,7 @@ import Breadcrumb from '../main/component/bread-crumb/Breadcrumb';
 import CustomInput from '../share/common/custom-input/CustomInput';
 import CustomSelect from '../share/common/custom-select/CustomSelect';
 import { fetAllStore } from '../redux/action/store.constant';
+import { clearQuantites } from '../redux/action/quantity.constant';
 import GGMapsWithDirection from '../main/component/gg-maps/GGMapsWithDirection';
 import NumberFormat from 'react-number-format';
 import { isFormValid } from '../share/common/custom-validation';
@@ -56,12 +57,12 @@ class Checkout extends Component {
       quantities: this.props.quantity.quantities,
     }
     createOrder(newOrder).then(({ data }) => {
+      this.props.clearAllQuantities();
       this.setState({
         isSubmitting: false,
       })
       Helper.setLoading(false);
-      localStorage.removeItem(LOCAL_STORAGE.ORDER);
-      window.location.href = RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: data }]);
+      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: data }]));
     }).catch(e => {
       console.log(e);
       Helper.setLoading(false);
@@ -270,6 +271,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchAllStore: () => {
       dispatch(fetAllStore());
+    },
+    clearAllQuantities: () => {
+      dispatch(clearQuantites());
     }
   }
 }

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.ConfigGlobal;
-import ds.upgrade.model.Order;
 import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.support.OrderForm;
 import ds.upgrade.model.support.OrderJson;
 import ds.upgrade.model.support.StoreJson;
 import ds.upgrade.service.CategoryService;
@@ -85,7 +85,7 @@ public class MainRestController {
   }
 
   @PostMapping(AppConstant.MODEL.ORDER_MODEL + AppConstant.API_URL.CREATE)
-  public ResponseEntity<?> createNewOrder(@RequestBody @Validated OrderJson orderJson,
+  public ResponseEntity<?> createNewOrder(@RequestBody @Validated OrderForm orderJson,
       BindingResult result, HttpServletRequest request) {
     try {
       if (result.hasErrors() || !customValidation.verifyOrderJson(orderJson))
@@ -116,10 +116,10 @@ public class MainRestController {
   public ResponseEntity<?> findList(@RequestParam String orderCode, @RequestParam String uvresp,
       HttpServletRequest request) {
     try {
-      List<Order> list = orderService.findList(orderCode, uvresp, request);
+      List<OrderJson> list = orderService.findList(orderCode, uvresp, request);
       if (list == null)
         return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
-      return new ResponseEntity<List<Order>>(list, HttpStatus.OK);
+      return new ResponseEntity<List<OrderJson>>(list, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);

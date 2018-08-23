@@ -1,47 +1,51 @@
 package ds.upgrade.model.support;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import ds.upgrade.model.Order;
+import ds.upgrade.model.Quantity;
 
 public class OrderJson implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
-
-  @NotEmpty
-  private String uvresp;
-  @NotEmpty
-  @Size(max = 40)
+  private String code;
   private String nameCreated;
-  @NotEmpty
-  @Size(max = 11)
   private String phone;
-  @NotEmpty
-  private String storeCode;
-  @NotEmpty
-  @Size(max = 255)
+  private String storeName;
+  private Boolean shipping;
   private String addressShipping;
-  @NotEmpty
-  @Size(max = 20)
   private String distance;
-  @NotNull
-  @Max(100000)
   private Long shippingPrice;
-  @NotNull
   private Long totalPrice;
   private List<QuantityJson> quantities;
+  private OrderStatusJson status;
 
-  public String getUvresp() {
-    return uvresp;
+  public OrderJson() {
   }
 
-  public void setUvresp(String uvresp) {
-    this.uvresp = uvresp;
+  public OrderJson(Order order) {
+    this.code = order.getCode();
+    this.nameCreated = order.getNameCreated();
+    this.phone = order.getPhone();
+    this.storeName = order.getStoreId().getName();
+    this.shipping = order.isShipping();
+    this.addressShipping = order.getAddressShipping();
+    this.distance = order.getDistance();
+    this.shippingPrice = order.getShippingPrice();
+    this.totalPrice = order.getTotalPrice();
+    this.setQuantities(order.getQuantities());
+    this.status = new OrderStatusJson(order.getStatusId());
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getNameCreated() {
@@ -60,12 +64,20 @@ public class OrderJson implements Serializable {
     this.phone = phone;
   }
 
-  public String getStoreCode() {
-    return storeCode;
+  public String getStoreName() {
+    return storeName;
   }
 
-  public void setStoreCode(String storeCode) {
-    this.storeCode = storeCode;
+  public void setStoreName(String storeName) {
+    this.storeName = storeName;
+  }
+
+  public Boolean getShipping() {
+    return shipping;
+  }
+
+  public void setShipping(Boolean shipping) {
+    this.shipping = shipping;
   }
 
   public String getAddressShipping() {
@@ -104,15 +116,26 @@ public class OrderJson implements Serializable {
     return quantities;
   }
 
-  public void setQuantities(List<QuantityJson> quantities) {
-    this.quantities = quantities;
+  public void setQuantities(Set<Quantity> quantities) {
+    this.quantities = new ArrayList<>();
+    quantities.forEach(quantity -> {
+      this.quantities.add(new QuantityJson(quantity));
+    });
+  }
+
+  public OrderStatusJson getStatus() {
+    return status;
+  }
+
+  public void setStatus(OrderStatusJson status) {
+    this.status = status;
   }
 
   @Override
   public String toString() {
-    return "OrderJson [uvresp=" + uvresp + ", nameCreated=" + nameCreated + ", phone=" + phone
-        + ", storeCode=" + storeCode + ", addressShipping=" + addressShipping + ", distance="
+    return "OrderJson [nameCreated=" + nameCreated + ", phone=" + phone + ", storeName=" + storeName
+        + ", shipping=" + shipping + ", addressShipping=" + addressShipping + ", distance="
         + distance + ", shippingPrice=" + shippingPrice + ", totalPrice=" + totalPrice
-        + ", quantities=" + quantities + "]";
+        + ", quantities=" + quantities + ", status=" + status + "]";
   }
 }

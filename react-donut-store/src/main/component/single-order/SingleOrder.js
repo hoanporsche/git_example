@@ -28,7 +28,7 @@ class SingleOrder extends Component {
     const { order } = this.props;
     return order ? (
       <div id="single-order" className="card">
-        <div className="card-header" style={{backgroundColor: 'white'}}>
+        <div className="card-header" style={{ backgroundColor: 'white' }}>
           <div className="row">
             <div className="col-12 col-md-9">
               <span className="normal-text">Đơn hàng </span>
@@ -40,14 +40,36 @@ class SingleOrder extends Component {
             </div>
             <div className="col-12 col-md-3">
               <div className="float-right">
-                <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>
+                <span className={`status ${order.status.name}`}>{order.status.description}</span>
               </div>
             </div>
           </div>
         </div>
-        <div className="card-body" style={{padding: '1%'}}>
-          <div className="container" style={{backgroundColor: '#f2f3f880'}}>
-            {/* {this.showQuantites(order.quantities)} */}
+        <div className="card-body" style={{ padding: '1%' }}>
+          <div className="container" style={{ backgroundColor: '#f2f3f880',paddingTop: '1%' }}>
+            <div className="row">
+              <div className="col-12 col-md-8">
+                {this.showQuantites(order.quantities)}
+              </div>
+              <div className="col-12 col-md-4">
+                <div className="row">
+                  <div className="col-6"><span>Địa chỉ:</span></div>
+                  <div className="col-6"><span className="float-right">{order.addressShipping}</span></div>
+                </div>
+                <div className="row">
+                  <div className="col-6"><span>Phone:</span></div>
+                  <div className="col-6"><span className="float-right">{order.phone}</span></div>
+                </div>
+                <div className="row">
+                  <div className="col-6"><span>Phí ship:</span></div>
+                  <div className="col-6"><span className="float-right"><NumberFormat value={order.shippingPrice} displayType={'text'} thousandSeparator={true} />₫</span></div>
+                </div>
+                <hr />
+                <div className="row" style={{ color: 'black' }}>
+                  <div className="col-12"><h5>Đơn hàng sẽ được giao ngay sau khi xác thực thành công</h5></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
