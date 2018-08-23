@@ -1,5 +1,5 @@
 /**
- * Dang params la 1 array vi du: { name: 'code', value: 'abc'}
+ * Dang params la 1 array vi du: [{ name: 'code', value: 'abc'}]
  */
 const RedirectQueryParams = (to, params) => {
   let url = `${to}?`;

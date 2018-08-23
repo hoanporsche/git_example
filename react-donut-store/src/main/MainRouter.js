@@ -26,7 +26,7 @@ const mainRoutes = [
   {
     path : ROUTING_URL.DETAIL_ORDER,
     exact : true,
-    main : ({location}) => <DetailOrder location={location}/>,
+    main : ({location, history}) => <DetailOrder history={history} location={location}/>,
   },
   {
     path : ROUTING_URL.DETAIL,

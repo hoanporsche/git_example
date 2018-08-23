@@ -4,5 +4,31 @@
 }
 
 #detail-order h3 {
-  color: red;
+  color: #0b8d44;
+  font-family: Open Sans;
+  font-size: 2.5em;
+  font-weight: 400;
+  font-variant: normal;
+  letter-spacing: 0em;
+}
+
+#detail-order .custom-input {
+  width: 108%;
+  height: 46px;
+  background: #fafafa;
+  border-radius: 40px 0 0 40px;
+  border: 10;
+  padding: 0 20px 0 30px;
+}
+
+#detail-order .submit-btn {
+  width: 100%;
+  right: 0;
+  top: 0;
+  padding: 0 15px 0 10px;
+  height: 46px;
+  border-radius: 0 40px 40px 0;
+  color: #fff;
+  font-size: 14px;
+  background: linear-gradient(90deg, #bd2a36, #9b4599, #214181);
 }

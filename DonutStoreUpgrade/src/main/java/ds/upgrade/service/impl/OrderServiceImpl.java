@@ -27,6 +27,7 @@ import ds.upgrade.service.OrderService;
 import ds.upgrade.service.QuantityService;
 import ds.upgrade.util.service.CapchaService;
 import ds.upgrade.util.service.CommonMethod;
+import ds.upgrade.util.service.CustomValidation;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -43,6 +44,8 @@ public class OrderServiceImpl implements OrderService {
   private ItemRepository itemRepository;
   @Autowired
   private QuantityService quantityService;
+  @Autowired
+  private CustomValidation customValidation;
 
   /**
    * @description: .
@@ -152,6 +155,23 @@ public class OrderServiceImpl implements OrderService {
       if (!success) return null;
     }
     return order.getCode();
+  }
+
+  @Override
+  public List<Order> findList(String orderCode, String uvresp, HttpServletRequest request) {
+    if (capchaService.checkCapcha(uvresp, request)) {
+      Date now = new Date();
+      Date startDate = commonMethod.createStartDate(now);
+      Date endDate = commonMethod.createEndDate(now);
+      if (customValidation.isPhoneNumber(orderCode)) {
+        Specification<Order> spec = new OrderSpecification(startDate, endDate, orderCode);
+        return orderRepository.findAll(spec);
+      } else {
+        Specification<Order> spec = new OrderSpecification(orderCode, startDate, endDate);
+        return orderRepository.findAll(spec);
+      }
+    }
+    return null;
   }
 
 }

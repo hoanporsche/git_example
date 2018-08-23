@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ds.upgrade.model.ConfigGlobal;
 import ds.upgrade.repository.ConfigGlobalRepository;
 import ds.upgrade.service.ConfigGlobalService;
-import ds.upgrade.util.service.CommonMethod;
+import ds.upgrade.util.service.CustomValidation;
 
 @Service
 public class ConfigGlobalServiceImpl implements ConfigGlobalService {
@@ -16,7 +16,7 @@ public class ConfigGlobalServiceImpl implements ConfigGlobalService {
   @Autowired
   private ConfigGlobalRepository configGlobalRepository;
   @Autowired
-  private CommonMethod commonMethod;
+  private CustomValidation customValidation;
 
   @Override
   public ConfigGlobal createOrUpdate(ConfigGlobal cg) {
@@ -35,7 +35,7 @@ public class ConfigGlobalServiceImpl implements ConfigGlobalService {
 
   @Override
   public Boolean delete(ConfigGlobal cg) {
-    if (commonMethod.notDeleteConfigGlobal(cg.getName()))
+    if (customValidation.notDeleteConfigGlobal(cg.getName()))
       return Boolean.FALSE;
     configGlobalRepository.delete(cg);
     return Boolean.TRUE;

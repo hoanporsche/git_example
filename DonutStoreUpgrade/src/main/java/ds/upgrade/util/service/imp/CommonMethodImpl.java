@@ -1,5 +1,6 @@
 package ds.upgrade.util.service.imp;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -46,18 +47,25 @@ public class CommonMethodImpl implements CommonMethod {
   }
 
   @Override
-  public Boolean notDeleteConfigGlobal(String name) {
-    String newName = name.trim();
-    return (AppConstant.CONFIG_NAME.LOGO.equals(newName)
-        || AppConstant.CONFIG_NAME.HEADQUARTER.equals(newName)
-        || AppConstant.CONFIG_NAME.HOT_LINE.equals(newName)
-        || AppConstant.CONFIG_NAME.EMAIL.equals(newName)
-        || AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE.equals(newName)
-        || AppConstant.CONFIG_NAME.FREE_SHIP_DISTANCE.equals(newName)
-        || AppConstant.CONFIG_NAME.MIN_AHA_DISTANCE.equals(newName)
-        || AppConstant.CONFIG_NAME.SUBSIDY_PRICE.equals(newName)
-        || AppConstant.CONFIG_NAME.SINGLE_SHIPPING_PRICE.equals(newName)
-        || AppConstant.CONFIG_NAME.MIN_SHIPPING_PRICE.equals(newName));
+  public Date createStartDate(Date now) {
+    String format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(now);
+    try {
+      return new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1)
+          .parse(format + " 00:00:00");
+    } catch (ParseException e) {
+      return null;
+    }
+  }
+
+  @Override
+  public Date createEndDate(Date now) {
+    String format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(now);
+    try {
+      return new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1)
+          .parse(format + " 23:59:59");
+    } catch (ParseException e) {
+      return null;
+    }
   }
 
 }

@@ -55,6 +55,7 @@ public class AppConstant {
     public static final String SENDER_DB_S_PARAM = "senderDbs";
     public static final String LAST_CONNECT = "lastConnect";
     public static final String ROOM_DB_S_PARAM = "roomDbs";
+    public static final String CODE_PARAM = "code";
   }
   
   public static class PATH_PARAM {

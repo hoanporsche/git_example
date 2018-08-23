@@ -12,9 +12,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.ConfigGlobal;
+import ds.upgrade.model.Order;
 import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.model.support.OrderJson;
@@ -106,6 +108,20 @@ public class MainRestController {
       return new ResponseEntity<List<ConfigGlobal>>(list, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping(AppConstant.MODEL.ORDER_MODEL + AppConstant.API_URL.FIND_LIST)
+  public ResponseEntity<?> findList(@RequestParam String orderCode, @RequestParam String uvresp,
+      HttpServletRequest request) {
+    try {
+      List<Order> list = orderService.findList(orderCode, uvresp, request);
+      if (list == null)
+        return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+      return new ResponseEntity<List<Order>>(list, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

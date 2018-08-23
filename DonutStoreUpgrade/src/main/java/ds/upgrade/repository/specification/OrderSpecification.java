@@ -29,9 +29,26 @@ public class OrderSpecification implements Specification<Order> {
   private Boolean isShipping;
   private Date startDate;
   private Date endDate;
+  private String orderCode;
+  private String orderPhone;
+
+  //find today list by phone
+  public OrderSpecification(Date startDate, Date endDate, String orderPhone) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.orderPhone = orderPhone;
+  }
+
+  //find today list by code
+  public OrderSpecification(String orderCode, Date startDate, Date endDate) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.orderCode = orderCode;
+  }
 
   public OrderSpecification() {
-    // TODO Auto-generated constructor stub
   }
 
   public OrderSpecification(Long statusId, Long storeId, Boolean isShipping, Date startDate,
@@ -76,6 +93,14 @@ public class OrderSpecification implements Specification<Order> {
     if (isShipping != null) {
       predicate = cb.and(predicate,
           cb.equal(root.<Boolean>get(AppConstant.PARAM.IS_SHIPPING_PARAM), isShipping));
+    }
+    if (orderCode != null) {
+      predicate = cb.and(predicate, cb.equal(
+          root.<String>get(AppConstant.PARAM.CODE_PARAM), orderCode));
+    }
+    if (orderPhone != null) {
+      predicate = cb.and(predicate, cb.equal(
+          root.<String>get(AppConstant.PARAM.PHONE_PARAM), orderPhone));
     }
     return predicate;
   }

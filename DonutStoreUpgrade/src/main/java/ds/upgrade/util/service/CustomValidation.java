@@ -7,4 +7,6 @@ public interface CustomValidation {
   public Boolean isPhoneNumber(String phone);
   
   public Boolean verifyOrderJson(OrderJson orderJson);
+
+  public Boolean notDeleteConfigGlobal(String name);
 }
