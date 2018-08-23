@@ -85,6 +85,7 @@ public class AppConstant {
     public static final String FIND_BY_USERS_IN_ROOM = "/find-by-users-in-room";
     public static final String COUNT_NOT_SEEN_NOTI = "/count-not-seen-noti";
     public static final String CREATE = "/create";
+    public static final String DELETE = "/delete";
   }
   
   public static class MODEL {
@@ -107,6 +108,7 @@ public class AppConstant {
     public static final String ROOM_DB_MODEL = "room-db";
     public static final String MESSAGE_DB_MODEL = "message-db";
     public static final String SENDER_DB_MODEL = "sender-db";
+    public static final String CONFIG_GLOBAL_MODEL = "config-global";
   }
   
   public static class FORMAT {
@@ -139,5 +141,18 @@ public class AppConstant {
     public static final String ITEM_PREFIX = "ITE";
     public static final String CATEGORY_PREFIX = "CAT";
     public static final String STORE_PREFIX = "STO";
+  }
+  
+  public static class CONFIG_NAME {
+    public static final String LOGO = "logo";
+    public static final String HEADQUARTER = "headquarter";
+    public static final String HOT_LINE = "hotLine";
+    public static final String EMAIL = "email";
+    public static final String MIN_TOTAL_PRICE = "minTotalPrice";
+    public static final String FREE_SHIP_DISTANCE = "freeShipDistance";
+    public static final String MIN_AHA_DISTANCE = "minAhaDistance";
+    public static final String SUBSIDY_PRICE = "subsidyPrice";
+    public static final String SINGLE_SHIPPING_PRICE = "singleShippingPrice";
+    public static final String MIN_SHIPPING_PRICE = "minShippingPrice";
   }
 }

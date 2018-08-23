@@ -1,4 +1,4 @@
-import { findAllCategory } from '../../main/page/util/api-caller';
+import { findAllCategory } from '../../main/util/api-caller';
 import * as Helper from '../../share/common/helper/Helper';
 
 export const FETCH_CATEGORY = 'FETCH_CATEGORY';

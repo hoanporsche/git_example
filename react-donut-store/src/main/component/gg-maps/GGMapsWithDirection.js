@@ -10,7 +10,8 @@ import {
   DirectionsRenderer,
 } from "react-google-maps";
 import { SearchBox } from "react-google-maps/lib/components/places/SearchBox";
-import { SHIPPING_PRICE_UNIT } from '../../../share/constant/common.constant';
+import { CONFIG_NAME } from '../../../share/constant/configuration.constant';
+import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 
 //input props: store
 const GGMapsWithDirection = compose(
@@ -165,13 +166,36 @@ const GGMapsWithDirection = compose(
 
 const calculatedDistance = (distance) => {
   let calculated = 0;
-  if (distance.value > 3000 && distance.value < 4000) {
-    calculated = 12000;
+  if (distance.value > findFreeShipDistance()*1000 && distance.value < findMinAhaDistance()*1000) {
+    calculated = findMinShippingPrice();
   }
-  if (distance.value > 4000) {
-    calculated = (+(distance.value / 1000 + 0.1).toString().substring(0, 3) * SHIPPING_PRICE_UNIT) - 10000;
+  if (distance.value > findMinAhaDistance()*1000) {
+    calculated = (+(distance.value / 1000 + 0.1).toString().substring(0, 3) * findSingleShippingPrice()) - findSubsidyPrice();
   }
   return calculated;
+}
+
+const listConfigGlobal = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL));
+
+const findFreeShipDistance = () => {
+  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.FREE_SHIP_DISTANCE);
+  return value ? value.value : 0;
+}
+const findMinAhaDistance = () => {
+  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.MIN_AHA_DISTANCE);
+  return value ? value.value : 0;
+}
+const findSubsidyPrice = () => {
+  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.SUBSIDY_PRICE);
+  return value ? value.value : 0;
+}
+const findSingleShippingPrice = () => {
+  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.SINGLE_SHIPPING_PRICE);
+  return value ? value.value : 0;
+}
+const findMinShippingPrice = () => {
+  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.MIN_SHIPPING_PRICE);
+  return value ? value.value : 0;
 }
 
 GGMapsWithDirection.propTypes = {

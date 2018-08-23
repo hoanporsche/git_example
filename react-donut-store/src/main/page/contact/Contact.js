@@ -4,6 +4,8 @@ import './Contact.css';
 import { connect } from 'react-redux';
 import { fetAllStore } from '../../../redux/action/store.constant';
 import GGMaps from '../../component/gg-maps/GGMaps';
+import { CONFIG_NAME } from '../../../share/constant/configuration.constant';
+import NumberFormat from 'react-number-format';
 
 class Contact extends Component {
 
@@ -34,6 +36,24 @@ class Contact extends Component {
     }) : null;
   }
 
+  findHotLine = () => {
+    const { listConfigGlobal } = this.props;
+    const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.HOT_LINE);
+    return value ? value.value : '';
+  }
+
+  findFreeShipDistance = () => {
+    const { listConfigGlobal } = this.props;
+    const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.FREE_SHIP_DISTANCE);
+    return value ? +value.value : 0;
+  }
+
+  findMinTotalPrice = () => {
+    const { listConfigGlobal } = this.props;
+    const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.MIN_TOTAL_PRICE);
+    return value ? +value.value : 0;
+  }
+
   render() {
     return (
       <div className="container">
@@ -52,12 +72,12 @@ class Contact extends Component {
             </ul>
             <h5><b>Dịch vụ giao hàng:</b></h5>
             <ul>
-              <li>Giao hàng với đơn hàng từ 90k</li>
-              <li>Freeship 3km đầu tiên</li>
+              <li>Giao hàng với đơn hàng từ <NumberFormat value={this.findMinTotalPrice()} displayType={'text'} thousandSeparator={true} />₫</li>
+              <li>Freeship {this.findFreeShipDistance()}km đầu tiên</li>
               <li>Có hóa đơn</li>
             </ul>
             <h5><b>Hotline phản hồi:</b></h5>
-            <h4 style={{ color: 'red' }}><i className="fas fa-mobile-alt"></i><b> 094 345 1794</b></h4>
+            <h4 style={{ color: 'red' }}><i className="fas fa-mobile-alt"></i><b> {this.findHotLine()}</b></h4>
           </div>
         </div>
         <hr />
@@ -96,6 +116,7 @@ class Contact extends Component {
 const mapStateToProps = (state) => {
   return {
     listStore: state.storeReducer,
+    listConfigGlobal: state.configGlobalReducer,
   }
 }
 

@@ -1,4 +1,4 @@
-import { findAllItem } from '../../main/page/util/api-caller';
+import { findAllItem } from '../../main/util/api-caller';
 import * as Helper from '../../share/common/helper/Helper';
 
 export const FETCH_ITEM = 'FETCH_ITEM';

@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ds.upgrade.model.ConfigGlobal;
 import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.model.support.OrderJson;
 import ds.upgrade.model.support.StoreJson;
 import ds.upgrade.service.CategoryService;
+import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.service.OrderService;
 import ds.upgrade.service.StoreService;
@@ -38,6 +40,8 @@ public class MainRestController {
   private OrderService orderService;
   @Autowired
   private CustomValidation customValidation;
+  @Autowired
+  private ConfigGlobalService configGlobalService;
 
   @GetMapping(AppConstant.MODEL.CATEGORY_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllCategory() {
@@ -89,6 +93,19 @@ public class MainRestController {
       return new ResponseEntity<String>(orderCode, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping(AppConstant.MODEL.CONFIG_GLOBAL_MODEL + AppConstant.API_URL.FIND_ALL)
+  public ResponseEntity<?> findAll() {
+    try {
+      List<ConfigGlobal> list = configGlobalService.findAll();
+      if (list == null)
+        return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+      return new ResponseEntity<List<ConfigGlobal>>(list, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

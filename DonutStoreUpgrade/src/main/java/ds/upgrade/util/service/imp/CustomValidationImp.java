@@ -1,15 +1,20 @@
 package ds.upgrade.util.service.imp;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.support.OrderJson;
 import ds.upgrade.model.support.QuantityJson;
+import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.util.AppConstant;
 import ds.upgrade.util.service.CustomValidation;
 
 @Service
 public class CustomValidationImp implements CustomValidation {
+
+  @Autowired
+  private ConfigGlobalService configGlobalService;
 
   @Override
   public Boolean isPhoneNumber(String phone) {
@@ -21,9 +26,10 @@ public class CustomValidationImp implements CustomValidation {
         && StringUtils.isNumeric(newValue));
   }
 
-  /**Kiểm tra xem từng item có tổng tiền từng item bằng với tổng tiền đã tính không
-   * Kiểm tra xem tổng tiền đơn hàng có bằng tổng tiền từng item cộng với tiền giao hàng không.
-   * Kiểm tra phone có phù hợp không
+  /**
+   * Kiểm tra xem từng item có tổng tiền từng item bằng với tổng tiền đã tính
+   * không Kiểm tra xem tổng tiền đơn hàng có bằng tổng tiền từng item cộng với
+   * tiền giao hàng không. Kiểm tra phone có phù hợp không
    */
   @Override
   public Boolean verifyOrderJson(OrderJson orderJson) {
@@ -38,8 +44,11 @@ public class CustomValidationImp implements CustomValidation {
 
         totalPrice = totalPrice + price;
       }
-      
-      if (totalPrice + orderJson.getShippingPrice() != orderJson.getTotalPrice() || !isPhoneNumber(orderJson.getPhone()))
+
+      if (totalPrice + orderJson.getShippingPrice() != orderJson.getTotalPrice()
+          || totalPrice != Long.valueOf(
+              configGlobalService.findByname(AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE).getValue())
+          || !isPhoneNumber(orderJson.getPhone()))
         return false;
     } else {
       return false;

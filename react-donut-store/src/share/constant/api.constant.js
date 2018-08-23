@@ -46,6 +46,7 @@ export const MODEL_URL= Object.freeze({
     ROOM_DB: '/room-db',
     MESSAGE_DB: '/message-db',
     SENDER_DB: '/sender-db',
+    CONFIG_GLOBAL: '/config-global',
 });
 
 export const CHAT_URL = Object.freeze({

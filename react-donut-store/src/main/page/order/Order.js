@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import './Order.css';
 import SectionHeader from '../../component/section-header/SectionHeader';
 import { connect } from 'react-redux';
-import { fetAllStore } from '../../../redux/action/store.constant';
 import EmptyCart from '../../component/empty-cart/EmptyCart';
 import NumberFormat from 'react-number-format';
 import { NavLink } from 'react-router-dom';
 import SingleQuantity from '../../component/single-quantity/SingleQuantity';
-import { CONFIG } from '../../../share/constant/configuration.constant';
+import { CONFIG_NAME } from '../../../share/constant/configuration.constant';
 import { ROUTING_URL } from '../../../share/constant/routing.constant';
 
 class Order extends Component {
@@ -20,6 +19,11 @@ class Order extends Component {
     }
   }
 
+  findMinTotalPrice = () => {
+    const { listConfigGlobal } = this.props;
+    const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.MIN_TOTAL_PRICE);
+    return value ? +value.value : 0;
+  }
   showShippingCart = () => {
     return (this.props.quantity.quantities.length > 0) ? (
       <div className="row">
@@ -51,10 +55,10 @@ class Order extends Component {
   }
 
   canCheckOut() {
-    return this.props.quantity.totalPrice >= CONFIG.MIN_TOTAL_PRICE ? (
+    return this.props.quantity.totalPrice >= this.findMinTotalPrice() ? (
       <NavLink className="payment-click" to={ROUTING_URL.CHECKOUT} >Tiến hành thanh toán</NavLink>
     ) : (
-      <p>Chúng tôi không thể giao hàng với đơn giá trị dưới <NumberFormat value={CONFIG.MIN_TOTAL_PRICE} displayType={'text'} thousandSeparator={true}/>₫</p>
+      <p>Chúng tôi không thể giao hàng với đơn giá trị dưới <NumberFormat value={this.findMinTotalPrice()} displayType={'text'} thousandSeparator={true}/>₫</p>
     );
   }
   render() {
@@ -71,14 +75,7 @@ class Order extends Component {
 const mapStateToProps = state => {
   return {
     quantity: state.quantityReducer,
+    listConfigGlobal: state.configGlobalReducer,
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchAllStore: () => {
-      dispatch(fetAllStore());
-    }
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Order);
+export default connect(mapStateToProps, null)(Order);

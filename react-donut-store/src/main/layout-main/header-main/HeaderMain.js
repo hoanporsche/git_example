@@ -4,25 +4,35 @@ import { NavLink } from 'react-router-dom';
 import './HeaderMain.css';
 import NumberFormat from 'react-number-format';
 import SearchRedirect from '../../../share/common/search-redirect/SearchRedirect';
+import { fetAllConfigGlobal } from '../../../redux/action/config-global.constant';
+import { CONFIG_NAME } from '../../../share/constant/configuration.constant';
 
 class HeaderMain extends Component {
 
+  componentDidMount() {
+    if (this.props.listConfigGlobal.length === 0) {
+      this.props.fetchAllConfigGlobal();
+    }
+  }
+
+  findLogo = () => {
+    const { listConfigGlobal } = this.props;
+    const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.LOGO);
+    return value ? value.value : '';
+  }
   render() {
     return (
       <header className="container">
         <div id="header" className="row">
-          {/* <div className="col-md-5 header-search">
-            <input type="text" name="q" className="inline-block w-small bm-remove" placeholder="Bạn cần tìm gì?" onKeyPress={this.onKeyPress} maxLength="255" autoComplete="off" defaultValue="" />
-          </div> */}
           <SearchRedirect />
           <div className="col-md-2 header-logo">
             <NavLink to={"/"} className="image-logo">
-              <img src={"https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR6.jpg"} className="image" alt="brand" />
+            <img src={this.findLogo()} className="image" alt="brand" />
             </NavLink>
           </div>
           <div className="col-md-5 header-cart">
             <NavLink to={"/gio-hang"} className="text-cart">
-              <i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span>{this.props.quantity.quantities.length}</span> <span>sản phẩm</span> - <span><NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true}/>₫</span>)
+              <i className="fa fa-shopping-cart fa-fw" /> Giỏ hàng (<span>{this.props.quantity.quantities.length}</span> <span>sản phẩm</span> - <span><NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span>)
             </NavLink>
           </div>
         </div>
@@ -34,7 +44,14 @@ class HeaderMain extends Component {
 const mapStateToProps = state => {
   return {
     quantity: state.quantityReducer,
+    listConfigGlobal: state.configGlobalReducer,
   }
 }
-
-export default connect(mapStateToProps, null)(HeaderMain);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAllConfigGlobal: () => {
+      dispatch(fetAllConfigGlobal());
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderMain);

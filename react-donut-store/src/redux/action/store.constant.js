@@ -1,4 +1,4 @@
-import { findAllStore } from '../../main/page/util/api-caller';
+import { findAllStore } from '../../main/util/api-caller';
 import * as Helper from '../../share/common/helper/Helper';
 
 export const FETCH_STORE = 'FETCH_STORE';

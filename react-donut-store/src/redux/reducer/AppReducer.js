@@ -4,6 +4,7 @@ import categoryReducer from './CategoryReducer';
 import storeReducer from './StoreReducer';
 import quantityReducer from './QuantityReducer';
 import notificationReducer from './NotificationReducer';
+import configGlobalReducer from './ConfigGlobalReducer';
 
 const appReducers = combineReducers({
   itemReducer,
@@ -11,6 +12,7 @@ const appReducers = combineReducers({
   storeReducer,
   quantityReducer,
   notificationReducer,
+  configGlobalReducer,
 });
 
 export default appReducers;

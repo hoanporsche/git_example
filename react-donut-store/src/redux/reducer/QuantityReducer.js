@@ -4,7 +4,7 @@ import { LOCAL_STORAGE } from '../../share/constant/local-storage.constant';
 //Lấy danh sách ra từ localstorage trc
 let localState = JSON.parse(localStorage.getItem(LOCAL_STORAGE.ORDER));
 
-let initialState = (localState !== null) ? localState : {
+let initialState = localState ? localState : {
   quantities: [],
   totalPrice: 0,
 };

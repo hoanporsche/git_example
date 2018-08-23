@@ -9,5 +9,6 @@ public interface CommonMethod {
   public String createCategoryCode();
   public String createStoreCode();
   public String createQuantityCode(String orderCode, int index);
+  public Boolean notDeleteConfigGlobal(String name);
 
 }

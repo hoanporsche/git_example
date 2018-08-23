@@ -161,3 +161,14 @@ INSERT INTO `donutstore`.`notification_db` VALUES
 ('3','3','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
 ('4','4','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0');
 
+INSERT INTO `donutstore`.`config_global` VALUES
+('logo','https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR6.jpg'),
+('headquarter','113/D6 Giảng Võ'),
+('hotLine','0943451794'),
+('email','banhranhoan@gmail.com'),
+('minTotalPrice','80000'),
+('freeShipDistance','3'),
+('minAhaDistance','4'),
+('subsidyPrice','10000'),
+('singleShippingPrice','5600'),
+('minShippingPrice','12000');
