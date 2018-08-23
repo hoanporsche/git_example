@@ -72,7 +72,8 @@
 		element.onclick = validate;
 	}
 </script>
-<script src="https://www.google.com/recaptcha/api.js" async="async" defer="defer"></script>
+<script src="https://www.google.com/recaptcha/api.js" async="async"
+	defer="defer"></script>
 </head>
 <body onload="disconnect()">
 	<div>
@@ -93,11 +94,35 @@
 		</div>
 	</div>
 	<form>
-		Name: (required) <input id="field" name="field"/>
-		<div id='recaptcha' class="g-recaptcha" data-sitekey="6LdRSWsUAAAAAFhqjYDSvVwAzgM2EN6k8_ADCSE6"
+		Name: (required) <input id="field" name="field" />
+		<div id='recaptcha' class="g-recaptcha"
+			data-sitekey="6LdRSWsUAAAAAFhqjYDSvVwAzgM2EN6k8_ADCSE6"
 			data-callback="onSubmit" data-size="invisible"></div>
 		<button id='submit'>submit</button>
 	</form>
+	<div class="fb-messengermessageus" messenger_app_id="2150713538567990"
+		page_id="478740035631679" data-color="blue" data-size="standard"></div>
+	<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId : '2150713538567990',
+				autoLogAppEvents : true,
+				xfbml : true,
+				version : 'v3.1'
+			});
+		};
+
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 	<script>
 		onload();
 	</script>

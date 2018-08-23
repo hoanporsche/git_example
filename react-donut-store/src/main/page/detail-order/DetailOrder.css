@@ -1,0 +1,8 @@
+#detail-order {
+  font-family: Open sans;
+  min-height: 45vh
+}
+
+#detail-order h3 {
+  color: red;
+}

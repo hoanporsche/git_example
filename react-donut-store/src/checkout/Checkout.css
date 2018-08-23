@@ -12,6 +12,7 @@
   color: #717171;
   box-shadow: 1px 0 0 #e1e1e1 inset;
   padding-bottom: 1em;
+  min-height: 100vh;
 }
 
 #check-out .buyer-info {

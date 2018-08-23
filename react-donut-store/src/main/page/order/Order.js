@@ -59,7 +59,7 @@ class Order extends Component {
   }
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{minHeight: '45vh'}}>
         <SectionHeader title="Giỏ hàng của bạn" />
         <p className="text-center">Giỏ hàng ({this.props.quantity.quantities.length} Sản phẩm - <NumberFormat value={this.props.quantity.totalPrice} displayType={'text'} thousandSeparator={true} />₫)</p>
         {this.showShippingCart()}

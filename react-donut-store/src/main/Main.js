@@ -25,8 +25,10 @@ class Main extends Component {
         <HeaderMain />
         <MenuMain />
         <Switch>
-          { this.showRoute(mainRoutes) } 
+          {this.showRoute(mainRoutes)}
         </Switch>
+        <div className="fb-messengermessageus fb-messengermessageus-custom" messengerappid={2150713538567990} pageid="478740035631679" color="blue" size="xlarge">
+        </div>
         <FooterMain />
       </div>
     );

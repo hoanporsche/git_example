@@ -38,6 +38,10 @@ const listBreadcrumb = [
 ]
 
 class Checkout extends Component {
+  componentWillMount() {
+    if (!JSON.parse(localStorage.getItem(LOCAL_STORAGE.ORDER)))
+      this.props.history.push(ROUTING_URL.ORDER);
+  }
   onCaptchaCompleted = e => {
     const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
     const newOrder = {

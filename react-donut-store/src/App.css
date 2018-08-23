@@ -360,7 +360,7 @@ input, select {
 
 .page-border {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   border: 5px solid #bfbfbf;
 }
 
@@ -385,4 +385,14 @@ input, select {
 
 .border-field-required {
   border: 2px solid red;
+}
+
+.fb-messengermessageus-custom {
+  position: fixed !important;
+  bottom: 0px;
+  right: 20px;
+  z-index: 999999999999999;
+  width: 250px;
+  height: auto;
+  overflow: hidden;
 }

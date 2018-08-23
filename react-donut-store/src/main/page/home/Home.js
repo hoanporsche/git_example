@@ -69,7 +69,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{minHeight: '45vh'}}>
         {/* <div className="row ds-second-div">
             <div className="col-12">
               <div className="more-detail gg-maps"></div>
