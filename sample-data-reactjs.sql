@@ -53,11 +53,11 @@ INSERT INTO `donutstore`.`item_material` VALUES
 ('2','7');
 
 INSERT INTO `donutstore`.`order_status` VALUES 
-('1','Assigning','Đang tìm',b'1'),
-('2','Accepted','Đã nhận',b'1'),
-('3','In process','Đang thực hiện',b'1'),
-('4','Completed','Đã hoàn thành',b'1'),
-('5','Cancel','Hủy',b'1');
+('1','verifying','Đang xác thực',b'1'),
+('2','accepted','Đã nhận',b'1'),
+('3','in-process','Đang thực hiện',b'1'),
+('4','completed','Đã hoàn thành',b'1'),
+('5','cancel','Hủy',b'1');
 
 INSERT INTO `donutstore`.`store` VALUES 
 ('1','STOsfgtjnm','Giảng Võ','','0943451794','D6 Giảng Võ','21.026846','105.821322','2018-01-02', '2018-02-03', b'1'),

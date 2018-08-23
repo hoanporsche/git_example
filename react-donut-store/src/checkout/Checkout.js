@@ -61,7 +61,7 @@ class Checkout extends Component {
       })
       Helper.setLoading(false);
       localStorage.removeItem(LOCAL_STORAGE.ORDER);
-      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: data }]));
+      window.location.href = RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: data }]);
     }).catch(e => {
       console.log(e);
       Helper.setLoading(false);

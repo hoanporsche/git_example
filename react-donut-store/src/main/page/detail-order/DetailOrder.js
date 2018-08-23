@@ -7,6 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { capchaKey } from '../../../enviroment';
 import * as Helper from '../../../share/common/helper/Helper';
 import { findTodayListOrder } from '../../util/api-caller';
+import SingleOrder from '../../component/single-order/SingleOrder';
 
 const recaptchaRef = React.createRef();
 
@@ -17,7 +18,7 @@ class DetailOrder extends Component {
     this.state = {
       orderCode: '',
       searchString: '',
-      listOrder: '',
+      listOrder: [],
       isSubmitting: false,
     }
   }
@@ -26,13 +27,14 @@ class DetailOrder extends Component {
     console.log(queryParam);
     this.setState({
       orderCode: queryParam.orderCode,
-      listOrder: '',
+      listOrder: [],
       isSubmitting: true,
+      searchString: queryParam.orderCode,
     });
     window.grecaptcha.execute();
   }
   onCaptchaCompleted = e => {
-    findTodayListOrder(this.state.orderCode, e).then(({data})=> {
+    findTodayListOrder(this.state.orderCode, e).then(({ data }) => {
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
@@ -60,15 +62,23 @@ class DetailOrder extends Component {
     this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: this.state.searchString }]))
   }
 
+  showListOrder = () => {
+    const { listOrder } = this.state;
+    return (listOrder.length > 0) ? listOrder.map((order, index) => {
+      return (
+        <SingleOrder key={index} order={order}/>
+      )
+    }) : null;
+  }
   render() {
     return (
-      <div id="detail-order" className="container text-center"><ReCAPTCHA
+      <div id="detail-order" className="container"><ReCAPTCHA
         ref={recaptchaRef}
         size="invisible"
         sitekey={capchaKey}
         onChange={this.onCaptchaCompleted}
       />
-        <h3><i className="fas fa-book"></i> Theo dõi đơn hàng</h3>
+        <h3 className="text-center"><i className="fas fa-book"></i> Theo dõi đơn hàng</h3>
         <div className="row">
           <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
             <div className="row">
@@ -81,9 +91,9 @@ class DetailOrder extends Component {
                 </button>
               </div>
             </div>
-
           </div>
         </div>
+        {this.showListOrder()}
       </div>
     );
   }
