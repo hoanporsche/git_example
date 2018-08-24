@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import SingleItem from '../../component/single-item/SingleItem';
 import './Home.css';
 import { fetAllItem } from '../../../redux/action/item.constant';
-import queryString from 'query-string';
 import xoaDau from '../../../share/util/xoaDau';
 import NotFound from '../../../error/NotFound';
 import ModalSingleItem from '../../component/modal-single-item/ModalSingleItem';
+const queryString = require('query-string');
 
 class Home extends Component {
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
 import './DetailOrder.css';
 import RedirectQueryParams from '../../../share/util/RedirectQueryParams';
 import { ROUTING_URL } from '../../../share/constant/routing.constant';
@@ -8,6 +7,7 @@ import { capchaKey } from '../../../enviroment';
 import * as Helper from '../../../share/common/helper/Helper';
 import { findTodayListOrder } from '../../util/api-caller';
 import SingleOrder from '../../component/single-order/SingleOrder';
+const queryString = require('query-string');
 
 const recaptchaRef = React.createRef();
 
