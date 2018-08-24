@@ -1,3 +1,6 @@
+import { ChatInternalService } from './services/chat-internal.service';
+import { ChatFreeService } from './services/chat-free.service';
+import { NotificationService } from './services/notification.service';
 import { SortService } from './services/sort.service';
 import { BaseService } from './services/base.service';
 import { ScriptLoaderService } from './services/script-loader.service';
@@ -7,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from './services/local-storage.service';
+import { WebSocketService } from './services/web-socket.service';
+import { SenderService } from './services/sender.service';
 
 @NgModule({
   imports: [
@@ -28,7 +33,12 @@ import { LocalStorageService } from './services/local-storage.service';
     NavigationService,
     ScriptLoaderService,
     LocalStorageService,
-    SortService
+    SortService,
+    WebSocketService,
+    NotificationService,
+    ChatFreeService,
+    ChatInternalService,
+    SenderService,
   ]
 })
 export class CoreModule { }

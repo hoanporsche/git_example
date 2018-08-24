@@ -1,0 +1,27 @@
+<div class="container ds-all-sender">
+  <div class="ds-contacts">
+    CONTACTS
+    <a href="#" class="float-right" (click)="refresh()">
+      <i class="la la-refresh"></i>
+    </a>
+  </div>
+  <ul>
+    <li class="row one-sender" *ngFor="let internalSender of listInternalSender">
+      <a href="#" (click)="getSender(internalSender)">
+        {{ internalSender?.name }}
+      </a>
+      - {{ internalSender?.phone }}
+    </li>
+  </ul>
+  <div class="ds-contacts">
+    CUSTOMERS
+  </div>
+  <ul>
+    <li class="row one-sender" *ngFor="let notInternalSender of listNotInternalSender">
+      <a href="#" (click)="getSender(notInternalSender)">
+        {{ notInternalSender?.name }}
+      </a>
+      - {{ notInternalSender?.phone }}
+    </li>
+  </ul>
+</div>

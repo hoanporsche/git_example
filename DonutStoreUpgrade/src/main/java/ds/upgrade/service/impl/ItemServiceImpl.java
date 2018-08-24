@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,15 +11,19 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.model.support.ItemJson;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.ItemSpecification;
 import ds.upgrade.service.ItemService;
+import ds.upgrade.util.service.CommonMethod;
 
 @Service
 public class ItemServiceImpl implements ItemService {
 
   @Autowired
   private ItemRepository itemRepository;
+  @Autowired
+  private CommonMethod commonMethod;
 
   /**
    * @description: .
@@ -29,8 +34,16 @@ public class ItemServiceImpl implements ItemService {
    * @return
    */
   @Override
-  public List<Item> findAll() {
-    return itemRepository.findAll();
+  public List<ItemJson> findAll() {
+    List<Item> listFound = itemRepository.findAll();
+    List<ItemJson> list = new ArrayList<>();
+    if (listFound != null && listFound.size() > 0) {
+      for (Item item : listFound) {
+        list.add(new ItemJson(item));
+      }
+      return list;
+    }
+    return null;
   }
 
   /**
@@ -66,11 +79,13 @@ public class ItemServiceImpl implements ItemService {
   public Item save(Item item) {
     if (item.getId() == null) {
       item.setDateCreated(new Date());
+      item.setCode(commonMethod.createItemCode());
     } else {
       Item foundItem = itemRepository.findOne(item.getId());
       if (foundItem == null)
         return null;
       item.setDateCreated(foundItem.getDateCreated());
+      item.setCode(foundItem.getCode());
     }
     item.setDateUpdated(new Date());
     item.setEnabled(true);

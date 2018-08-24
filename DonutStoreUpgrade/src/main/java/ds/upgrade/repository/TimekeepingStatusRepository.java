@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import ds.upgrade.model.TimekeepingStatus;
+import ds.upgrade.util.QueryConstant;
 
 public interface TimekeepingStatusRepository extends JpaRepository<TimekeepingStatus, Long>, JpaSpecificationExecutor<TimekeepingStatus> {
 
-  @Query("SELECT ts FROM TimekeepingStatus ts WHERE ts.enabled = true")
+  @Query(QueryConstant.TIMEKEEPING_STATUS.FIND_ALL)
   List<TimekeepingStatus> findAll();
   
   TimekeepingStatus findByName(String name);

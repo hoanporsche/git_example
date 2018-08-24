@@ -14,5 +14,5 @@ public interface StoreRepository extends JpaRepository<Store, Long>, JpaSpecific
   @Query("SELECT s FROM Store s WHERE s.enabled = true")
   List<Store> findAll();
   
-  Store findByName(String name);
+  Store findBycode(String code);
 }

@@ -2,7 +2,6 @@ import { LOCAL_STORAGE } from '../../shared/constants/local-storage.constant';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Token } from '@angular/compiler';
 
 /**
 * @WhatItDoes defines all common services to api servers
@@ -51,9 +50,11 @@ export class BaseService {
   }
 
   public createHeaders() {
-    return  new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
+    //for jwt
+    // return  new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
+    return  new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken().access_token);
   }
-  private getToken(): Token {
-    return <Token> JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));
+  private getToken() {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE.TOKEN));
   }
 }

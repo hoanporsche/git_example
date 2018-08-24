@@ -6,10 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Category;
+import ds.upgrade.model.support.CategoryJson;
 
 public interface CategoryService {
 
-  List<Category> findAll();
+  List<CategoryJson> findAll();
   
   Category findOne(Long id);
   

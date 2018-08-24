@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import ds.upgrade.model.Category;
+import ds.upgrade.util.QueryConstant;
 
 public interface CategoryRepository
     extends JpaRepository<Category, Long>, JpaSpecificationExecutor<Category> {
 
-  @Query("SELECT c FROM Category c WHERE c.enabled = true")
+  @Query(QueryConstant.CATEGORY.FIND_ALL)
   List<Category> findAll();
   
   Category findByName(String name);

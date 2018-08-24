@@ -8,7 +8,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.TimekeepingStatus;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 public class TimekeepingStatusSpecification implements Specification<TimekeepingStatus> {
 
@@ -25,7 +25,7 @@ public class TimekeepingStatusSpecification implements Specification<Timekeeping
     Predicate predicate = cb.conjunction();
     if (enabled != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.ENABLED_PARAM), enabled));
     }
     return predicate;
   }

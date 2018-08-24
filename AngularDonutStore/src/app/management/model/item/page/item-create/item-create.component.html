@@ -5,7 +5,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter item's name">
+        <input type="text" class="form-control m-input" formControlName="name" maxlength="40" placeholder="Enter item's name">
         <div class="error-no-padding" *ngIf="name.touched && name.invalid">
           <div *ngIf="name.hasError('required')">
             Name is required.
@@ -26,7 +26,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter item's picutre">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter item's picutre">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
           <div *ngIf="picture.hasError('required')">
             Picture is required.
@@ -56,7 +56,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <textarea type="text" class="form-control m-input" formControlName="description" maxlength="1000" placeholder="Enter item's description"></textarea>
+        <textarea type="text" class="form-control m-input" formControlName="description" maxlength="255" placeholder="Enter item's description"></textarea>
         <div class="error-no-padding" *ngIf="description.touched && description.invalid">
           <div *ngIf="description.hasError('required')">
             Description is required.

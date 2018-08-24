@@ -1,42 +1,4 @@
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
-  <!-- BEGIN: Subheader -->
-  <div class="m-subheader">
-    <div class="d-flex align-items-center">
-      <div class="mr-auto">
-        <h3 class="m-subheader__title m-subheader__title--separator">
-          User
-        </h3>
-        <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
-          <li class="m-nav__item m-nav__item--home">
-            <a href="#" class="m-nav__link m-nav__link--icon">
-              <i class="m-nav__link-icon la la-home"></i>
-            </a>
-          </li>
-          <li class="m-nav__separator">
-            -
-          </li>
-          <li class="m-nav__item">
-            <a href="javascript: void(0);" class="m-nav__link">
-              <span class="m-nav__link-text">
-                List User
-              </span>
-            </a>
-          </li>
-          <li class="m-nav__separator">
-            -
-          </li>
-          <li class="m-nav__item">
-            <a href="javascript: void(0);" class="m-nav__link">
-              <span class="m-nav__link-text">
-                List
-              </span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!-- END: Subheader -->
   <div class="m-content">
     <div class="row">
       <div class="col-12">
@@ -143,14 +105,12 @@
                     <tr>
                       <th>#</th>
                       <th sortable-column="email">Email</th>
+                      <th sortable-column="picture">Picture</th>
                       <th>Role</th>
                       <th sortable-column="dateCreated">Date created</th>
                       <th sortable-column="dateUpdated">Date created</th>
                       <th sortable-column="storeId.name">Store</th>
                       <th sortable-column="enabled">Enabled</th>
-                      <th sortable-column="credentialsexpired">Credentialsexpired</th>
-                      <th sortable-column="expired">Expired</th>
-                      <th sortable-column="locked">Locked</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -160,6 +120,9 @@
                       <th scope="row">{{ requestPage.size * requestPage.number + i + 1 }}</th>
                       <td>
                         <span placement="top" ngbTooltip="{{ user?.email }}">{{ user?.email | summary: 20}}</span>
+                      </td>
+                      <td>
+                        <span placement="top" ngbTooltip="{{ user?.picture }}">{{ user?.picture | summary: 20}}</span>
                       </td>
                       <td>
                         <span *ngFor="let role of user?.roles" placement="top" ngbTooltip="{{ role?.name }}">{{ role?.name | summary: 20}}</span>
@@ -178,18 +141,6 @@
                       <td>
                         <span *ngIf="user?.enabled" style="color: red">Active</span>
                         <span *ngIf="!user?.enabled" style="color: black">In-Active</span>
-                      </td>
-                      <td>
-                        <span *ngIf="user?.credentialsexpired" style="color: red">Credential's expired</span>
-                        <span *ngIf="!user?.credentialsexpired" style="color: black">Credential's not expired</span>
-                      </td>
-                      <td>
-                        <span *ngIf="user?.expired" style="color: red">Expired</span>
-                        <span *ngIf="!user?.expired" style="color: black">Not expired</span>
-                      </td>
-                      <td>
-                        <span *ngIf="user?.locked" style="color: red">Locked</span>
-                        <span *ngIf="!user?.locked" style="color: black">Not locked</span>
                       </td>
                       <td>
                         <i class="la la-edit" (click)="onDetail(user)" placement="top" ngbTooltip="View Detail">

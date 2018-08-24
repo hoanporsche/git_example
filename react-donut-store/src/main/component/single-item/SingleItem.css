@@ -1,0 +1,87 @@
+.ds-single-item {
+  padding-bottom: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: beige;
+  text-align: center;
+}
+
+#ds-item .nav-link-item {
+  text-decoration: none;
+}
+
+#ds-item .nav-link-item h4:hover {
+  color: red;
+  transition: all 0.2s ease-in-out;
+}
+
+.ds-single-item-image {
+  padding-top: 5em;
+  height: 180px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+#ds-item .quick-look {
+  border-radius: 100%;
+  vertical-align: middle;
+  margin:0 auto;
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  color: black;
+}
+
+#ds-item .quick-look i {
+  margin-top: 12px;
+  margin-left: -2px;
+  font-size: 1.5em;
+}
+
+#ds-item .quick-look:hover {
+  background-color: black;
+  color: white;
+}
+
+#ds-item .auto-fade {
+  visibility:hidden;
+}
+
+.fade-image {
+  cursor: pointer;
+}
+
+#ds-item .fade-image:hover {
+  opacity: 0.5;
+}
+
+#ds-item .fade-image:hover .auto-fade {
+  visibility:visible;
+  opacity: 1;
+}
+
+.ds-single-item h4 {
+  color: #512728;
+  font-size: 1.3em;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.ds-single-item span {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#ds-item .custom-btn:hover {
+  border-radius: 100%;
+}

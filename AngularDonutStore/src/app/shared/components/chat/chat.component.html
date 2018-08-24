@@ -1,0 +1,22 @@
+<div class="ds-chat-box" [ngClass]="{'ds-width-250-px': !isOpen, 'ds-width-350-px': isOpen}">
+  <div class="ds-open">
+    <div class="ds-box-header">
+      <a href="#" (click)="openBox()">
+        <i class="fa fa-comments-o" *ngIf="!isOpen"></i>
+        <b>Chat với chúng tôi!</b>
+      </a>
+      <a href="#" class="float-right" *ngIf="isOpen" (click)="closeBox()">
+        <i class="fa fa-angle-down shrink_icon"></i>
+      </a>
+    </div>
+    <div class="ds-box" [ngClass]="{'ds-height-230-px': !chatUser, 'ds-height-415-px': chatUser}" *ngIf="isOpen">
+      <app-form-user *ngIf="!chatUser" (emitChatUser)="getEmitChatUser($event)"></app-form-user>
+      <app-form-chat *ngIf="chatUser" (emitMessage)="emitMessage($event)" 
+        [allReceivedMessages]="allReceivedMessages"
+        [chatUser]="chatUser"></app-form-chat>
+    </div>
+    <div class="ds-box-footer" *ngIf="isOpen">
+
+    </div>
+  </div>
+</div>

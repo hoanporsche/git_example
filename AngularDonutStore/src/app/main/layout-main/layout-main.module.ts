@@ -11,12 +11,12 @@ import { LayoutMainComponent } from './layout-main.component';
   imports: [
     CommonModule,
     SharedModule,
-    LayoutMainRoutingModule
+    LayoutMainRoutingModule,
   ],
   declarations: [
     LayoutMainComponent,
     HeaderMainComponent,
-    FooterMainComponent
+    FooterMainComponent,
   ],
   providers: [
     MainService

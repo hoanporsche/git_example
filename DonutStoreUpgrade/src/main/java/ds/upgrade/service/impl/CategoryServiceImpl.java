@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Category;
 import ds.upgrade.model.Item;
+import ds.upgrade.model.support.CategoryJson;
 import ds.upgrade.repository.CategoryRepository;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;
 import ds.upgrade.service.CategoryService;
+import ds.upgrade.util.service.CommonMethod;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -23,6 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
   private CategoryRepository categoryRepository;
   @Autowired
   private ItemRepository itemRepository;
+  @Autowired
+  private CommonMethod commonMethod;
 
   /**
    * @description: .
@@ -33,8 +38,16 @@ public class CategoryServiceImpl implements CategoryService {
    * @return
    */
   @Override
-  public List<Category> findAll() {
-    return categoryRepository.findAll();
+  public List<CategoryJson> findAll() {
+    List<Category> listFound = categoryRepository.findAll();
+    List<CategoryJson> listJson = new ArrayList<>();
+    if (listFound != null && listFound.size() > 0) {
+      for (Category category : listFound) {
+        listJson.add(new CategoryJson(category));
+      }
+      return listJson;
+    }
+    return null;
   }
 
   /**
@@ -70,11 +83,13 @@ public class CategoryServiceImpl implements CategoryService {
   public Category save(Category category) {
     if (category.getId() == null) {
       category.setDateCreated(new Date());
+      category.setCode(commonMethod.createCategoryCode());
     } else {
       Category foundCategory = categoryRepository.findOne(category.getId());
       if (foundCategory == null)
         return null;
       category.setDateCreated(foundCategory.getDateCreated());
+      category.setCode(foundCategory.getCode());
     }
     category.setDateUpdated(new Date());
     category.setEnabled(true);

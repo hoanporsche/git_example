@@ -15,7 +15,7 @@ export class StoreGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.identityService.isStore() || this.identityService.isStaff() || this.identityService.isAdmin()) {
+    if (this.identityService.isStore() || this.identityService.isAdmin()) {
       return true;
     } else {
       this.navigationService.navErrorUnauthorized();

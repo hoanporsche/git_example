@@ -35,12 +35,16 @@ public class Item implements Serializable {
   @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  @Size(min = 10, max = 10)
   @NotEmpty
-  @Size(max = 255)
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
+  @NotEmpty
+  @Size(max = 40)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   @NotEmpty
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "picture")
   private String picture;
 
@@ -63,7 +67,7 @@ public class Item implements Serializable {
   @Size(max = 1000)
   @Column(name = "description", nullable = false)
   private String description;
-  
+
   @ManyToMany
   @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
   private Set<Material> materials;
@@ -78,12 +82,21 @@ public class Item implements Serializable {
   public String toString() {
     return this.name;
   }
+
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getName() {
@@ -149,7 +162,7 @@ public class Item implements Serializable {
   public void setMaterials(Set<Material> materials) {
     this.materials = materials;
   }
-  
+
   public List<Quantity> getQuantites() {
     return quantites;
   }

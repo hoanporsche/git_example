@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Timekeeping;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -55,23 +55,23 @@ public class TimekeepingSpecification implements Specification<Timekeeping> {
     Predicate predicate = cb.conjunction();
     if (statusId != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.STATUS_ID_PARAM).get(Constants.PARAM.ID_PARAM), statusId));
+          root.<Long>get(AppConstant.PARAM.STATUS_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), statusId));
     }
     if (staffId != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.STAFF_ID_PARAM).get(Constants.PARAM.ID_PARAM), staffId));
+          root.<Long>get(AppConstant.PARAM.STAFF_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), staffId));
     }
     if (storeId != null) {
-      predicate = cb.and(predicate, cb.equal(root.<Long>get(Constants.PARAM.STAFF_ID_PARAM)
-          .get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+      predicate = cb.and(predicate, cb.equal(root.<Long>get(AppConstant.PARAM.STAFF_ID_PARAM)
+          .get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), storeId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate,
-          cb.greaterThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), startDate));
+          cb.greaterThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), startDate));
     }
     if (endDate != null) {
       predicate = cb.and(predicate,
-          cb.lessThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), endDate));
+          cb.lessThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), endDate));
     }
     return predicate;
   }

@@ -30,12 +30,27 @@
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
         <input type="password" class="form-control m-input" formControlName="password" maxlength="60" placeholder="Enter user's password">
-        <div class="error-no-padding" *ngIf="email.touched && email.invalid">
+        <div class="error-no-padding" *ngIf="password.touched && password.invalid">
           <div *ngIf="password.hasError('required')">
             Password is required.
           </div>
           <div *ngIf="password.hasError('notEmpty')">
             Password is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Picture
+    </label>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="input-group">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter user's picture">
+        <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
+          <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
+            Picture is required.
           </div>
         </div>
       </div>
@@ -73,7 +88,7 @@
             {{ role?.name }}
           </option>
         </select>
-        <div class="error-no-padding" *ngIf="storeId.invalid">
+        <div class="error-no-padding" *ngIf="roles.invalid">
           <div *ngIf="roles.hasError('required')">
             Role is required.
           </div>

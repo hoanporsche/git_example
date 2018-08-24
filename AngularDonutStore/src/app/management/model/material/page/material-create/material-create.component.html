@@ -5,7 +5,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter material's name">
+        <input type="text" class="form-control m-input" formControlName="name" maxlength="20" placeholder="Enter material's name">
         <div class="error-no-padding" *ngIf="name.touched && name.invalid">
           <div *ngIf="name.hasError('required')">
             Name is required.
@@ -26,7 +26,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter material's picutre">
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter material's picutre">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
           <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
             Picture is required.

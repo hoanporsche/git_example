@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Order;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -29,9 +29,26 @@ public class OrderSpecification implements Specification<Order> {
   private Boolean isShipping;
   private Date startDate;
   private Date endDate;
+  private String orderCode;
+  private String orderPhone;
+
+  //find today list by phone
+  public OrderSpecification(Date startDate, Date endDate, String orderPhone) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.orderPhone = orderPhone;
+  }
+
+  //find today list by code
+  public OrderSpecification(String orderCode, Date startDate, Date endDate) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.orderCode = orderCode;
+  }
 
   public OrderSpecification() {
-    // TODO Auto-generated constructor stub
   }
 
   public OrderSpecification(Long statusId, Long storeId, Boolean isShipping, Date startDate,
@@ -59,23 +76,31 @@ public class OrderSpecification implements Specification<Order> {
     Predicate predicate = cb.conjunction();
     if (storeId != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+          root.<Long>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), storeId));
     }
     if (statusId != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.STATUS_ID_PARAM).get(Constants.PARAM.ID_PARAM), statusId));
+          root.<Long>get(AppConstant.PARAM.STATUS_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), statusId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate,
-          cb.greaterThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), startDate));
+          cb.greaterThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), startDate));
     }
     if (endDate != null) {
       predicate = cb.and(predicate,
-          cb.lessThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), endDate));
+          cb.lessThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), endDate));
     }
     if (isShipping != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(Constants.PARAM.IS_SHIPPING_PARAM), isShipping));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.IS_SHIPPING_PARAM), isShipping));
+    }
+    if (orderCode != null) {
+      predicate = cb.and(predicate, cb.equal(
+          root.<String>get(AppConstant.PARAM.CODE_PARAM), orderCode));
+    }
+    if (orderPhone != null) {
+      predicate = cb.and(predicate, cb.equal(
+          root.<String>get(AppConstant.PARAM.PHONE_PARAM), orderPhone));
     }
     return predicate;
   }

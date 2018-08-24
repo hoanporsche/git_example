@@ -17,7 +17,7 @@ import ds.upgrade.repository.MaterialDailyReportRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.MaterialDailyReportSpecification;
 import ds.upgrade.service.MaterialDailyReportService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 @Service
 public class MaterialDailyReportServiceImpl implements MaterialDailyReportService {
@@ -88,7 +88,7 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
   @Override
   public List<MaterialDailyReport> save(List<MaterialDailyReport> listReport, String storeName) {
     // If list doesn't have id, will check to create
-    SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.FORMAT.DATE_FORMAT_1);
+    SimpleDateFormat dateFormat = new SimpleDateFormat(AppConstant.FORMAT.DATE_FORMAT_1);
     List<MaterialDailyReport> listFoundReport = findDailyReport(
         dateFormat.format(new Date()).toString(), storeName);
     if (listReport.get(0).getId() == null) {
@@ -106,7 +106,7 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
   private List<MaterialDailyReport> saveOneByOneReport(List<MaterialDailyReport> listReport,
       String storeName) {
     List<MaterialDailyReport> listSavedReport = new ArrayList<>();
-    Store store = storeRepository.findByName(storeName);
+    Store store = storeRepository.findByname(storeName);
     for (int i = 0; i < listReport.size(); i++) {
       MaterialDailyReport savedReport = listReport.get(i);
       savedReport.setDateCreated(new Date());

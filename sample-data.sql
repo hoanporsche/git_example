@@ -6,8 +6,8 @@ INSERT INTO `donutstore`.`category` VALUES
 (3,'Đồ uống', '2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
-(1,'Bánh rán mặn', './assets/img/donut-store/BR7.jpg','1','2018-01-02', '2018-02-03','3000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
-(2,'Bánh rán ngọt', './assets/img/donut-store/BR8.jpg','1','2018-01-02', '2018-02-03','3000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
+(1,'Bánh rán mặn', './assets/img/donut-store/BR7.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
+(2,'Bánh rán ngọt', './assets/img/donut-store/BR8.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với nhân đỗ xanh quyện với đường cho vị ngọt thanh khi thưởng thức, vỏ bánh giòn mỏng.'),
 (3,'Bánh mì pate trứng', './assets/img/donut-store/BM1.jpg','2','2018-01-02', '2018-02-03','12000', b'1','Bánh mì với nhân là pate, trứng chiên cùng các loại rau và sốt.'),
 (4,'Bánh mì pate xúc xích', './assets/img/donut-store/BM2.jpg','2','2018-01-02', '2018-02-03','15000', b'1','Bánh mì với nhân là pate, xúc xích rán cùng các loại rau và sốt.'),
 (5,'Bánh mì pate trứng xúc xích', './assets/img/donut-store/BM3.jpg','2','2018-01-02', '2018-02-03','18000', b'1','Bánh mì với nhân là pate, trứng chiên, xúc xích rán cùng các loại rau và sốt.'),
@@ -104,10 +104,10 @@ INSERT INTO `donutstore`.`timekeeping` VALUES
 ('1','1','2018-03-06','2018-03-06 08:20:00','2018-03-06 17:30:00', b'1');
 
 INSERT INTO `donutstore`.`user` VALUES 
-('1','admin@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
-('2','giangvo@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',1),
-('3','staff@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',2),
-('4','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6','2018-01-02','2018-02-03',b'1',b'0',b'0',b'0',2);
+('1','admin@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',1),
+('2','giangvo@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',1),
+('3','staff@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',2),
+('4','nuitruc@gmail.com','$2a$10$rieSbYQ8pMADeHBugz4ni.xtPq3G7dIM673TVE3T1Srcl5w4ITQL6',"",'2018-01-02','2018-02-03',b'1',2);
 
 
 INSERT INTO `donutstore`.`user_role` VALUES 
@@ -130,4 +130,34 @@ INSERT INTO `donutstore`.`material_daily_report` VALUES
 ('11','2','2018-03-07','5','10','11','enough'),
 ('12','2','2018-02-03','6','10','11','enough');
 
+INSERT INTO `donutstore`.`room_db` VALUES 
+('1', 'Customer1'),
+('2', 'Customer2'),
+('3', 'Nuitruc-giangvo');
+
+INSERT INTO `donutstore`.`sender_db` VALUES
+('1','giangvo','0943451794','2018-05-22','2'),
+('2','nuitruc','0969550954','2018-05-22','4'),
+('3','Hoang ngu','0988888808','2018-05-22', null),
+('4','Phong ngu','0988888888','2018-05-22', null);
+
+INSERT INTO `donutstore`.`sender_room_db` VALUES
+('1','1'),
+('1','3'),
+('2','2'),
+('2','4'),
+('3','1'),
+('3','2');
+
+INSERT INTO `donutstore`.`message_db` VALUES 
+('1','3','Hello','2018-05-22 13:04;00', '1'),
+('2','1','Chao ban','2018-05-22 13:05;00', '1'),
+('3','4','Minh muon mua banh ran','2018-05-22 13:09;00', '2'),
+('4','2','Ban lay bao nhieu chiec a','2018-05-22 13:10;00', '2');
+
+INSERT INTO `donutstore`.`notification_db` VALUES
+('1','1','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
+('2','2','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
+('3','3','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0'),
+('4','4','We have a new message at room DS-UG','2018-06-11 10:25:25',b'0');
 

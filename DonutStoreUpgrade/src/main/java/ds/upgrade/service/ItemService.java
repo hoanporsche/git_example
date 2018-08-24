@@ -6,10 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.model.support.ItemJson;
 
 public interface ItemService {
 
-  List<Item> findAll();
+  List<ItemJson> findAll();
   
   Item findOne(Long id);
   

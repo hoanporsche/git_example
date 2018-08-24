@@ -2,16 +2,20 @@ package ds.upgrade.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,6 +24,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -32,7 +38,7 @@ public class User implements Serializable {
   @Column(name = "id", nullable = false)
   private Long id;
   @NotEmpty
-  @Size(max = 255)
+  @Size(max = 100)
   @Email
   @Column(name = "email",nullable = false, unique = true)
   private String email;
@@ -41,6 +47,9 @@ public class User implements Serializable {
   @Size(max = 60)
   @Column(name = "password", nullable = false)
   private String password;
+  @NotNull
+  @Column(name = "picture")
+  private String picture;
 
   @ManyToMany
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
@@ -53,18 +62,17 @@ public class User implements Serializable {
   @NotNull
   @Column(name = "enabled")
   private boolean enabled = true;
-  @NotNull
-  @Column(name = "credentialsexpired")
-  private boolean credentialsexpired = false;
-  @NotNull
-  @Column(name = "expired")
-  private boolean expired = false;
-  @NotNull
-  @Column(name = "locked")
-  private boolean locked = false;
   @OneToOne
   @JoinColumn(name = "storeId", referencedColumnName = "id")
   private Store storeId;
+  
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+  @JsonIgnore
+  private List<NotificationDb> notifications;
+  
+  @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, 
+              fetch = FetchType.LAZY, optional = false)
+  private SenderDb senderDbId;
   
   @Transient
   private String oldPassword;
@@ -129,28 +137,12 @@ public class User implements Serializable {
     this.enabled = enabled;
   }
 
-  public boolean isCredentialsexpired() {
-    return credentialsexpired;
+  public String getPicture() {
+    return picture;
   }
 
-  public void setCredentialsexpired(boolean credentialsexpired) {
-    this.credentialsexpired = credentialsexpired;
-  }
-
-  public boolean isExpired() {
-    return expired;
-  }
-
-  public void setExpired(boolean expired) {
-    this.expired = expired;
-  }
-
-  public boolean isLocked() {
-    return locked;
-  }
-
-  public void setLocked(boolean locked) {
-    this.locked = locked;
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
   public Store getStoreId() {
@@ -175,6 +167,27 @@ public class User implements Serializable {
 
   public void setNewPassword(String newPassword) {
     this.newPassword = newPassword;
+  }
+
+  public List<NotificationDb> getNotifications() {
+    return notifications;
+  }
+
+  public void setNotifications(List<NotificationDb> notifications) {
+    this.notifications = notifications;
+  }
+
+  public SenderDb getSenderDbId() {
+    return senderDbId;
+  }
+
+  public void setSenderDbId(SenderDb senderDbId) {
+    this.senderDbId = senderDbId;
+  }
+
+  @Override
+  public String toString() {
+    return "User [id=" + id + ", email=" + email + "]";
   }
   
 }

@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.MaterialDailyReport;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -55,20 +55,20 @@ public class MaterialDailyReportSpecification implements Specification<MaterialD
     Predicate predicate = cb.conjunction();
     if (storeName != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<String>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.NAME_PARAM), storeName));
+          root.<String>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.NAME_PARAM), storeName));
     }
     if (materialId != null) {
       predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(Constants.PARAM.MATERIAL_ID_PARAM).get(Constants.PARAM.ID_PARAM), materialId));
+          root.<Long>get(AppConstant.PARAM.MATERIAL_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), materialId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate, cb.greaterThanOrEqualTo(
-          root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM),
+          root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM),
           startDate));
     }
     if (endDate != null) {
       predicate = cb.and(predicate, cb.lessThanOrEqualTo(
-          root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM),
+          root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM),
           endDate));
     }
     return predicate;

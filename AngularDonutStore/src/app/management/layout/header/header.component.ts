@@ -1,5 +1,6 @@
+import { UserJson } from './../../model/user/user-json';
 import { User } from '../../model/user/user';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptLoaderService } from '../../../core/services/script-loader.service';
 import { NavigationService } from '../../../core/services/navigation.service';
@@ -15,7 +16,8 @@ declare let mLayout: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  currentUser;
+  currentUser: UserJson;
+  numberNotSeenNoti: number;
   constructor(
     private router: Router,
     private _script: ScriptLoaderService,
@@ -31,7 +33,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   logout() {
     // clear token remove user from local storage to log user out
     this.localStorageService.removeItem(LOCAL_STORAGE.TOKEN);
-
+    this.identityService.setCurrentUser(undefined);
     this.navigationService.navLogin();
   }
 
@@ -54,5 +56,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   onChangePassword() {
     $('#modal_change').modal({ show: true, backdrop: 'static' });
+  }
+
+  getEmitCountNotSeenNoti(event) {
+    this.numberNotSeenNoti = event;
   }
 }

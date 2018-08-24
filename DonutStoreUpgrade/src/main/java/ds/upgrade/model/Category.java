@@ -30,8 +30,10 @@ public class Category implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
   @NotEmpty
-  @Size(max = 255)
+  @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
@@ -40,6 +42,8 @@ public class Category implements Serializable {
   @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
+  @Column(name = "picture", nullable = false)
+  private String picture;
   @Column(name = "enabled", nullable = false)
   private boolean enabled;
 
@@ -60,6 +64,14 @@ public class Category implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getName() {
@@ -84,6 +96,14 @@ public class Category implements Serializable {
 
   public void setDateUpdated(Date dateUpdated) {
     this.dateUpdated = dateUpdated;
+  }
+
+  public String getPicture() {
+    return picture;
+  }
+
+  public void setPicture(String picture) {
+    this.picture = picture;
   }
 
   public boolean isEnabled() {

@@ -13,9 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableWebSecurity
@@ -47,6 +44,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
       .csrf().disable()
       .authorizeRequests()
         .antMatchers("/admin/**").authenticated()
+        .antMatchers("/chat/**").permitAll()
         .and()
       .formLogin()
         .loginPage("/login")
@@ -68,23 +66,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
-  }
-
-  /**.
-   * @description: 
-   * @author: VDHoan
-   * @date_created: Mar 5, 2018
-   * @return
-   */
-  @Bean
-  public JwtAccessTokenConverter jwtAccessTokenConverter() {
-    final JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-    jwtAccessTokenConverter.setSigningKey("vdhoan2352");
-    return jwtAccessTokenConverter;
-  }
-
-  @Bean
-  public TokenStore tokenStore() {
-    return new JwtTokenStore(jwtAccessTokenConverter());
   }
 }

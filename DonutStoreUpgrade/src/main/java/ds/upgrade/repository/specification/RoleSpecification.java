@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.Role;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -35,7 +35,7 @@ public class RoleSpecification implements Specification<Role> {
     Predicate predicate = cb.conjunction();
     if (enabled != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(Constants.PARAM.ENABLED_PARAM), enabled));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.ENABLED_PARAM), enabled));
     }
     return predicate;
   }

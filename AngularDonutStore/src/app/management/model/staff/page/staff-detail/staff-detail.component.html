@@ -5,7 +5,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="name" maxlength="255" placeholder="Enter staff's name" [(ngModel)]="staffService.getStaff().name">
+        <input type="text" class="form-control m-input" formControlName="name" maxlength="20" placeholder="Enter staff's name" [(ngModel)]="staffService.getStaff().name">
         <div class="error-no-padding" *ngIf="name.touched && name.invalid">
           <div *ngIf="name.hasError('required')">
             Name is required.
@@ -23,7 +23,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="picture" maxlength="1000" placeholder="Enter staff's picture"
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter staff's picture"
           [(ngModel)]="staffService.getStaff().picture">
         <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
           <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
@@ -55,7 +55,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="address" maxlength="255" placeholder="Enter staff's address"
+        <input type="text" class="form-control m-input" formControlName="address" maxlength="60" placeholder="Enter staff's address"
           [(ngModel)]="staffService.getStaff().address">
         <div class="error-no-padding" *ngIf="address.touched && address.invalid">
           <div *ngIf="address.hasError('required') || address.hasError('notEmpty')">
@@ -90,7 +90,7 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="homeTown" maxlength="255" placeholder="Enter staff's homeTown"
+        <input type="text" class="form-control m-input" formControlName="homeTown" maxlength="20" placeholder="Enter staff's homeTown"
           [(ngModel)]="staffService.getStaff().homeTown">
         <div class="error-no-padding" *ngIf="homeTown.touched && homeTown.invalid">
           <div *ngIf="homeTown.hasError('required') || homeTown.hasError('notEmpty')">

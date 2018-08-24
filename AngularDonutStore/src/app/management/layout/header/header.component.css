@@ -1,25 +1,45 @@
 /* @import '../../../../../styles/design/_variables.scss'; */
+
 #header {
-    width: 100%;
-    border-bottom: 1px solid #a7a9ac;
-    background-color: #fff;
-    padding: 0 15px;
+  width: 100%;
+  border-bottom: 1px solid #a7a9ac;
+  background-color: #fff;
+  padding: 0 15px;
 }
 
 @media screen and (max-width: 1030px) {
-    #header{
-        font-size: 120%;
-    }
+  #header {
+    font-size: 120%;
+  }
 }
+
 /* .centeruppercase {
     text-align: center;
 } */
+
 .right {
-    text-align: right;
+  text-align: right;
 }
+
 /* .logo-header {
     width: 15%;
 } */
+
 .paddingFirst:hover {
-    cursor: pointer; 
+  cursor: pointer;
+}
+
+/* user for not shaking icon
+*/
+
+.m-nav__link-icon2 {
+  text-align: center;
+  line-height: 0;
+  vertical-align: middle;
+  padding: 0;
+  color: #ad5beb;
+  display: table-cell;
+  height: 100%;
+  width: 35px;
+  font-size: 1.4rem;
 }

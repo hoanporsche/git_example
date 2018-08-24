@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +19,8 @@ public class Quantity implements Serializable {
   private static final long serialVersionUID = 4197942078910386097L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", nullable = false)
-  private Long id;
+  @Column(name = "code", nullable = false)
+  private String code;
   @ManyToOne
   @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
   private Item itemId;
@@ -32,19 +29,21 @@ public class Quantity implements Serializable {
 
   @ManyToOne
   @JsonProperty(access = Access.WRITE_ONLY)
-  @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-  private Order orderId;
-  
+  @JoinColumn(name = "order_code", referencedColumnName = "code", nullable = false)
+  private Order orderCode;
+
+  @Override
   public String toString() {
-    return this.orderId.getNameCreated();
+    return "Quantity [code=" + code + ", itemId=" + itemId + ", quantity=" + quantity
+        + ", orderCode=" + orderCode + "]";
   }
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Item getItemId() {
@@ -63,12 +62,12 @@ public class Quantity implements Serializable {
     this.quantity = quantity;
   }
 
-  public Order getOrderId() {
-    return orderId;
+  public Order getOrderCode() {
+    return orderCode;
   }
 
-  public void setOrderId(Order orderId) {
-    this.orderId = orderId;
+  public void setOrderCode(Order orderCode) {
+    this.orderCode = orderCode;
   }
 
 }

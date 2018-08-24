@@ -5,42 +5,25 @@
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <!-- <input type="text" class="form-control m-input" formControlName="email" maxlength="255" placeholder="Enter user's email"
-          [(ngModel)]="userService.getUser().email" (blur)="validateEmail()">
-        <div class="error-no-padding" *ngIf="email.touched && email.invalid">
-          <div *ngIf="email.hasError('required')">
-            Email is required.
-          </div>
-          <div *ngIf="email.hasError('notEmpty')">
-            Email is required.
-          </div>
-          <div *ngIf="email.hasError('shouldBeUnique')">
-            Email should be unique.
-          </div>
-        </div> -->
         <p>{{ userService.getUser().email }}</p>
       </div>
     </div>
   </div>
-  <!-- <div class="form-group m-form__group row">
-    <label class="col-form-label col-lg-3 col-sm-12">
-      Password
+  <div class="form-group m-form__group row">
+    <label class="col-form-label col-lg-3 col-sm-12 required">
+      Picture
     </label>
     <div class="col-lg-9 col-md-9 col-sm-12">
       <div class="input-group">
-        <input type="text" class="form-control m-input" formControlName="password" maxlength="60" [(ngModel)]="userService.getUser().password"
-          placeholder="Enter user's password">
-        <div class="error-no-padding" *ngIf="email.touched && email.invalid">
-          <div *ngIf="password.hasError('required')">
-            Password is required.
-          </div>
-          <div *ngIf="password.hasError('notEmpty')">
-            Password is required.
+        <input type="text" class="form-control m-input" formControlName="picture" maxlength="255" placeholder="Enter user's picture">
+        <div class="error-no-padding" *ngIf="picture.touched && picture.invalid">
+          <div *ngIf="picture.hasError('required') || picture.hasError('notEmpty')">
+            Picture is required.
           </div>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div class="form-group m-form__group row">
     <label class="col-form-label col-lg-3 col-sm-12 required">

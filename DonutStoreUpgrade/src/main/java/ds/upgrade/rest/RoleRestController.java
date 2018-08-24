@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.service.RoleService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: /api/role.
@@ -34,7 +34,7 @@ import ds.upgrade.util.Constants;
  */
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
-@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.ROLE_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.ROLE_MODEL)
 public class RoleRestController {
 
   @Autowired
@@ -48,17 +48,17 @@ public class RoleRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_ALL)
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<Role> list = roleService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<Role>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -70,20 +70,20 @@ public class RoleRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstant.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       Role role = roleService.findOne(newId);
       if (role != null)
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -96,21 +96,21 @@ public class RoleRestController {
    * @param enabled
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_LIST)
+  @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.ENABLED_PARAM, required = false) String enabled) {
+      @RequestParam(value = AppConstant.PARAM.ENABLED_PARAM, required = false) String enabled) {
     try {
       Boolean newEnabled = (StringUtils.isEmpty(enabled)) ? null : Boolean.parseBoolean(enabled);
       Page<Role> list = roleService.findList(pageable, newEnabled);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Role>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -123,20 +123,20 @@ public class RoleRestController {
    * @param result
    * @return
    */
-  @PostMapping(Constants.API_URL.SAVE)
+  @PostMapping(AppConstant.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Role role,
       BindingResult result) {
     try {
       if (result.hasErrors())
-        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       role = roleService.save(role);
       if (role != null)
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
 
   /**
@@ -148,20 +148,20 @@ public class RoleRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
-  public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstant.API_URL.ENABLED_OR_NOT)
+  public ResponseEntity<?> showOrNot(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       Role role = roleService.enabledOrNot(newId);
       if (role != null)
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -173,16 +173,16 @@ public class RoleRestController {
    * @param name
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_BY_NAME)
-  public ResponseEntity<?> findByName(@RequestParam(Constants.PARAM.NAME_PARAM) String name) {
+  @GetMapping(AppConstant.API_URL.FIND_BY_NAME)
+  public ResponseEntity<?> findByName(@RequestParam(AppConstant.PARAM.NAME_PARAM) String name) {
     try {
       Role role = roleService.findByName(name);
       if (role != null)
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "orders")
@@ -20,18 +21,20 @@ public class Order implements Serializable {
   private static final long serialVersionUID = 4197942078910386097L;
 
   @Id
-  @Column(name = "id", nullable = false)
-  private String id;
-  
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
+
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
 
   @Column(name = "date_updated")
   private Date dateUpdated;
 
+  @Size(max = 40)
   @Column(name = "name_created", nullable = false)
   private String nameCreated;
 
+  @Size(max = 11)
   @Column(name = "phone", nullable = false)
   private String phone;
 
@@ -43,36 +46,39 @@ public class Order implements Serializable {
   @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
   private OrderStatus statusId;
 
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "orderId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderCode")
   private Set<Quantity> quantities;
 
-  @Column(name = "is_shipping", nullable = false)
-  private boolean isShipping;
+  @Column(name = "shipping", nullable = false)
+  private boolean shipping;
 
+  @Size(max = 255)
   @Column(name = "address_shipping")
   private String addressShipping;
-  
+
+  @Size(max = 20)
   @Column(name = "distance")
-  private float distance;
+  private String distance;
 
   @Column(name = "shipping_price")
-  private double shippingPrice;
+  private Long shippingPrice;
 
   @Column(name = "total_price", nullable = false)
-  private double totalPrice;
+  private Long totalPrice;
+
+  public Order() {
+  }
   
-  public Order() {}
-
-  public String toString() {
-    return this.nameCreated;
+  public Order(String code) {
+    this.code = code;
   }
 
-  public String getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Date getDateCreated() {
@@ -132,11 +138,11 @@ public class Order implements Serializable {
   }
 
   public boolean isShipping() {
-    return isShipping;
+    return shipping;
   }
 
-  public void setIsShipping(boolean isShipping) {
-    this.isShipping = isShipping;
+  public void setShipping(boolean shipping) {
+    this.shipping = shipping;
   }
 
   public String getAddressShipping() {
@@ -147,28 +153,37 @@ public class Order implements Serializable {
     this.addressShipping = addressShipping;
   }
 
-  public float getDistance() {
+  public String getDistance() {
     return distance;
   }
 
-  public void setDistance(float distance) {
+  public void setDistance(String distance) {
     this.distance = distance;
   }
 
-  public double getShippingPrice() {
+  public Long getShippingPrice() {
     return shippingPrice;
   }
 
-  public void setShippingPrice(double shippingPrice) {
+  public void setShippingPrice(Long shippingPrice) {
     this.shippingPrice = shippingPrice;
   }
 
-  public double getTotalPrice() {
+  public Long getTotalPrice() {
     return totalPrice;
   }
 
-  public void setTotalPrice(double totalPrice) {
+  public void setTotalPrice(Long totalPrice) {
     this.totalPrice = totalPrice;
+  }
+
+  @Override
+  public String toString() {
+    return "Order [code=" + code + ", dateCreated=" + dateCreated + ", dateUpdated="
+        + dateUpdated + ", nameCreated=" + nameCreated + ", phone=" + phone + ", storeId=" + storeId
+        + ", statusId=" + statusId + ", quantities=" + quantities + ", shipping=" + shipping
+        + ", addressShipping=" + addressShipping + ", distance=" + distance + ", shippingPrice="
+        + shippingPrice + ", totalPrice=" + totalPrice + "]";
   }
 
 }

@@ -1,0 +1,76 @@
+package ds.upgrade.model.support;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import ds.upgrade.model.Role;
+import ds.upgrade.model.SenderDb;
+import ds.upgrade.model.User;
+
+public class UserJson {
+
+  private String email;
+  private String picture;
+  private String senderName;
+  private Set<String> roles;
+  private Long storeId;
+
+  public UserJson(User user) {
+    this.setEmail(user.getEmail());
+    this.setPicture(user.getPicture());
+    this.setSenderName(user.getSenderDbId());
+    this.setStoreId(user.getStoreId().getId());
+    this.setRoles(user.getRoles());
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPicture() {
+    return picture;
+  }
+
+  public void setPicture(String picture) {
+    this.picture = picture;
+  }
+
+  public String getSenderName() {
+    return senderName;
+  }
+
+  public void setSenderName(SenderDb senderDb) {
+    if (senderDb != null)
+      this.senderName = senderDb.getName();
+  }
+
+  public Set<String> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Set<Role> roles) {
+    this.roles = new HashSet<>();
+    for (Role role : roles) {
+      this.roles.add(role.getName());
+    }
+  }
+
+  public Long getStoreId() {
+    return storeId;
+  }
+
+  public void setStoreId(Long storeId) {
+    this.storeId = storeId;
+  }
+
+  @Override
+  public String toString() {
+    return "UserForm [email=" + email + ", picture=" + picture + ", senderName=" + senderName
+        + ", roles=" + roles + ", storeId=" + storeId + "]";
+  }
+
+}

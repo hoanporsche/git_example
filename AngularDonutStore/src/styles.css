@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
 /* @import '~bootstrap/dist/css/bootstrap.min.css'; */
 
 html body {
@@ -54,16 +53,13 @@ app-aside-nav {
     text-transform: uppercase;
 }
 
-
 /* END OF THIEN STYLES */
-
 
 /* LOGIN PAGE */
 
 .login-logo {
     /* height: 65px; */
 }
-
 
 /* END::LOGIN PAGE */
 
@@ -89,7 +85,6 @@ app-aside-nav {
     justify-content: center;
 }
 
-
 /* REQUEST LIST */
 
 .skill-list {
@@ -111,17 +106,17 @@ ul.skill-list li:not(:first-child)::before {
     content: ' ,';
 }
 
-
 /* END:: REQUEST LIST */
 
 .error {
-  position: absolute;
-  bottom: -18px;
-  left: 0;
-  font-size: 0.8rem;
-  color: indianred;
-  padding-left: 15px;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    font-size: 0.8rem;
+    color: indianred;
+    padding-left: 15px;
 }
+
 .error-no-padding {
     position: absolute;
     bottom: -18px;
@@ -134,60 +129,58 @@ ul.skill-list li:not(:first-child)::before {
     border-left: 0px;
 }
 
-
 /* END::REQUEST LIST */
-
 
 /* FOR ALL THE TABLE */
 
 th:hover {
     cursor: pointer;
 }
+
 /* END::ALL THE TABLE */
 
 /* Align time picker text to center */
-ngb-timepicker  input {
-  padding-left: 1.2rem !important;
+
+ngb-timepicker input {
+    padding-left: 1.2rem !important;
 }
+
 /* END: align time picker text to center */
 
-
 /* END::ALL THE TABLE */
+
 .required::after {
     content: '*';
     color: red;
 }
 
-.ds-card-padding {
-    padding: 1%;
-}
-.ds-card-margin {
-    margin: 1%;
-}
-.ds-choose-item {
-    overflow-y: scroll;
-    max-height: 270px;
-}
-.ds-choose-category {
-    overflow-y: scroll;
-    max-height: 270px;
-}
+
 /* width */
+
 ::-webkit-scrollbar {
     width: 2px;
 }
 
 /* Track */
+
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
 
 /* Handle */
+
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
 }
 
 /* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
+}
+
+.ds-main {
+    background-image: url('./assets/img/donut-store/main-background.jpg');
+    /* background-repeat: no-repeat;
+    background-position: center; */
 }

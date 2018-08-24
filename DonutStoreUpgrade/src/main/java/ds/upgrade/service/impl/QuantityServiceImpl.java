@@ -1,6 +1,8 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +49,24 @@ public class QuantityServiceImpl implements QuantityService {
   @Override
   public Quantity findOne(Long id) {
     return quantityRepository.findOne(id);
+  }
+
+  /**
+   * @description: save all quantity in list
+   * @author: VDHoan
+   * @created_date: Aug 22, 2018
+   * @param list
+   * @return true if savedList == inputlist
+   */
+  @Override
+  public Boolean saveList(List<Quantity> list) {
+    List<Quantity> savedList = new ArrayList<>();
+    for(Quantity quantity: list) {
+      Quantity saved = quantityRepository.save(quantity);
+      if (saved != null)
+        savedList.add(saved);
+    }
+    return (savedList.size() == list.size());
   }
 
 }

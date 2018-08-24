@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import ds.upgrade.model.Supply;
+import ds.upgrade.util.QueryConstant;
 
 public interface SupplyRepository extends JpaRepository<Supply, Long>, JpaSpecificationExecutor<Supply> {
 
-  @Query("SELECT s FROM Supply s WHERE s.enabled = true")
+  @Query(QueryConstant.SUPPLY.FIND_ALL)
   List<Supply> findAll();
   
   Supply findByName(String name);

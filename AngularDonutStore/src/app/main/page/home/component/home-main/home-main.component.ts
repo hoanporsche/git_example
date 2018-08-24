@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Category } from '../../../../../management/model/category/category';
 import { Item } from '../../../../../management/model/item/item';
 import { ScriptLoaderService } from '../../../../../core/services/script-loader.service';
-import { } from '@types/googlemaps';
+// import { } from '@types/googlemaps';
 import { Store } from '../../../../../management/model/store/store';
 
 declare var $: any;
@@ -34,15 +34,15 @@ export class HomeMainComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.listCategory = response;
       });
-    this.subListItem = this.mainService.findAllItem()
-      .subscribe(response => {
-        this.listItem = response;
-        if (this.listItem && this.listItem.length > 0 && this.listCategory) {
-          for (let i = 0; i < this.listCategory.length; i++) {
-            this.listCategory[i].items = this.listItem.filter(o => o.categoryId.id === this.listCategory[i].id);
-          }
-        }
-      });
+    // this.subListItem = this.mainService.findAllItem()
+    //   .subscribe(response => {
+    //     this.listItem = response;
+    //     if (this.listItem && this.listItem.length > 0 && this.listCategory) {
+    //       for (let i = 0; i < this.listCategory.length; i++) {
+    //         this.listCategory[i].items = this.listItem.filter(o => o.categoryId.id === this.listCategory[i].id);
+    //       }
+    //     }
+    //   });
     this.subListStore = this.mainService.findAllStore()
       .subscribe(response => {
         this.listStore = response;

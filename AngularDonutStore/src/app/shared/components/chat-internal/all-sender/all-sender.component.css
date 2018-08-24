@@ -1,0 +1,47 @@
+.ds-all-sender {
+  color: black;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.ds-contacts {
+  color: #4c4c4c !important;
+  font-size: 11px;
+  font-weight: bold;
+  height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 3% 0;
+}
+
+ul {
+  list-style-type: none;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+  display: block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  margin: 3% 0;
+}
+
+a:hover {
+  background-color: blanchedalmond;
+}
+
+a:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.one-sender {
+  height: 35px;
+}

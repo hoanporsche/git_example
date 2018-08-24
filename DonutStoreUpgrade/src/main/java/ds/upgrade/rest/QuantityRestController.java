@@ -22,7 +22,7 @@ import ds.upgrade.model.Quantity;
 import ds.upgrade.model.User;
 import ds.upgrade.service.QuantityService;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: /api/quantity.
@@ -32,7 +32,7 @@ import ds.upgrade.util.Constants;
  * @modifier_date: Mar 21, 2018
  */
 @RestController
-@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.QUANTITY_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.QUANTITY_MODEL)
 public class QuantityRestController {
 
   @Autowired
@@ -49,13 +49,13 @@ public class QuantityRestController {
    * @return
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
-  @GetMapping(Constants.API_URL.FIND_LIST)
+  @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
-      @RequestParam(value = Constants.PARAM.ITEM_ID_PARAM, required = false) String itemId,
-      @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
-      @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = Constants.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
+      @RequestParam(value = AppConstant.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = AppConstant.PARAM.ITEM_ID_PARAM, required = false) String itemId,
+      @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
+      @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate,
+      @RequestParam(value = AppConstant.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
     try {
       User user = userService.findInfoUser();
       Long newStoreId;
@@ -65,7 +65,7 @@ public class QuantityRestController {
       } else {
         newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       }
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
+      SimpleDateFormat format = new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1);
       Long newItemId = (StringUtils.isEmpty(itemId)) ? null : Long.parseLong(itemId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -78,12 +78,12 @@ public class QuantityRestController {
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Quantity>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {System.out.println(e.getMessage());
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -96,19 +96,19 @@ public class QuantityRestController {
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @GetMapping(Constants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @GetMapping(AppConstant.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       Quantity quantity = quantityService.findOne(newId);
       if (quantity != null)
         return new ResponseEntity<Quantity>(quantity, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 }

@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ds.upgrade.model.User;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: .
@@ -51,19 +51,19 @@ public class UserSpecification implements Specification<User> {
   public Predicate toPredicate(Root<User> root, CriteriaQuery<?> arg1, CriteriaBuilder cb) {
     Predicate predicate = cb.conjunction();
     if (storeId != null) {
-      predicate = cb.and(predicate, cb.equal(root.<Long>get(Constants.PARAM.STORE_ID_PARAM).get(Constants.PARAM.ID_PARAM), storeId));
+      predicate = cb.and(predicate, cb.equal(root.<Long>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), storeId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate,
-          cb.greaterThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), startDate));
+          cb.greaterThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), startDate));
     }
     if (endDate != null) {
       predicate = cb.and(predicate,
-          cb.lessThanOrEqualTo(root.<Date>get(Constants.PARAM.DATE_CREATED_PARAM), endDate));
+          cb.lessThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), endDate));
     }
     if (roleId != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.join(Constants.PARAM.ROLES_PARAM).get(Constants.PARAM.ID_PARAM), roleId));
+          cb.equal(root.join(AppConstant.PARAM.ROLES_PARAM).get(AppConstant.PARAM.ID_PARAM), roleId));
     }
     return predicate;
   }

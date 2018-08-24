@@ -29,6 +29,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     public userService: UserService,
   ) {
     this.formUser = fb.group({
+      picture: [''],
       storeId: ['', Validators.required],
       roles: ['', [Validators.required]]
     })
@@ -47,6 +48,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         id: this.oldUser.id,
         email: this.userService.getUser().email,
         password: this.userService.getUser().password,
+        picture: this.picture.value,
         storeId: this.storeId.value,
         roles: [this.roles.value]
       }
@@ -59,6 +61,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
           this.submitted.emit('fail');
         });
     }
+  }
+  
+  get picture() {
+    return this.formUser.get('picture');
   }
 
   get storeId() {

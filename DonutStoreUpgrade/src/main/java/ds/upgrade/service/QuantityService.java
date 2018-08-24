@@ -1,6 +1,7 @@
 package ds.upgrade.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,4 +14,6 @@ public interface QuantityService {
       Date endDate, Boolean isShipping);
 
   Quantity findOne(Long id);
+  
+  Boolean saveList(List<Quantity> list);
 }

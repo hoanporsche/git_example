@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import { environment } from './../../../environments/environment';
-import { API_URL } from './../../shared/constants/api.constant';
+import { API_URL, MODEL_URL } from './../../shared/constants/api.constant';
 import { BaseService } from '../../core/services/base.service';
 import 'rxjs/add/operator/map';
 import { Token } from '@angular/compiler';
@@ -13,7 +13,8 @@ import { User } from '../../management/model/user/user';
 
 @Injectable()
 export class LoginService extends BaseService {
-  loginUrl = 'http://localhost:6789' + API_URL.LOGIN;
+  private loginUrl = 'http://localhost:6789' + API_URL.LOGIN;
+  private findInfoUrl = environment.baseUrl + API_URL.API + MODEL_URL.USER + API_URL.FIND_INFO;
   constructor(
     httpClient: HttpClient,
     private http: Http,
@@ -30,5 +31,9 @@ export class LoginService extends BaseService {
     headers.append('Authorization', 'Basic ' + btoa('demo-clientid' + ':' + 'demo-secret'));
 
     return this.http.post(this.loginUrl, body, { headers });
+  }
+
+  getInfo(): Observable<any> {
+    return this.get(this.findInfoUrl);
   }
 }

@@ -24,8 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.User;
+import ds.upgrade.model.support.UserJson;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 /**
  * @description: /api/user.
@@ -34,13 +35,25 @@ import ds.upgrade.util.Constants;
  * @modifier: User
  * @modifier_date: Mar 21, 2018
  */
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
-@RequestMapping(Constants.API_URL.MAIN_API + Constants.MODEL.USER_MODEL)
+@RequestMapping(AppConstant.API_URL.MAIN_API + AppConstant.MODEL.USER_MODEL)
 public class UserRestController {
 
   @Autowired
   private UserService userService;
+  
+  @GetMapping(AppConstant.API_URL.FIND_INFO)
+  public ResponseEntity<?> findInfo() {
+    try {
+      UserJson user = userService.findJsonInfoUser();
+      if (user != null)
+        return new ResponseEntity<UserJson>(user, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + " " +e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
 
   /**
    * @description: /find-all.
@@ -50,17 +63,18 @@ public class UserRestController {
    * @modifier_date: Mar 21, 2018
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_ALL)
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAll() {
     try {
       List<User> list = userService.findAll();
       if (!list.isEmpty())
         return new ResponseEntity<List<User>>(list, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -72,20 +86,21 @@ public class UserRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @GetMapping(AppConstant.API_URL.FIND_ONE)
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       User user = userService.findOne(newId);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -97,17 +112,18 @@ public class UserRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_BY_EMAIL)
-  public ResponseEntity<?> findByEmail(@RequestParam(Constants.PARAM.EMAIL_PARAM) String email) {
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @GetMapping(AppConstant.API_URL.FIND_BY_EMAIL)
+  public ResponseEntity<?> findByEmail(@RequestParam(AppConstant.PARAM.EMAIL_PARAM) String email) {
     try {
       User user = userService.findByEmail(email);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -120,14 +136,15 @@ public class UserRestController {
    * @param enabled
    * @return
    */
-  @GetMapping(Constants.API_URL.FIND_LIST)
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findList(Pageable pageable,
-      @RequestParam(value = Constants.PARAM.STORE_ID_PARAM, required = false) String storeId,
-      @RequestParam(value = Constants.PARAM.START_DATE_PARAM, required = false) String startDate,
-      @RequestParam(value = Constants.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = Constants.PARAM.ROLE_ID_PARAM, required = false) String roleId) {
+      @RequestParam(value = AppConstant.PARAM.STORE_ID_PARAM, required = false) String storeId,
+      @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
+      @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate,
+      @RequestParam(value = AppConstant.PARAM.ROLE_ID_PARAM, required = false) String roleId) {
     try {
-      SimpleDateFormat format = new SimpleDateFormat(Constants.FORMAT.DATE_TIME_FORMAT_1);
+      SimpleDateFormat format = new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1);
       Long newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
@@ -138,12 +155,12 @@ public class UserRestController {
       if (list.getSize() > 0)
         return new ResponseEntity<Page<User>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -155,17 +172,17 @@ public class UserRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.RESET_PASSWORD)
-  public ResponseEntity<?> resetPassword(@RequestParam(Constants.PARAM.EMAIL_PARAM) String email) {
+  @GetMapping(AppConstant.API_URL.RESET_PASSWORD)
+  public ResponseEntity<?> resetPassword(@RequestParam(AppConstant.PARAM.EMAIL_PARAM) String email) {
     try {
       User user = userService.resetPassword(email);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -177,20 +194,21 @@ public class UserRestController {
    * @param id
    * @return
    */
-  @GetMapping(Constants.API_URL.ENABLED_OR_NOT)
-  public ResponseEntity<?> showOrNot(@RequestParam(Constants.PARAM.ID_PARAM) String id) {
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @GetMapping(AppConstant.API_URL.ENABLED_OR_NOT)
+  public ResponseEntity<?> showOrNot(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
       Long newId = Long.parseLong(id);
       User user = userService.enabledOrNot(newId);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (NumberFormatException e) {
-      return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   /**
@@ -203,19 +221,20 @@ public class UserRestController {
    * @param result
    * @return
    */
-  @PostMapping(Constants.API_URL.SAVE)
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PostMapping(AppConstant.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated User user, BindingResult result) {
     try {
       if (result.hasErrors())
-        return new ResponseEntity<String>(Constants.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       user = userService.save(user);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
   
   /**
@@ -228,17 +247,17 @@ public class UserRestController {
    * @param result
    * @return
    */
-  @PostMapping(Constants.API_URL.CHANGE_PASSWORD)
+  @PostMapping(AppConstant.API_URL.CHANGE_PASSWORD)
   public ResponseEntity<?> changePassword(@RequestBody User user) {
     try {
       user = userService.changePassword(user.getEmail().trim(), user.getOldPassword(), user.getNewPassword());
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(Constants.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(Constants.REPONSE.WRONG_OLD_PASSWORD, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_OLD_PASSWORD, HttpStatus.BAD_REQUEST);
   }
   
   @GetMapping("/find-role")

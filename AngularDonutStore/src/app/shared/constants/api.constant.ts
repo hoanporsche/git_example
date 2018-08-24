@@ -4,6 +4,7 @@ export const API_URL = Object.freeze({
     RESET_PASSWORD: '/reset-password',
     CHANGE_PASSWORD: '/change-password',
     FIND_ALL: '/find-all',
+    FIND_INFO: '/find-info',
     FIND_ONE: '/find-one',
     FIND_LIST: '/find-list',
     FIND_BY_NAME: '/find-by-name',
@@ -12,6 +13,16 @@ export const API_URL = Object.freeze({
     FIND_BY_IDENTITY_CARD: '/find-by-identity-card',
     FIND_BY_EMAIL: '/find-by-email',
     FIND_DAILY_REPORT: '/find-daily-report',
+    CREATE_ROOM: '/create-room',
+    USER_HAS_SEEN: '/user-has-seen',
+    JOIN_ROOM: '/join-room',
+    SEND_MESSAGE: '/send-message',
+    FIND_ALL_INTERNAL: '/find-all-internal',
+    FIND_ALL_NOT_INTERNAL_IN_24H: '/find-all-not-internal-in-24h',
+    FIND_ALL_NOT_INTERNAL: '/find-all-not-internal',
+    FIND_ALL_NOT_INTERNAL_IN_24H_IN_CHARGE_OF_USER: '/find-all-not-internal-in-24h-in-charge-of-user',
+    FIND_BY_USERS_IN_ROOM: '/find-by-users-in-room',
+    COUNT_NOT_SEEN_NOTI: '/count-not-seen-noti',
 });
 
 export const MODEL_URL= Object.freeze({
@@ -30,4 +41,17 @@ export const MODEL_URL= Object.freeze({
     TIMEKEEPING_STATUS: '/timekeeping-status',
     USER: '/user',
     WORKING_CALENDER: '/working-calender',
+    NOTIFICATION: '/notification-db',
+    ROOM_DB: '/room-db',
+    MESSAGE_DB: '/message-db',
+    SENDER_DB: '/sender-db',
 });
+
+export const CHAT_URL = Object.freeze({
+    CHAT: '/chat',
+    NOTIFICATION: '/notification',
+    APP_CHAT_ROOM: '/app/chat/room/',
+    TOPIC_ROOM: '/topic/room/',
+    TOPIC_NOTIFICATION: '/topic/notification/',
+})
+

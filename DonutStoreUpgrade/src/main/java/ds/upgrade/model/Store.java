@@ -28,12 +28,14 @@ public class Store implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
   @NotEmpty
-  @Size(max = 255)
+  @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   @NotEmpty
-  @Size(max = 1000)
+  @Size(max = 255)
   @Column(name = "picture")
   private String picture;
   @NotEmpty
@@ -73,6 +75,14 @@ public class Store implements Serializable {
   private List<Order> orders;
 
   public Store() {
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String toString() {

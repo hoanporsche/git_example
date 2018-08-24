@@ -1,0 +1,32 @@
+#ds-quantity {
+  border: 1px solid black;
+}
+
+#ds-quantity p {
+  margin: 0;
+  text-align: center;
+}
+
+#ds-quantity button {
+  margin: 0 0 20px;
+  outline: none;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  width: 100%;
+  padding: 10px;
+  background: #0b8d44;
+  color: #ffffff;
+  font-family: Open Sans;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: normal;
+  -webkit-appearance: button;
+  cursor: pointer;
+  font-size: 80%;
+}
+
+#ds-quantity button:active {
+  opacity: 0.5;
+}

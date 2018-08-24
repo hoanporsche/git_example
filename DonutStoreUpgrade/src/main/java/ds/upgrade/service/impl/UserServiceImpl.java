@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
+import ds.upgrade.model.support.UserJson;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
 import ds.upgrade.service.UserService;
-import ds.upgrade.util.Constants;
+import ds.upgrade.util.AppConstant;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -100,9 +101,6 @@ public class UserServiceImpl implements UserService {
     }
     user.setDateUpdated(new Date());
     user.setEnabled(true);
-    user.setCredentialsexpired(false);
-    user.setExpired(false);
-    user.setLocked(false);
     return userRepository.save(user);
   }
 
@@ -135,6 +133,11 @@ public class UserServiceImpl implements UserService {
     return user;
   }
 
+  @Override
+  public UserJson findJsonInfoUser() {
+    return new UserJson(findInfoUser());
+  }
+
   /**
    * @description: .
    * @author: VDHoan
@@ -146,7 +149,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean isAdmin(Set<Role> roles) {
     for (Role role : roles) {
-      if (Constants.ROLE.ROLE_ADMIN.equals(role.getName()))
+      if (AppConstant.ROLE.ROLE_ADMIN.equals(role.getName()))
         return true;
     }
     return false;
@@ -163,7 +166,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean isStore(Set<Role> roles) {
     for (Role role : roles) {
-      if (Constants.ROLE.ROLE_STORE.equals(role.getName()))
+      if (AppConstant.ROLE.ROLE_STORE.equals(role.getName()))
         return true;
     }
     return false;
@@ -180,7 +183,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Boolean isStaff(Set<Role> roles) {
     for (Role role : roles) {
-      if (Constants.ROLE.ROLE_STAFF.equals(role.getName()))
+      if (AppConstant.ROLE.ROLE_STAFF.equals(role.getName()))
         return true;
     }
     return false;

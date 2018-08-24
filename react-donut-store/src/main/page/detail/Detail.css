@@ -1,0 +1,44 @@
+.main-menu-category {
+  padding-left: 0;
+  list-style: none;
+}
+
+.item-picture {
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-item p {
+  color: #666;
+  font-size: 13px;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+  display: block;
+}
+
+.detail-item span {
+  color: #e86a00;
+  font-size: 32px;
+  font-weight: bold;
+  display: block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.single-item-image {
+  cursor: pointer;
+  margin: 1% 0;
+  height: 130px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+}
+
+.single-item-image:hover, .border-picture {
+  border: 3px solid black;
+  opacity: 1;
+}

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutMainComponent implements OnInit {
 
+  currentUser: any;
   constructor() { }
 
   ngOnInit() {

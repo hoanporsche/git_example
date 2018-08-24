@@ -28,7 +28,7 @@ public class Role implements Serializable {
   private Long id;
   
   @NotEmpty
-  @Size(max = 255)
+  @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
   

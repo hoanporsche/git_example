@@ -33,12 +33,12 @@
   </a>
 </div>
 
-<div class="container-fluid" style="margin-top:1%;">
-  <div class="col-md-10 col-md-offset-1" style="background:white;">
+<div class="container-fluid" style="margin-top:1em;">
+  <div class="col-12 col-sm-10 ds-second-div" style="background:white;">
     <div class="col-md-7">
-
+      <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbrgiangvo%2F&tabs=timeline&width=300px&height=200px%20&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="300px" height="200px " style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
     </div>
-    <div class="col-md-5">
+    <div class="col-sm-5">
       <div id="show_ggmaps" *ngIf="listStore">
         <agm-map [latitude]="+listStore[0].lat" [longitude]="+listStore[0].lng" [scrollwheel]="false" [zoom]="13">
           <agm-marker *ngFor="let store of listStore" [latitude]="+store?.lat" [longitude]="+store?.lng"></agm-marker>
@@ -46,22 +46,15 @@
       </div>
     </div>
   </div>
+
 </div>
 <div class="container">
   <div class="card ds-card-margin" *ngFor="let category of listCategory">
     <h5 class="card-header">{{ category?.name}}</h5>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-4" *ngFor="let item of category?.items">
-          <div class="card">
-            <h5 class="card-header">{{ item?.name }}</h5>
-            <div class="card-body">
-              <!-- <h5 class="card-title">Special title treatment</h5> -->
-              <img class="ds-main-img" [src]="item?.picture">
-              <p class="card-text">{{ item?.description }}</p>
-              <a href="#" class="btn btn-primary">{{ item?.singleValue}} Đ</a>
-            </div>
-          </div>
+        <div class="col-sm-4" *ngFor="let item of category?.items">
+          <app-single-item [item]="item"></app-single-item>
         </div>
       </div>
     </div>
