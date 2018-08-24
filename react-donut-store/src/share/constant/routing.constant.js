@@ -10,6 +10,7 @@ export const ROUTING_URL = Object.freeze({
   LOGIN: '/dang-nhap',
   FORGOT_PASSWORD: '/quen-mat-khau',
   UNAUTHORIZED: '/unauthorized',
+  CONFIG: '/config',
 });
 
 export const MODEL_ROUTING = Object.freeze({
@@ -29,6 +30,7 @@ export const MODEL_ROUTING = Object.freeze({
   TIMEKEEPING_STATUS: '/timekeeping-status',
   USER: '/user',
   WORKING_CALENDER: '/working-calender',
+  CONFIG: '/config',
 });
 
 export const MENU_NAME = Object.freeze({
@@ -41,4 +43,8 @@ export const MENU_NAME = Object.freeze({
   DETAIL: 'Thực đơn',
   LOGIN: 'Đăng nhập',
   FORGOT_PASSWORD: 'Quên mật khẩu',
+  ORDER_MANAGEMENT: 'Đơn hàng',
+  MATERIAL_DAILY_REPORT: 'Báo cáo',
+  TIMEKEEPING: 'Chấm công',
+  CONFIG: 'Configuration',
 });

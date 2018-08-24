@@ -1,16 +1,30 @@
 import React from 'react';
-import { MODEL_ROUTING } from '../share/constant/routing.constant';
-import OrderList from './model/order/OrderList';
-import CategoryList from './model/category/CategoryList';
+import { MODEL_ROUTING, ROUTING_URL } from '../share/constant/routing.constant';
+import MaterialDailyReport from './page/material-daily-report/MaterialDailyReport';
+import Timekeeping from './page/timekeeping/Timekeeping';
+import Config from './page/config/Config';
+import OrderList from './page/order/OrderList';
 import * as Guard from '../auth/guard';
 import NotFound from '../error/NotFound';
 
 const managementRoutes = [
   {
-    path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.CATEGORY,
+    path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.MATERIAL_DAILY_REPORT,
+    exact: true,
+    canActive: Guard.storeGuard(),
+    main: () => <MaterialDailyReport />,
+  },
+  {
+    path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.TIMEKEEPING,
+    exact: true,
+    canActive: Guard.staffGuard(),
+    main: () => <Timekeeping />,
+  },
+  {
+    path: MODEL_ROUTING.MANAGEMENT + ROUTING_URL.CONFIG,
     exact: true,
     canActive: Guard.adminGuard(),
-    main: () => <CategoryList />,
+    main: () => <Config />,
   },
   {
     path: MODEL_ROUTING.MANAGEMENT,

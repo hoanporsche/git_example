@@ -46,7 +46,7 @@ class UnAuthorizedComponent extends Component {
     return (
       <div id="login" className="container-fluid">
         <div className="row">
-          <div className="col-12 col-md-6 form-login text-center">
+          <div className="col-12 col-xl-6 form-login text-center">
             <div className="row">
               <div className="col-12">
                 <div className="image-header">
@@ -93,7 +93,7 @@ class UnAuthorizedComponent extends Component {
             </div>
           </div>
 
-          <div className="col-12 col-md-6 login-image">
+          <div className="col-12 col-xl-6 login-image">
 
           </div>
 

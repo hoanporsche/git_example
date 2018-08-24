@@ -84,7 +84,7 @@ class CustomSelect extends Component {
 }
 
 CustomSelect.propTypes = {
-  wasSubmitted: PropTypes.bool.isRequired,
+  wasSubmitted: PropTypes.bool,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,

@@ -55,7 +55,7 @@ public class QuantityRestController {
       @RequestParam(value = AppConstant.PARAM.ITEM_ID_PARAM, required = false) String itemId,
       @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = AppConstant.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
+      @RequestParam(value = AppConstant.PARAM.SHIPPING_PARAM, required = false) String isShipping) {
     try {
       User user = userService.findInfoUser();
       Long newStoreId;

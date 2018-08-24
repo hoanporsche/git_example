@@ -51,35 +51,38 @@ public class OrderRestController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
-      @RequestParam(value = AppConstant.PARAM.STORE_ID_PARAM, required = false) String storeId,
-      @RequestParam(value = AppConstant.PARAM.STATUS_ID_PARAM, required = false) String statusId,
       @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = AppConstant.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
+      @RequestParam(value = AppConstant.PARAM.STORE_ID_PARAM, required = false) String storeCode,
+      @RequestParam(value = AppConstant.PARAM.STATUS_ID_PARAM, required = false) String statusId,
+      @RequestParam(value = AppConstant.PARAM.SHIPPING_PARAM, required = false) String shipping,
+      @RequestParam(value = AppConstant.PARAM.SEARCH_STRING_PARAM, required = false) String searchString) {
     try {
       User user = userService.findInfoUser();
-      Long newStoreId;
+      String newStoreCode;
       //Admin can overwatch all orders and Store have just overwatch all orders belong to their store.
+      System.out.println(userService.isStore(user.getRoles()));
       if (userService.isStore(user.getRoles())) {
-        newStoreId = user.getStoreId().getId();
+        newStoreCode = user.getStoreId().getCode();
       } else {
-        newStoreId = (StringUtils.isEmpty(storeId)) ? null : Long.parseLong(storeId);
+        newStoreCode = (StringUtils.isEmpty(storeCode)) ? null : storeCode;
       }
+      System.out.println(storeCode);
       SimpleDateFormat format = new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1);
       Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-      Boolean newIsShipping = (StringUtils.isEmpty(isShipping)) ? null
-          : Boolean.parseBoolean(isShipping);
-      Page<Order> list = orderService.findList(pageable, newStatusId, newStoreId, newIsShipping,
-          newStartDate, newEndDate);
+      Boolean newIsShipping = (StringUtils.isEmpty(shipping)) ? null
+          : Boolean.parseBoolean(shipping);
+      Page<Order> list = orderService.findList(pageable, newStatusId, newStoreCode, newIsShipping,
+          newStartDate, newEndDate, searchString);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Order>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + " " + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);

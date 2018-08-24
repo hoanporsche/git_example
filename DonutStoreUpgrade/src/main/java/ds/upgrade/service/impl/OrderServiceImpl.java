@@ -80,9 +80,15 @@ public class OrderServiceImpl implements OrderService {
    * @return
    */
   @Override
-  public Page<Order> findList(Pageable pageable, Long statusId, Long storeId, Boolean isShipping,
-      Date startDate, Date endDate) {
-    Specification<Order> spec = new OrderSpecification(statusId, storeId, isShipping, startDate,
+  public Page<Order> findList(Pageable pageable, Long statusId, String storeCode, Boolean shipping,
+      Date startDate, Date endDate, String searchString) {
+    Specification<Order> spec = new OrderSpecification();
+    if (customValidation.isPhoneNumber(searchString)) {
+      
+    } else {
+      
+    }
+    spec = new OrderSpecification(statusId, storeCode, shipping, startDate,
         endDate);
     return orderRepository.findAll(spec, pageable);
   }

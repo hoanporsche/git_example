@@ -76,7 +76,7 @@ public class QuantitySpecification implements Specification<Quantity> {
     }
     if (isShipping != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(AppConstant.PARAM.ORDER_ID_PARAM).get(AppConstant.PARAM.IS_SHIPPING_PARAM), isShipping));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.ORDER_ID_PARAM).get(AppConstant.PARAM.SHIPPING_PARAM), isShipping));
     }
     return predicate;
   }
