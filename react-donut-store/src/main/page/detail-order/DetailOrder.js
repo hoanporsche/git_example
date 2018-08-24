@@ -19,6 +19,8 @@ class DetailOrder extends Component {
       searchString: '',
       listOrder: [],
       isSubmitting: false,
+      isSearching: false,
+      isNew: false,
     }
   }
   componentDidMount() {
@@ -26,6 +28,12 @@ class DetailOrder extends Component {
     if (queryParam.orderCode) {
       this.setState({
         searchString: queryParam.orderCode,
+        isSearching: false,
+      });
+    }
+    if (queryParam.new) {
+      this.setState({
+        isNew: true,
       });
     }
   }
@@ -35,25 +43,39 @@ class DetailOrder extends Component {
     window.grecaptcha.reset();
     if (queryParam.orderCode) {
       this.setState({
-        listOrder: [],
         isSubmitting: true,
         searchString: queryParam.orderCode,
       });
       window.grecaptcha.execute();
+    } else {
+      this.setState({
+        listOrder: [],
+        isSearching: false,
+        isNew: false,
+      });
     }
+    if (queryParam.new) {
+      this.setState({
+        isNew: true,
+      });
+    }
+    console.log("123");
   }
+
   onCaptchaCompleted = e => {
     findTodayListOrder(this.state.searchString, e).then(({ data }) => {
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
-        listOrder: data
+        listOrder: data,
+        isSearching: true,
       });
     }).catch(e => {
-      console.log(e);
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
+        isSearching: true,
+        listOrder: [],
       })
     })
   }
@@ -74,9 +96,18 @@ class DetailOrder extends Component {
     const { listOrder } = this.state;
     return (listOrder.length > 0) ? listOrder.map((order, index) => {
       return (
-        <SingleOrder key={index} order={order}/>
+        <SingleOrder key={index} order={order} />
       )
-    }) : <SingleOrder />;
+    }) : <SingleOrder message={this.state.isSearching ? "Rất tiếc đã không có đơn hàng nào phù hợp." : "Xin hãy nhập mã đơn hàng hoặc số điện thoại của bạn và ấn kiểm tra."} />;
+  }
+
+  showIsNew = () => {
+    return this.state.isNew ? (
+      <ul className="text-center">Cảm ơn bạn đã tin tưởng Bánh Rán Hoàn.
+        <li>Đơn hàng {this.state.searchString} của bạn đã được tạo thành công.</li>
+        <li>Để theo dõi đơn hàng, bạn hãy nhập mã đơn hàng hoặc số điện thoại vào ô tìm kiếm ở trên và kiểm tra.</li>
+      </ul>
+    ) : null;
   }
   render() {
     return (
@@ -94,13 +125,14 @@ class DetailOrder extends Component {
                 <input type="text" maxLength={25} className="form-control custom-input" onChange={this.onChange} value={this.state.searchString} placeholder="Nhập mã đơn hàng hoặc số điện thoại của bạn..." />
               </div>
               <div className="col-4 col-md-3">
-                <button type="button" disabled={this.state.isSubmitting} className="btn search-btn submit-btn" onClick={this.onSearch}>
-                  <span><i className="fas fa-search"></i> Tìm kiếm</span>
+                <button type="button" disabled={this.state.isSubmitting || this.state.searchString === ''} className="btn search-btn submit-btn" onClick={this.onSearch}>
+                  <span><i className="fas fa-search"></i> Kiểm tra</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
+        {this.showIsNew()}
         {this.showListOrder()}
       </div>
     );

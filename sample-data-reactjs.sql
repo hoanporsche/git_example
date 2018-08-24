@@ -55,7 +55,7 @@ INSERT INTO `donutstore`.`item_material` VALUES
 INSERT INTO `donutstore`.`order_status` VALUES 
 ('1','verifying','Đang xác thực',b'1'),
 ('2','accepted','Đã nhận',b'1'),
-('3','in-process','Đang thực hiện',b'1'),
+('3','in-process','Đang giao hàng',b'1'),
 ('4','completed','Đã hoàn thành',b'1'),
 ('5','cancel','Hủy',b'1');
 

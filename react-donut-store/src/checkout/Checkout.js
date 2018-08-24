@@ -62,7 +62,10 @@ class Checkout extends Component {
         isSubmitting: false,
       })
       Helper.setLoading(false);
-      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: data }]));
+      window.location.href = RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [
+        { name: 'orderCode', value: data }, 
+        { name: 'new', value: true}
+      ]);
     }).catch(e => {
       console.log(e);
       Helper.setLoading(false);

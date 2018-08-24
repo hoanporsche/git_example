@@ -28,7 +28,7 @@ class SingleOrder extends Component {
     const { order } = this.props;
     return order ? (
       <div id="single-order" className="card">
-        <div className="card-header" style={{ backgroundColor: 'white' }}>
+        <div className="card-header detail-header">
           <div className="row">
             <div className="col-12 col-md-9">
               <span className="normal-text">Đơn hàng </span>
@@ -45,8 +45,8 @@ class SingleOrder extends Component {
             </div>
           </div>
         </div>
-        <div className="card-body" style={{ padding: '1%' }}>
-          <div className="container" style={{ backgroundColor: '#f2f3f880',paddingTop: '1%' }}>
+        <div className="card-body detail-body">
+          <div className="container detail-container">
             <div className="row">
               <div className="col-12 col-md-8">
                 {this.showQuantites(order.quantities)}
@@ -75,18 +75,25 @@ class SingleOrder extends Component {
       </div>
     ) : (
         <div id="single-order" className="card">
-          <div className="card-header">
+          <div className="card-header detail-header">
             <div className="row">
               <div className="col-12 col-md-9">
-                No thing
-            </div>
+                <span className="title-text">{this.props.message}</span>
+              </div>
               <div className="col-12 col-md-3">
 
               </div>
             </div>
           </div>
-          <div className="card-body">
-
+          <div className="card-body detail-body">
+            <div className="container detail-container">
+              -
+              {/* <span className={`status verifying`}>verifying</span>
+              <span className={`status accepted`}>accepted</span>
+              <span className={`status in-progress`}>in-progress</span>
+              <span className={`status completed`}>completed</span>
+              <span className={`status cancel`}>cancelled</span> */}
+            </div>
           </div>
         </div>
       )
