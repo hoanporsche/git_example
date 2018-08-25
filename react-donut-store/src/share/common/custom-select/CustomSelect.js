@@ -14,10 +14,10 @@ class CustomSelect extends Component {
 
   onChange = (event) => {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value.toString().trim();
+    const value = target.value.toString().trim();
     let valid = true;
     let stringError = '';
-    if (value.toString().trim() === '') {
+    if (value === '') {
       valid = false;
       stringError = this.props.placeholder;
     }
@@ -44,11 +44,11 @@ class CustomSelect extends Component {
     }
   }
   showRequired = () => {
-    return this.state.valid ? null : (
+    return this.props.required ? (this.state.valid ? null : (
       <span className="field-required">
         *Xin hãy chọn {this.props.placeholder}
       </span>
-    );
+    )) : null;
   }
 
   showOption = () => {
@@ -70,7 +70,7 @@ class CustomSelect extends Component {
   render() {
     return (
       <div className="form-group">
-        <select className={`form-control ${!this.state.valid ? 'border-field-required' : ''}`}
+        <select className={`form-control ${this.props.required ? (!this.state.valid ? 'border-field-required' : '') : ''}`}
           onChange={this.onChange}
           value={this.props.value}
           name={this.props.name}>
@@ -89,5 +89,9 @@ CustomSelect.propTypes = {
   value: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
   data: PropTypes.array.isRequired,
+  required: PropTypes.bool,
+}
+CustomSelect.defaultProps = {
+  required: true
 }
 export default CustomSelect;

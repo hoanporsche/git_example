@@ -24,4 +24,6 @@ public interface OrderService {
   Order createOrUpdate(Order order);
   
   String createNewShipping(OrderForm orderJson, HttpServletRequest request);
+  
+  Boolean changeStatus(String orderCode, Long statusId);
 }

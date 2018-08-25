@@ -191,4 +191,16 @@ public class OrderServiceImpl implements OrderService {
     return list;
   }
 
+  @Override
+  public Boolean changeStatus(String orderCode, Long statusId) {
+    Order foundOrder = orderRepository.findBycode(orderCode);
+    if(customValidation.canUpdateOrderStatus(foundOrder.getStatusId(), statusId)) {
+      foundOrder.setStatusId(new OrderStatus(statusId));
+      foundOrder.setDateUpdated(new Date());
+      orderRepository.save(foundOrder);
+      return Boolean.TRUE;
+    };
+    return Boolean.FALSE;
+  }
+
 }

@@ -1,11 +1,15 @@
 package ds.upgrade.util.service.imp;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ds.upgrade.model.OrderStatus;
 import ds.upgrade.model.support.OrderForm;
 import ds.upgrade.model.support.QuantityForm;
+import ds.upgrade.repository.OrderStatusRepository;
 import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.util.AppConstant;
 import ds.upgrade.util.service.CustomValidation;
@@ -15,10 +19,13 @@ public class CustomValidationImp implements CustomValidation {
 
   @Autowired
   private ConfigGlobalService configGlobalService;
+  @Autowired
+  private OrderStatusRepository orderStatusRepository;
 
   @Override
   public Boolean isPhoneNumber(String phone) {
-    if (phone == null) return false;
+    if (phone == null)
+      return false;
     final String newValue = phone.trim();
 
     return (newValue.length() >= AppConstant.VALIDATION.PHONE_MIN_LENGTH
@@ -69,6 +76,20 @@ public class CustomValidationImp implements CustomValidation {
         || AppConstant.CONFIG_NAME.SUBSIDY_PRICE.equals(newName)
         || AppConstant.CONFIG_NAME.SINGLE_SHIPPING_PRICE.equals(newName)
         || AppConstant.CONFIG_NAME.MIN_SHIPPING_PRICE.equals(newName));
+  }
+
+  @Override
+  public Boolean canUpdateOrderStatus(OrderStatus oldStatusId, Long newStatusId) {
+    if (oldStatusId.getId() == 4 || oldStatusId.getId() == 5)
+      return false;
+    List<OrderStatus> findAll = orderStatusRepository.findAll();
+    List<OrderStatus> availableList = findAll.subList(findAll.indexOf(oldStatusId) + 1,
+        findAll.size());
+    for (OrderStatus os : availableList) {
+      if (os.getId() == newStatusId)
+        return true;
+    }
+    return false;
   }
 
 }

@@ -63,8 +63,8 @@ class Checkout extends Component {
       })
       Helper.setLoading(false);
       window.location.href = RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [
-        { name: 'orderCode', value: data }, 
-        { name: 'new', value: true}
+        { name: 'orderCode', value: data },
+        { name: 'new', value: true }
       ]);
     }).catch(e => {
       console.log(e);
@@ -138,6 +138,10 @@ class Checkout extends Component {
         <p className="col-12 field-required">Vui lòng nhập địa chỉ của bạn</p>
       </div>
     ) : null;
+  }
+
+  showIsTooFar = () => {
+    return (+this.state.shippingPrice.value > 100000) ? (<p className="col-12 field-required">Đơn hàng của bạn ở quá xa.</p>) : null;
   }
 
   showQuantites = () => {
@@ -215,6 +219,7 @@ class Checkout extends Component {
               <div className="col-12 col-lg-11">
                 {this.showInfoShipment()}
               </div>
+              {this.showIsTooFar()}
               {this.showGGMaps()}
               <div className="col-12 col-lg-11 padding-top1">
                 <div className="row">
@@ -223,7 +228,7 @@ class Checkout extends Component {
                   </div>
                   <div className="col-6">
                     <div className="float-right">
-                      <button type="submit" disabled={this.state.isSubmitting} className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
+                      <button type="submit" disabled={this.state.isSubmitting || (+this.state.shippingPrice.value > 100000)} className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
                     </div>
                   </div>
                 </div>

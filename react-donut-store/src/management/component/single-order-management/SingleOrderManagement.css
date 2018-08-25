@@ -1,4 +1,4 @@
-#single-order {
+#single-order-management {
   color: #0b8d44;
   font-family: Open Sans;
   font-weight: 400;
@@ -7,18 +7,18 @@
   margin-top: 2em;
 }
 
-#single-order .title-text {
+#single-order-management .title-text {
   font-weight: bold;
   font-size: 1.5em;
 }
 
-#single-order .normal-text {
+#single-order-management .normal-text {
   font-size: 1rem;
   color: black;
   line-height: 30px;
 }
 
-#single-order .status {
+#single-order-management .status {
   width: 85px;
   height: 18px;
   font-size: 12px;
@@ -28,27 +28,27 @@
   line-height: 30px;
 }
 
-#single-order .verifying {
+#single-order-management .verifying {
   background-image: linear-gradient(105deg, #9ea7fc, #65b6f7);
 }
 
-#single-order .accepted {
+#single-order-management .accepted {
   background-image: linear-gradient(105deg, #ff9784, #ffb74d);
 }
 
-#single-order .in-progress {
+#single-order-management .in-process {
   background-image: linear-gradient(105deg, #ff0467, #fc7437);
 }
 
-#single-order .completed {
+#single-order-management .completed {
   background-image: linear-gradient(45deg, red, blue);
 }
 
-#single-order .cancel {
+#single-order-management .cancel {
   background-image: linear-gradient(to left, #333, #333 50%, #eee 75%, #333 75%);
 }
 
-#single-order .quantity-item {
+#single-order-management .quantity-item {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -57,7 +57,7 @@
   border-radius: 10px;
 }
 
-#single-order .product-thumbnail-quantity {
+#single-order-management .product-thumbnail-quantity {
   font-size: 0.85714em;
   font-weight: 500;
   white-space: nowrap;
@@ -70,19 +70,19 @@
   top: -0.75em;
   z-index: 2;
 }
-#single-order .detail-header {
+#single-order-management .detail-header {
   background-color: white
 }
-#single-order .detail-body {
+#single-order-management .detail-body {
   padding: 1%;
 }
 
-#single-order .detail-container {
+#single-order-management .detail-container {
   background-color: #f2f3f880;
   padding-top: 1%;
   min-height: 195px;
 }
 
-#single-order .single-row {
+#single-order-management .single-row {
   padding-bottom: 1em;
 }

@@ -118,4 +118,20 @@ public class OrderRestController {
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
+  
+  @GetMapping("/change-status")
+  public ResponseEntity<?> changeStatus(@RequestParam(AppConstant.PARAM.CODE_PARAM) String code, @RequestParam(AppConstant.PARAM.STATUS_ID_PARAM) String statusId) {
+    try {
+      Long newStatusId = Long.parseLong(statusId);
+      Boolean order = orderService.changeStatus(code, newStatusId);
+      if (order)
+        return new ResponseEntity<Boolean>(order, HttpStatus.OK);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.FORBIDDEN);
+    } catch (NumberFormatException e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

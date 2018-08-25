@@ -8,10 +8,9 @@ class CustomDate extends Component {
 
     if (typeof (event) === 'object') {
       //get date from moment and format to yyy-MM-dd
-      const formatDate = event.toDate().toISOString().split("T")[0];
       this.props.onEmittedValue({
         name: this.props.name,
-        value: formatDate,
+        value: fomatDate(event.toDate()),
       });
     } else {
       this.props.onEmittedValue({
@@ -30,8 +29,16 @@ class CustomDate extends Component {
   }
 
 }
+
 CustomDate.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
 }
 export default CustomDate;
+
+const fomatDate = (date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+  const day = (date.getDate() < 10) ? `0${date.getDate()}` : date.getDate();
+  return `${year}-${month}-${day}`;
+}

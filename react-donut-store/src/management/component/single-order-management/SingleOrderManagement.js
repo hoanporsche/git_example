@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import './SingleOrderManagement.css';
 import NumberFormat from 'react-number-format';
+import CustomSelect from '../../../share/common/custom-select/CustomSelect';
+import { changeStatus } from '../../page/order/OrderApiCaller';
+import * as Helper from '../../../share/common/helper/Helper';
 
 class SingleOrderManagement extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      statusId: '',
+    }
+  }
   showQuantites = (quantities) => {
     return (quantities.length > 0) ? (
       quantities.map((quantity, index) => {
@@ -25,10 +34,35 @@ class SingleOrderManagement extends Component {
     ) : null;
   }
 
+  showChangeStatus = (statusId) => {
+    const { listOrderStatus } = this.props;
+    const currentIndex = listOrderStatus.findIndex(i => +i.id === +statusId);
+    return (+statusId === 5 || +statusId === 4) ? null : (
+      <CustomSelect placeholder="Đổi trạng thái" name="statusId" value={this.state.statusId} required={false}
+        data={listOrderStatus.slice(currentIndex + 1)} onEmittedValue={this.onReceivedSelectValue} />
+    );
+  }
+
+  onReceivedSelectValue = (event) => {
+    this.setState({
+      statusId: event.value
+    }, () => {
+      Helper.setLoading(true);
+      changeStatus({ code: this.props.order.code, statusId: event.value }).then((response) => {
+        Helper.setLoading(false);
+        this.props.onEmittedValue({
+          name: 'change-status',
+        });
+      }).catch(error => {
+        Helper.setLoading(false);
+      });
+    });
+  }
+
   render() {
     const { order } = this.props;
     return order ? (
-      <div id="single-order" className="card">
+      <div id="single-order-management" className="card">
         <div className="card-header detail-header">
           <div className="row">
             <div className="col-12 col-md-9">
@@ -40,8 +74,15 @@ class SingleOrderManagement extends Component {
               <span className="title-text"><NumberFormat value={order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span>
             </div>
             <div className="col-12 col-md-3">
-              <div className="float-right">
-                <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>
+              <div className="row">
+                <div className="col-6 col-sm-12 col-xl-5 offset-xl-2">
+                  {this.showChangeStatus(order.statusId.id)}
+                </div>
+                <div className="col-6 col-sm-12 col-xl-5">
+                  <div className="float-right">
+                    <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

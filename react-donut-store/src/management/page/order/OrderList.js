@@ -76,7 +76,7 @@ class OrderList extends Component {
     const { listOrder } = this.props;
     return (listOrder.content && listOrder.content.length > 0) ? listOrder.content.map((order, index) => {
       return (
-        <SingleOrderManagement key={index} order={order} listOrderStatus={this.state.listOrderStatus} />
+        <SingleOrderManagement key={index} order={order} listOrderStatus={this.state.listOrderStatus} onEmittedValue={this.onFilter}/>
       )
     }) : <SingleOrderManagement message={"Rất tiếc đã không có đơn hàng nào phù hợp."} />;
   }
@@ -144,15 +144,15 @@ class OrderList extends Component {
           <div className="col-md-9">
             <div className="row">
               <div className="col-md-4 col-lg-2">
-                <CustomSelect placeholder="Giao đi/đến lấy" name="shipping" value={this.state.params.shipping}
+                <CustomSelect placeholder="Giao đi/đến lấy" name="shipping" value={this.state.params.shipping} required={false}
                   data={selectOption} onEmittedValue={this.onReceivedSelectValue} />
               </div>
               <div className="col-md-4 col-lg-2">
-                <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode}
+                <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode} required={false}
                   data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
               </div>
               <div className="col-md-4 col-lg-2">
-                <CustomSelect placeholder="Trạng thái" name="statusId" value={this.state.params.statusId}
+                <CustomSelect placeholder="Trạng thái" name="statusId" value={this.state.params.statusId} required={false}
                   data={this.state.listOrderStatus} onEmittedValue={this.onReceivedSelectValue} />
               </div>
               <div className="col-md-4 col-lg-2">
