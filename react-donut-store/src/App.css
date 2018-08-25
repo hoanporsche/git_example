@@ -400,3 +400,9 @@ input, select {
 ul {
   list-style-type: none;
 }
+
+.pagination__page-number {
+  display: inline-flex;
+  padding-left: 10px;
+  padding-right: 10px;
+}

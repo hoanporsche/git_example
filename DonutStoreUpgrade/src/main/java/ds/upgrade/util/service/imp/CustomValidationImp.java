@@ -18,6 +18,7 @@ public class CustomValidationImp implements CustomValidation {
 
   @Override
   public Boolean isPhoneNumber(String phone) {
+    if (phone == null) return false;
     final String newValue = phone.trim();
 
     return (newValue.length() >= AppConstant.VALIDATION.PHONE_MIN_LENGTH

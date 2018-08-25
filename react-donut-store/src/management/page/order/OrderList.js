@@ -9,6 +9,7 @@ import CustomSelect from '../../../share/common/custom-select/CustomSelect';
 import CustomDate from '../../../share/common/custom-datetime/CustomDate';
 import CustomSearchInput from '../../../share/common/custom-search-input/CustomSearchInput';
 import { fetListOrder } from '../../../redux/action/order.constant';
+import SingleOrderManagement from '../../component/single-order-management/SingleOrderManagement';
 
 const selectOption = [
   {
@@ -48,7 +49,6 @@ class OrderList extends Component {
       });
       Helper.setLoading(false);
     }).catch(error => {
-      console.log(error);
       Helper.setLoading(false);
     });
     await this.props.fetchListOrder(this.state.params);
@@ -58,12 +58,79 @@ class OrderList extends Component {
     this.setState({
       params: Object.assign({}, this.state.params, { [event.name]: event.value })
     }, () => {
-      console.log(this.state);
+      if (event.name === 'searchString') {
+        this.onFilter();
+      }
     });
   }
 
   onFilter = () => {
     this.props.fetchListOrder(this.state.params);
+  }
+
+  onNewRequest = () => {
+    console.log("a");
+  }
+
+  showListOrder = () => {
+    const { listOrder } = this.props;
+    return (listOrder.content && listOrder.content.length > 0) ? listOrder.content.map((order, index) => {
+      return (
+        <SingleOrderManagement key={index} order={order} listOrderStatus={this.state.listOrderStatus} />
+      )
+    }) : <SingleOrderManagement message={"Rất tiếc đã không có đơn hàng nào phù hợp."} />;
+  }
+
+  first = () => {
+    if (!this.props.listOrder.first) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: 0,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  prev = () => {
+    if (!this.props.listOrder.first) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: this.props.listOrder.number - 1,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  next = () => {
+    if (!this.props.listOrder.last) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: this.props.listOrder.number + 1,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  last = () => {
+    if (!this.props.listOrder.last) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: this.props.listOrder.totalPages - 1,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+
+  showPagination = () => {
+    const { totalPages } = this.props.listOrder;
+    return (totalPages) ? (<p>
+      Page {(totalPages === 0) ? 0 : this.props.listOrder.number + 1} of {totalPages}
+    </p>) : (<p>Page 0 of 0</p>);
   }
 
   render() {
@@ -76,36 +143,55 @@ class OrderList extends Component {
           </div>
           <div className="col-md-9">
             <div className="row">
-              <div className="col-md-2">
+              <div className="col-md-4 col-lg-2">
                 <CustomSelect placeholder="Giao đi/đến lấy" name="shipping" value={this.state.params.shipping}
                   data={selectOption} onEmittedValue={this.onReceivedSelectValue} />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4 col-lg-2">
                 <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode}
                   data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4 col-lg-2">
                 <CustomSelect placeholder="Trạng thái" name="statusId" value={this.state.params.statusId}
                   data={this.state.listOrderStatus} onEmittedValue={this.onReceivedSelectValue} />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4 col-lg-2">
                 <div className="form-group">
                   <CustomDate name="startDate" placeholder="Từ ngày" onEmittedValue={this.onReceivedSelectValue} />
                 </div>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4 col-lg-2">
                 <div className="form-group">
                   <CustomDate name="endDate" placeholder="đến ngày" onEmittedValue={this.onReceivedSelectValue} />
                 </div>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4 col-lg-2">
                 <div className="float-right">
-                  <button className="btn btn-success" onClick={this.onFilter}>Lọc đơn hàng</button>
+                  <button className="btn btn-success" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
+                  <button className="btn btn-primary" onClick={this.onNewRequest}><i className="fas fa-plus-circle"></i></button>
                 </div>
               </div>
             </div>
           </div>
 
+        </div>
+        {this.showListOrder()}
+        <div className="row padding-top1">
+          <div className="col-12">
+            <div className="float-right">
+              <div className="btn-group btn-group-sm" role="group">
+                <button type="button" className="btn btn-outline-info" onClick={this.first}><i className="fas fa-angle-double-left"></i></button>
+                <button type="button" className="btn btn-outline-info" onClick={this.prev}><i className="fas fa-angle-left"></i></button>
+              </div>
+              <div className="pagination__page-number">
+                {this.showPagination()}
+              </div>
+              <div className="btn-group btn-group-sm" role="group">
+                <button type="button" className="btn btn-outline-info" onClick={this.next}><i className="fas fa-angle-right"></i></button>
+                <button type="button" className="btn btn-outline-info" onClick={this.last}><i className="fas fa-angle-double-right"></i></button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )

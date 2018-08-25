@@ -164,6 +164,7 @@ class Checkout extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
+    window.grecaptcha.reset();
     const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
     if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
       Helper.setLoading(true);

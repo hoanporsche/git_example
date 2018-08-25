@@ -53,30 +53,35 @@ public class OrderRestController {
   public ResponseEntity<?> findAll(Pageable pageable,
       @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = AppConstant.PARAM.STORE_ID_PARAM, required = false) String storeCode,
+      @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM, required = false) String storeCode,
       @RequestParam(value = AppConstant.PARAM.STATUS_ID_PARAM, required = false) String statusId,
       @RequestParam(value = AppConstant.PARAM.SHIPPING_PARAM, required = false) String shipping,
       @RequestParam(value = AppConstant.PARAM.SEARCH_STRING_PARAM, required = false) String searchString) {
     try {
       User user = userService.findInfoUser();
       String newStoreCode;
-      //Admin can overwatch all orders and Store have just overwatch all orders belong to their store.
-      System.out.println(userService.isStore(user.getRoles()));
+      // Admin can overwatch all orders and Store have just overwatch all orders
+      // belong to their store.
       if (userService.isStore(user.getRoles())) {
         newStoreCode = user.getStoreId().getCode();
       } else {
-        newStoreCode = (StringUtils.isEmpty(storeCode)) ? null : storeCode;
+        newStoreCode = StringUtils.isEmpty(storeCode) ? null : storeCode;
       }
-      System.out.println(storeCode);
       SimpleDateFormat format = new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1);
-      Long newStatusId = (StringUtils.isEmpty(statusId)) ? null : Long.parseLong(statusId);
-      Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
+
+      Long newStatusId = StringUtils.isEmpty(statusId) ? null : Long.parseLong(statusId);
+
+      Date newStartDate = StringUtils.isEmpty(startDate) ? null
           : format.parse(startDate + " 00:00:00");
-      Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-      Boolean newIsShipping = (StringUtils.isEmpty(shipping)) ? null
-          : Boolean.parseBoolean(shipping);
+
+      Date newEndDate = StringUtils.isEmpty(endDate) ? null : format.parse(endDate + " 23:59:59");
+
+      Boolean newIsShipping = StringUtils.isEmpty(shipping) ? null : Boolean.parseBoolean(shipping);
+
+      String newSearchString = StringUtils.isEmpty(searchString) ? null : searchString;
+      
       Page<Order> list = orderService.findList(pageable, newStatusId, newStoreCode, newIsShipping,
-          newStartDate, newEndDate, searchString);
+          newStartDate, newEndDate, newSearchString);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<Order>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {

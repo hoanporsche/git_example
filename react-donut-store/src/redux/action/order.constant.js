@@ -7,7 +7,6 @@ export const fetListOrder = (params) => {
   return (dispatch) => {
     Helper.setLoading(true);
     return findListOrder(params).then(({ data }) => {
-      console.log(data.content);
       dispatch(actFetchListOrder(data));
       Helper.setLoading(false);
     }).catch(error => {

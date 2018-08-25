@@ -32,6 +32,7 @@ public class AppConstant {
     public static final String STATUS_ID_PARAM = "statusId";
     public static final String STAFF_ID_PARAM = "staffId";
     public static final String STORE_ID_PARAM = "storeId";
+    public static final String STORE_CODE_PARAM = "storeCode";
     public static final String START_DATE_PARAM = "startDate";
     public static final String END_DATE_PARAM = "endDate";
     public static final String DATE_CREATED_PARAM = "dateCreated";
