@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.ConfigGlobal;
-import ds.upgrade.model.support.CategoryJson;
-import ds.upgrade.model.support.ItemJson;
-import ds.upgrade.model.support.OrderForm;
-import ds.upgrade.model.support.OrderJson;
-import ds.upgrade.model.support.StoreJson;
+import ds.upgrade.model.form.OrderFormPublic;
+import ds.upgrade.model.json.CategoryJson;
+import ds.upgrade.model.json.ItemJson;
+import ds.upgrade.model.json.OrderJson;
+import ds.upgrade.model.json.StoreJson;
 import ds.upgrade.service.CategoryService;
 import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.service.ItemService;
@@ -85,10 +85,10 @@ public class MainRestController {
   }
 
   @PostMapping(AppConstant.MODEL.ORDER_MODEL + AppConstant.API_URL.CREATE)
-  public ResponseEntity<?> createNewOrder(@RequestBody @Validated OrderForm orderJson,
+  public ResponseEntity<?> createNewOrder(@RequestBody @Validated OrderFormPublic orderJson,
       BindingResult result, HttpServletRequest request) {
     try {
-      if (result.hasErrors() || !customValidation.verifyOrderJson(orderJson))
+      if (result.hasErrors() || !customValidation.verifyOrderFormPublic(orderJson))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
             HttpStatus.NOT_ACCEPTABLE);
       String orderCode = orderService.createNewShipping(orderJson, request);

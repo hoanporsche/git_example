@@ -8,7 +8,7 @@ const orderReducer = (state = initialState, action) => {
       state = action.content;
       return Object.assign({}, state);
     }
-    default : return [...state];
+    default : return Object.assign({}, state);
   }
 } 
 

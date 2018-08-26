@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Category;
-import ds.upgrade.model.support.CategoryJson;
+import ds.upgrade.model.json.CategoryJson;
 
 public interface CategoryService {
 

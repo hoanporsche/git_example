@@ -13,16 +13,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Order;
+import ds.upgrade.model.Store;
 import ds.upgrade.model.User;
+import ds.upgrade.model.form.OrderFormPrivate;
 import ds.upgrade.service.OrderService;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.service.CustomValidation;
 
 /**
  * @description: /api/order.
@@ -39,6 +46,8 @@ public class OrderRestController {
   private OrderService orderService;
   @Autowired
   private UserService userService;
+  @Autowired
+  private CustomValidation customValidation;
 
   /**
    * @description: /find-list.
@@ -79,7 +88,7 @@ public class OrderRestController {
       Boolean newIsShipping = StringUtils.isEmpty(shipping) ? null : Boolean.parseBoolean(shipping);
 
       String newSearchString = StringUtils.isEmpty(searchString) ? null : searchString;
-      
+
       Page<Order> list = orderService.findList(pageable, newStatusId, newStoreCode, newIsShipping,
           newStartDate, newEndDate, newSearchString);
       if (list.getSize() > 0)
@@ -104,10 +113,9 @@ public class OrderRestController {
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(AppConstant.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.CODE_PARAM) String code) {
     try {
-      Long newId = Long.parseLong(id);
-      Order order = orderService.findOne(newId);
+      Order order = orderService.findOne(code);
       if (order != null)
         return new ResponseEntity<Order>(order, HttpStatus.OK);
     } catch (NumberFormatException e) {
@@ -118,9 +126,10 @@ public class OrderRestController {
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
-  
+
   @GetMapping("/change-status")
-  public ResponseEntity<?> changeStatus(@RequestParam(AppConstant.PARAM.CODE_PARAM) String code, @RequestParam(AppConstant.PARAM.STATUS_ID_PARAM) String statusId) {
+  public ResponseEntity<?> changeStatus(@RequestParam(AppConstant.PARAM.CODE_PARAM) String code,
+      @RequestParam(AppConstant.PARAM.STATUS_ID_PARAM) String statusId) {
     try {
       Long newStatusId = Long.parseLong(statusId);
       Boolean order = orderService.changeStatus(code, newStatusId);
@@ -131,6 +140,27 @@ public class OrderRestController {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @PostMapping(AppConstant.API_URL.SAVE)
+  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated OrderFormPrivate orderForm,
+      BindingResult result) {
+    try {
+//      orderForm.setAddressShipping(orderForm.getAddressShipping());
+//      orderForm.setDistance(orderForm.getDistance());
+      System.out.println(orderForm);
+      if (result.hasErrors() || !customValidation.verifyOrderFormPrivate(orderForm))
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
+            HttpStatus.NOT_ACCEPTABLE);
+      Store userStore = userService.findInfoUser().getStoreId();
+      Boolean isSaved = orderService.createOrUpdate(orderForm, userStore);
+      if (isSaved)
+        return new ResponseEntity<Boolean>(isSaved, HttpStatus.OK);
+      return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.FORBIDDEN);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

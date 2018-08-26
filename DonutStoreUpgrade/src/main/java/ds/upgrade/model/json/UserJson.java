@@ -1,4 +1,4 @@
-package ds.upgrade.model.support;
+package ds.upgrade.model.json;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,13 +13,13 @@ public class UserJson {
   private String picture;
   private String senderName;
   private Set<String> roles;
-  private Long storeId;
+  private StoreJson storeId;
 
   public UserJson(User user) {
     this.setEmail(user.getEmail());
     this.setPicture(user.getPicture());
     this.setSenderName(user.getSenderDbId());
-    this.setStoreId(user.getStoreId().getId());
+    this.setStoreId(new StoreJson(user.getStoreId()));
     this.setRoles(user.getRoles());
   }
 
@@ -59,11 +59,11 @@ public class UserJson {
     }
   }
 
-  public Long getStoreId() {
+  public StoreJson getStoreId() {
     return storeId;
   }
 
-  public void setStoreId(Long storeId) {
+  public void setStoreId(StoreJson storeId) {
     this.storeId = storeId;
   }
 

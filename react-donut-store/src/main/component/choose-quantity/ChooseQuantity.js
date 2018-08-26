@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './ChooseQuantity.css';
+import PropTypes from 'prop-types';
 
 class ChooseQuantity extends Component {
 
@@ -25,7 +26,7 @@ class ChooseQuantity extends Component {
 
   onEmittedValue = (quantity) => {
     this.props.onEmittedValue({
-      name: 'quantity',
+      name: this.props.name,
       value: quantity,
     })
   }
@@ -42,5 +43,11 @@ class ChooseQuantity extends Component {
     )
   }
 }
-
+ChooseQuantity.propTypes = {
+  quantity: PropTypes.number.isRequired,
+  name: PropTypes.string,
+}
+ChooseQuantity.defaultProps = {
+  name: 'quantity'
+}
 export default ChooseQuantity;

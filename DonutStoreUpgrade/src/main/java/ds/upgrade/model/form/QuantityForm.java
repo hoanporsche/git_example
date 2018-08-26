@@ -1,31 +1,22 @@
-package ds.upgrade.model.support;
+package ds.upgrade.model.form;
 
 import java.io.Serializable;
 
-import ds.upgrade.model.Quantity;
+public class QuantityForm implements Serializable {
 
-public class QuantityJson implements Serializable {
-  
   private static final long serialVersionUID = 4197942078910386097L;
-  private ItemJson item;
+  private ItemForm item;
   private int quantity;
   private Long price;
 
-  public QuantityJson() {
+  public QuantityForm() {
   }
 
-  public QuantityJson(Quantity quantity) {
-    this.quantity = quantity.getQuantity();
-    this.price = quantity.getQuantity() * quantity.getItemId().getSingleValue().longValue();
-    this.item = new ItemJson(quantity.getItemId());
-  }
-
-
-  public ItemJson getItem() {
+  public ItemForm getItem() {
     return item;
   }
 
-  public void setItem(ItemJson item) {
+  public void setItem(ItemForm item) {
     this.item = item;
   }
 

@@ -1,4 +1,4 @@
-package ds.upgrade.model.support;
+package ds.upgrade.model.form;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class OrderForm implements Serializable {
+public class OrderFormPublic implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
 

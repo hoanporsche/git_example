@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.UserJson;
+import ds.upgrade.model.json.UserJson;
 
 public interface UserService {
 

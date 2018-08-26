@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.Sender;
+import ds.upgrade.model.json.Sender;
 import ds.upgrade.repository.SenderDbRepository;
 import ds.upgrade.repository.specification.SenderDbSpecification;
 import ds.upgrade.service.SenderDbService;

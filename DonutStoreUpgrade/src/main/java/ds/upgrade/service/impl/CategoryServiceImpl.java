@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Category;
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.CategoryJson;
+import ds.upgrade.model.json.CategoryJson;
 import ds.upgrade.repository.CategoryRepository;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;

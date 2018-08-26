@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.UserJson;
+import ds.upgrade.model.json.UserJson;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
 

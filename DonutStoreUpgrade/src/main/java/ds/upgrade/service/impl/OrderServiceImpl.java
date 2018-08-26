@@ -17,9 +17,10 @@ import ds.upgrade.model.Order;
 import ds.upgrade.model.OrderStatus;
 import ds.upgrade.model.Quantity;
 import ds.upgrade.model.Store;
-import ds.upgrade.model.support.OrderForm;
-import ds.upgrade.model.support.OrderJson;
-import ds.upgrade.model.support.QuantityForm;
+import ds.upgrade.model.form.OrderFormPrivate;
+import ds.upgrade.model.form.OrderFormPublic;
+import ds.upgrade.model.form.QuantityForm;
+import ds.upgrade.model.json.OrderJson;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.OrderRepository;
 import ds.upgrade.repository.StoreRepository;
@@ -58,8 +59,8 @@ public class OrderServiceImpl implements OrderService {
    * @return
    */
   @Override
-  public Order findOne(Long id) {
-    Order order = orderRepository.findOne(id);
+  public Order findOne(String code) {
+    Order order = orderRepository.findBycode(code);
     if (order == null)
       return null;
     return order;
@@ -104,9 +105,50 @@ public class OrderServiceImpl implements OrderService {
    * @return
    */
   @Override
-  public Order createOrUpdate(Order order) {
-    // TODO Auto-generated method stub
-    return null;
+  public Boolean createOrUpdate(OrderFormPrivate orderForm, Store userStore) {
+    Order order = new Order();
+    Date newDate = new Date();
+    if (order.getCode() == null) {
+      order.setCode(commonMethod.createOrderCode(newDate));
+      order.setDateCreated(newDate);
+    } else {
+      Order foundOrder = orderRepository.findBycode(orderForm.getCode());
+      if (foundOrder == null)
+        return Boolean.FALSE;
+      order.setCode(foundOrder.getCode());
+      order.setDateCreated(foundOrder.getDateCreated());
+    }
+    order.setDateUpdated(newDate);
+    order.setNameCreated(orderForm.getNameCreated().trim());
+    order.setPhone(orderForm.getPhone().trim());
+    order.setStoreId(userStore);
+    order.setAddressShipping(orderForm.getAddressShipping().trim());
+    order.setDistance(orderForm.getDistance().trim());
+    order.setShippingPrice(orderForm.getShippingPrice());
+    order.setTotalPrice(orderForm.getTotalPrice());
+
+    List<Quantity> listQuantity = new ArrayList<>();
+    List<QuantityForm> list = orderForm.getQuantities();
+    for (int i = 0; i < list.size(); i++) {
+      Item foundItem = itemRepository.findBycode(list.get(i).getItem().getCode());
+      if (foundItem == null || !foundItem.isEnabled()) {
+        return null;
+      } else {
+        Quantity quantity = new Quantity();
+        quantity.setCode(commonMethod.createQuantityCode(order.getCode(), i));
+        quantity.setItemId(foundItem);
+        quantity.setOrderCode(new Order(order.getCode()));
+        quantity.setQuantity(list.get(i).getQuantity());
+        listQuantity.add(quantity);
+      }
+    }
+    order = orderRepository.save(order);
+    if (order == null)
+      return Boolean.FALSE;
+    Boolean success = quantityService.saveList(listQuantity);
+    if (!success)
+      return Boolean.FALSE;
+    return Boolean.TRUE;
   }
 
   /**
@@ -115,36 +157,36 @@ public class OrderServiceImpl implements OrderService {
    *               không, kiểm tra các quantity có lưu thành công không.
    * @author: VDHoan
    * @created_date: Aug 22, 2018
-   * @param orderJson
+   * @param orderForm
    * @param request
    * @return nếu tất cả thành công thì trả về code của order, ngược lại trả ra
    *         null
    */
   @Override
-  public String createNewShipping(OrderForm orderJson, HttpServletRequest request) {
+  public String createNewShipping(OrderFormPublic orderForm, HttpServletRequest request) {
     Order order = new Order();
-    if (capchaService.checkCapcha(orderJson.getUvresp(), request)) {
+    if (capchaService.checkCapcha(orderForm.getUvresp(), request)) {
       Date newDate = new Date();
       order.setCode(commonMethod.createOrderCode(newDate));
       order.setDateCreated(newDate);
       order.setDateUpdated(newDate);
-      order.setNameCreated(orderJson.getNameCreated().trim());
-      order.setPhone(orderJson.getPhone().trim());
+      order.setNameCreated(orderForm.getNameCreated().trim());
+      order.setPhone(orderForm.getPhone().trim());
 
-      Store foundStore = storeRepository.findBycode(orderJson.getStoreCode());
+      Store foundStore = storeRepository.findBycode(orderForm.getStoreCode());
       if (foundStore == null || !foundStore.isEnabled())
         return null;
       order.setStoreId(foundStore);
 
       order.setStatusId(new OrderStatus(1L));
       order.setShipping(true);
-      order.setAddressShipping(orderJson.getAddressShipping().trim());
-      order.setDistance(orderJson.getDistance().trim());
-      order.setShippingPrice(orderJson.getShippingPrice());
-      order.setTotalPrice(orderJson.getTotalPrice());
+      order.setAddressShipping(orderForm.getAddressShipping().trim());
+      order.setDistance(orderForm.getDistance().trim());
+      order.setShippingPrice(orderForm.getShippingPrice());
+      order.setTotalPrice(orderForm.getTotalPrice());
 
       List<Quantity> listQuantity = new ArrayList<>();
-      List<QuantityForm> list = orderJson.getQuantities();
+      List<QuantityForm> list = orderForm.getQuantities();
       for (int i = 0; i < list.size(); i++) {
         Item foundItem = itemRepository.findBycode(list.get(i).getItem().getCode());
         if (foundItem == null || !foundItem.isEnabled()) {
@@ -194,12 +236,13 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Boolean changeStatus(String orderCode, Long statusId) {
     Order foundOrder = orderRepository.findBycode(orderCode);
-    if(customValidation.canUpdateOrderStatus(foundOrder.getStatusId(), statusId)) {
+    if (customValidation.canUpdateOrderStatus(foundOrder.getStatusId(), statusId)) {
       foundOrder.setStatusId(new OrderStatus(statusId));
       foundOrder.setDateUpdated(new Date());
       orderRepository.save(foundOrder);
       return Boolean.TRUE;
-    };
+    }
+    ;
     return Boolean.FALSE;
   }
 

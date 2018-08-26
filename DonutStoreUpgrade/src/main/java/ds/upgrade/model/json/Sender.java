@@ -1,4 +1,4 @@
-package ds.upgrade.model.support;
+package ds.upgrade.model.json;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

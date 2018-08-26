@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.json.ItemJson;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.util.AppConstant;
 

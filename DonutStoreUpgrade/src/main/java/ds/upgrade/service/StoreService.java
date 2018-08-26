@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Store;
-import ds.upgrade.model.support.StoreJson;
+import ds.upgrade.model.json.StoreJson;
 
 public interface StoreService {
 

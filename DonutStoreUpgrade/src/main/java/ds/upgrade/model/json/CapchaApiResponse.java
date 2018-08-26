@@ -1,4 +1,4 @@
-package ds.upgrade.model.support;
+package ds.upgrade.model.json;
 
 import java.io.Serializable;
 import java.util.Date;

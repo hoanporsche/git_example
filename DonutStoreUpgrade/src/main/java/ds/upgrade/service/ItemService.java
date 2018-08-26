@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.json.ItemJson;
 
 public interface ItemService {
 

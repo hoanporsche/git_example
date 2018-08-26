@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Staff;
 import ds.upgrade.model.Store;
-import ds.upgrade.model.support.StoreJson;
+import ds.upgrade.model.json.StoreJson;
 import ds.upgrade.repository.StaffRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.StoreSpecification;

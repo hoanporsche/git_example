@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
-import ds.upgrade.model.support.CapchaApiResponse;
+import ds.upgrade.model.json.CapchaApiResponse;
 import ds.upgrade.util.AppConstant;
 import ds.upgrade.util.service.CapchaService;
 

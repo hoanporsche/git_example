@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.json.ItemJson;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.ItemSpecification;
 import ds.upgrade.service.ItemService;

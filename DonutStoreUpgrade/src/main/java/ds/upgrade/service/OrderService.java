@@ -9,8 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Order;
-import ds.upgrade.model.support.OrderForm;
-import ds.upgrade.model.support.OrderJson;
+import ds.upgrade.model.Store;
+import ds.upgrade.model.form.OrderFormPrivate;
+import ds.upgrade.model.form.OrderFormPublic;
+import ds.upgrade.model.json.OrderJson;
 
 public interface OrderService {
 
@@ -19,11 +21,11 @@ public interface OrderService {
 
   List<OrderJson> findList(String orderCode, String uvresp, HttpServletRequest request);
   
-  Order findOne(Long id);
+  Order findOne(String code);
   
-  Order createOrUpdate(Order order);
+  Boolean createOrUpdate(OrderFormPrivate orderForm, Store userStore);
   
-  String createNewShipping(OrderForm orderJson, HttpServletRequest request);
+  String createNewShipping(OrderFormPublic orderForm, HttpServletRequest request);
   
   Boolean changeStatus(String orderCode, Long statusId);
 }

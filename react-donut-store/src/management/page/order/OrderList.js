@@ -11,7 +11,9 @@ import CustomSearchInput from '../../../share/common/custom-search-input/CustomS
 import { fetListOrder } from '../../../redux/action/order.constant';
 import SingleOrderManagement from '../../component/single-order-management/SingleOrderManagement';
 import CreateOrder from './component/create-order/CreateOrder';
+import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 
+const currentUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
 const selectOption = [
   {
     name: 'Giao đi',
@@ -177,8 +179,8 @@ class OrderList extends Component {
               </div>
               <div className="col-md-4 col-lg-2">
                 <div className="float-right">
-                  <button className="btn btn-outline-success" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
-                  <button className="btn btn-outline-primary" onClick={this.onNewOrder}><i className="fas fa-plus-circle"></i></button>
+                  <button type="button" className="btn btn-outline-success" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
+                  <button type="button" className="btn btn-outline-primary" onClick={this.onNewOrder}><i className="fas fa-plus-circle"></i></button>
                 </div>
               </div>
             </div>
@@ -203,7 +205,7 @@ class OrderList extends Component {
             </div>
           </div>
         </div>
-        {this.state.showCreateModal ? <CreateOrder onEmittedCloseModal={this.onReceivedValue}/> : null}
+        {this.state.showCreateModal ? <CreateOrder currentUser={currentUser} onEmittedCloseModal={this.onReceivedValue}/> : null}
       </div>
     )
   }

@@ -14,7 +14,6 @@ class UpdateOrder extends Component {
   }
 
   onUpdateOrder = () => {
-    console.log("update");
     setTimeout(() => {
       $('#close-update-modal').click();
     }, 3000);
@@ -35,8 +34,10 @@ class UpdateOrder extends Component {
 
                   <div className="row">
                     <div className="col-12">
-                      <button type="button" id="close-update-modal" className="btn btn-outline-dark" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Quay laị</button>&nbsp;
+                      <div className="float-right">
+                        <button type="button" id="close-update-modal" className="btn btn-outline-dark" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Quay laị</button>&nbsp;
                       <button type="button" className="btn btn-outline-primary" onClick={this.onUpdateOrder}>Cập nhật</button>
+                      </div>
                     </div>
                   </div>
                 </div>

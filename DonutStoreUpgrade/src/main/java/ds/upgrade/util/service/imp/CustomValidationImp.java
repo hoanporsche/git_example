@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.OrderStatus;
-import ds.upgrade.model.support.OrderForm;
-import ds.upgrade.model.support.QuantityForm;
+import ds.upgrade.model.form.OrderFormPrivate;
+import ds.upgrade.model.form.OrderFormPublic;
+import ds.upgrade.model.form.QuantityForm;
 import ds.upgrade.repository.OrderStatusRepository;
 import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.util.AppConstant;
@@ -40,27 +41,27 @@ public class CustomValidationImp implements CustomValidation {
    * tiền giao hàng không. Kiểm tra phone có phù hợp không
    */
   @Override
-  public Boolean verifyOrderJson(OrderForm orderJson) {
-    if (orderJson.getQuantities().size() > 0) {
+  public Boolean verifyOrderFormPublic(OrderFormPublic orderForm) {
+    if (orderForm.getQuantities().size() > 0) {
       Long totalPrice = 0L;
-      for (QuantityForm quantityJson : orderJson.getQuantities()) {
+      for (QuantityForm quantityJson : orderForm.getQuantities()) {
         Long singleValue = quantityJson.getItem().getSingleValue();
         int quantity = quantityJson.getQuantity();
         Long price = quantityJson.getPrice();
         if (quantity * singleValue != price)
-          return false;
+          return Boolean.FALSE;
 
         totalPrice = totalPrice + price;
       }
-      if (totalPrice + orderJson.getShippingPrice() != orderJson.getTotalPrice()
+      if (totalPrice + orderForm.getShippingPrice() != orderForm.getTotalPrice()
           || totalPrice < Long.valueOf(
               configGlobalService.findByname(AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE).getValue())
-          || !isPhoneNumber(orderJson.getPhone()))
-        return false;
+          || !isPhoneNumber(orderForm.getPhone()))
+        return Boolean.FALSE;
     } else {
-      return false;
+      return Boolean.FALSE;
     }
-    return true;
+    return Boolean.TRUE;
   }
 
   @Override
@@ -81,15 +82,50 @@ public class CustomValidationImp implements CustomValidation {
   @Override
   public Boolean canUpdateOrderStatus(OrderStatus oldStatusId, Long newStatusId) {
     if (oldStatusId.getId() == 4 || oldStatusId.getId() == 5)
-      return false;
+      return Boolean.FALSE;
     List<OrderStatus> findAll = orderStatusRepository.findAll();
     List<OrderStatus> availableList = findAll.subList(findAll.indexOf(oldStatusId) + 1,
         findAll.size());
     for (OrderStatus os : availableList) {
       if (os.getId() == newStatusId)
-        return true;
+        return Boolean.TRUE;
     }
-    return false;
+    return Boolean.FALSE;
+  }
+
+  @Override
+  public Boolean verifyOrderFormPrivate(OrderFormPrivate orderForm) {
+    if (orderForm.getQuantities().size() > 0) {
+      Long totalPrice = 0L;
+      for (QuantityForm quantityJson : orderForm.getQuantities()) {
+        Long singleValue = quantityJson.getItem().getSingleValue();
+        int quantity = quantityJson.getQuantity();
+        Long price = quantityJson.getPrice();
+        if (quantity * singleValue != price)
+          return Boolean.FALSE;
+        totalPrice = totalPrice + price;
+      }
+      //Kiểm tra nếu có shipping là true thì bắt buộc phải có address, distance, shipping price
+      if (orderForm.isShipping() && (orderForm.getAddressShipping() == null
+          || orderForm.getDistance() == null || orderForm.getShippingPrice() == null))
+        return Boolean.FALSE;
+      //Còn nếu shipping là false thì k đc có address, distance, shipping price
+      if (!orderForm.isShipping() && (orderForm.getAddressShipping() != null
+          || orderForm.getDistance() != null || orderForm.getShippingPrice() != null))
+        return Boolean.FALSE;
+      Long shippingPrice = orderForm.getShippingPrice() == null ? 0 : orderForm.getShippingPrice(); 
+      System.out.println(totalPrice + shippingPrice);
+      System.out.println(orderForm.getTotalPrice());
+      System.out.println(configGlobalService.findByname(AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE).getValue());
+      if (totalPrice + shippingPrice != orderForm.getTotalPrice()
+          || totalPrice < Long.valueOf(
+              configGlobalService.findByname(AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE).getValue())
+          || !isPhoneNumber(orderForm.getPhone()))
+        return Boolean.FALSE;
+    } else {
+      return Boolean.FALSE;
+    }
+    return Boolean.TRUE;
   }
 
 }

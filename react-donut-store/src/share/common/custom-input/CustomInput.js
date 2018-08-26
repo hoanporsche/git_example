@@ -15,7 +15,7 @@ class CustomInput extends Component {
 
   onChange = (event) => {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value.toString().trim();
+    const value = target.value;
     let valid = true;
     let stringError = '';
     //Kiểm tra điều kiện với field
@@ -58,7 +58,7 @@ class CustomInput extends Component {
     return (
       <div className="form-group">
         <input type={this.props.type} className={`form-control ${!this.state.valid ? 'border-field-required' : ''}`}
-          placeholder={this.props.required ? '*' : '' + this.props.placeholder}
+          placeholder={(this.props.required ? '* ' : '') + this.props.placeholder}
           onChange={this.onChange}
           onBlur={this.onChange}
           name={this.props.name}
@@ -79,7 +79,7 @@ CustomInput.propType = {
   maxLength: PropTypes.number.isRequired,
   required: PropTypes.bool,
 }
-CustomInput.defaulProps = {
+CustomInput.defaultProps = {
   required: true,
 }
 export default CustomInput;
