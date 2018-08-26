@@ -61,7 +61,6 @@ class CreateOrder extends Component {
 
   onCreateOrder = () => {
     const { nameCreated, phone, shipping } = this.state;
-    console.log(shipping);
     if (isFormValid([nameCreated, phone, shipping]) && this.state.quantities.length > 0 && this.state.totalPrice >= this.findMinTotalPrice()) {
       const newOrder = {
         nameCreated: nameCreated.value,
@@ -76,27 +75,24 @@ class CreateOrder extends Component {
       this.setState({
         isSubmitting: true,
       });
-      save(newOrder).then((response) => {
+      save(newOrder).then(() => {
         Helper.setLoading(false);
-        console.log(response);
         this.setState({
           isSubmitting: false,
+        }, () => {
+          $('#close-create-modal').click();
         });
       }).catch(() => {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false,
         });
-        $('#close-create-modal').click();
       })
     } else {
       this.setState({
         wasSubmitted: true,
       })
     }
-    // setTimeout(() => {
-    //   $('#close-create-modal').click();
-    // }, 3000);
   }
 
   onReceivedValue = (event) => {
@@ -124,7 +120,7 @@ class CreateOrder extends Component {
         <p className="col-6">Phí vận chuyển: <NumberFormat value={this.state.shippingPrice.value} displayType={'text'} thousandSeparator={true} />₫</p>
         <p className="col-6">Khoảng cách: {this.state.distance.value}</p>
       </div>
-    ) : (!this.state.addressShipping.valid && this.state.wasSubmitted) ? (
+    ) : (!this.state.shipping.value.toString() === 'true' && this.state.wasSubmitted) ? (
       <div className="row">
         <p className="col-12 field-required">Vui lòng nhập địa chỉ của bạn</p>
       </div>

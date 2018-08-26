@@ -114,9 +114,6 @@ public class CustomValidationImp implements CustomValidation {
           || orderForm.getDistance() != null || orderForm.getShippingPrice() != null))
         return Boolean.FALSE;
       Long shippingPrice = orderForm.getShippingPrice() == null ? 0 : orderForm.getShippingPrice(); 
-      System.out.println(totalPrice + shippingPrice);
-      System.out.println(orderForm.getTotalPrice());
-      System.out.println(configGlobalService.findByname(AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE).getValue());
       if (totalPrice + shippingPrice != orderForm.getTotalPrice()
           || totalPrice < Long.valueOf(
               configGlobalService.findByname(AppConstant.CONFIG_NAME.MIN_TOTAL_PRICE).getValue())

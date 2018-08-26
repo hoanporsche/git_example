@@ -37,7 +37,7 @@ public class QueryConstant {
   }
 
   public static class QUANTITY {
-
+    public static final String DELETE_BY_ORDER_CODE = "DELETE FROM Quantity q WHERE q.orderCode.code = :code";
   }
 
   public static class ROLE {

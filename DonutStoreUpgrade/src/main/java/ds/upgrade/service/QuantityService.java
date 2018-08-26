@@ -16,4 +16,6 @@ public interface QuantityService {
   Quantity findOne(Long id);
   
   Boolean saveList(List<Quantity> list);
+  
+  void deleteByOrderCode(String code);
 }

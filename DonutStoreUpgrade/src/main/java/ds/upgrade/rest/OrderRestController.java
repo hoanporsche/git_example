@@ -148,8 +148,6 @@ public class OrderRestController {
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated OrderFormPrivate orderForm,
       BindingResult result) {
     try {
-//      orderForm.setAddressShipping(orderForm.getAddressShipping());
-//      orderForm.setDistance(orderForm.getDistance());
       System.out.println(orderForm);
       if (result.hasErrors() || !customValidation.verifyOrderFormPrivate(orderForm))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,

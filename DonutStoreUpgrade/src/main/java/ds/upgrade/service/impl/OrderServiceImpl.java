@@ -108,22 +108,27 @@ public class OrderServiceImpl implements OrderService {
   public Boolean createOrUpdate(OrderFormPrivate orderForm, Store userStore) {
     Order order = new Order();
     Date newDate = new Date();
-    if (order.getCode() == null) {
+    if (orderForm.getCode() == null) {
       order.setCode(commonMethod.createOrderCode(newDate));
       order.setDateCreated(newDate);
+      order.setStatusId(new OrderStatus(2L));
     } else {
       Order foundOrder = orderRepository.findBycode(orderForm.getCode());
       if (foundOrder == null)
         return Boolean.FALSE;
       order.setCode(foundOrder.getCode());
       order.setDateCreated(foundOrder.getDateCreated());
+      order.setStatusId(foundOrder.getStatusId());
+      quantityService.deleteByOrderCode(foundOrder.getCode());
     }
     order.setDateUpdated(newDate);
     order.setNameCreated(orderForm.getNameCreated().trim());
     order.setPhone(orderForm.getPhone().trim());
     order.setStoreId(userStore);
-    order.setAddressShipping(orderForm.getAddressShipping().trim());
-    order.setDistance(orderForm.getDistance().trim());
+    String addressShipping = (orderForm.getAddressShipping() == null) ? "" : orderForm.getAddressShipping().trim();
+    order.setAddressShipping(addressShipping);
+    String distance = (orderForm.getDistance() == null) ? "" : orderForm.getDistance().trim();
+    order.setDistance(distance);
     order.setShippingPrice(orderForm.getShippingPrice());
     order.setTotalPrice(orderForm.getTotalPrice());
 

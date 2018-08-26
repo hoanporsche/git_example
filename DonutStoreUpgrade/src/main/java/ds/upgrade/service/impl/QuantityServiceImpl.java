@@ -69,4 +69,9 @@ public class QuantityServiceImpl implements QuantityService {
     return (savedList.size() == list.size());
   }
 
+  @Override
+  public void deleteByOrderCode(String code) {
+    quantityRepository.deleteByOrderCode(code);
+  }
+
 }

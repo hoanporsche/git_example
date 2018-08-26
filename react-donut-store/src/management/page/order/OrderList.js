@@ -81,6 +81,10 @@ class OrderList extends Component {
   onReceivedValue = (event) => {
     this.setState({
       [event.name]: event.value
+    }, () => {
+      if (event.name === 'showCreateModal') {
+        this.onFilter();
+      }
     });
   }
 

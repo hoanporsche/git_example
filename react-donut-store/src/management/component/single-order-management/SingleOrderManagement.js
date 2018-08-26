@@ -62,10 +62,6 @@ class SingleOrderManagement extends Component {
   }
 
   onClick = () => {
-    // this.props.onEmittedValue({
-    //   name: 'showUpdateModal',
-    //   value: true,
-    // });
     this.setState({
       showUpdateModal: true,
     });
@@ -74,9 +70,21 @@ class SingleOrderManagement extends Component {
   onReceivedValue = (event) => {
     this.setState({
       [event.name]: event.value
+    }, () => {
+      if (event.name === 'showUpdateModal') {
+        this.props.onEmittedValue({
+          name: 'close-modal-update',
+        });
+      }
     });
   }
 
+  showEditButton = () => {
+    const { order } = this.props;
+    return ((order.shipping && (+order.statusId.id === 1 || +order.statusId.id === 2)) || (!order.shipping && (+order.statusId.id === 2 || +order.statusId.id === 3))) ? (
+      <button className="btn btn-outline-info" onClick={this.onClick}><i className="fas fa-edit"></i></button>
+    ) : null;
+  }
   render() {
     const { order } = this.props;
     return order ? (
@@ -99,7 +107,7 @@ class SingleOrderManagement extends Component {
                 </div>
                 <div className="col-4 col-sm-4 col-lg-3">
                   <div className="float-right">
-                    <button className="btn btn-outline-info" onClick={this.onClick}><i className="fas fa-edit"></i></button>
+                    {this.showEditButton()}
                   </div>
                 </div>
               </div>
@@ -113,14 +121,11 @@ class SingleOrderManagement extends Component {
                 {this.showQuantites(order.quantities)}
               </div>
               <div className="col-12 col-md-6">
-                <div className="row">
-                  <div className="col-6"><span>Địa chỉ:</span></div>
-                  <div className="col-6"><span className="float-right">{order.addressShipping}</span></div>
-                </div>
-                <div className="row">
-                  <div className="col-6"><span>Phone:</span></div>
-                  <div className="col-6"><span className="float-right">{order.phone}</span></div>
-                </div>
+                {order.shipping ? (
+                  <div className="row">
+                    <div className="col-6"><span>Địa chỉ:</span></div>
+                    <div className="col-6"><span className="float-right">{order.addressShipping}</span></div>
+                  </div>) : null}
                 {order.shipping ? (
                   <div className="row">
                     <div className="col-6"><span>Phí ship:</span></div>
@@ -128,9 +133,13 @@ class SingleOrderManagement extends Component {
                   </div>
                 ) : (
                     <div className="row">
-                      <span>Dùng luôn:</span>
+                      <span className="col-12">Dùng luôn / Đến lấy</span>
                     </div>
                   )}
+                <div className="row">
+                  <div className="col-6"><span>Phone:</span></div>
+                  <div className="col-6"><span className="float-right">{order.phone}</span></div>
+                </div>
                 <div className="row">
                   <div className="col-6"><span>Ngày tạo:</span></div>
                   <div className="col-6"><span className="float-right">{(new Date(order.dateCreated)).toLocaleString()}</span></div>
@@ -144,7 +153,7 @@ class SingleOrderManagement extends Component {
             </div>
           </div>
         </div>
-        {this.state.showUpdateModal ? <UpdateOrder onEmittedCloseModal={this.onReceivedValue}/> : null}
+        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} /> : null}
       </div>
     ) : (
         <div id="single-order" className="card">
