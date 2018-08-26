@@ -47,8 +47,8 @@ public class QuantityServiceImpl implements QuantityService {
    * @return
    */
   @Override
-  public Quantity findOne(Long id) {
-    return quantityRepository.findOne(id);
+  public Quantity findOne(String code) {
+    return quantityRepository.findOne(code);
   }
 
   /**

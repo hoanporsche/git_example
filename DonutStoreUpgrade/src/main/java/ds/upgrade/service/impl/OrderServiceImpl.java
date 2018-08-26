@@ -118,6 +118,12 @@ public class OrderServiceImpl implements OrderService {
         return Boolean.FALSE;
       order.setCode(foundOrder.getCode());
       order.setDateCreated(foundOrder.getDateCreated());
+      Long foundStatusId = foundOrder.getStatusId().getId();
+      if (foundStatusId == 5
+          || (orderForm.isShipping() && (foundStatusId == 3 || foundStatusId == 4))
+          || (!orderForm.isShipping()
+              && (foundStatusId == 1 || foundOrder.getStatusId().getId() == 4)))
+        return Boolean.FALSE;
       order.setStatusId(foundOrder.getStatusId());
       quantityService.deleteByOrderCode(foundOrder.getCode());
     }
@@ -125,7 +131,8 @@ public class OrderServiceImpl implements OrderService {
     order.setNameCreated(orderForm.getNameCreated().trim());
     order.setPhone(orderForm.getPhone().trim());
     order.setStoreId(userStore);
-    String addressShipping = (orderForm.getAddressShipping() == null) ? "" : orderForm.getAddressShipping().trim();
+    String addressShipping = (orderForm.getAddressShipping() == null) ? ""
+        : orderForm.getAddressShipping().trim();
     order.setAddressShipping(addressShipping);
     String distance = (orderForm.getDistance() == null) ? "" : orderForm.getDistance().trim();
     order.setDistance(distance);
