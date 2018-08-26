@@ -74,7 +74,7 @@ class CustomSelect extends Component {
           onChange={this.onChange}
           value={this.props.value}
           name={this.props.name}>
-          <option value="">{'*' + this.props.placeholder}</option>
+          <option value="">{this.props.required ? '*' : '' + this.props.placeholder}</option>
           {this.showOption()}
         </select>
         {this.showRequired()}

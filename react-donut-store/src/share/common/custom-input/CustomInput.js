@@ -47,18 +47,18 @@ class CustomInput extends Component {
     }
   }
   showRequired = () => {
-    return this.state.valid ? null : (
+    return this.props.required ? this.state.valid ? null : (
         <span className="field-required">
           *Xin hãy nhập {this.state.stringError}
         </span>
-      );
+      ) : null;
   }
 
   render() {
     return (
       <div className="form-group">
         <input type={this.props.type} className={`form-control ${!this.state.valid ? 'border-field-required' : ''}`}
-          placeholder={'*' + this.props.placeholder}
+          placeholder={this.props.required ? '*' : '' + this.props.placeholder}
           onChange={this.onChange}
           onBlur={this.onChange}
           name={this.props.name}
@@ -77,5 +77,9 @@ CustomInput.propType = {
   name: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
   maxLength: PropTypes.number.isRequired,
+  required: PropTypes.bool,
+}
+CustomInput.defaulProps = {
+  required: true,
 }
 export default CustomInput;

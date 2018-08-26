@@ -10,6 +10,7 @@ import CustomDate from '../../../share/common/custom-datetime/CustomDate';
 import CustomSearchInput from '../../../share/common/custom-search-input/CustomSearchInput';
 import { fetListOrder } from '../../../redux/action/order.constant';
 import SingleOrderManagement from '../../component/single-order-management/SingleOrderManagement';
+import CreateOrder from './component/create-order/CreateOrder';
 
 const selectOption = [
   {
@@ -36,7 +37,8 @@ class OrderList extends Component {
         page: 0,
         size: CONFIG.PAGE_SIZE,
         sort: 'code,desc'
-      }
+      },
+      showCreateModal: false,
     }
   }
 
@@ -68,8 +70,16 @@ class OrderList extends Component {
     this.props.fetchListOrder(this.state.params);
   }
 
-  onNewRequest = () => {
-    console.log("a");
+  onNewOrder = () => {
+    this.setState({
+      showCreateModal: true,
+    })
+  }
+
+  onReceivedValue = (event) => {
+    this.setState({
+      [event.name]: event.value
+    });
   }
 
   showListOrder = () => {
@@ -132,11 +142,11 @@ class OrderList extends Component {
       Page {(totalPages === 0) ? 0 : this.props.listOrder.number + 1} of {totalPages}
     </p>) : (<p>Page 0 of 0</p>);
   }
-
+  
   render() {
     return (
       <div className="container-fluid padding-top1">
-        <div className="row">
+        <div className="row main-row">
           <div className="col-md-3">
             <CustomSearchInput name="searchString" placeholder="Mã đơn/sđt..."
               value={this.state.searchString} maxLength={25} onEmittedValue={this.onReceivedSelectValue} />
@@ -167,8 +177,8 @@ class OrderList extends Component {
               </div>
               <div className="col-md-4 col-lg-2">
                 <div className="float-right">
-                  <button className="btn btn-success" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
-                  <button className="btn btn-primary" onClick={this.onNewRequest}><i className="fas fa-plus-circle"></i></button>
+                  <button className="btn btn-outline-success" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
+                  <button className="btn btn-outline-primary" onClick={this.onNewOrder}><i className="fas fa-plus-circle"></i></button>
                 </div>
               </div>
             </div>
@@ -193,6 +203,7 @@ class OrderList extends Component {
             </div>
           </div>
         </div>
+        {this.state.showCreateModal ? <CreateOrder onEmittedCloseModal={this.onReceivedValue}/> : null}
       </div>
     )
   }

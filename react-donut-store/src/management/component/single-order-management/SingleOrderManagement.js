@@ -4,6 +4,7 @@ import NumberFormat from 'react-number-format';
 import CustomSelect from '../../../share/common/custom-select/CustomSelect';
 import { changeStatus } from '../../page/order/OrderApiCaller';
 import * as Helper from '../../../share/common/helper/Helper';
+import UpdateOrder from '../../page/order/component/update-order/UpdateOrder';
 
 class SingleOrderManagement extends Component {
 
@@ -11,6 +12,7 @@ class SingleOrderManagement extends Component {
     super(props);
     this.state = {
       statusId: '',
+      showUpdateModal: false,
     }
   }
   showQuantites = (quantities) => {
@@ -59,13 +61,30 @@ class SingleOrderManagement extends Component {
     });
   }
 
+  onClick = () => {
+    // this.props.onEmittedValue({
+    //   name: 'showUpdateModal',
+    //   value: true,
+    // });
+    this.setState({
+      showUpdateModal: true,
+    });
+  }
+
+  onReceivedValue = (event) => {
+    this.setState({
+      [event.name]: event.value
+    });
+  }
+
   render() {
     const { order } = this.props;
     return order ? (
       <div id="single-order-management" className="card">
-        <div className="card-header detail-header">
+        <div className="detail-header">
           <div className="row">
             <div className="col-12 col-md-9">
+              <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>&nbsp;
               <span className="normal-text">Đơn hàng </span>
               <span className="title-text">{order.code}</span>
               <span className="normal-text"> từ</span>
@@ -75,12 +94,12 @@ class SingleOrderManagement extends Component {
             </div>
             <div className="col-12 col-md-3">
               <div className="row">
-                <div className="col-6 col-sm-12 col-xl-5 offset-xl-2">
+                <div className="col-8 col-sm-8 col-lg-9 col-xl-6 offset-xl-3 main-row">
                   {this.showChangeStatus(order.statusId.id)}
                 </div>
-                <div className="col-6 col-sm-12 col-xl-5">
+                <div className="col-4 col-sm-4 col-lg-3">
                   <div className="float-right">
-                    <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>
+                    <button className="btn btn-outline-info" onClick={this.onClick}><i className="fas fa-edit"></i></button>
                   </div>
                 </div>
               </div>
@@ -125,6 +144,7 @@ class SingleOrderManagement extends Component {
             </div>
           </div>
         </div>
+        {this.state.showUpdateModal ? <UpdateOrder onEmittedCloseModal={this.onReceivedValue}/> : null}
       </div>
     ) : (
         <div id="single-order" className="card">
