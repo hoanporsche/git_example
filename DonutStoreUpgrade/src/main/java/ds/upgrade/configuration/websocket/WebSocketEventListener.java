@@ -36,7 +36,7 @@ public class WebSocketEventListener {
         logger.info("Subcribe a new web socket connection \n" + event);
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
-            logger.info("User Disconnected : " + username);
+            logger.info("User Subcribe : " + username);
         }
     }
 }

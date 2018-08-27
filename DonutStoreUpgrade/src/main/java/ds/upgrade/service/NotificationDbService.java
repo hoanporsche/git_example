@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.NotificationDb;
+import ds.upgrade.model.Order;
 import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.User;
 
@@ -18,4 +19,6 @@ public interface NotificationDbService {
   public NotificationDb userHasSeen(Long id);
   
   public Integer countNotSeenNoti(long userId);
+
+  public void pushNewOrderToUser(Order order);
 }

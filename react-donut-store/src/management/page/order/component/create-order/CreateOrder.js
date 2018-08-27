@@ -70,6 +70,7 @@ class CreateOrder extends Component {
         shippingPrice: this.state.shippingPrice.value,
         totalPrice: +this.state.totalPrice,
         quantities: this.state.quantities,
+        shipping: shipping.value,
       }
       Helper.setLoading(true);
       this.setState({

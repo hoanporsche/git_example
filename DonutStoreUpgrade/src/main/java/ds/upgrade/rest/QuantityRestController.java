@@ -97,10 +97,9 @@ public class QuantityRestController {
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.CODE_PARAM) String code) {
     try {
-      Long newId = Long.parseLong(id);
-      Quantity quantity = quantityService.findOne(newId);
+      Quantity quantity = quantityService.findOne(code);
       if (quantity != null)
         return new ResponseEntity<Quantity>(quantity, HttpStatus.OK);
     } catch (NumberFormatException e) {

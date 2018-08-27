@@ -25,6 +25,7 @@ import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.OrderRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.OrderSpecification;
+import ds.upgrade.service.NotificationDbService;
 import ds.upgrade.service.OrderService;
 import ds.upgrade.service.QuantityService;
 import ds.upgrade.util.service.CapchaService;
@@ -48,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
   private QuantityService quantityService;
   @Autowired
   private CustomValidation customValidation;
+  @Autowired
+  private NotificationDbService notificationDbService;
 
   /**
    * @description: .
@@ -220,6 +223,7 @@ public class OrderServiceImpl implements OrderService {
       if (!success)
         return null;
     }
+    notificationDbService.pushNewOrderToUser(order);
     return order.getCode();
   }
 

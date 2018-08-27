@@ -74,6 +74,10 @@ public class Store implements Serializable {
   @JsonIgnore
   private List<Order> orders;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
+  @JsonIgnore
+  private List<User> users;
+
   public Store() {
   }
 
@@ -191,6 +195,14 @@ public class Store implements Serializable {
 
   public void setOrders(List<Order> orders) {
     this.orders = orders;
+  }
+
+  public List<User> getUsers() {
+    return users;
+  }
+
+  public void setUsers(List<User> users) {
+    this.users = users;
   }
 
 }

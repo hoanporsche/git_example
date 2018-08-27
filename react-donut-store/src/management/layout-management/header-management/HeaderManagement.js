@@ -4,6 +4,7 @@ import { MENU_NAME, MODEL_ROUTING } from '../../../share/constant/routing.consta
 import './HeaderManagement.css';
 import { connect } from 'react-redux';
 import { fetAllConfigGlobal } from '../../../redux/action/config-global.constant';
+import Notification from '../../component/notification/Notification';
 
 const menus = [
   {
@@ -70,11 +71,12 @@ class HeaderManagement extends Component {
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
+        <Notification />
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             {this.showMenu(menus)}
           </ul>
-          <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          {/* <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> */}
         </div>
       </nav>
     );

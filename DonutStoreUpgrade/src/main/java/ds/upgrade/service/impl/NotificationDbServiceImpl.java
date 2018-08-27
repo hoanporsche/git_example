@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.NotificationDb;
+import ds.upgrade.model.Order;
 import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.User;
 import ds.upgrade.repository.NotificationDbRepository;
@@ -77,6 +78,16 @@ public class NotificationDbServiceImpl implements NotificationDbService {
   public Integer countNotSeenNoti(long userId) {
     Integer counted = notificationDbRepository.countNotSeenNoti(userId);
     return (counted == null) ? 0 : counted;
+  }
+
+  @Override
+  public void pushNewOrderToUser(Order order) {
+    String text = ConstantWebSocket.RESPONSE.NEW_ORDER + order.getCode();
+    for (User user : order.getStoreId().getUsers()) {
+      NotificationDb newNoti = new NotificationDb(user, text);
+      newNoti = notificationDbRepository.save(newNoti);
+      template.convertAndSend("/topic/notification/" + user.getEmail(), newNoti);
+    }    
   }
 
 }
