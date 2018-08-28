@@ -172,6 +172,7 @@ public class UserRestController {
    * @param id
    * @return
    */
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.RESET_PASSWORD)
   public ResponseEntity<?> resetPassword(@RequestParam(AppConstant.PARAM.EMAIL_PARAM) String email) {
     try {
@@ -250,11 +251,11 @@ public class UserRestController {
   @PostMapping(AppConstant.API_URL.CHANGE_PASSWORD)
   public ResponseEntity<?> changePassword(@RequestBody User user) {
     try {
-      user = userService.changePassword(user.getEmail().trim(), user.getOldPassword(), user.getNewPassword());
+      user = userService.changePassword(userService.findInfoUser().getEmail(), user.getOldPassword(), user.getNewPassword());
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_OLD_PASSWORD, HttpStatus.BAD_REQUEST);

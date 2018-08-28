@@ -5,6 +5,7 @@ import './HeaderManagement.css';
 import { connect } from 'react-redux';
 import { fetAllConfigGlobal } from '../../../redux/action/config-global.constant';
 import Notification from '../../component/notification/Notification';
+import UserAvatar from '../../component/user-avatar/UserAvatar';
 
 const menus = [
   {
@@ -72,6 +73,7 @@ class HeaderManagement extends Component {
           <span className="navbar-toggler-icon" />
         </button>
         <Notification />
+        <UserAvatar />
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             {this.showMenu(menus)}

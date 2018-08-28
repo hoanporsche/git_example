@@ -149,6 +149,11 @@ class OrderList extends Component {
     </p>) : (<p>Page 0 of 0</p>);
   }
   
+  closeDoNotModal = () => {
+    this.setState({
+      showCreateModal: false,
+    })
+  }
   render() {
     return (
       <div className="container-fluid padding-top1">
@@ -209,7 +214,7 @@ class OrderList extends Component {
             </div>
           </div>
         </div>
-        {this.state.showCreateModal ? <CreateOrder currentUser={currentUser} onEmittedCloseModal={this.onReceivedValue}/> : null}
+        {this.state.showCreateModal ? <CreateOrder currentUser={currentUser} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
       </div>
     )
   }

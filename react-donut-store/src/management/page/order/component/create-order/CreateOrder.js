@@ -59,6 +59,13 @@ class CreateOrder extends Component {
     });
   }
 
+  onCloseDoNotModal = () => {
+    this.props.onEmittedCloseDoNotModal({
+      name: 'showCreateModal',
+      value: false
+    });
+  }
+
   onCreateOrder = () => {
     const { nameCreated, phone, shipping } = this.state;
     if (isFormValid([nameCreated, phone, shipping]) && this.state.quantities.length > 0 && this.state.totalPrice >= this.findMinTotalPrice()) {
@@ -97,21 +104,28 @@ class CreateOrder extends Component {
   }
 
   onReceivedValue = (event) => {
-    this.setState({
-      [event.name]: { value: event.value, valid: event.valid },
-    }, () => {
-      if (event.name === 'shipping') {
-        this.setState({
-          addressShipping: { value: '', valid: false },
-          distance: { value: '', valid: false },
-          shippingPrice: { value: '', valid: false },
-        }, () => {
+    if (!this.state.isSubmitting) {
+      this.setState({
+        [event.name]: { value: event.value, valid: event.valid },
+      }, () => {
+        if (event.name === "shippingPrice") {
           this.setState({
             totalPrice: this.calculateTotalPrice(),
           });
-        });
-      }
-    })
+        }
+        if (event.name === 'shipping') {
+          this.setState({
+            addressShipping: { value: '', valid: false },
+            distance: { value: '', valid: false },
+            shippingPrice: { value: '', valid: false },
+          }, () => {
+            this.setState({
+              totalPrice: this.calculateTotalPrice(),
+            });
+          });
+        }
+      })
+    }
   }
 
   showInfoShipment = () => {
@@ -270,7 +284,8 @@ class CreateOrder extends Component {
                     </div>
                     <div className="col-8">
                       <div className="float-right">
-                        <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} id="close-create-modal" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Quay laị</button>&nbsp;
+                        <button type="button" style={{display: 'none'}} data-dismiss="modal" aria-label="Close" id="close-create-modal" onClick={this.onCloseModal}></button>
+                        <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} onClick={this.onCloseDoNotModal} data-dismiss="modal" aria-label="Close">Quay laị</button>&nbsp;
                         <button className="btn btn-outline-primary" disabled={this.state.isSubmitting || +this.state.shippingPrice > 100000} onClick={this.onCreateOrder}>Tạo</button>
                       </div>
                     </div>

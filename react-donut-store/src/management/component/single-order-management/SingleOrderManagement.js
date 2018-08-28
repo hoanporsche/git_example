@@ -85,6 +85,12 @@ class SingleOrderManagement extends Component {
       <button className="btn btn-outline-info" onClick={this.onClick}><i className="fas fa-edit"></i></button>
     ) : null;
   }
+
+  closeDoNotModal = () => {
+    this.setState({
+      showUpdateModal: false
+    })
+  }
   render() {
     const { order } = this.props;
     return order ? (
@@ -153,7 +159,7 @@ class SingleOrderManagement extends Component {
             </div>
           </div>
         </div>
-        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} /> : null}
+        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
       </div>
     ) : (
         <div id="single-order" className="card">

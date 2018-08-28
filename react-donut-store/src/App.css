@@ -62,7 +62,7 @@
 }
 
 .m-page-loader.m-page-loader--non-block {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   right: auto;

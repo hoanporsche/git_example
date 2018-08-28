@@ -97,9 +97,11 @@ class Checkout extends Component {
   }
 
   onReceivedValue = (event) => {
-    this.setState({
-      [event.name]: { value: event.value, valid: event.valid },
-    });
+    if (!this.state.isSubmitting) {
+      this.setState({
+        [event.name]: { value: event.value, valid: event.valid },
+      });
+    }
   }
 
   showGGMaps = () => {
@@ -113,17 +115,19 @@ class Checkout extends Component {
   }
 
   onReceivedSelectValue = (event) => {
-    this.setState({
-      storeCode: { value: event.value, valid: event.valid },
-      addressShipping: { value: '', valid: false },
-      distance: { value: '', valid: false },
-      shippingPrice: { value: '', valid: false },
-      showMap: false,
-    }, () => {
+    if (!this.state.isSubmitting) {
       this.setState({
-        showMap: true,
+        storeCode: { value: event.value, valid: event.valid },
+        addressShipping: { value: '', valid: false },
+        distance: { value: '', valid: false },
+        shippingPrice: { value: '', valid: false },
+        showMap: false,
+      }, () => {
+        this.setState({
+          showMap: true,
+        });
       });
-    });
+    }
   }
 
   showInfoShipment = () => {

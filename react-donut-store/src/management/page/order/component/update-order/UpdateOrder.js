@@ -74,7 +74,7 @@ class UpdateOrder extends Component {
     let quantities = [];
     list.forEach(i => {
       quantities = quantities.concat({
-        item: Object.assign({}, i.itemId, {picture: i.itemId.picture.split(',')}), quantity: i.quantity, price: i.itemId.singleValue * i.quantity
+        item: Object.assign({}, i.itemId, { picture: i.itemId.picture.split(',') }), quantity: i.quantity, price: i.itemId.singleValue * i.quantity
       })
     });
     return quantities;
@@ -87,10 +87,11 @@ class UpdateOrder extends Component {
     });
   }
 
-  onUpdateOrder = () => {
-    setTimeout(() => {
-      $('#close-update-modal').click();
-    }, 3000);
+  onCloseDoNotModal = () => {
+    this.props.onEmittedCloseDoNotModal({
+      name: 'showUpdateModal',
+      value: false
+    });
   }
 
   onUpdateOrder = () => {
@@ -132,21 +133,28 @@ class UpdateOrder extends Component {
   }
 
   onReceivedValue = (event) => {
-    this.setState({
-      [event.name]: { value: event.value, valid: event.valid },
-    }, () => {
-      if (event.name === 'shipping') {
-        this.setState({
-          addressShipping: { value: '', valid: false },
-          distance: { value: '', valid: false },
-          shippingPrice: { value: '', valid: false },
-        }, () => {
+    if (!this.state.isSubmitting) {
+      this.setState({
+        [event.name]: { value: event.value, valid: event.valid },
+      }, () => {
+        if (event.name === "shippingPrice") {
           this.setState({
             totalPrice: this.calculateTotalPrice(),
           });
-        });
-      }
-    })
+        }
+        if (event.name === 'shipping') {
+          this.setState({
+            addressShipping: { value: '', valid: false },
+            distance: { value: '', valid: false },
+            shippingPrice: { value: '', valid: false },
+          }, () => {
+            this.setState({
+              totalPrice: this.calculateTotalPrice(),
+            });
+          });
+        }
+      })
+    }
   }
 
   showInfoShipment = () => {
@@ -305,7 +313,8 @@ class UpdateOrder extends Component {
                     </div>
                     <div className="col-8">
                       <div className="float-right">
-                        <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} id="close-update-modal" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Quay lại</button>&nbsp;
+                        <button type="button" style={{ display: 'none' }} data-dismiss="modal" aria-label="Close" id="close-update-modal" onClick={this.onCloseModal}></button>
+                        <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} onClick={this.onCloseDoNotModal} data-dismiss="modal" aria-label="Close">Quay lại</button>&nbsp;
                         <button className="btn btn-outline-primary" disabled={this.state.isSubmitting || +this.state.shippingPrice > 100000} onClick={this.onUpdateOrder}>Cập nhật</button>
                       </div>
                     </div>

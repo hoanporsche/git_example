@@ -134,6 +134,7 @@ public class OrderServiceImpl implements OrderService {
     order.setNameCreated(orderForm.getNameCreated().trim());
     order.setPhone(orderForm.getPhone().trim());
     order.setStoreId(userStore);
+    order.setShipping(orderForm.isShipping());
     String addressShipping = (orderForm.getAddressShipping() == null) ? ""
         : orderForm.getAddressShipping().trim();
     order.setAddressShipping(addressShipping);
