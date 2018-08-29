@@ -101,16 +101,19 @@ public class CategoryServiceImpl implements CategoryService {
     Category foundCategory = categoryRepository.findOne(id);
     if (foundCategory == null)
       return null;
-    if (foundCategory.isEnabled()) {
-      List<Item> list = itemRepository.findByCategory(id);
-      for (Item item : list) {
-        item.setEnabled(false);
-        itemRepository.save(item);
-      }
-    }
     foundCategory.setDateUpdated(new Date());
     foundCategory.setEnabled(!foundCategory.isEnabled());
-    return categoryRepository.save(foundCategory);
+    categoryRepository.save(foundCategory);
+//    if (!foundCategory.isEnabled()) {
+//      List<Item> list = foundCategory.getItems();
+//      for (Item item : list) {
+//        item.setDateUpdated(new Date());
+//        item.setEnabled(false);
+//        System.out.println(item);
+//        itemRepository.save(item);
+//      }
+//    }
+    return foundCategory;
   }
 
   /**

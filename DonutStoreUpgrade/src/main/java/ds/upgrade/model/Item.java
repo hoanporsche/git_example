@@ -79,8 +79,12 @@ public class Item implements Serializable {
   public Item() {
   }
 
+  @Override
   public String toString() {
-    return this.name;
+    return "Item [id=" + id + ", code=" + code + ", name=" + name + ", picture=" + picture
+        + ", categoryId=" + categoryId + ", dateCreated=" + dateCreated + ", dateUpdated="
+        + dateUpdated + ", singleValue=" + singleValue + ", enabled=" + enabled + ", description="
+        + description + ", materials=" + materials + ", quantites=" + quantites + "]";
   }
 
   public Long getId() {
