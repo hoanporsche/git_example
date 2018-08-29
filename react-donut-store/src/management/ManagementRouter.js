@@ -9,6 +9,12 @@ import NotFound from '../error/NotFound';
 
 const managementRoutes = [
   {
+    path: MODEL_ROUTING.MANAGEMENT,
+    exact: true,
+    canActive: Guard.storeGuard(),
+    main: () => <OrderList />,
+  },
+  {
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.MATERIAL_DAILY_REPORT,
     exact: true,
     canActive: Guard.storeGuard(),
@@ -22,15 +28,9 @@ const managementRoutes = [
   },
   {
     path: MODEL_ROUTING.MANAGEMENT + ROUTING_URL.CONFIG,
-    exact: true,
+    exact: false,
     canActive: Guard.adminGuard(),
     main: () => <Config />,
-  },
-  {
-    path: MODEL_ROUTING.MANAGEMENT,
-    exact: true,
-    canActive: Guard.storeGuard(),
-    main: () => <OrderList />,
   },
   {
     path: '',

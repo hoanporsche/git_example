@@ -1,0 +1,44 @@
+#config-management {
+  width: 100%;
+  display: table;
+}
+
+.aside-nav {
+  width: 10%;
+  background-color: teal;
+  color: white;
+  min-height: 83vh;
+}
+.aside-nav ul {
+  margin-left: -2em;
+}
+
+.aside-nav li {
+  padding-left: 1em;
+  margin-bottom: 1em;
+}
+
+.aside-nav a {
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.aside-nav a:hover {
+  opacity: 0.5;
+}
+
+.aside-nav .active-aside {
+  color: red;
+  background-color: chocolate;
+  border-radius: 10px;
+}
+
+.config-content {
+  width: 90%;
+  background-color: white;
+  color: black;
+  min-height: 83vh;
+}

@@ -17,6 +17,7 @@ import { capchaKey } from '../enviroment';
 import { LOCAL_STORAGE } from '../share/constant/local-storage.constant';
 import RedirectQueryParams from '../share/util/RedirectQueryParams';
 import ReCAPTCHA from "react-google-recaptcha";
+import {fetAllConfigGlobal} from '../redux/action/config-global.constant';
 
 const recaptchaRef = React.createRef();
 
@@ -94,6 +95,9 @@ class Checkout extends Component {
   componentDidMount() {
     if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
+    if (this.props.listConfigGlobal.length === 0) {
+      this.props.fetchAllConfigGlobal();
+    }
   }
 
   onReceivedValue = (event) => {
@@ -172,18 +176,20 @@ class Checkout extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    window.grecaptcha.reset();
-    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
-    if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
-      Helper.setLoading(true);
-      this.setState({
-        isSubmitting: true,
-      });
-      window.grecaptcha.execute();
-    } else {
-      this.setState({
-        wasSubmitted: true,
-      });
+    if (!this.state.isSubmitting) {
+      window.grecaptcha.reset();
+      const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
+      if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
+        Helper.setLoading(true);
+        this.setState({
+          isSubmitting: true,
+        });
+        window.grecaptcha.execute();
+      } else {
+        this.setState({
+          wasSubmitted: true,
+        });
+      }
     }
   }
 
@@ -278,6 +284,7 @@ const mapStateToProps = state => {
   return {
     quantity: state.quantityReducer,
     listStore: state.storeReducer,
+    listConfigGlobal: state.configGlobalReducer,
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -287,6 +294,9 @@ const mapDispatchToProps = dispatch => {
     },
     clearAllQuantities: () => {
       dispatch(clearQuantites());
+    },
+    fetchAllConfigGlobal: () => {
+      dispatch(fetAllConfigGlobal());
     }
   }
 }

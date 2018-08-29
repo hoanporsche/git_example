@@ -5,6 +5,7 @@
   color: #676c7b;
 }
 #header-management .active-header {
-  background-color: black;
+  background-color: wheat;
   color: white;
+  border-radius: 10px;
 }

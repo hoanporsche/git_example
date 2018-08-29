@@ -5,6 +5,7 @@ import CustomSelect from '../../../share/common/custom-select/CustomSelect';
 import { changeStatus } from '../../page/order/OrderApiCaller';
 import * as Helper from '../../../share/common/helper/Helper';
 import UpdateOrder from '../../page/order/component/update-order/UpdateOrder';
+import ReactTooltip from 'react-tooltip';
 
 class SingleOrderManagement extends Component {
 
@@ -82,7 +83,7 @@ class SingleOrderManagement extends Component {
   showEditButton = () => {
     const { order } = this.props;
     return ((order.shipping && (+order.statusId.id === 1 || +order.statusId.id === 2)) || (!order.shipping && (+order.statusId.id === 2 || +order.statusId.id === 3))) ? (
-      <button className="btn btn-outline-info" onClick={this.onClick}><i className="fas fa-edit"></i></button>
+      <button className="btn btn-outline-info" data-tip="Chỉnh sửa" onClick={this.onClick}><i className="fas fa-edit"></i></button>
     ) : null;
   }
 
@@ -160,6 +161,7 @@ class SingleOrderManagement extends Component {
           </div>
         </div>
         {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
+        <ReactTooltip />
       </div>
     ) : (
         <div id="single-order" className="card">

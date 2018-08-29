@@ -121,7 +121,6 @@ class ChangePassword extends Component {
                         maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
                     </div>
                   </div>
-                  <hr />
                   <div className="row">
                     <div className="col-8">
                       <div className="float-right">

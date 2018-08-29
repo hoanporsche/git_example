@@ -67,39 +67,41 @@ class CreateOrder extends Component {
   }
 
   onCreateOrder = () => {
-    const { nameCreated, phone, shipping } = this.state;
-    if (isFormValid([nameCreated, phone, shipping]) && this.state.quantities.length > 0 && this.state.totalPrice >= this.findMinTotalPrice()) {
-      const newOrder = {
-        nameCreated: nameCreated.value,
-        phone: phone.value,
-        addressShipping: this.state.addressShipping.value,
-        distance: this.state.distance.value,
-        shippingPrice: this.state.shippingPrice.value,
-        totalPrice: +this.state.totalPrice,
-        quantities: this.state.quantities,
-        shipping: shipping.value,
+    if (!this.state.isSubmitting) {
+      const { nameCreated, phone, shipping } = this.state;
+      if (isFormValid([nameCreated, phone, shipping]) && this.state.quantities.length > 0 && this.state.totalPrice >= this.findMinTotalPrice()) {
+        const newOrder = {
+          nameCreated: nameCreated.value,
+          phone: phone.value,
+          addressShipping: this.state.addressShipping.value,
+          distance: this.state.distance.value,
+          shippingPrice: this.state.shippingPrice.value,
+          totalPrice: +this.state.totalPrice,
+          quantities: this.state.quantities,
+          shipping: shipping.value,
+        }
+        Helper.setLoading(true);
+        this.setState({
+          isSubmitting: true,
+        });
+        save(newOrder).then(() => {
+          Helper.setLoading(false);
+          this.setState({
+            isSubmitting: false,
+          }, () => {
+            $('#close-create-modal').click();
+          });
+        }).catch(() => {
+          Helper.setLoading(false);
+          this.setState({
+            isSubmitting: false,
+          });
+        })
+      } else {
+        this.setState({
+          wasSubmitted: true,
+        })
       }
-      Helper.setLoading(true);
-      this.setState({
-        isSubmitting: true,
-      });
-      save(newOrder).then(() => {
-        Helper.setLoading(false);
-        this.setState({
-          isSubmitting: false,
-        }, () => {
-          $('#close-create-modal').click();
-        });
-      }).catch(() => {
-        Helper.setLoading(false);
-        this.setState({
-          isSubmitting: false,
-        });
-      })
-    } else {
-      this.setState({
-        wasSubmitted: true,
-      })
     }
   }
 
@@ -284,7 +286,7 @@ class CreateOrder extends Component {
                     </div>
                     <div className="col-8">
                       <div className="float-right">
-                        <button type="button" style={{display: 'none'}} data-dismiss="modal" aria-label="Close" id="close-create-modal" onClick={this.onCloseModal}></button>
+                        <button type="button" style={{ display: 'none' }} data-dismiss="modal" aria-label="Close" id="close-create-modal" onClick={this.onCloseModal}></button>
                         <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} onClick={this.onCloseDoNotModal} data-dismiss="modal" aria-label="Close">Quay laị</button>&nbsp;
                         <button className="btn btn-outline-primary" disabled={this.state.isSubmitting || +this.state.shippingPrice > 100000} onClick={this.onCreateOrder}>Tạo</button>
                       </div>

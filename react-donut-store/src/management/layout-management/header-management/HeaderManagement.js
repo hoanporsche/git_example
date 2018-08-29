@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, NavLink } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import { MENU_NAME, MODEL_ROUTING } from '../../../share/constant/routing.constant';
 import './HeaderManagement.css';
 import { connect } from 'react-redux';
@@ -15,11 +15,11 @@ const menus = [
   }, {
     name: MENU_NAME.MATERIAL_DAILY_REPORT,
     to: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.MATERIAL_DAILY_REPORT,
-    exact: false,
+    exact: true,
   }, {
     name: MENU_NAME.TIMEKEEPING,
     to: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.TIMEKEEPING,
-    exact: false,
+    exact: true,
   }, {
     name: MENU_NAME.CONFIG,
     to: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.CONFIG,
@@ -34,7 +34,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
       let active = match ? 'active-header' : '';
       return (
         <li className={`nav-item ${active}`}>
-          <Link className='nav-link link-text' to={to}><span>{label}</span></Link>
+          <NavLink className='nav-link link-text' to={to}><span>{label}</span></NavLink>
         </li>
       )
     }}

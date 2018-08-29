@@ -31,6 +31,7 @@ export const MODEL_ROUTING = Object.freeze({
   USER: '/user',
   WORKING_CALENDER: '/working-calender',
   CONFIG: '/config',
+  CONFIG_GLOBAL: '/config-global',
 });
 
 export const MENU_NAME = Object.freeze({
@@ -47,4 +48,16 @@ export const MENU_NAME = Object.freeze({
   MATERIAL_DAILY_REPORT: 'Báo cáo',
   TIMEKEEPING: 'Chấm công',
   CONFIG: 'Configuration',
+  CATEGORY: 'Category',
+  CONFIG_GLOBAL: 'Config Global',
+  ITEM: 'Item',
+  MATERIAL: 'Material',
+  ORDER_STATUS: 'Order Status',
+  ROLE: 'Role',
+  STAFF: 'Staff',
+  STORE: 'Store',
+  SUPPLY: 'Supply',
+  TIMEKEEPING_STATUS: 'Timekeeping Status',
+  USER: 'User',
+  WORKING_CALENDER: 'Working Calender',
 });

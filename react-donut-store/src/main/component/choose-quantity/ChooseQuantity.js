@@ -44,7 +44,7 @@ class ChooseQuantity extends Component {
   }
 }
 ChooseQuantity.propTypes = {
-  quantity: PropTypes.number.isRequired,
+  quantity: PropTypes.any.isRequired,
   name: PropTypes.string,
 }
 ChooseQuantity.defaultProps = {

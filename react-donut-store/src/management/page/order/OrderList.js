@@ -12,6 +12,7 @@ import { fetListOrder } from '../../../redux/action/order.constant';
 import SingleOrderManagement from '../../component/single-order-management/SingleOrderManagement';
 import CreateOrder from './component/create-order/CreateOrder';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
+import ReactTooltip from 'react-tooltip';
 
 const currentUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
 const selectOption = [
@@ -156,7 +157,7 @@ class OrderList extends Component {
   }
   render() {
     return (
-      <div className="container-fluid padding-top1">
+      <div className="container-fluid padding-top1 page-min-height">
         <div className="row main-row">
           <div className="col-md-3">
             <CustomSearchInput name="searchString" placeholder="Mã đơn/sđt..."
@@ -188,8 +189,8 @@ class OrderList extends Component {
               </div>
               <div className="col-md-4 col-lg-2">
                 <div className="float-right">
-                  <button type="button" className="btn btn-outline-success" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
-                  <button type="button" className="btn btn-outline-primary" onClick={this.onNewOrder}><i className="fas fa-plus-circle"></i></button>
+                  <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
+                  <button type="button" className="btn btn-outline-primary" data-tip="Tạo mới" onClick={this.onNewOrder}><i className="fas fa-plus-circle"></i></button>
                 </div>
               </div>
             </div>
@@ -215,6 +216,7 @@ class OrderList extends Component {
           </div>
         </div>
         {this.state.showCreateModal ? <CreateOrder currentUser={currentUser} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
+        <ReactTooltip />
       </div>
     )
   }

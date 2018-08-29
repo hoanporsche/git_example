@@ -95,40 +95,42 @@ class UpdateOrder extends Component {
   }
 
   onUpdateOrder = () => {
-    const { nameCreated, phone, shipping } = this.state;
-    if (isFormValid([nameCreated, phone, shipping]) && this.state.quantities.length > 0 && this.state.totalPrice >= this.findMinTotalPrice()) {
-      const newOrder = {
-        code: this.state.code,
-        nameCreated: nameCreated.value,
-        phone: phone.value,
-        addressShipping: this.state.addressShipping.value,
-        distance: this.state.distance.value,
-        shippingPrice: this.state.shippingPrice.value,
-        totalPrice: +this.state.totalPrice,
-        quantities: this.state.quantities,
-        shipping: shipping.value,
+    if (!this.state.isSubmitting) {
+      const { nameCreated, phone, shipping } = this.state;
+      if (isFormValid([nameCreated, phone, shipping]) && this.state.quantities.length > 0 && this.state.totalPrice >= this.findMinTotalPrice()) {
+        const newOrder = {
+          code: this.state.code,
+          nameCreated: nameCreated.value,
+          phone: phone.value,
+          addressShipping: this.state.addressShipping.value,
+          distance: this.state.distance.value,
+          shippingPrice: this.state.shippingPrice.value,
+          totalPrice: +this.state.totalPrice,
+          quantities: this.state.quantities,
+          shipping: shipping.value,
+        }
+        Helper.setLoading(true);
+        this.setState({
+          isSubmitting: true,
+        });
+        save(newOrder).then(() => {
+          Helper.setLoading(false);
+          this.setState({
+            isSubmitting: false,
+          }, () => {
+            $('#close-update-modal').click();
+          });
+        }).catch(() => {
+          Helper.setLoading(false);
+          this.setState({
+            isSubmitting: false,
+          });
+        })
+      } else {
+        this.setState({
+          wasSubmitted: true,
+        })
       }
-      Helper.setLoading(true);
-      this.setState({
-        isSubmitting: true,
-      });
-      save(newOrder).then(() => {
-        Helper.setLoading(false);
-        this.setState({
-          isSubmitting: false,
-        }, () => {
-          $('#close-update-modal').click();
-        });
-      }).catch(() => {
-        Helper.setLoading(false);
-        this.setState({
-          isSubmitting: false,
-        });
-      })
-    } else {
-      this.setState({
-        wasSubmitted: true,
-      })
     }
   }
 

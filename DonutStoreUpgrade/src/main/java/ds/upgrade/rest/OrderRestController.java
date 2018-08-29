@@ -148,7 +148,6 @@ public class OrderRestController {
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated OrderFormPrivate orderForm,
       BindingResult result) {
     try {
-      System.out.println(orderForm);
       if (result.hasErrors() || !customValidation.verifyOrderFormPrivate(orderForm))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
             HttpStatus.NOT_ACCEPTABLE);

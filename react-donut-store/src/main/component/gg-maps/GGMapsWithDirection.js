@@ -170,31 +170,29 @@ const calculatedDistance = (distance) => {
     calculated = findMinShippingPrice();
   }
   if (distance.value > findMinAhaDistance()*1000) {
-    calculated = (+(distance.value / 1000 + 0.1).toString().substring(0, 3) * findSingleShippingPrice()) - findSubsidyPrice();
+    calculated = (parseFloat(distance.value / 1000 + 0.1).toFixed(1) * findSingleShippingPrice()) - findSubsidyPrice();
   }
   return calculated;
 }
 
-const listConfigGlobal = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL));
-
 const findFreeShipDistance = () => {
-  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.FREE_SHIP_DISTANCE);
+  const value = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.FREE_SHIP_DISTANCE);
   return value ? value.value : 0;
 }
 const findMinAhaDistance = () => {
-  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.MIN_AHA_DISTANCE);
+  const value = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.MIN_AHA_DISTANCE);
   return value ? value.value : 0;
 }
 const findSubsidyPrice = () => {
-  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.SUBSIDY_PRICE);
+  const value = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.SUBSIDY_PRICE);
   return value ? value.value : 0;
 }
 const findSingleShippingPrice = () => {
-  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.SINGLE_SHIPPING_PRICE);
+  const value = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.SINGLE_SHIPPING_PRICE);
   return value ? value.value : 0;
 }
 const findMinShippingPrice = () => {
-  const value = listConfigGlobal.find(i => i.name === CONFIG_NAME.MIN_SHIPPING_PRICE);
+  const value = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.MIN_SHIPPING_PRICE);
   return value ? value.value : 0;
 }
 

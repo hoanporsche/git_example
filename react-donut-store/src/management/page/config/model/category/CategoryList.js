@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { findListCategory } from './CategoryApiCaller';
-import { CONFIG } from '../../../share/constant/configuration.constant';
+import { CONFIG } from '../../../../../share/constant/configuration.constant';
 
 class CategoryList extends Component {
 
