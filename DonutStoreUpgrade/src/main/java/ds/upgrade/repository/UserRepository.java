@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
   @Query(QueryConstant.USER.FIND_ALL)
   List<User> findAll();
 
+  @Query(QueryConstant.USER.FIND_USER_BY_STORE_ID)
+  List<User> findUserByStoreId(@Param(AppConstant.PARAM.STORE_ID_PARAM) Long storeId);
 }

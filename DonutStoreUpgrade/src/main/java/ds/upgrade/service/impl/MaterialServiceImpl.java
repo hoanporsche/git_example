@@ -9,21 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import ds.upgrade.model.Item;
 import ds.upgrade.model.Material;
-import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.MaterialRepository;
-import ds.upgrade.repository.specification.ItemSpecification;
 import ds.upgrade.repository.specification.MaterialSpecification;
 import ds.upgrade.service.MaterialService;
 
 @Service
 public class MaterialServiceImpl implements MaterialService {
-  
+
   @Autowired
   private MaterialRepository materialRepository;
-  @Autowired
-  private ItemRepository itemRepository;
 
   /**
    * @description: .
@@ -106,15 +101,8 @@ public class MaterialServiceImpl implements MaterialService {
     Material foundMaterial = materialRepository.findOne(id);
     if (foundMaterial == null)
       return null;
-    if (foundMaterial.isEnabled()) {
-      List<Item> list = itemRepository.findAll(new ItemSpecification(true, id, null));
-      for (Item item : list) {
-        item.getMaterials().remove(foundMaterial);
-        itemRepository.save(item);
-      }
-      foundMaterial.getItems().clear();
-    } else if (!foundMaterial.getSupplyId().isEnabled()) {
-        return null;
+    if (!foundMaterial.getSupplyId().isEnabled()) {
+      return null;
     }
     foundMaterial.setDateUpdated(new Date());
     foundMaterial.setEnabled(!foundMaterial.isEnabled());

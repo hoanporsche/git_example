@@ -38,9 +38,8 @@ public class Order implements Serializable {
   @Column(name = "phone", nullable = false)
   private String phone;
 
-  @ManyToOne
-  @JoinColumn(name = "store_id", referencedColumnName = "id", nullable = false)
-  private Store storeId;
+  @Column(name = "store_id")
+  private Long storeId;
 
   @ManyToOne
   @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
@@ -113,11 +112,11 @@ public class Order implements Serializable {
     this.phone = phone;
   }
 
-  public Store getStoreId() {
+  public Long getStoreId() {
     return storeId;
   }
 
-  public void setStoreId(Store storeId) {
+  public void setStoreId(Long storeId) {
     this.storeId = storeId;
   }
 

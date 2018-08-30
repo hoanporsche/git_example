@@ -10,19 +10,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Staff;
-import ds.upgrade.model.User;
 import ds.upgrade.repository.StaffRepository;
 import ds.upgrade.repository.specification.StaffSpecification;
 import ds.upgrade.service.StaffService;
-import ds.upgrade.service.UserService;
 
 @Service
 public class StaffServiceImpl implements StaffService {
 
   @Autowired
   private StaffRepository staffRepository;
-  @Autowired
-  private UserService userService;
 
   /**
    * @description: .
@@ -104,14 +100,14 @@ public class StaffServiceImpl implements StaffService {
   @Override
   public Staff enabledOrNot(Long id) {
     Staff foundStaff = staffRepository.findOne(id);
-    if (foundStaff == null)
-      return null;
-    User user = userService.findInfoUser();
-    if (userService.isStore(user.getRoles())
-        && user.getStoreId().getId() != foundStaff.getStoreId().getId())
-      return null;
-    foundStaff.setDateUpdated(new Date());
-    foundStaff.setEnabled(!foundStaff.isEnabled());
+//    if (foundStaff == null)
+//      return null;
+//    User user = userService.findInfoUser();
+//    if (userService.isStore(user.getRoles())
+//        && user.getStoreId().getId() != foundStaff.getStoreId().getId())
+//      return null;
+//    foundStaff.setDateUpdated(new Date());
+//    foundStaff.setEnabled(!foundStaff.isEnabled());
     return staffRepository.save(foundStaff);
   }
 

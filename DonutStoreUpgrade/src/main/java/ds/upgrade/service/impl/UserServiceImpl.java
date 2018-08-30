@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
     User foundUser = userRepository.findOne(id);
     if (foundUser == null)
       return null;
+    foundUser.getRoles().clear();
     foundUser.setDateUpdated(new Date());
     foundUser.setEnabled(!foundUser.isEnabled());;
     return userRepository.save(foundUser);

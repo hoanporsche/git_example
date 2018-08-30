@@ -64,7 +64,7 @@ public class User implements Serializable {
   @Column(name = "enabled")
   private boolean enabled = true;
   @ManyToOne
-  @JoinColumn(name = "storeId", referencedColumnName = "id")
+  @JoinColumn(name = "store_id", referencedColumnName = "id")
   private Store storeId;
   
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")

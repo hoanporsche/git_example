@@ -14,9 +14,9 @@ import ds.upgrade.model.Category;
 import ds.upgrade.model.Item;
 import ds.upgrade.model.json.CategoryJson;
 import ds.upgrade.repository.CategoryRepository;
-import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;
 import ds.upgrade.service.CategoryService;
+import ds.upgrade.service.ItemService;
 import ds.upgrade.util.service.CommonMethod;
 
 @Service
@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Autowired
   private CategoryRepository categoryRepository;
   @Autowired
-  private ItemRepository itemRepository;
+  private ItemService itemService;
   @Autowired
   private CommonMethod commonMethod;
 
@@ -104,15 +104,12 @@ public class CategoryServiceImpl implements CategoryService {
     foundCategory.setDateUpdated(new Date());
     foundCategory.setEnabled(!foundCategory.isEnabled());
     categoryRepository.save(foundCategory);
-//    if (!foundCategory.isEnabled()) {
-//      List<Item> list = foundCategory.getItems();
-//      for (Item item : list) {
-//        item.setDateUpdated(new Date());
-//        item.setEnabled(false);
-//        System.out.println(item);
-//        itemRepository.save(item);
-//      }
-//    }
+    if (!foundCategory.isEnabled()) {
+      List<Item> list = foundCategory.getItems();
+      for (Item item : list) {
+        itemService.enabledOrNot(item.getId());
+      }
+    }
     return foundCategory;
   }
 

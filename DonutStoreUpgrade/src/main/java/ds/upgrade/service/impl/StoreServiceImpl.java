@@ -10,10 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import ds.upgrade.model.Staff;
 import ds.upgrade.model.Store;
 import ds.upgrade.model.json.StoreJson;
-import ds.upgrade.repository.StaffRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.StoreSpecification;
 import ds.upgrade.service.StoreService;
@@ -24,8 +22,6 @@ public class StoreServiceImpl implements StoreService {
 
   @Autowired
   private StoreRepository storeRepository;
-  @Autowired
-  private StaffRepository staffRepository;
   @Autowired
   private CommonMethod commonMethod;
   
@@ -111,16 +107,26 @@ public class StoreServiceImpl implements StoreService {
    */
   @Override
   public Store enabledOrNot(Long id) {
+//     return Optional.ofNullable(storeRepository.findOne(id)).map(p -> {
+//       Store foundStore = new Store();
+//       foundStore.setId(p.getId());
+//       foundStore.setCode(p.getCode());
+//       foundStore.setName(p.getName());
+//       foundStore.setPicture(p.getPicture());
+//       foundStore.setPhone(p.getPhone());
+//       foundStore.setAddress(p.getAddress());
+//       foundStore.setLat(p.getLat());
+//       foundStore.setLng(p.getLng());
+//       foundStore.setDateCreated(p.getDateCreated());
+//       foundStore.setDateUpdated(p.getDateUpdated());
+//       foundStore.setEnabled(!p.isEnabled());
+//       foundStore.setStaffs(p.getStaffs());
+//       foundStore.setReports(p.getReports());
+//       foundStore.setOrders(p.getOrders());
+//       foundStore.setUsers(p.getUsers());
+//       return storeRepository.save(foundStore);
+//    }).orElseGet(()-> new Store());
     Store foundStore = storeRepository.findOne(id);
-    if (foundStore == null)
-      return null;
-    if (foundStore.isEnabled()) {
-      List<Staff> list = staffRepository.findByStore(id);
-      for (Staff staff : list) {
-         staff.setEnabled(false);
-         staffRepository.save(staff);
-      }
-    }
     foundStore.setDateUpdated(new Date());
     foundStore.setEnabled(!foundStore.isEnabled());
     return storeRepository.save(foundStore);

@@ -27,5 +27,5 @@ public interface MaterialDailyReportRepository extends JpaRepository<MaterialDai
   @Query(QueryConstant.MATERIAL_DAILY_REPORT.FIND_DAILY_REPORT)
   List<MaterialDailyReport> findDailyReport(
       @Param(AppConstant.PARAM.DATE_CREATED_PARAM) String dateCreated,
-      @Param(AppConstant.PARAM.NAME_PARAM) String storeName);
+      @Param(AppConstant.PARAM.STORE_ID_PARAM) Long storeId);
 }

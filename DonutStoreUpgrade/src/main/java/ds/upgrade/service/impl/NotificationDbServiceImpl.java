@@ -83,7 +83,7 @@ public class NotificationDbServiceImpl implements NotificationDbService {
   @Override
   public void pushNewOrderToUser(Order order) {
     String text = ConstantWebSocket.RESPONSE.NEW_ORDER + order.getCode();
-    for (User user : order.getStoreId().getUsers()) {
+    for (User user : userRepository.findUserByStoreId(order.getStoreId())) {
       NotificationDb newNoti = new NotificationDb(user, text);
       newNoti = notificationDbRepository.save(newNoti);
       template.convertAndSend("/topic/notification/" + user.getEmail(), newNoti);
