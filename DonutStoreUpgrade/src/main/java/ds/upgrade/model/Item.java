@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -48,9 +49,11 @@ public class Item implements Serializable {
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
   private Category categoryId;
 
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
 
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
   @NotNull

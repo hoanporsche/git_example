@@ -10,7 +10,9 @@ import ds.upgrade.model.json.CategoryJson;
 
 public interface CategoryService {
 
-  List<CategoryJson> findAll();
+  List<CategoryJson> findAllJson();
+  
+  List<Category> findAll();
   
   Category findOne(Long id);
   

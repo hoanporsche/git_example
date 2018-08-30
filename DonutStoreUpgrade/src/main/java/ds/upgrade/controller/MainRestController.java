@@ -48,7 +48,7 @@ public class MainRestController {
   @GetMapping(AppConstant.MODEL.CATEGORY_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllCategory() {
     try {
-      List<CategoryJson> list = categoryService.findAll();
+      List<CategoryJson> list = categoryService.findAllJson();
       if (!list.isEmpty())
         return new ResponseEntity<List<CategoryJson>>(list, HttpStatus.OK);
     } catch (Exception e) {
