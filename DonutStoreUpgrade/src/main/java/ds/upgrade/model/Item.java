@@ -34,7 +34,6 @@ public class Item implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @Size(min = 10, max = 10)
-  @NotEmpty
   @Column(name = "code", nullable = false, unique = true)
   private String code;
   @NotEmpty

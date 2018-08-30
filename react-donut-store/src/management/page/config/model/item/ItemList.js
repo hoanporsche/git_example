@@ -179,7 +179,12 @@ class ItemList extends Component {
           <tr key={index}>
             <th scope="row">{index}</th>
             <td>{item.name}</td>
-            <td><a href={item.picture} target="_blank">{item.picture}</a></td>
+            <td>
+              {item.picture.split(',').map((pic, index) => {
+                return (<p key={index}><a href={pic} target="_blank">{pic}</a></p>)
+              })}
+
+            </td>
             <td>{item.categoryId.name}</td>
             <td>{item.dateCreated}</td>
             <td>{item.dateUpdated}</td>
@@ -253,8 +258,8 @@ class ItemList extends Component {
           </div>
         </div>
         <ReactTooltip />
-        {this.state.showModalCreate ? <Create onEmittedCloseModalCreate={this.onReceivedValue} /> : null}
-        {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} item={this.state.updateItem} /> : null}
+        {this.state.showModalCreate ? <Create onEmittedCloseModalCreate={this.onReceivedValue} listCategory={this.state.listCategory} /> : null}
+        {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} item={this.state.updateItem} listCategory={this.state.listCategory} /> : null}
       </div>
     )
   }

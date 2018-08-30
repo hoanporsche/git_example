@@ -6,6 +6,7 @@ import CustomTextarea from '../../../../../../share/common/custom-textarea/Custo
 import * as Helper from '../../../../../../share/common/helper/Helper';
 import { save } from '../ItemApiCaller';
 import { isFormValid } from '../../../../../../share/common/custom-validation';
+import PropTypes from 'prop-types';
 
 class Create extends Component {
 
@@ -55,15 +56,18 @@ class Create extends Component {
 
   onSubmit = () => {
     if (!this.state.isSubmitting) {
-      const { name, picture } = this.state.form;
-      if (isFormValid([name, picture])) {
+      const { name, picture, categoryId, singleValue, description } = this.state.form;
+      if (isFormValid([name, picture, categoryId, singleValue, description])) {
         Helper.setLoading(true);
         this.setState({
           isSubmitting: true,
         });
         const form = {
           name: name.value,
-          picture: picture.value
+          picture: picture.value,
+          categoryId: +categoryId.value,
+          singleValue: +singleValue.value,
+          description: description.value,
         }
         save(form).then(({ data }) => {
           Helper.setLoading(false);
@@ -101,15 +105,17 @@ class Create extends Component {
                   maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
                 <CustomInput type="text" name="singleValue" placeholder="Item's single value" value={this.state.form.singleValue.value}
                   maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomSelect placeholder="Category" name="categoryId" value={this.state.form.categoryId.value}
+                  data={this.props.listCategory} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
                 <CustomTextarea type="text" name="picture" placeholder="Item's picture" value={this.state.form.picture.value}
                   maxLength={1000} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomTextarea type="text" name="description" placeholder="Item's picture" required={false} value={this.state.form.description.value}
+                <CustomTextarea type="text" name="description" placeholder="Item's description" required={false} value={this.state.form.description.value}
                   maxLength={255} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
               </div>
               <div className="modal-footer">
-                <button style={{ display: 'none' }} id="close-modal-create-and-refresh" onClick={this.onCloseModalAndRefresh} data-dismiss="modal" aria-label="Close">Quay lại</button>&nbsp;
-                <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} id="close-modal-create" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Quay lại</button>&nbsp;
-                <button className="btn btn-outline-primary" disabled={this.state.isSubmitting} onClick={this.onSubmit}>Cập nhật</button>
+                <button style={{ display: 'none' }} id="close-modal-create-and-refresh" onClick={this.onCloseModalAndRefresh} data-dismiss="modal" aria-label="Close"></button>&nbsp;
+                <button className="btn btn-outline-dark" disabled={this.state.isSubmitting} id="close-modal-create" onClick={this.onCloseModal} data-dismiss="modal" aria-label="Close">Back</button>&nbsp;
+                <button className="btn btn-outline-primary" disabled={this.state.isSubmitting} onClick={this.onSubmit}>Create</button>
               </div>
             </div>
           </div>
@@ -118,5 +124,10 @@ class Create extends Component {
     )
   }
 }
-
+Create.propTypes = {
+  listCategory: PropTypes.array,
+}
+Create.defaultProps = {
+  listCategory: [],
+}
 export default Create;
