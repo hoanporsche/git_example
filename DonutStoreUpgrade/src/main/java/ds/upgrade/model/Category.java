@@ -42,6 +42,7 @@ public class Category implements Serializable {
   @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
+  @Size(max = 255)
   @Column(name = "picture", nullable = false)
   private String picture;
   @Column(name = "enabled", nullable = false)

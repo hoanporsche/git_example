@@ -5,6 +5,8 @@ import ReactTooltip from 'react-tooltip';
 import CustomSelect from '../../../../../share/common/custom-select/CustomSelect';
 // import CustomDate from '../../../../../share/common/custom-datetime/CustomDate';
 import * as Helper from '../../../../../share/common/helper/Helper';
+import Create from './component/Create';
+import Update from './component/Update';
 
 class CategoryList extends Component {
 
@@ -18,6 +20,7 @@ class CategoryList extends Component {
         size: CONFIG.PAGE_SIZE,
         sort: 'id,desc'
       },
+      updateCategory: undefined,
       isSubmitting: false,
       showModalCreate: false,
       showModateUpdate: false,
@@ -32,6 +35,23 @@ class CategoryList extends Component {
     if (!this.state.isSubmitting) {
       this.setState({
         params: Object.assign({}, this.state.params, { [event.name]: event.value })
+      })
+    }
+  }
+
+  onReceivedValue = event => {
+    if (!this.state.isSubmitting) {
+      this.setState({
+        [event.name]: event.value,
+      }, () => {
+        if (event.refresh)
+          this.onFilter();
+        if (event.update) {
+          this.setState({
+            updateCategory: undefined,
+          });
+          this.updateList(this.state.listCategory.content, event.update);
+        }
       })
     }
   }
@@ -51,9 +71,10 @@ class CategoryList extends Component {
       })
     }
   }
-  onUpdate = () => {
+  onUpdate = (category) => {
     if (!this.state.isSubmitting) {
       this.setState({
+        updateCategory: category,
         showModalUpdate: true,
       })
     }
@@ -69,7 +90,8 @@ class CategoryList extends Component {
         this.setState({
           isSubmitting: false
         });
-        this.onFilter();
+        const list = this.state.listCategory.content;
+        this.updateList(list, data);
       }).catch(({ response }) => {
         Helper.setLoading(false);
         this.setState({
@@ -78,6 +100,14 @@ class CategoryList extends Component {
         console.log(response)
       })
     }
+  }
+  updateList = (list, data) => {
+    const index = list.findIndex(i => +i.id === +data.id);
+    this.setState({
+      listCategory: Object.assign({}, this.state.listCategory, {
+        content: [].concat(list.slice(0, index)).concat(data).concat(list.slice(index + 1)),
+      })
+    })
   }
   first = () => {
     if (!this.state.listCategory.first) {
@@ -146,7 +176,7 @@ class CategoryList extends Component {
             <td>{category.enabled ? "Yes" : "No"}</td>
             <td>
               <i className="fas fa-exchange-alt" data-tip="Đổi status" style={{ cursor: 'pointer' }} onClick={() => this.showOrNot(category.id)}></i>  &nbsp;
-              <i className="fas fa-edit" data-tip="Sửa" style={{ cursor: 'pointer' }} onClick={this.onUpdate}></i>
+              <i className="fas fa-edit" data-tip="Sửa" style={{ cursor: 'pointer' }} onClick={() => this.onUpdate(category)}></i>
             </td>
           </tr>
         );
@@ -204,6 +234,8 @@ class CategoryList extends Component {
           </div>
         </div>
         <ReactTooltip />
+        {this.state.showModalCreate ? <Create onEmittedCloseModalCreate={this.onReceivedValue} /> : null}
+        {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} category={this.state.updateCategory}/> : null}
       </div>
     )
   }
