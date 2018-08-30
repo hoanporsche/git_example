@@ -95,6 +95,11 @@ public class ItemServiceImpl implements ItemService {
   @Override
   public Item enabledOrNot(Long id) {
     Item foundItem = itemRepository.findOne(id);
+    if (foundItem == null)
+      return null;
+    if (!foundItem.getCategoryId().isEnabled()) {
+      return null;
+    }
     foundItem.setDateUpdated(new Date());
     foundItem.setEnabled(!foundItem.isEnabled());
     return itemRepository.save(foundItem);

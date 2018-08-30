@@ -40,7 +40,7 @@ public class Item implements Serializable {
   @Size(max = 40)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-  @Size(max = 255)
+  @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
 
@@ -157,14 +157,6 @@ public class Item implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
-  }
-
-  @Override
-  public String toString() {
-    return "Item [id=" + id + ", code=" + code + ", name=" + name + ", picture=" + picture
-        + ", categoryId=" + categoryId + ", dateCreated=" + dateCreated + ", dateUpdated="
-        + dateUpdated + ", singleValue=" + singleValue + ", enabled=" + enabled + ", description="
-        + description + "]";
   }
 
 }
