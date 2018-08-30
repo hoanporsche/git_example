@@ -39,9 +39,10 @@ public class Staff implements Serializable {
   @Size(max = 255)
   @Column(name = "picture")
   private String picture;
-  
-  @Column(name = "store_id")
-  private Long storeId;
+
+  @ManyToOne
+  @JoinColumn(name = "store_id", referencedColumnName = "id")
+  private Store storeId;
   
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
@@ -109,11 +110,11 @@ public class Staff implements Serializable {
     this.picture = picture;
   }
 
-  public Long getStoreId() {
+  public Store getStoreId() {
     return storeId;
   }
 
-  public void setStoreId(Long storeId) {
+  public void setStoreId(Store storeId) {
     this.storeId = storeId;
   }
 
