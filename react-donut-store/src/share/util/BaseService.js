@@ -6,7 +6,7 @@ const BaseSerivce = Object.freeze({
     return axios({
       method: 'GET',
       url: url,
-      data: data,
+      params: data,
       headers: createHeader(),
     });
   },

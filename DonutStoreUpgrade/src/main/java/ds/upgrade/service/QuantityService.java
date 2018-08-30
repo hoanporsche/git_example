@@ -13,7 +13,9 @@ public interface QuantityService {
   Page<Quantity> findList(Pageable pageable, Long storeId, Long itemId, Date startDate,
       Date endDate, Boolean isShipping);
 
-  Quantity findOne(Long id);
+  Quantity findOne(String code);
   
   Boolean saveList(List<Quantity> list);
+  
+  void deleteByOrderCode(String code);
 }

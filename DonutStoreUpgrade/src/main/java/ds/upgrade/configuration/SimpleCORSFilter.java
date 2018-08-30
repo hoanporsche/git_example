@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCORSFilter implements Filter {
-  private final List<String> allowedOrigins = Arrays.asList("http://localhost:4200","*");
+  private final List<String> allowedOrigins = Arrays.asList("http://localhost:4200","http://localhost:3000","*");
 
   private final Logger log = LoggerFactory.getLogger(SimpleCORSFilter.class);
   

@@ -21,7 +21,7 @@ class Management extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{backgroundColor: 'beige'}}>
         <HeaderManagement />
         <Switch>
           {this.showRoute(managementRoutes)}

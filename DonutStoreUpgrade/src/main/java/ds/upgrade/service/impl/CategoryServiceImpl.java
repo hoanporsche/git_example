@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Category;
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.CategoryJson;
+import ds.upgrade.model.json.CategoryJson;
 import ds.upgrade.repository.CategoryRepository;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.CategorySpecification;
@@ -101,16 +101,18 @@ public class CategoryServiceImpl implements CategoryService {
     Category foundCategory = categoryRepository.findOne(id);
     if (foundCategory == null)
       return null;
-    if (foundCategory.isEnabled()) {
-      List<Item> list = itemRepository.findByCategory(id);
+    foundCategory.setDateUpdated(new Date());
+    foundCategory.setEnabled(!foundCategory.isEnabled());
+    categoryRepository.save(foundCategory);
+    if (!foundCategory.isEnabled()) {
+      List<Item> list = foundCategory.getItems();
       for (Item item : list) {
-        item.setEnabled(false);
+        item.setDateUpdated(new Date());
+        item.setEnabled(Boolean.FALSE);
         itemRepository.save(item);
       }
     }
-    foundCategory.setDateUpdated(new Date());
-    foundCategory.setEnabled(!foundCategory.isEnabled());
-    return categoryRepository.save(foundCategory);
+    return foundCategory;
   }
 
   /**

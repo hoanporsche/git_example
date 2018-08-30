@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { NavLink } from 'react-router-dom';
-import { ROUTING_URL, MENU_NAME, MODEL_ROUTING } from '../../../share/constant/routing.constant';
+import { ROUTING_URL, MODEL_ROUTING } from '../../../share/constant/routing.constant';
 import CustomInput from '../../../share/common/custom-input/CustomInput';
 import { login, getInfo } from '../../util';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
+import { resetPassword } from '../../../management/page/config/model/user/UserApiCaller';
 
 class UnAuthorizedComponent extends Component {
   componentWillMount() {
@@ -18,27 +19,63 @@ class UnAuthorizedComponent extends Component {
     this.state = {
       email: '',
       password: '',
+      emailReset: '',
+      isSubmitting: false,
     }
   }
 
   onReceivedValue = (event) => {
-    this.setState({
-      [event.name]: event.value,
-    })
+    if (!this.state.isSubmitting) {
+      this.setState({
+        [event.name]: event.value,
+      })
+    }
   }
 
   onHandleSubmit = (event) => {
     event.preventDefault();
+    this.setState({
+      isSubmitting: true
+    })
     login(this.state.email, this.state.password).then((response) => {
       if (response.status === 200) {
         localStorage.setItem(LOCAL_STORAGE.TOKEN, JSON.stringify(response.data.access_token));
         getInfo().then(({ data }) => {
           localStorage.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(data));
+          this.setState({
+            isSubmitting: true
+          })
           this.props.history.push(MODEL_ROUTING.MANAGEMENT);
         }).catch(error => {
-          console.log(error);
+          console.log(error.response);
+          this.setState({
+            isSubmitting: true
+          })
         })
       }
+    })
+  }
+
+  onChangeInput = (event) => {
+    if (!this.state.isSubmitting) {
+      this.setState({
+        emailReset: event.target.value.toString().trim(),
+      })
+    }
+  }
+
+  resetPassword = () => {
+    this.setState({
+      isSubmitting: true
+    })
+    resetPassword(this.state.email).then(({ data }) => {
+      this.setState({
+        isSubmitting: false,
+      });
+    }).catch(error => {
+      this.setState({
+        isSubmitting: false,
+      });
     })
   }
 
@@ -46,7 +83,7 @@ class UnAuthorizedComponent extends Component {
     return (
       <div id="login" className="container-fluid">
         <div className="row">
-          <div className="col-12 col-md-6 form-login text-center">
+          <div className="col-12 col-xl-6 form-login text-center">
             <div className="row">
               <div className="col-12">
                 <div className="image-header">
@@ -73,13 +110,16 @@ class UnAuthorizedComponent extends Component {
                   <div className="row">
                     <div className="col-12">
                       <div className="float-right">
-                        <NavLink to={ROUTING_URL.FORGOT_PASSWORD}><h5>{MENU_NAME.FORGOT_PASSWORD} ?</h5></NavLink>
+                        {/* <NavLink to={ROUTING_URL.FORGOT_PASSWORD}><h5>{MENU_NAME.FORGOT_PASSWORD} ?</h5></NavLink> */}
+                        <a data-toggle="modal" data-target="#resetPasswordModal">
+                          <h5>Quên mật khẩu</h5>
+                        </a>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <button type="submit" className="btn btn-primary btn-login">Đăng nhập</button>&nbsp;
+                      <button type="submit" className="btn btn-primary btn-login" disabled={this.state.isSubmitting}>Đăng nhập</button>&nbsp;
                       <NavLink className="btn btn-light btn-login" to={ROUTING_URL.HOME}><span>Quay lại</span></NavLink>
                     </div>
                   </div>
@@ -93,10 +133,29 @@ class UnAuthorizedComponent extends Component {
             </div>
           </div>
 
-          <div className="col-12 col-md-6 login-image">
+          <div className="col-12 col-xl-6 login-image"></div>
 
+        </div>
+        <div className="modal fade" id="resetPasswordModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <p style={{ fontSize: '1.25rem', cursor: 'pointer' }} className="modal-title" id="exampleModalLongTitle">Hãy nhập email của bạn</p>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="form-group">
+                  <input type="email" maxLength={255} name="email" value={this.state.emailReset} onChange={this.onChangeInput} className="form-control" />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" disabled={this.state.isSubmitting} data-dismiss="modal">Quay lại</button>
+                <button type="button" className="btn btn-primary" disabled={this.state.isSubmitting} onClick={this.resetPassword}>Tìm lại mật khẩu</button>
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
     )

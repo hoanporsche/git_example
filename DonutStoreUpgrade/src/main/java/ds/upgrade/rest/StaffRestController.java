@@ -149,7 +149,7 @@ public class StaffRestController {
       User user = userService.findInfoUser();
       //Store have only created your staff belong to your store
       if (userService.isStore(user.getRoles())) {
-        staff.setStoreId(user.getStoreId());
+        staff.setStoreId(user.getStoreId().getId());
       }
       staff = staffService.save(staff);
       if (staff != null)

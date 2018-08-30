@@ -17,6 +17,7 @@ import { capchaKey } from '../enviroment';
 import { LOCAL_STORAGE } from '../share/constant/local-storage.constant';
 import RedirectQueryParams from '../share/util/RedirectQueryParams';
 import ReCAPTCHA from "react-google-recaptcha";
+import {fetAllConfigGlobal} from '../redux/action/config-global.constant';
 
 const recaptchaRef = React.createRef();
 
@@ -63,8 +64,8 @@ class Checkout extends Component {
       })
       Helper.setLoading(false);
       window.location.href = RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [
-        { name: 'orderCode', value: data }, 
-        { name: 'new', value: true}
+        { name: 'orderCode', value: data },
+        { name: 'new', value: true }
       ]);
     }).catch(e => {
       console.log(e);
@@ -94,12 +95,17 @@ class Checkout extends Component {
   componentDidMount() {
     if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
+    if (this.props.listConfigGlobal.length === 0) {
+      this.props.fetchAllConfigGlobal();
+    }
   }
 
   onReceivedValue = (event) => {
-    this.setState({
-      [event.name]: { value: event.value, valid: event.valid },
-    });
+    if (!this.state.isSubmitting) {
+      this.setState({
+        [event.name]: { value: event.value, valid: event.valid },
+      });
+    }
   }
 
   showGGMaps = () => {
@@ -113,17 +119,19 @@ class Checkout extends Component {
   }
 
   onReceivedSelectValue = (event) => {
-    this.setState({
-      storeCode: { value: event.value, valid: event.valid },
-      addressShipping: { value: '', valid: false },
-      distance: { value: '', valid: false },
-      shippingPrice: { value: '', valid: false },
-      showMap: false,
-    }, () => {
+    if (!this.state.isSubmitting) {
       this.setState({
-        showMap: true,
+        storeCode: { value: event.value, valid: event.valid },
+        addressShipping: { value: '', valid: false },
+        distance: { value: '', valid: false },
+        shippingPrice: { value: '', valid: false },
+        showMap: false,
+      }, () => {
+        this.setState({
+          showMap: true,
+        });
       });
-    });
+    }
   }
 
   showInfoShipment = () => {
@@ -138,6 +146,10 @@ class Checkout extends Component {
         <p className="col-12 field-required">Vui lòng nhập địa chỉ của bạn</p>
       </div>
     ) : null;
+  }
+
+  showIsTooFar = () => {
+    return (+this.state.shippingPrice.value > 100000) ? (<p className="col-12 field-required">Đơn hàng của bạn ở quá xa.</p>) : null;
   }
 
   showQuantites = () => {
@@ -164,17 +176,20 @@ class Checkout extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
-    if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
-      Helper.setLoading(true);
-      this.setState({
-        isSubmitting: true,
-      });
-      window.grecaptcha.execute();
-    } else {
-      this.setState({
-        wasSubmitted: true,
-      });
+    if (!this.state.isSubmitting) {
+      window.grecaptcha.reset();
+      const { nameCreated, phone, storeCode, addressShipping, distance, shippingPrice } = this.state;
+      if (isFormValid([nameCreated, phone, storeCode, addressShipping, distance, shippingPrice])) {
+        Helper.setLoading(true);
+        this.setState({
+          isSubmitting: true,
+        });
+        window.grecaptcha.execute();
+      } else {
+        this.setState({
+          wasSubmitted: true,
+        });
+      }
     }
   }
 
@@ -214,6 +229,7 @@ class Checkout extends Component {
               <div className="col-12 col-lg-11">
                 {this.showInfoShipment()}
               </div>
+              {this.showIsTooFar()}
               {this.showGGMaps()}
               <div className="col-12 col-lg-11 padding-top1">
                 <div className="row">
@@ -222,7 +238,7 @@ class Checkout extends Component {
                   </div>
                   <div className="col-6">
                     <div className="float-right">
-                      <button type="submit" disabled={this.state.isSubmitting} className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
+                      <button type="submit" disabled={this.state.isSubmitting || (+this.state.shippingPrice.value > 100000)} className="btn btn-primary"><span>Xác nhận đặt hàng</span></button>
                     </div>
                   </div>
                 </div>
@@ -268,6 +284,7 @@ const mapStateToProps = state => {
   return {
     quantity: state.quantityReducer,
     listStore: state.storeReducer,
+    listConfigGlobal: state.configGlobalReducer,
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -277,6 +294,9 @@ const mapDispatchToProps = dispatch => {
     },
     clearAllQuantities: () => {
       dispatch(clearQuantites());
+    },
+    fetchAllConfigGlobal: () => {
+      dispatch(fetAllConfigGlobal());
     }
   }
 }

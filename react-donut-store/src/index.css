@@ -26,3 +26,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.pac-container {
+  z-index: 10000 !important;
+}

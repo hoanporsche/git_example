@@ -12,7 +12,7 @@ public class QueryConstant {
   }
 
   public static class MATERIAL_DAILY_REPORT {
-    public static final String FIND_DAILY_REPORT = "SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId.name = :name ";
+    public static final String FIND_DAILY_REPORT = "SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId = :storeId ";
   }
 
   public static class MATERIAL {
@@ -37,7 +37,7 @@ public class QueryConstant {
   }
 
   public static class QUANTITY {
-
+    public static final String DELETE_BY_ORDER_CODE = "DELETE FROM Quantity q WHERE q.orderCode.code = :code";
   }
 
   public static class ROLE {
@@ -73,6 +73,7 @@ public class QueryConstant {
     public static final String FIND_BY_ENABLED_EMAIL = "SELECT u FROM User u WHERE u.email = :email AND u.enabled = true";
     public static final String FIND_BY_ENABLED_PHONE = "SELECT u FROM User u WHERE u.storeId.phone = :phone AND u.enabled = true";
     public static final String FIND_ALL = "SELECt u FROM User u WHERE u.enabled = true";
+    public static final String FIND_USER_BY_STORE_ID = "SELECt u FROM User u WHERE u.storeId = :storeId";
   }
   
   public static class WORKING_CALENDER {

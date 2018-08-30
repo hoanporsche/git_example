@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.json.ItemJson;
 import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.specification.ItemSpecification;
 import ds.upgrade.service.ItemService;
@@ -97,10 +97,8 @@ public class ItemServiceImpl implements ItemService {
     Item foundItem = itemRepository.findOne(id);
     if (foundItem == null)
       return null;
-    if (foundItem.isEnabled()) {
-      foundItem.getMaterials().clear();
-    } else if (!foundItem.getCategoryId().isEnabled()) {
-        return null;
+    if (!foundItem.getCategoryId().isEnabled()) {
+      return null;
     }
     foundItem.setDateUpdated(new Date());
     foundItem.setEnabled(!foundItem.isEnabled());

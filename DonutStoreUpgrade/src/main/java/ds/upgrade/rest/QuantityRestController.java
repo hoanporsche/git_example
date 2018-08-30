@@ -55,7 +55,7 @@ public class QuantityRestController {
       @RequestParam(value = AppConstant.PARAM.ITEM_ID_PARAM, required = false) String itemId,
       @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate,
-      @RequestParam(value = AppConstant.PARAM.IS_SHIPPING_PARAM, required = false) String isShipping) {
+      @RequestParam(value = AppConstant.PARAM.SHIPPING_PARAM, required = false) String isShipping) {
     try {
       User user = userService.findInfoUser();
       Long newStoreId;
@@ -97,10 +97,9 @@ public class QuantityRestController {
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.FIND_ONE)
-  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
+  public ResponseEntity<?> findOne(@RequestParam(AppConstant.PARAM.CODE_PARAM) String code) {
     try {
-      Long newId = Long.parseLong(id);
-      Quantity quantity = quantityService.findOne(newId);
+      Quantity quantity = quantityService.findOne(code);
       if (quantity != null)
         return new ResponseEntity<Quantity>(quantity, HttpStatus.OK);
     } catch (NumberFormatException e) {

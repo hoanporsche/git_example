@@ -1,0 +1,11 @@
+#footer-management {
+  background-color: white;
+  min-height: 60px;
+  padding-top: 20px;
+}
+
+#footer-management span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #a9a9aa;
+}

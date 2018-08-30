@@ -62,7 +62,7 @@
 }
 
 .m-page-loader.m-page-loader--non-block {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   right: auto;
@@ -399,4 +399,13 @@ input, select {
 
 ul {
   list-style-type: none;
+}
+
+.pagination__page-number {
+  display: inline-flex;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.page-min-height {
+  min-height: 83vh;
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Item;
-import ds.upgrade.model.support.ItemJson;
+import ds.upgrade.model.json.ItemJson;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.util.AppConstant;
 
@@ -161,7 +161,7 @@ public class ItemRestController {
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NOT_DISABLED, HttpStatus.BAD_REQUEST);

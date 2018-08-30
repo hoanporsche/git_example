@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.upgrade.model.MessageDb;
 import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.JsonResponse;
+import ds.upgrade.model.json.JsonResponse;
 import ds.upgrade.service.MessageDbService;
 import ds.upgrade.service.RoomDbService;
 import ds.upgrade.service.UserService;

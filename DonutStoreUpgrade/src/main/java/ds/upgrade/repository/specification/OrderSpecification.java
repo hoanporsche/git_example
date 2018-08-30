@@ -25,14 +25,14 @@ import ds.upgrade.util.AppConstant;
 public class OrderSpecification implements Specification<Order> {
 
   private Long statusId;
-  private Long storeId;
-  private Boolean isShipping;
+  private String storeCode;
+  private Boolean shipping;
   private Date startDate;
   private Date endDate;
   private String orderCode;
   private String orderPhone;
 
-  //find today list by phone
+  // find today list by phone
   public OrderSpecification(Date startDate, Date endDate, String orderPhone) {
     super();
     this.startDate = startDate;
@@ -40,7 +40,7 @@ public class OrderSpecification implements Specification<Order> {
     this.orderPhone = orderPhone;
   }
 
-  //find today list by code
+  // find today list by code
   public OrderSpecification(String orderCode, Date startDate, Date endDate) {
     super();
     this.startDate = startDate;
@@ -51,11 +51,29 @@ public class OrderSpecification implements Specification<Order> {
   public OrderSpecification() {
   }
 
-  public OrderSpecification(Long statusId, Long storeId, Boolean isShipping, Date startDate,
+  public OrderSpecification(Long statusId, String storeCode, Boolean shipping, Date startDate,
       Date endDate) {
     this.statusId = statusId;
-    this.storeId = storeId;
-    this.isShipping = isShipping;
+    this.storeCode = storeCode;
+    this.shipping = shipping;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+  public OrderSpecification(Long statusId, String storeCode, Boolean shipping, Date startDate,
+      Date endDate, String orderPhone) {
+    this.statusId = statusId;
+    this.storeCode = storeCode;
+    this.shipping = shipping;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.orderPhone = orderPhone;
+  }
+  public OrderSpecification(String orderCode, Long statusId, String storeCode, Boolean shipping, Date startDate,
+      Date endDate) {
+    this.orderCode = orderCode;
+    this.statusId = statusId;
+    this.storeCode = storeCode;
+    this.shipping = shipping;
     this.startDate = startDate;
     this.endDate = endDate;
   }
@@ -74,13 +92,17 @@ public class OrderSpecification implements Specification<Order> {
   @Override
   public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> arg1, CriteriaBuilder cb) {
     Predicate predicate = cb.conjunction();
-    if (storeId != null) {
-      predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), storeId));
+    if (storeCode != null) {
+      predicate = cb.and(predicate,
+          cb.equal(
+              root.<String>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.CODE_PARAM),
+              storeCode));
     }
     if (statusId != null) {
-      predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(AppConstant.PARAM.STATUS_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), statusId));
+      predicate = cb.and(predicate,
+          cb.equal(
+              root.<Long>get(AppConstant.PARAM.STATUS_ID_PARAM).get(AppConstant.PARAM.ID_PARAM),
+              statusId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate,
@@ -90,17 +112,17 @@ public class OrderSpecification implements Specification<Order> {
       predicate = cb.and(predicate,
           cb.lessThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), endDate));
     }
-    if (isShipping != null) {
+    if (shipping != null) {
       predicate = cb.and(predicate,
-          cb.equal(root.<Boolean>get(AppConstant.PARAM.IS_SHIPPING_PARAM), isShipping));
+          cb.equal(root.<Boolean>get(AppConstant.PARAM.SHIPPING_PARAM), shipping));
     }
     if (orderCode != null) {
-      predicate = cb.and(predicate, cb.equal(
-          root.<String>get(AppConstant.PARAM.CODE_PARAM), orderCode));
+      predicate = cb.and(predicate,
+          cb.equal(root.<String>get(AppConstant.PARAM.CODE_PARAM), orderCode));
     }
     if (orderPhone != null) {
-      predicate = cb.and(predicate, cb.equal(
-          root.<String>get(AppConstant.PARAM.PHONE_PARAM), orderPhone));
+      predicate = cb.and(predicate,
+          cb.equal(root.<String>get(AppConstant.PARAM.PHONE_PARAM), orderPhone));
     }
     return predicate;
   }

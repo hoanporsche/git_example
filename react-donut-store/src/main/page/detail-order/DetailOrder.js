@@ -89,7 +89,9 @@ class DetailOrder extends Component {
 
   onSearch = () => {
     Helper.setLoading(true);
-    this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: this.state.searchString }]))
+    if (!this.state.isSubmitting) {
+      this.props.history.push(RedirectQueryParams(ROUTING_URL.DETAIL_ORDER, [{ name: 'orderCode', value: this.state.searchString }]))
+    }
   }
 
   showListOrder = () => {

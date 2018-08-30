@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,8 +40,7 @@ public class Item implements Serializable {
   @Size(max = 40)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-  @NotEmpty
-  @Size(max = 255)
+  @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
 
@@ -68,19 +64,11 @@ public class Item implements Serializable {
   @Column(name = "description", nullable = false)
   private String description;
 
-  @ManyToMany
-  @JoinTable(name = "item_material", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "material_id"))
-  private Set<Material> materials;
-
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
   @JsonIgnore
   private List<Quantity> quantites;
 
   public Item() {
-  }
-
-  public String toString() {
-    return this.name;
   }
 
   public Long getId() {
@@ -153,14 +141,6 @@ public class Item implements Serializable {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
-  }
-
-  public Set<Material> getMaterials() {
-    return materials;
-  }
-
-  public void setMaterials(Set<Material> materials) {
-    this.materials = materials;
   }
 
   public List<Quantity> getQuantites() {

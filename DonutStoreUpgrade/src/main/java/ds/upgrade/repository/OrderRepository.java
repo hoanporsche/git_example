@@ -8,4 +8,5 @@ import ds.upgrade.model.Order;
 public interface OrderRepository
     extends JpaRepository<Order, Long>, JpaSpecificationExecutor<Order> {
 
+  Order findBycode(String code);
 }

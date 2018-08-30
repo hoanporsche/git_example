@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,7 +36,6 @@ public class Material implements Serializable {
   @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-  @NotEmpty
   @Size(max = 255)
   @Column(name = "picture")
   private String picture;
@@ -58,10 +55,6 @@ public class Material implements Serializable {
 
   @Column(name = "enabled", nullable = true)
   private boolean enabled;
-
-  @ManyToMany(mappedBy = "materials")
-  @JsonIgnore
-  private Set<Item> items;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "materialId")
   @JsonIgnore
@@ -136,14 +129,6 @@ public class Material implements Serializable {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
-  }
-
-  public Set<Item> getItems() {
-    return items;
-  }
-
-  public void setItems(Set<Item> items) {
-    this.items = items;
   }
 
   public List<MaterialDailyReport> getReports() {

@@ -2,21 +2,16 @@ package ds.upgrade.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "store")
@@ -34,7 +29,6 @@ public class Store implements Serializable {
   @Size(max = 20)
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-  @NotEmpty
   @Size(max = 255)
   @Column(name = "picture")
   private String picture;
@@ -61,18 +55,6 @@ public class Store implements Serializable {
 
   @Column(name = "enabled", nullable = false)
   private boolean enabled;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
-  @JsonIgnore
-  private List<Staff> staffs;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
-  @JsonIgnore
-  private List<MaterialDailyReport> reports;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeId")
-  @JsonIgnore
-  private List<Order> orders;
 
   public Store() {
   }
@@ -167,30 +149,6 @@ public class Store implements Serializable {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
-  }
-
-  public List<Staff> getStaffs() {
-    return staffs;
-  }
-
-  public void setStaffs(List<Staff> staffs) {
-    this.staffs = staffs;
-  }
-
-  public List<MaterialDailyReport> getReports() {
-    return reports;
-  }
-
-  public void setReports(List<MaterialDailyReport> reports) {
-    this.reports = reports;
-  }
-
-  public List<Order> getOrders() {
-    return orders;
-  }
-
-  public void setOrders(List<Order> orders) {
-    this.orders = orders;
   }
 
 }

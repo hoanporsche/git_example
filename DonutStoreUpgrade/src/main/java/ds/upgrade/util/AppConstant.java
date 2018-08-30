@@ -32,6 +32,7 @@ public class AppConstant {
     public static final String STATUS_ID_PARAM = "statusId";
     public static final String STAFF_ID_PARAM = "staffId";
     public static final String STORE_ID_PARAM = "storeId";
+    public static final String STORE_CODE_PARAM = "storeCode";
     public static final String START_DATE_PARAM = "startDate";
     public static final String END_DATE_PARAM = "endDate";
     public static final String DATE_CREATED_PARAM = "dateCreated";
@@ -44,7 +45,7 @@ public class AppConstant {
     public static final String IDENTITY_CARD_ID_PARAM = "identityCard";
     public static final String ORDER_ID_PARAM = "orderId";
     public static final String ITEM_ID_PARAM = "itemId";
-    public static final String IS_SHIPPING_PARAM = "isShipping";
+    public static final String SHIPPING_PARAM = "shipping";
     public static final String EMAIL_PARAM = "email";
     public static final String ROLE_ID_PARAM = "roleId";
     public static final String ROLES_PARAM = "roles";
@@ -56,6 +57,7 @@ public class AppConstant {
     public static final String LAST_CONNECT = "lastConnect";
     public static final String ROOM_DB_S_PARAM = "roomDbs";
     public static final String CODE_PARAM = "code";
+    public static final String SEARCH_STRING_PARAM = "searchString";
   }
   
   public static class PATH_PARAM {

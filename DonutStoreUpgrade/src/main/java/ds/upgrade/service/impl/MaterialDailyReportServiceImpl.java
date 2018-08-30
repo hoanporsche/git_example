@@ -73,7 +73,8 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    */
   @Override
   public List<MaterialDailyReport> findDailyReport(String dateCreated, String storeName) {
-    return materialDailyReportRepository.findDailyReport(dateCreated, storeName);
+    return materialDailyReportRepository.findDailyReport(dateCreated,
+        storeRepository.findByname(storeName).getId());
   }
 
   /**
@@ -92,7 +93,7 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
     List<MaterialDailyReport> listFoundReport = findDailyReport(
         dateFormat.format(new Date()).toString(), storeName);
     if (listReport.get(0).getId() == null) {
-      // 
+      //
       if (listFoundReport.size() > 0)
         return null;
       return saveOneByOneReport(listReport, storeName);
@@ -110,7 +111,7 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
     for (int i = 0; i < listReport.size(); i++) {
       MaterialDailyReport savedReport = listReport.get(i);
       savedReport.setDateCreated(new Date());
-      savedReport.setStoreId(store);
+      savedReport.setStoreId(store.getId());
       savedReport = materialDailyReportRepository.save(savedReport);
       if (savedReport == null) {
         return null;

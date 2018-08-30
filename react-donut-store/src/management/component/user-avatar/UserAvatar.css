@@ -1,0 +1,61 @@
+#user-avatar {
+  right: 1%;
+  cursor: pointer;
+  position: absolute;
+}
+
+#user-avatar .avatar-user {
+  height: 39px;
+  width: 39px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#user-avatar .avatar-user:hover {
+  opacity: 0.7;
+}
+
+@media only screen and (max-width: 1200px) {
+  #user-avatar {
+    right: 2%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #user-avatar {
+    right: 11.5%;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  #user-avatar {
+    right: 22.5%;
+  }
+}
+
+#user-avatar .some-function {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  position: absolute;
+  min-height: 210px;
+  width: 200px;
+  z-index: 10;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 15px 1px rgba(113, 106, 202, 0.2);
+  border-radius: 6px;
+  right: -30%;
+}
+
+#user-avatar a {
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+#user-avatar .single-function {
+  color: #007bff;
+}
+
+#user-avatar .single-function:hover {
+  color: darkslateblue;
+}

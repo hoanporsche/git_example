@@ -36,22 +36,6 @@ INSERT INTO `donutstore`.`material` VALUES
 ('10','Miến', 'https://photos.google.com/photo/AF1QipMiTbl3BCZ4m2CqxSQ6rlAJ9Onj7xArYWxghg8','6', '2018-01-02', '2018-02-03','12000', b'1'),
 ('11','Thịt lợn', 'https://photos.google.com/photo/AF1QipMiTbl3BCZ4m2CqxSQ6rlAJ9Onj7xArYWxghg8','4', '2018-01-02', '2018-02-03','12000', b'1');
 
-INSERT INTO `donutstore`.`item_material` VALUES 
-('1','1'),
-('1','2'),
-('1','3'),
-('1','4'),
-('1','5'),
-('1','10'),
-('1','11'),
-('2','1'),
-('2','2'),
-('2','3'),
-('2','4'),
-('2','5'),
-('2','6'),
-('2','7');
-
 INSERT INTO `donutstore`.`order_status` VALUES 
 ('1','verifying','Đang xác thực',b'1'),
 ('2','accepted','Đã nhận',b'1'),

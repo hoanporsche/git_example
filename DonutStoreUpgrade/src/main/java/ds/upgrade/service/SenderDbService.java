@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.Sender;
+import ds.upgrade.model.json.Sender;
 
 public interface SenderDbService {
   

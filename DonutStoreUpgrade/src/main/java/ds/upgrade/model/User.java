@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -62,8 +63,8 @@ public class User implements Serializable {
   @NotNull
   @Column(name = "enabled")
   private boolean enabled = true;
-  @OneToOne
-  @JoinColumn(name = "storeId", referencedColumnName = "id")
+  @ManyToOne
+  @JoinColumn(name = "store_id", referencedColumnName = "id")
   private Store storeId;
   
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")

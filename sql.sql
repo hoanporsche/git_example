@@ -153,21 +153,6 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
-
--- -----------------------------------------------------
--- Table `donutstore`.`item_material`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `donutstore`.`item_material` (
-  `item_id` BIGINT NOT NULL,
-  `material_id` BIGINT NOT NULL,
-  PRIMARY KEY (`item_id`, `material_id`),
-    FOREIGN KEY (`material_id`)
-    REFERENCES `donutstore`.`material` (`id`),
-    FOREIGN KEY (`item_id`)
-    REFERENCES `donutstore`.`item` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
-
 -- -----------------------------------------------------
 -- Table `donutstore`.`order_status`
 -- -----------------------------------------------------
@@ -213,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
   `store_id` BIGINT NOT NULL,
   `status_id` BIGINT NOT NULL,
   `shipping` BOOLEAN NOT NULL,
-  `address_shipping` VARCHAR(60) NULL DEFAULT NULL,
+  `address_shipping` VARCHAR(255) NULL DEFAULT NULL,
   `distance` VARCHAR(20),
   `shipping_price` BIGINT NULL DEFAULT NULL,
   `total_price` BIGINT NOT NULL,

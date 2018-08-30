@@ -36,7 +36,7 @@
   background-image: linear-gradient(105deg, #ff9784, #ffb74d);
 }
 
-#single-order .in-progress {
+#single-order .in-process {
   background-image: linear-gradient(105deg, #ff0467, #fc7437);
 }
 
@@ -81,4 +81,8 @@
   background-color: #f2f3f880;
   padding-top: 1%;
   min-height: 195px;
+}
+
+#single-order .single-row {
+  padding-bottom: 1em;
 }

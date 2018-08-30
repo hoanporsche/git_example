@@ -12,7 +12,7 @@ import ds.upgrade.model.MessageDb;
 import ds.upgrade.model.RoomDb;
 import ds.upgrade.model.SenderDb;
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.Sender;
+import ds.upgrade.model.json.Sender;
 import ds.upgrade.repository.MessageDbRepository;
 import ds.upgrade.repository.RoomDbRepository;
 import ds.upgrade.repository.SenderDbRepository;

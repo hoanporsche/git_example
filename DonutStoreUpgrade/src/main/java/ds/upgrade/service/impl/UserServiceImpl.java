@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
-import ds.upgrade.model.support.UserJson;
+import ds.upgrade.model.json.UserJson;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
 import ds.upgrade.service.UserService;
@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
     User foundUser = userRepository.findOne(id);
     if (foundUser == null)
       return null;
+    foundUser.getRoles().clear();
     foundUser.setDateUpdated(new Date());
     foundUser.setEnabled(!foundUser.isEnabled());;
     return userRepository.save(foundUser);

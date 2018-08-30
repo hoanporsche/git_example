@@ -47,8 +47,8 @@ public class QuantityServiceImpl implements QuantityService {
    * @return
    */
   @Override
-  public Quantity findOne(Long id) {
-    return quantityRepository.findOne(id);
+  public Quantity findOne(String code) {
+    return quantityRepository.findOne(code);
   }
 
   /**
@@ -67,6 +67,11 @@ public class QuantityServiceImpl implements QuantityService {
         savedList.add(saved);
     }
     return (savedList.size() == list.size());
+  }
+
+  @Override
+  public void deleteByOrderCode(String code) {
+    quantityRepository.deleteByOrderCode(code);
   }
 
 }
