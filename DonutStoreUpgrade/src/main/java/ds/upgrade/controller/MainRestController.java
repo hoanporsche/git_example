@@ -74,7 +74,7 @@ public class MainRestController {
   @GetMapping(AppConstant.MODEL.STORE_MODEL + AppConstant.API_URL.FIND_ALL)
   public ResponseEntity<?> findAllStore() {
     try {
-      List<StoreJson> list = storeService.findAll();
+      List<StoreJson> list = storeService.findAllJson();
       if (!list.isEmpty())
         return new ResponseEntity<List<StoreJson>>(list, HttpStatus.OK);
     } catch (Exception e) {

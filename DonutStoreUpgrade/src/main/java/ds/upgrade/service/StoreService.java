@@ -10,7 +10,7 @@ import ds.upgrade.model.json.StoreJson;
 
 public interface StoreService {
 
-  List<StoreJson> findAll();
+  List<StoreJson> findAllJson();
 
   Store findOne(Long id);
   
@@ -21,4 +21,6 @@ public interface StoreService {
   Store enabledOrNot(Long id);
   
   Store findByName(String name);
+  
+  List<Store> findAll();
 }

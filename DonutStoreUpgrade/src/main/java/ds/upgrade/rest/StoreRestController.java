@@ -3,6 +3,8 @@
  */
 package ds.upgrade.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,6 +63,19 @@ public class StoreRestController {
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
+  public ResponseEntity<?> findAll() {
+    try {
+      List<Store> list = storeService.findAll();
+      if (list.size() > 0)
+        return new ResponseEntity<List<Store>>(list, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+  
   /**
    * @description: /find-list.
    * @author: VDHoan

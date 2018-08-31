@@ -34,7 +34,7 @@ public class StoreServiceImpl implements StoreService {
    * @return
    */
   @Override
-  public List<StoreJson> findAll() {
+  public List<StoreJson> findAllJson() {
     List<StoreJson> list = new ArrayList<StoreJson>();
     storeRepository.findAll().forEach(store -> list.add(new StoreJson(store)));
     return list;
@@ -144,6 +144,11 @@ public class StoreServiceImpl implements StoreService {
   @Override
   public Store findByName(String name) {
     return storeRepository.findByname(name);
+  }
+
+  @Override
+  public List<Store> findAll() {
+    return storeRepository.findAll();
   }
 
 }
