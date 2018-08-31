@@ -1,7 +1,7 @@
 #footer-management {
-  background-color: white;
   min-height: 60px;
   padding-top: 20px;
+  background-color: #f8f9fa !important;
 }
 
 #footer-management span {
