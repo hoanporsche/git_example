@@ -95,8 +95,7 @@ class WorkingCalenderList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        });
-        console.log(response)
+        }, () => alert(response.data));
       })
     }
   }

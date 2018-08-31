@@ -1,6 +1,7 @@
 package ds.upgrade.service.impl;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,11 +84,15 @@ public class NotificationDbServiceImpl implements NotificationDbService {
   @Override
   public void pushNewOrderToUser(Order order) {
     String text = ConstantWebSocket.RESPONSE.NEW_ORDER + order.getCode();
-    for (User user : userRepository.findUserByStoreId(order.getStoreId().getId())) {
-      NotificationDb newNoti = new NotificationDb(user, text);
-      newNoti = notificationDbRepository.save(newNoti);
-      template.convertAndSend("/topic/notification/" + user.getEmail(), newNoti);
-    }    
+    Executors.newSingleThreadExecutor().execute(new Runnable() {
+      public void run() {
+        for (User user : userRepository.findUserByStoreId(order.getStoreId().getId())) {
+          NotificationDb newNoti = new NotificationDb(user, text);
+          newNoti = notificationDbRepository.save(newNoti);
+          template.convertAndSend("/topic/notification/" + user.getEmail(), newNoti);
+        }
+      }
+    });
   }
 
 }

@@ -17,7 +17,7 @@ import { capchaKey } from '../enviroment';
 import { LOCAL_STORAGE } from '../share/constant/local-storage.constant';
 import RedirectQueryParams from '../share/util/RedirectQueryParams';
 import ReCAPTCHA from "react-google-recaptcha";
-import {fetAllConfigGlobal} from '../redux/action/config-global.constant';
+import { fetAllConfigGlobal } from '../redux/action/config-global.constant';
 
 const recaptchaRef = React.createRef();
 
@@ -67,12 +67,11 @@ class Checkout extends Component {
         { name: 'orderCode', value: data },
         { name: 'new', value: true }
       ]);
-    }).catch(e => {
-      console.log(e);
+    }).catch(({ response }) => {
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
-      })
+      }, () => alert(response.data))
     });
   };
 

@@ -6,6 +6,7 @@ import CustomInput from '../../../share/common/custom-input/CustomInput';
 import { login, getInfo } from '../../util';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 import { resetPassword } from '../../../management/page/config/model/user/UserApiCaller';
+import * as Helper from '../../../share/common/helper/Helper';
 
 class UnAuthorizedComponent extends Component {
   componentWillMount() {
@@ -34,25 +35,33 @@ class UnAuthorizedComponent extends Component {
 
   onHandleSubmit = (event) => {
     event.preventDefault();
+    Helper.setLoading(true);
     this.setState({
       isSubmitting: true
     })
     login(this.state.email, this.state.password).then((response) => {
+      Helper.setLoading(true);
       if (response.status === 200) {
         localStorage.setItem(LOCAL_STORAGE.TOKEN, JSON.stringify(response.data.access_token));
         getInfo().then(({ data }) => {
           localStorage.setItem(LOCAL_STORAGE.CURRENT_USER, JSON.stringify(data));
+          Helper.setLoading(false);
           this.setState({
             isSubmitting: true
           })
           this.props.history.push(MODEL_ROUTING.MANAGEMENT);
-        }).catch(error => {
-          console.log(error.response);
+        }).catch(({ response }) => {
+          Helper.setLoading(false);
           this.setState({
             isSubmitting: true
-          })
+          }, () => alert(response.data))
         })
       }
+    }).catch(({ response }) => {
+      Helper.setLoading(false);
+      this.setState({
+        isSubmitting: false,
+      }, () => alert(response.data))
     })
   }
 
@@ -103,10 +112,10 @@ class UnAuthorizedComponent extends Component {
                 <form onSubmit={this.onHandleSubmit} className="section-input">
                   <CustomInput type='text' required={true}
                     placeholder="email" name="email" value={this.state.email}
-                    maxLength={20} onEmittedValue={this.onReceivedValue} />
+                    maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={false}/>
                   <CustomInput type='password' required={true}
                     placeholder="Số điện thoại" name="password" value={this.state.password}
-                    maxLength={12} onEmittedValue={this.onReceivedValue} />
+                    maxLength={12} onEmittedValue={this.onReceivedValue} wasSubmitted={false}/>
                   <div className="row">
                     <div className="col-12">
                       <div className="float-right">
