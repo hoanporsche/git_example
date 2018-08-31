@@ -3,7 +3,7 @@ import './OrderList.css';
 import { connect } from 'react-redux';
 import { CONFIG } from '../../../share/constant/configuration.constant';
 import { fetAllStore } from '../../../redux/action/store.constant';
-import * as orderStatusService from '../config/model/order-status/OrderStatus.ApiCaller';
+import * as orderStatusService from '../config/model/order-status/OrderStatusApiCaller';
 import * as Helper from '../../../share/common/helper/Helper';
 import CustomSelect from '../../../share/common/custom-select/CustomSelect';
 import CustomDate from '../../../share/common/custom-datetime/CustomDate';
@@ -48,7 +48,7 @@ class OrderList extends Component {
   async componentDidMount() {
     if (this.props.listStore.length === 0)
       await this.props.fetchAllStore();
-    await orderStatusService.fetchAll().then(({ data }) => {
+    await orderStatusService.findAllOrderStatus().then(({ data }) => {
       this.setState({
         listOrderStatus: data,
       });

@@ -8,14 +8,14 @@ import ds.upgrade.model.Category;
 import ds.upgrade.model.Item;
 
 public class CategoryJson implements Serializable {
-  
+
   private static final long serialVersionUID = 4197942078910386097L;
 
   private String code;
   private String name;
   private String picture;
   private List<ItemJson> items;
-  
+
   public CategoryJson(Category category) {
     setCode(category.getCode());
     setName(category.getName());
@@ -54,7 +54,8 @@ public class CategoryJson implements Serializable {
   public void setItems(List<Item> items) {
     this.items = new ArrayList<>();
     for (Item item : items) {
-      this.items.add(new ItemJson(item));
+      if (item.isEnabled())
+        this.items.add(new ItemJson(item));
     }
   }
 }
