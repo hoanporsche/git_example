@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Role;
 import ds.upgrade.model.User;
+import ds.upgrade.model.form.UserForm;
 import ds.upgrade.model.json.UserJson;
 
 public interface UserService {
@@ -25,7 +26,7 @@ public interface UserService {
   
   User changePassword(String email, String oldPassword, String newPassword);
   
-  User save(User user);
+  User save(UserForm userForm);
   
   User enabledOrNot(Long id);
   

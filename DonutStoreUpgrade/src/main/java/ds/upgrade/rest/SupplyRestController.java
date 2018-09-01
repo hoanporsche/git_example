@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.upgrade.model.Supply;
 import ds.upgrade.service.SupplyService;
 import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.service.CustomValidation;
 
 /**
  * @description: /api/supply.
@@ -37,6 +38,8 @@ public class SupplyRestController {
 
   @Autowired
   private SupplyService supplyService;
+  @Autowired
+  private CustomValidation customValidation;
 
   /**
    * @description: /find-all.
@@ -125,7 +128,7 @@ public class SupplyRestController {
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Supply supply,
       BindingResult result) {
     try {
-      if (result.hasErrors())
+      if (result.hasErrors() || !customValidation.isPhoneNumber(supply.getPhone()))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       supply = supplyService.save(supply);
       if (supply != null)

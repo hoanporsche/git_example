@@ -26,6 +26,7 @@ import ds.upgrade.model.User;
 import ds.upgrade.service.StaffService;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.service.CustomValidation;
 
 /**
  * @description: /api/staff.
@@ -42,6 +43,8 @@ public class StaffRestController {
   private StaffService staffService;
   @Autowired
   private UserService userService;
+  @Autowired
+  private CustomValidation customValidation;
 
   /**
    * @description: /find-all.
@@ -144,7 +147,7 @@ public class StaffRestController {
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Staff staff,
       BindingResult result) {
     try {
-      if (result.hasErrors())
+      if (result.hasErrors() || !customValidation.isPhoneNumber(staff.getPhone()))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       User user = userService.findInfoUser();
       //Store have only created your staff belong to your store

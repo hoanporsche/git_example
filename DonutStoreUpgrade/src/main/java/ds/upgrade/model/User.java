@@ -2,7 +2,6 @@ package ds.upgrade.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,7 +24,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "user")
@@ -48,7 +46,7 @@ public class User implements Serializable {
   @Size(max = 60)
   @Column(name = "password", nullable = false)
   private String password;
-  @NotNull
+  @Size(max = 255)
   @Column(name = "picture")
   private String picture;
 
@@ -56,8 +54,10 @@ public class User implements Serializable {
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created")
   private Date dateCreated;
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated")
   private Date dateUpdated;
   @NotNull
@@ -66,10 +66,6 @@ public class User implements Serializable {
   @ManyToOne
   @JoinColumn(name = "store_id", referencedColumnName = "id")
   private Store storeId;
-  
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-  @JsonIgnore
-  private List<NotificationDb> notifications;
   
   @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, 
               fetch = FetchType.LAZY, optional = false)
@@ -168,14 +164,6 @@ public class User implements Serializable {
 
   public void setNewPassword(String newPassword) {
     this.newPassword = newPassword;
-  }
-
-  public List<NotificationDb> getNotifications() {
-    return notifications;
-  }
-
-  public void setNotifications(List<NotificationDb> notifications) {
-    this.notifications = notifications;
   }
 
   public SenderDb getSenderDbId() {

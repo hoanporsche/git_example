@@ -4,7 +4,7 @@ import CustomInput from '../../../../../../share/common/custom-input/CustomInput
 import CustomSelect from '../../../../../../share/common/custom-select/CustomSelect';
 import CustomTextarea from '../../../../../../share/common/custom-textarea/CustomTextarea';
 import * as Helper from '../../../../../../share/common/helper/Helper';
-import { save } from '../ItemApiCaller';
+import { save } from '../UserApiCaller';
 import { isFormValid } from '../../../../../../share/common/custom-validation';
 import PropTypes from 'prop-types';
 
@@ -15,11 +15,10 @@ class Create extends Component {
     this.state = {
       isSubmitting: false,
       form: {
-        name: { value: '', valid: false },
+        email: { value: '', valid: false },
         picture: { value: '', valid: false },
-        categoryId: { value: '', valid: false },
-        singleValue: { value: '', valid: false },
-        description: { value: '', valid: false },
+        storeId: { value: '', valid: false },
+        roleId: { value: '', valid: false },
       },
       wasSubmitted: false,
     }
@@ -56,18 +55,17 @@ class Create extends Component {
 
   onSubmit = () => {
     if (!this.state.isSubmitting) {
-      const { name, picture, categoryId, singleValue, description } = this.state.form;
-      if (isFormValid([name, picture, categoryId, singleValue, description])) {
+      const { email, picture, storeId, roleId } = this.state.form;
+      if (isFormValid([email, picture, storeId, roleId])) {
         Helper.setLoading(true);
         this.setState({
           isSubmitting: true,
         });
         const form = {
-          name: name.value,
+          email: email.value,
           picture: picture.value,
-          categoryId: +categoryId.value,
-          singleValue: +singleValue.value,
-          description: description.value,
+          storeId: +storeId.value,
+          roleId: +roleId.value,
         }
         save(form).then(({ data }) => {
           Helper.setLoading(false);
@@ -98,18 +96,16 @@ class Create extends Component {
         <div id="modal-create" className="modal fade" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
-              <div className="modal-header"><h5>Create Item</h5></div>
+              <div className="modal-header"><h5>Create User</h5></div>
               <div className="modal-body">
-                <CustomInput type="text" name="name" placeholder="Item's name" value={this.state.form.name.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomInput type="text" name="singleValue" placeholder="Item's single value" value={this.state.form.singleValue.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomSelect placeholder="Category" name="categoryId" value={this.state.form.categoryId.value}
-                  data={this.props.listCategory} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomTextarea type="text" name="picture" placeholder="Item's picture" value={this.state.form.picture.value}
-                  maxLength={1000} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomTextarea type="text" name="description" placeholder="Item's description" required={false} value={this.state.form.description.value}
-                  maxLength={255} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomInput type="text" name="email" placeholder="User's email" value={this.state.form.email.value}
+                  maxLength={100} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomTextarea type="text" name="picture" placeholder="User's picture" value={this.state.form.picture.value}
+                  maxLength={255} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} required={false}/>
+                <CustomSelect placeholder="Store" name="storeId" value={this.state.form.storeId.value}
+                  data={this.props.listStore} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomSelect placeholder="Role" name="roleId" value={this.state.form.roleId.value}
+                  data={this.props.listRole} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
               </div>
               <div className="modal-footer">
                 <button style={{ display: 'none' }} id="close-modal-create-and-refresh" onClick={this.onCloseModalAndRefresh} data-dismiss="modal" aria-label="Close"></button>&nbsp;
@@ -124,9 +120,11 @@ class Create extends Component {
   }
 }
 Create.propTypes = {
-  listCategory: PropTypes.array,
+  listStore: PropTypes.array,
+  listRole: PropTypes.array,
 }
 Create.defaultProps = {
-  listCategory: [],
+  listStore: [],
+  listRole: [],
 }
 export default Create;

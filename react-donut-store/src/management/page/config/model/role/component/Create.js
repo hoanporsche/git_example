@@ -58,18 +58,17 @@ class Create extends Component {
         const form = {
           name: name.value,
         }
-        save(form).then(({data}) => {
+        save(form).then(({ data }) => {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
           });
           $('#close-modal-create-and-refresh').click();
-        }).catch(({response}) => {
+        }).catch(({ response }) => {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
-          });
-          console.log(response);
+          }, () => alert(response.data));
         })
       } else {
         this.setState({

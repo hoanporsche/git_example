@@ -120,11 +120,11 @@ class UpdateOrder extends Component {
           }, () => {
             $('#close-update-modal').click();
           });
-        }).catch(() => {
+        }).catch(({ response }) => {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
-          });
+          }, () => alert(response.data));
         })
       } else {
         this.setState({

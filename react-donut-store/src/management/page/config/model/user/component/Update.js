@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import CustomInput from '../../../../../../share/common/custom-input/CustomInput';
+import CustomSelect from '../../../../../../share/common/custom-select/CustomSelect';
+import CustomTextarea from '../../../../../../share/common/custom-textarea/CustomTextarea';
 import * as Helper from '../../../../../../share/common/helper/Helper';
-import { save } from '../StoreApiCaller';
+import { save } from '../UserApiCaller';
 import { isFormValid } from '../../../../../../share/common/custom-validation';
+import PropTypes from 'prop-types';
 
 class Update extends Component {
 
@@ -14,31 +17,25 @@ class Update extends Component {
       updatedData: '',
       form: {
         id: { value: '', valid: false },
-        code: { value: '', valid: false },
-        name: { value: '', valid: false },
+        email: { value: '', valid: false },
         picture: { value: '', valid: false },
-        phone: { value: '', valid: false },
-        address: { value: '', valid: false },
-        lat: { value: '', valid: false },
-        lng: { value: '', valid: false },
+        storeId: { value: '', valid: false },
+        roleId: { value: '', valid: false },
       },
       wasSubmitted: false,
     }
   }
   componentDidMount() {
     $('#open-modal-update').click();
-    if (this.props.store) {
-      const { store } = this.props;
+    if (this.props.user) {
+      const { user } = this.props;
       this.setState({
         form: {
-          id: { value: store.id, valid: true },
-          code: { value: store.code, valid: true },
-          name: { value: store.name, valid: true },
-          picture: { value: store.picture, valid: true },
-          phone: { value: store.phone, valid: true },
-          address: { value: store.address, valid: true },
-          lat: { value: store.lat, valid: true },
-          lng: { value: store.lng, valid: true },
+          id: { value: user.id, valid: true },
+          email: { value: user.email, valid: true },
+          picture: { value: user.picture, valid: true },
+          storeId: { value: user.storeId.id, valid: true },
+          roleId: { value: user.roles.length > 0 ? user.roles[0].id : '', valid: true },
         }
       })
     }
@@ -69,21 +66,18 @@ class Update extends Component {
 
   onSubmit = () => {
     if (!this.state.isSubmitting) {
-      const { id, code, name, picture, phone, address, lat, lng } = this.state.form;
-      if (isFormValid([name, picture, phone, address, lat, lng])) {
+      const { id, email, picture, storeId, roleId } = this.state.form;
+      if (isFormValid([email, picture, storeId, roleId])) {
         Helper.setLoading(true);
         this.setState({
           isSubmitting: true,
         });
         const form = {
           id: id.value,
-          code: code.value,
-          name: name.value,
+          email: email.value,
           picture: picture.value,
-          phone: phone.value,
-          address: address.value,
-          lat: lat.value,
-          lng: lng.value,
+          storeId: +storeId.value,
+          roleId: +roleId.value,
         }
         save(form).then(({ data }) => {
           Helper.setLoading(false);
@@ -116,20 +110,16 @@ class Update extends Component {
         <div id="modal-update" className="modal fade" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
-              <div className="modal-header"><h5>Update Store</h5></div>
+              <div className="modal-header"><h5>Update User</h5></div>
               <div className="modal-body">
-                <CustomInput type="text" name="name" placeholder="Store's name" value={this.state.form.name.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomInput type="text" name="picture" placeholder="Store's picture" value={this.state.form.picture.value}
-                  maxLength={255} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomInput type="text" name="phone" placeholder="Store's phone" value={this.state.form.phone.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomInput type="text" name="address" placeholder="Store's address" value={this.state.form.address.value}
-                  maxLength={60} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomInput type="text" name="lat" placeholder="Store's lat" value={this.state.form.lat.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
-                <CustomInput type="text" name="lng" placeholder="Store's lng" value={this.state.form.lng.value}
-                  maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomInput type="text" name="email" placeholder="User's email" value={this.state.form.email.value}
+                  maxLength={100} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomTextarea type="text" name="picture" placeholder="User's picture" value={this.state.form.picture.value}
+                  maxLength={255} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} required={false}/>
+                <CustomSelect placeholder="Store" name="storeId" value={this.state.form.storeId.value}
+                  data={this.props.listStore} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                <CustomSelect placeholder="Role" name="roleId" value={this.state.form.roleId.value}
+                  data={this.props.listRole} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
               </div>
               <div className="modal-footer">
                 <button style={{ display: 'none' }} id="close-modal-update-and-update" onClick={this.onCloseModalAndUpdate} data-dismiss="modal" aria-label="Close"></button>&nbsp;
@@ -143,5 +133,13 @@ class Update extends Component {
     )
   }
 }
-
+Update.propTypes = {
+  user: PropTypes.any.isRequired,
+  listStore: PropTypes.array,
+  listRole: PropTypes.array,
+}
+Update.defaultProps = {
+  listStore: [],
+  listRole: [],
+}
 export default Update;
