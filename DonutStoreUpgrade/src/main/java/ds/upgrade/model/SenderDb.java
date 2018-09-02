@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -40,19 +38,17 @@ public class SenderDb implements Serializable {
   @JoinColumn(name = "user_id")
   @JsonIgnore
   private User userId;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderDbId")
-  @JsonIgnore
-  private Set<MessageDb> messageDbs;
   @ManyToMany(mappedBy = "senderDbs")
   @JsonIgnore
   private Set<RoomDb> roomDbs;
-  
-  public SenderDb() {}
-  
+
+  public SenderDb() {
+  }
+
   public SenderDb(Long id) {
     this.id = id;
   }
-  
+
   public SenderDb(String name, String phone) {
     this.name = name;
     this.phone = phone;
@@ -99,14 +95,6 @@ public class SenderDb implements Serializable {
     this.userId = userId;
   }
 
-  public Set<MessageDb> getMessageDbs() {
-    return messageDbs;
-  }
-
-  public void setMessageDbs(Set<MessageDb> messageDbs) {
-    this.messageDbs = messageDbs;
-  }
-
   public Set<RoomDb> getRoomDbs() {
     return roomDbs;
   }
@@ -119,5 +107,5 @@ public class SenderDb implements Serializable {
   public String toString() {
     return "SenderDb [name=" + name + ", phone=" + phone + ", lastConnect=" + lastConnect + "]";
   }
-  
+
 }

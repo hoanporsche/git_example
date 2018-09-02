@@ -18,7 +18,6 @@ import ds.upgrade.model.Role;
 import ds.upgrade.model.Store;
 import ds.upgrade.model.User;
 import ds.upgrade.model.form.UserForm;
-import ds.upgrade.model.json.Sender;
 import ds.upgrade.model.json.UserJson;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
   private PasswordEncoder passwordEncoder;
   @Autowired
   private SenderDbService senderDbService;
-  
+
   /**
    * @description: .
    * @author: VDHoan
@@ -69,7 +68,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Page<User> findList(Pageable pageble, Long storeId, Date startDate, Date endDate, Long roleId) {
+  public Page<User> findList(Pageable pageble, Long storeId, Date startDate, Date endDate,
+      Long roleId) {
     Specification<User> spec = new UserSpecification(storeId, startDate, endDate, roleId);
     return userRepository.findAll(spec, pageble);
   }
@@ -117,7 +117,9 @@ public class UserServiceImpl implements UserService {
     user.setRoles(roles);
     user.setDateUpdated(new Date());
     user.setEnabled(true);
-    return userRepository.save(user);
+    user = userRepository.save(user);
+    senderDbService.createByUser(user);
+    return user;
   }
 
   @Override
@@ -127,7 +129,8 @@ public class UserServiceImpl implements UserService {
       return null;
     foundUser.getRoles().clear();
     foundUser.setDateUpdated(new Date());
-    foundUser.setEnabled(!foundUser.isEnabled());;
+    foundUser.setEnabled(!foundUser.isEnabled());
+    ;
     return userRepository.save(foundUser);
   }
 
@@ -142,7 +145,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public User findInfoUser() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication == null) 
+    if (authentication == null)
       return null;
     User user = userRepository.findByEnabledEmail(authentication.getName());
     if (user == null)
