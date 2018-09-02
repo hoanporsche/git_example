@@ -363,7 +363,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 CREATE TABLE IF NOT EXISTS `donutstore`.`sender_db` (
 	`id` BIGINT NOT NULL auto_increment,
     `name` VARCHAR(20) NOT NULL,
-    `phone` VARCHAR(20) NOT NULL,
+    `phone` VARCHAR(20) NULL,
     `last_connect` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `user_id` BIGINT NULL,
     PRIMARY KEY(`id`),

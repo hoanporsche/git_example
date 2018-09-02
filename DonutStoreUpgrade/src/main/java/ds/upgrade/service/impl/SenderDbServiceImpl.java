@@ -87,7 +87,7 @@ public class SenderDbServiceImpl implements SenderDbService {
     int index = user.getEmail().indexOf("@");
     String newName = user.getEmail().substring(0, index);
     newSenderDb.setName(newName);
-    newSenderDb.setPhone(user.getStoreId().getPhone());
+//    newSenderDb.setPhone(user.getStoreId().getPhone());
     newSenderDb.setUserId(user);
     senderDbRepository.save(newSenderDb);
   }

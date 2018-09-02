@@ -111,15 +111,14 @@ public class UserServiceImpl implements UserService {
       user.setSenderDbId(foundUser.getSenderDbId());
     }
     user.setPicture(userForm.getPicture());
-    user.setStoreId(new Store(userForm.getRoleId()));
+    user.setStoreId(new Store(userForm.getStoreId()));
     Set<Role> roles = new HashSet<>();
     roles.add(new Role(userForm.getRoleId()));
     user.setRoles(roles);
     user.setDateUpdated(new Date());
     user.setEnabled(true);
-    user = userRepository.save(user);
     senderDbService.createByUser(user);
-    return user;
+    return userRepository.save(user);
   }
 
   @Override
@@ -130,7 +129,6 @@ public class UserServiceImpl implements UserService {
     foundUser.getRoles().clear();
     foundUser.setDateUpdated(new Date());
     foundUser.setEnabled(!foundUser.isEnabled());
-    ;
     return userRepository.save(foundUser);
   }
 
