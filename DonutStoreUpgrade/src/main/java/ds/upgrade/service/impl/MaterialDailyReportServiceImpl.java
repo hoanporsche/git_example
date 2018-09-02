@@ -111,7 +111,7 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
     for (int i = 0; i < listReport.size(); i++) {
       MaterialDailyReport savedReport = listReport.get(i);
       savedReport.setDateCreated(new Date());
-      savedReport.setStoreId(store.getId());
+      savedReport.setStoreId(store);
       savedReport = materialDailyReportRepository.save(savedReport);
       if (savedReport == null) {
         return null;

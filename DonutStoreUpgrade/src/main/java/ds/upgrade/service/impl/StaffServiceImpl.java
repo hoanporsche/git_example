@@ -108,7 +108,7 @@ public class StaffServiceImpl implements StaffService {
       return null;
     User user = userService.findInfoUser();
     if (userService.isStore(user.getRoles())
-        && user.getStoreId().getId() != foundStaff.getStoreId())
+        && user.getStoreId().getId() != foundStaff.getStoreId().getId())
       return null;
     foundStaff.setDateUpdated(new Date());
     foundStaff.setEnabled(!foundStaff.isEnabled());

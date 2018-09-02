@@ -8,7 +8,7 @@ class CustomSelect extends Component {
     this.state = {
       valid: true,
       stringError: '',
-      value: this.props.value,
+      value: '',
     };
   }
 

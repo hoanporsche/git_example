@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Guard from '../../../auth/guard';
 import CategoryList from './model/category/CategoryList';
-import ConfigGlobal from './model/config-global/ConfigGlobal';
+import ConfigGlobalList from './model/config-global/ConfigGlobalList';
 import ItemList from './model/item/ItemList';
 import MaterialList from './model/material/MaterialList';
 import OrderStatusList from './model/order-status/OrderStatusList';
@@ -26,7 +26,7 @@ const configRoutes = [
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.CONFIG + MODEL_ROUTING.CONFIG_GLOBAL,
     exact: false,
     canActive: Guard.adminGuard(),
-    main: () => <ConfigGlobal />,
+    main: () => <ConfigGlobalList />,
   },
   {
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.CONFIG + MODEL_ROUTING.ITEM,

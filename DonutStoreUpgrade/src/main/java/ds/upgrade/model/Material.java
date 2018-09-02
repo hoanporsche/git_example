@@ -3,9 +3,7 @@ package ds.upgrade.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,14 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "material")
@@ -43,10 +40,10 @@ public class Material implements Serializable {
   @ManyToOne
   @JoinColumn(name = "supply_id", referencedColumnName = "id", nullable = false)
   private Supply supplyId;
-
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created", nullable = false)
   private Date dateCreated;
-
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated", nullable = false)
   private Date dateUpdated;
   @NotNull
@@ -55,10 +52,6 @@ public class Material implements Serializable {
 
   @Column(name = "enabled", nullable = true)
   private boolean enabled;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "materialId")
-  @JsonIgnore
-  private List<MaterialDailyReport> reports;
 
   public Material() {
   }
@@ -130,13 +123,4 @@ public class Material implements Serializable {
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
   }
-
-  public List<MaterialDailyReport> getReports() {
-    return reports;
-  }
-
-  public void setReports(List<MaterialDailyReport> reports) {
-    this.reports = reports;
-  }
-
 }

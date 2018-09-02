@@ -73,7 +73,7 @@ public class QueryConstant {
     public static final String FIND_BY_ENABLED_EMAIL = "SELECT u FROM User u WHERE u.email = :email AND u.enabled = true";
     public static final String FIND_BY_ENABLED_PHONE = "SELECT u FROM User u WHERE u.storeId.phone = :phone AND u.enabled = true";
     public static final String FIND_ALL = "SELECt u FROM User u WHERE u.enabled = true";
-    public static final String FIND_USER_BY_STORE_ID = "SELECt u FROM User u WHERE u.storeId = :storeId";
+    public static final String FIND_USER_BY_STORE_ID = "SELECt u FROM User u WHERE u.storeId.id = :storeId";
   }
   
   public static class WORKING_CALENDER {

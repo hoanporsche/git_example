@@ -136,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setDateUpdated(newDate);
 		order.setNameCreated(orderForm.getNameCreated().trim());
 		order.setPhone(orderForm.getPhone().trim());
-		order.setStoreId(userStore.getId());
+		order.setStoreId(userStore);
 		order.setShipping(orderForm.isShipping());
 		String addressShipping = (orderForm.getAddressShipping() == null) ? "" : orderForm.getAddressShipping().trim();
 		order.setAddressShipping(addressShipping);
@@ -194,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
 			Store foundStore = storeRepository.findBycode(orderForm.getStoreCode());
 			if (foundStore == null || !foundStore.isEnabled())
 				return null;
-			order.setStoreId(foundStore.getId());
+			order.setStoreId(foundStore);
 
 			order.setStatusId(new OrderStatus(1L));
 			order.setShipping(true);
@@ -240,12 +240,12 @@ public class OrderServiceImpl implements OrderService {
 			if (customValidation.isPhoneNumber(orderCode)) {
 				Specification<Order> spec = new OrderSpecification(startDate, endDate, orderCode);
 				orderRepository.findAll(spec).forEach(order -> {
-					list.add(new OrderJson(order, storeRepository.findOne(order.getStoreId()).getName()));
+					list.add(new OrderJson(order));
 				});
 			} else {
 				Specification<Order> spec = new OrderSpecification(orderCode, startDate, endDate);
 				orderRepository.findAll(spec).forEach(order -> {
-					list.add(new OrderJson(order,storeRepository.findOne(order.getStoreId()).getName()));
+					list.add(new OrderJson(order));
 				});
 			}
 		}

@@ -25,7 +25,8 @@ public class SenderDbServiceImpl implements SenderDbService {
   private UserService userService;
 
   /**
-   * @description: if user is ADMIN, find all. If it's not ADMIN, find all except this user.
+   * @description: if user is ADMIN, find all. If it's not ADMIN, find all except
+   *               this user.
    * @author: VDHoan
    * @created_date: Mar 6, 2018
    */
@@ -58,10 +59,11 @@ public class SenderDbServiceImpl implements SenderDbService {
   public Page<SenderDb> findAllNotInternalIn24HInChargeOfUser(Pageable pageable, User user) {
     Date endDate = new Date();
     Date startDate = new Date(endDate.getTime() - (1000 * 60 * 60 * 24));
-    Specification<SenderDb> spec = new SenderDbSpecification(startDate, endDate, Boolean.FALSE, user.getSenderDbId());
+    Specification<SenderDb> spec = new SenderDbSpecification(startDate, endDate, Boolean.FALSE,
+        user.getSenderDbId());
     return senderDbRepository.findAll(spec, pageable);
   }
-  
+
   @Override
   public SenderDb findByPhone(String phone) {
     return senderDbRepository.findByPhone(phone);
@@ -75,5 +77,18 @@ public class SenderDbServiceImpl implements SenderDbService {
       senderDb.setId(foundSender.getId());
     }
     return senderDbRepository.save(senderDb);
+  }
+
+  @Override
+  public void createByUser(User user) {
+    SenderDb newSenderDb = new SenderDb();
+    if (user.getSenderDbId() != null)
+      newSenderDb.setId(user.getSenderDbId().getId());
+    int index = user.getEmail().indexOf("@");
+    String newName = user.getEmail().substring(0, index);
+    newSenderDb.setName(newName);
+//    newSenderDb.setPhone(user.getStoreId().getPhone());
+    newSenderDb.setUserId(user);
+    senderDbRepository.save(newSenderDb);
   }
 }

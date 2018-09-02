@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE } from '../constant/local-storage.constant';
 import axios from 'axios';
 
-const BaseSerivce = Object.freeze({
+const BaseService = Object.freeze({
   get: (url, data) => {
     return axios({
       method: 'GET',
@@ -26,4 +26,4 @@ const createHeader = () => {
   }
 }
 
-export default BaseSerivce;
+export default BaseService;

@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
    * @return
    */
   @Override
-  public List<CategoryJson> findAll() {
+  public List<CategoryJson> findAllJson() {
     List<Category> listFound = categoryRepository.findAll();
     List<CategoryJson> listJson = new ArrayList<>();
     if (listFound != null && listFound.size() > 0) {
@@ -127,6 +127,11 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public Category findByName(String name) {
     return categoryRepository.findByName(name);
+  }
+
+  @Override
+  public List<Category> findAll() {
+    return categoryRepository.findAll();
   }
 
 }

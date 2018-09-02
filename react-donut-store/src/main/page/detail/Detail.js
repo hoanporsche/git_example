@@ -17,9 +17,9 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: 'ITEkrfpyhe',
+      code: '',
       quantity: 1,
-      categoryCode: 'CATltmdtvb',
+      categoryCode: '',
       picture: '',
     }
   }
@@ -36,14 +36,34 @@ class Detail extends Component {
     if (this.props.listCategory.length === 0) {
       this.props.fetchAllCategory();
     }
+    this.setDefaultItem(this.props.listItem);
+    this.setDefaultCategory(this.props.listCategory);
   }
 
-  componentWillReceiveProps({ match }) {
-    if (match !== undefined) {
+  componentWillReceiveProps(newProps) {
+    if (newProps.match) {
       this.setState({
-        code: match.params.code,
+        code: newProps.match.params.code,
         quantity: 1,
         picture: '',
+      });
+    } else {
+      this.setDefaultItem(newProps.listItem);
+    }
+    this.setDefaultCategory(newProps.listCategory);
+  }
+
+  setDefaultItem = (listItem) => {
+    if (this.state.code === '' && listItem.length > 0) {
+      this.setState({
+        code: listItem[0].code,
+      });
+    }
+  }
+  setDefaultCategory = (listCategory) => {
+    if (this.state.categoryCode === '' && listCategory.length > 0) {
+      this.setState({
+        categoryCode: listCategory[0].code,
       });
     }
   }
@@ -73,7 +93,7 @@ class Detail extends Component {
         message: "Đưa vào giỏ hàng thành công",
         level: "success",
         autoDismiss: 1,
-        children: <GoToCartNoti title={`${this.state.quantity} ${item.name}`}  message="Đưa vào giỏ hàng thành công" picture={item.picture[0]} />
+        children: <GoToCartNoti title={`${this.state.quantity} ${item.name}`} message="Đưa vào giỏ hàng thành công" picture={item.picture[0]} />
       });
     } else {
       alert("Vui lòng chọn số lượng");
@@ -140,7 +160,7 @@ class Detail extends Component {
                 <p>{item.description}</p>
                 <div className="row" style={{ marginLeft: '0px' }}>
                   <div className="col-6">
-                    <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity}/>
+                    <ChooseQuantity onEmittedValue={this.onChange} quantity={this.state.quantity} />
                   </div>
                   <div className="col-3">
                     <button className="btn btn-success" onClick={this.onClick}>Mua hàng</button>

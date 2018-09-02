@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.User;
+import ds.upgrade.model.form.UserForm;
 import ds.upgrade.model.json.UserJson;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
@@ -41,7 +42,7 @@ public class UserRestController {
 
   @Autowired
   private UserService userService;
-  
+
   @GetMapping(AppConstant.API_URL.FIND_INFO)
   public ResponseEntity<?> findInfo() {
     try {
@@ -49,7 +50,7 @@ public class UserRestController {
       if (user != null)
         return new ResponseEntity<UserJson>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + " " +e.getMessage(),
+      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR + " " + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
@@ -174,7 +175,8 @@ public class UserRestController {
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(AppConstant.API_URL.RESET_PASSWORD)
-  public ResponseEntity<?> resetPassword(@RequestParam(AppConstant.PARAM.EMAIL_PARAM) String email) {
+  public ResponseEntity<?> resetPassword(
+      @RequestParam(AppConstant.PARAM.EMAIL_PARAM) String email) {
     try {
       User user = userService.resetPassword(email);
       if (user != null)
@@ -199,7 +201,11 @@ public class UserRestController {
   @GetMapping(AppConstant.API_URL.ENABLED_OR_NOT)
   public ResponseEntity<?> showOrNot(@RequestParam(AppConstant.PARAM.ID_PARAM) String id) {
     try {
+      User foundUser = userService.findInfoUser();
       Long newId = Long.parseLong(id);
+      if (newId == foundUser.getId())
+        return new ResponseEntity<String>(AppConstant.REPONSE.ADMIN_CANNOT_EN_DISABLE_HIS_ACCOUNT,
+            HttpStatus.FORBIDDEN);
       User user = userService.enabledOrNot(newId);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -209,7 +215,8 @@ public class UserRestController {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE,
+        HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   /**
@@ -218,26 +225,27 @@ public class UserRestController {
    * @created_date: Apr 1, 2018
    * @modifier: hoan
    * @modifier_date: Apr 1, 2018
-   * @param user
+   * @param userForm
    * @param result
    * @return
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(AppConstant.API_URL.SAVE)
-  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated User user, BindingResult result) {
+  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated UserForm userForm, BindingResult result) {
     try {
       if (result.hasErrors())
-        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
-      user = userService.save(user);
+        return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
+            HttpStatus.NOT_ACCEPTABLE);
+      User user = userService.save(userForm);
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
-  
+
   /**
    * @description: /change-password.
    * @author: VDHoan
@@ -251,18 +259,20 @@ public class UserRestController {
   @PostMapping(AppConstant.API_URL.CHANGE_PASSWORD)
   public ResponseEntity<?> changePassword(@RequestBody User user) {
     try {
-      user = userService.changePassword(userService.findInfoUser().getEmail(), user.getOldPassword(), user.getNewPassword());
+      user = userService.changePassword(userService.findInfoUser().getEmail(),
+          user.getOldPassword(), user.getNewPassword());
       if (user != null)
         return new ResponseEntity<User>(user, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_OLD_PASSWORD, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_OLD_PASSWORD,
+        HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping("/find-role")
-  public ResponseEntity<?> findRole(){
+  public ResponseEntity<?> findRole() {
     User user = userService.findInfoUser();
     return new ResponseEntity<User>(user, HttpStatus.OK);
   }

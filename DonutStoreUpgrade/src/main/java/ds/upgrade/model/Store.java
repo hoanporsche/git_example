@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "store")
 public class Store implements Serializable {
@@ -47,11 +49,17 @@ public class Store implements Serializable {
   @Column(name = "lng")
   private String lng;
 
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created")
   private Date dateCreated;
 
+  @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_updated")
   private Date dateUpdated;
+
+  public Store(Long id) {
+    this.id = id;
+  }
 
   @Column(name = "enabled", nullable = false)
   private boolean enabled;

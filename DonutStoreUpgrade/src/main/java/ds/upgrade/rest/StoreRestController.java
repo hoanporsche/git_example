@@ -3,6 +3,8 @@
  */
 package ds.upgrade.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ds.upgrade.model.Store;
 import ds.upgrade.service.StoreService;
 import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.service.CustomValidation;
 
 /**
  * @description: /api/store.
@@ -35,6 +38,8 @@ public class StoreRestController {
 
   @Autowired
   private StoreService storeService;
+  @Autowired
+  private CustomValidation customValidation;
 
   /**
    * @description: /find-one.
@@ -61,6 +66,19 @@ public class StoreRestController {
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
   }
 
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
+  public ResponseEntity<?> findAll() {
+    try {
+      List<Store> list = storeService.findAll();
+      if (list.size() > 0)
+        return new ResponseEntity<List<Store>>(list, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
+  
   /**
    * @description: /find-list.
    * @author: VDHoan
@@ -102,7 +120,7 @@ public class StoreRestController {
   public ResponseEntity<?> createOrUpdate(@RequestBody @Validated Store store,
       BindingResult result) {
     try {
-      if (result.hasErrors())
+      if (result.hasErrors() || !customValidation.isPhoneNumber(store.getPhone()))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
       store = storeService.save(store);
       if (store != null)

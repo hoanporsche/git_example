@@ -26,11 +26,11 @@ public class OrderJson implements Serializable {
   public OrderJson() {
   }
 
-  public OrderJson(Order order, String storeName) {
+  public OrderJson(Order order) {
     this.code = order.getCode();
     this.nameCreated = order.getNameCreated();
     this.phone = order.getPhone();
-    this.storeName = storeName;
+    this.storeName = order.getStoreId().getName();
     this.shipping = order.isShipping();
     this.addressShipping = order.getAddressShipping();
     this.distance = order.getDistance();

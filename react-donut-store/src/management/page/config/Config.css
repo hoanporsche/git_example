@@ -5,10 +5,11 @@
 
 .aside-nav {
   width: 10%;
-  background-color: teal;
-  color: white;
+  background-color: white;
   min-height: 83vh;
+  border-right: 1px solid black;
 }
+
 .aside-nav ul {
   margin-left: -2em;
 }
@@ -19,7 +20,7 @@
 }
 
 .aside-nav a {
-  color: white;
+  color: black;
   font-size: 14px;
   text-decoration: none;
   font-weight: 400;
@@ -31,9 +32,12 @@
 }
 
 .aside-nav .active-aside {
-  color: red;
   background-color: chocolate;
   border-radius: 10px;
+}
+
+.aside-nav .active-aside a {
+  color: white;
 }
 
 .config-content {

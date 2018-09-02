@@ -23,6 +23,7 @@ public class AppConstant {
     public static final String NOT_DISABLED = "Please Make sure you have a replacement";
     public static final String WRONG_OLD_PASSWORD = "Wrong old password";
     public static final String HAVE_NOT_PERMISSION = "You have not permission";
+    public static final String ADMIN_CANNOT_EN_DISABLE_HIS_ACCOUNT = "You cannot disable or enable your account";
   }
   
   public static class PARAM {
@@ -157,5 +158,6 @@ public class AppConstant {
     public static final String SUBSIDY_PRICE = "subsidyPrice";
     public static final String SINGLE_SHIPPING_PRICE = "singleShippingPrice";
     public static final String MIN_SHIPPING_PRICE = "minShippingPrice";
+    public static final String DEFAULT_PASSWORD = "12345678";
   }
 }

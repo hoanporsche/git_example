@@ -74,28 +74,9 @@ class SingleOrder extends Component {
         </div>
       </div>
     ) : (
-        <div id="single-order" className="card">
-          <div className="card-header detail-header">
-            <div className="row">
-              <div className="col-12 col-md-9">
-                <span className="title-text">{this.props.message}</span>
-              </div>
-              <div className="col-12 col-md-3">
-
-              </div>
-            </div>
-          </div>
-          <div className="card-body detail-body">
-            <div className="container detail-container">
-              -
-              {/* <span className={`status verifying`}>verifying</span>
-              <span className={`status accepted`}>accepted</span>
-              <span className={`status in-progress`}>in-progress</span>
-              <span className={`status completed`}>completed</span>
-              <span className={`status cancel`}>cancelled</span> */}
-            </div>
-          </div>
-        </div>
+      <div id="single-order">
+        <span className="title-text">{this.props.message}</span>
+      </div>
       )
   }
 }

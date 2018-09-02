@@ -3,6 +3,8 @@
  */
 package ds.upgrade.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +38,22 @@ public class CategoryRestController {
 
   @Autowired
   private CategoryService categoryService;
+  
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @GetMapping(AppConstant.API_URL.FIND_ALL)
+  public ResponseEntity<?> findAll() {
+    try {
+      List<Category> list = categoryService.findAll();
+      if (list != null)
+        return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+    } catch (NumberFormatException e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);
+  }
 
   /**
    * @description: /find-one.

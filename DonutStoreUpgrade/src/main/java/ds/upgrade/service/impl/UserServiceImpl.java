@@ -1,6 +1,7 @@
 package ds.upgrade.service.impl;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,10 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Role;
+import ds.upgrade.model.Store;
 import ds.upgrade.model.User;
+import ds.upgrade.model.form.UserForm;
 import ds.upgrade.model.json.UserJson;
 import ds.upgrade.repository.UserRepository;
 import ds.upgrade.repository.specification.UserSpecification;
+import ds.upgrade.service.SenderDbService;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
 
@@ -28,7 +32,9 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepository;
   @Autowired
   private PasswordEncoder passwordEncoder;
-  
+  @Autowired
+  private SenderDbService senderDbService;
+
   /**
    * @description: .
    * @author: VDHoan
@@ -62,7 +68,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Page<User> findList(Pageable pageble, Long storeId, Date startDate, Date endDate, Long roleId) {
+  public Page<User> findList(Pageable pageble, Long storeId, Date startDate, Date endDate,
+      Long roleId) {
     Specification<User> spec = new UserSpecification(storeId, startDate, endDate, roleId);
     return userRepository.findAll(spec, pageble);
   }
@@ -72,7 +79,7 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findByEmail(email);
     if (user == null)
       return null;
-    user.setPassword(passwordEncoder.encode("123456"));
+    user.setPassword(passwordEncoder.encode(AppConstant.CONFIG_NAME.DEFAULT_PASSWORD));
     user.setDateUpdated(new Date());
     return userRepository.save(user);
   }
@@ -88,19 +95,29 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User save(User user) {
-    if (user.getId() == null) {
+  public User save(UserForm userForm) {
+    User user = new User();
+    user.setEmail(userForm.getEmail());
+    if (userForm.getId() == null) {
       user.setDateCreated(new Date());
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
+      user.setPassword(passwordEncoder.encode(AppConstant.CONFIG_NAME.DEFAULT_PASSWORD));
     } else {
-      User foundUser = userRepository.findByEmail(user.getEmail());
+      User foundUser = userRepository.findOne(userForm.getId());
       if (foundUser == null)
         return null;
+      user.setId(foundUser.getId());
       user.setDateCreated(foundUser.getDateCreated());
       user.setPassword(foundUser.getPassword());
+      user.setSenderDbId(foundUser.getSenderDbId());
     }
+    user.setPicture(userForm.getPicture());
+    user.setStoreId(new Store(userForm.getStoreId()));
+    Set<Role> roles = new HashSet<>();
+    roles.add(new Role(userForm.getRoleId()));
+    user.setRoles(roles);
     user.setDateUpdated(new Date());
     user.setEnabled(true);
+    senderDbService.createByUser(user);
     return userRepository.save(user);
   }
 
@@ -111,7 +128,7 @@ public class UserServiceImpl implements UserService {
       return null;
     foundUser.getRoles().clear();
     foundUser.setDateUpdated(new Date());
-    foundUser.setEnabled(!foundUser.isEnabled());;
+    foundUser.setEnabled(!foundUser.isEnabled());
     return userRepository.save(foundUser);
   }
 
@@ -126,7 +143,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public User findInfoUser() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication == null) 
+    if (authentication == null)
       return null;
     User user = userRepository.findByEnabledEmail(authentication.getName());
     if (user == null)

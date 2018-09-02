@@ -42,9 +42,10 @@ public class MaterialDailyReport implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
   private Long id;
-  
-  @Column(name = "store_id")
-  private Long storeId;
+
+  @ManyToOne
+  @JoinColumn(name = "store_id", referencedColumnName = "id")
+  private Store storeId;
   
   @JsonFormat(pattern = "MM/dd/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created")
@@ -83,11 +84,11 @@ public class MaterialDailyReport implements Serializable {
     this.id = id;
   }
 
-  public Long getStoreId() {
+  public Store getStoreId() {
     return storeId;
   }
 
-  public void setStoreId(Long storeId) {
+  public void setStoreId(Store storeId) {
     this.storeId = storeId;
   }
 
