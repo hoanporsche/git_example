@@ -4,6 +4,7 @@ import { API_URL, MODEL_URL } from '../share/constant/api.constant';
 import BaseService from '../share/util/BaseService';
 import { LOCAL_STORAGE } from '../share/constant/local-storage.constant';
 import { ROUTING_URL } from '../share/constant/routing.constant';
+import { ROLES } from '../share/constant/role.constant';
 
 export const login = (email, password) => {
   return axios({
@@ -30,4 +31,12 @@ export const logout = () => {
 export const getTopRole = () => {
   const currentUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
   return currentUser ? currentUser.roles[0] : '';
+}
+
+export const isAdmin = () => {
+  return getTopRole() === ROLES.ADMIN ? true : false;
+}
+
+export const isStore = () => {
+  return (getTopRole() === ROLES.STORE || getTopRole() === ROLES.ADMIN) ? true : false;
 }

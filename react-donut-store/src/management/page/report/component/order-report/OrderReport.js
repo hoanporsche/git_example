@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-class MaterialDailyReport extends Component {
+class OrderReport extends Component {
 
   render() {
     return (
       <div className="container page-min-height">
-        MaterialDailyReport
+        OrderReport
       </div>
     )
   }
 }
 
-export default MaterialDailyReport;
+export default OrderReport;

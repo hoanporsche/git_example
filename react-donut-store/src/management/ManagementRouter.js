@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODEL_ROUTING, ROUTING_URL } from '../share/constant/routing.constant';
-import MaterialDailyReport from './page/material-daily-report/MaterialDailyReport';
+import Report from './page/report/Report';
 import Timekeeping from './page/timekeeping/Timekeeping';
 import Config from './page/config/Config';
 import OrderList from './page/order/OrderList';
@@ -16,10 +16,10 @@ const managementRoutes = [
     main: () => <OrderList />,
   },
   {
-    path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.MATERIAL_DAILY_REPORT,
-    exact: true,
+    path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT,
+    exact: false,
     canActive: Guard.storeGuard(),
-    main: () => <MaterialDailyReport />,
+    main: () => <Report />,
   },
   {
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.TIMEKEEPING,
