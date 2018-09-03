@@ -4,7 +4,7 @@ class MaterialDailyReport extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container page-min-height">
         MaterialDailyReport
       </div>
     )

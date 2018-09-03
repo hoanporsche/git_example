@@ -231,7 +231,8 @@ public class UserRestController {
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(AppConstant.API_URL.SAVE)
-  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated UserForm userForm, BindingResult result) {
+  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated UserForm userForm,
+      BindingResult result) {
     try {
       if (result.hasErrors())
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
@@ -243,7 +244,7 @@ public class UserRestController {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.FORBIDDEN);
   }
 
   /**
@@ -275,5 +276,18 @@ public class UserRestController {
   public ResponseEntity<?> findRole() {
     User user = userService.findInfoUser();
     return new ResponseEntity<User>(user, HttpStatus.OK);
+  }
+
+  @GetMapping(AppConstant.API_URL.SAVE)
+  public ResponseEntity<?> saveProfile(@RequestParam String email, @RequestParam String picture) {
+    try {
+      UserJson updated = userService.updateProfile(email.trim(), picture.trim());
+      if (updated != null)
+        return new ResponseEntity<UserJson>(updated, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.FORBIDDEN);
   }
 }

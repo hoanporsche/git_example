@@ -11,6 +11,7 @@ export const ROUTING_URL = Object.freeze({
   FORGOT_PASSWORD: '/quen-mat-khau',
   UNAUTHORIZED: '/unauthorized',
   CONFIG: '/config',
+  USER_PROFILE: '/thong-tin-ca-nhan',
 });
 
 export const MODEL_ROUTING = Object.freeze({

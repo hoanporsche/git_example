@@ -4,6 +4,7 @@ import MaterialDailyReport from './page/material-daily-report/MaterialDailyRepor
 import Timekeeping from './page/timekeeping/Timekeeping';
 import Config from './page/config/Config';
 import OrderList from './page/order/OrderList';
+import UserProfile from './page/user-profile/UserProfile';
 import * as Guard from '../auth/guard';
 import NotFound from '../error/NotFound';
 
@@ -31,6 +32,12 @@ const managementRoutes = [
     exact: false,
     canActive: Guard.adminGuard(),
     main: () => <Config />,
+  },
+  {
+    path: MODEL_ROUTING.MANAGEMENT + ROUTING_URL.USER_PROFILE,
+    exact: true,
+    canActive: Guard.staffGuard(),
+    main: () => <UserProfile />,
   },
   {
     path: '',
