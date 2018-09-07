@@ -77,19 +77,21 @@ class ConfigGlobalList extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Value</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.showListConfigGlobal()}
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Value</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListConfigGlobal()}
+            </tbody>
+          </table>
+        </div>
         <ReactTooltip />
         {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} configGlobal={this.state.updateConfigGlobal} /> : null}
       </div>

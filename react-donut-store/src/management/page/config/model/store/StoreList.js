@@ -189,9 +189,11 @@ class StoreList extends Component {
       <div className="container-fluid">
         <div className="row padding-top1">
           <div className="col-md-9">
-            <div className="col-md-2">
-              <CustomSelect placeholder="Status" name="enabled" value={this.state.params.enabled} required={false}
-                data={selectEnabledOption} onEmittedValue={this.onReceivedSelectValue} />
+            <div className="row">
+              <div className="col-md-2">
+                <CustomSelect placeholder="Status" name="enabled" value={this.state.params.enabled} required={false}
+                  data={selectEnabledOption} onEmittedValue={this.onReceivedSelectValue} />
+              </div>
             </div>
           </div>
           <div className="col-md-3">
@@ -201,25 +203,27 @@ class StoreList extends Component {
             </div>
           </div>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Picture</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Address</th>
-              <th scope="col">Coordinates</th>
-              <th scope="col">Date Created</th>
-              <th scope="col">Date Updated</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.showListStore()}
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Coordinates</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Date Updated</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListStore()}
+            </tbody>
+          </table>
+        </div>
         <div className="row padding-top1">
           <div className="col-12">
             <div className="float-right">

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import configRoutes from './ReportRouter';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from '../../../auth/PrivateRoute';
-import ReportAsideNav from './ReportAsideNav';
-import './Report.css';
+import ReportAsideNav from '../../layout-management/aside-nav-management/ReportAsideNav';
 
 class Report extends Component {
 
@@ -22,10 +21,10 @@ class Report extends Component {
   render() {
     return (
       <div className="row page-min-height">
-        <div className="aside-nav col-2 padding-top1">
+        <div id="div-aside-nav-report" className="aside-nav padding-top1">
           <ReportAsideNav />
         </div>
-        <div className="config-content col-10 col-md-10">
+        <div id="config-content" className="config-content col-12">
           <Switch>
             {this.showRoute(configRoutes)}
           </Switch>

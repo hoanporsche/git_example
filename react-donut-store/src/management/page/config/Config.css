@@ -1,22 +1,26 @@
 #config-management {
   width: 100%;
-  display: table;
 }
 
 .aside-nav {
-  width: 10%;
-  background-color: white;
-  min-height: 83vh;
-  border-right: 1px solid black;
+  height: 100%;
+  /* 100% Full-height */
+  position: absolute;
+  /* Stay in place */
+  z-index: 1;
+  /* Disable horizontal scroll */
+  transition: 0.5s;
+  /* 0.5 second transition effect to slide in the sidenav */
+  min-width: 3em;
 }
 
-.aside-nav ul {
-  margin-left: -2em;
-}
+/* .aside-nav ul {
+} */
 
 .aside-nav li {
   padding-left: 1em;
   margin-bottom: 1em;
+  margin-left: -20px;
 }
 
 .aside-nav a {
@@ -41,8 +45,11 @@
 }
 
 .config-content {
-  width: 90%;
   background-color: white;
   color: black;
   min-height: 83vh;
+}
+
+#config-content {
+  padding-left: 3.1em;
 }
