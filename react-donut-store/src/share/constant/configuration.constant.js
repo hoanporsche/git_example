@@ -27,3 +27,22 @@ export const selectEnabledOption = [
     code: false,
   }
 ]
+
+export const selectReportDay = [
+  {
+    name: '1 ngày',
+    code: 'a-day',
+  }, {
+    name: '1 tuần',
+    code: 'a-week',
+  }, {
+    name: '1 tháng',
+    code: 'a-month',
+  }, {
+    name: '1 năm',
+    code: 'a-year',
+  }, {
+    name: 'Toàn bộ thời gian',
+    code: 'all',
+  }
+]
