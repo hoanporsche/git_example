@@ -2,10 +2,13 @@ package ds.upgrade.util.service.imp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.util.AppConstant;
@@ -68,4 +71,28 @@ public class CommonMethodImpl implements CommonMethod {
     }
   }
 
+  @Override
+  public List<Date> getValueOrderReportDayOption(String key) {
+    Date now = new Date();
+    Date startDate;
+    Date endDate = this.createEndDate(now);
+    switch (key) {
+    case "A_DAY":
+      startDate = this.createStartDate(DateUtils.addDays(now, -1));
+    case "A_WEEK":
+      startDate = this.createStartDate(DateUtils.addDays(now, -7));
+    case "A_MONTH":
+      startDate = this.createStartDate(DateUtils.addMonths(now, -1));
+    case "A_YEAR":
+      startDate = this.createStartDate(DateUtils.addYears(now, -1));
+    case "ALL_TIME":
+      startDate = null;
+    default:
+      startDate = endDate;
+    }
+    List<Date> list = new ArrayList<>();
+    list.add(startDate);
+    list.add(endDate);
+    return list;
+  }
 }

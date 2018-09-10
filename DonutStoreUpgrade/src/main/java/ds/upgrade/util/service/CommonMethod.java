@@ -1,6 +1,7 @@
 package ds.upgrade.util.service;
 
 import java.util.Date;
+import java.util.List;
 
 public interface CommonMethod {
   
@@ -11,4 +12,5 @@ public interface CommonMethod {
   public String createQuantityCode(String orderCode, int index);
   public Date createStartDate(Date now);
   public Date createEndDate(Date now);
+  public List<Date> getValueOrderReportDayOption(String key);
 }

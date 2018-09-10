@@ -31,18 +31,18 @@ export const selectEnabledOption = [
 export const selectReportDay = [
   {
     name: '1 ngày',
-    code: 'a-day',
+    code: 'A_DAY',
   }, {
     name: '1 tuần',
-    code: 'a-week',
+    code: 'A_WEEK',
   }, {
     name: '1 tháng',
-    code: 'a-month',
+    code: 'A_MONTH',
   }, {
     name: '1 năm',
-    code: 'a-year',
+    code: 'A_YEAR',
   }, {
     name: 'Toàn bộ thời gian',
-    code: 'all',
+    code: 'ALL_TIME',
   }
 ]
