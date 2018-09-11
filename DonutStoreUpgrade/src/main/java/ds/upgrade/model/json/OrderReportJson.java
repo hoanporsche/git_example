@@ -5,33 +5,52 @@ import java.io.Serializable;
 public class OrderReportJson implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
-  private int totalOrder;
+  private Long totalOrder;
   private int totalShipping;
   private int totalNotShipping;
-  private String totalShippingPrice;
-  private String totalInbound;
+  private Long totalShippingPrice;
+  private Long totalInbound;
 
-  public String getTotalShippingPrice() {
-    return totalShippingPrice;
+  public OrderReportJson() {
   }
 
-  public void setTotalShippingPrice(String totalShippingPrice) {
+  public OrderReportJson(Long totalOrder, Long totalShippingPrice, Long totalInbound) {
+    super();
+    this.totalOrder = totalOrder;
     this.totalShippingPrice = totalShippingPrice;
-  }
-
-  public String getTotalInbound() {
-    return totalInbound;
-  }
-
-  public void setTotalInbound(String totalInbound) {
     this.totalInbound = totalInbound;
   }
 
-  public int getTotalOrder() {
+  public OrderReportJson(Long totalOrder, int totalShipping, int totalNotShipping,
+      Long totalShippingPrice, Long totalInbound) {
+    this.totalOrder = totalOrder;
+    this.totalShipping = totalShipping;
+    this.totalNotShipping = totalNotShipping;
+    this.totalShippingPrice = totalShippingPrice;
+    this.totalInbound = totalInbound;
+  }
+
+  public Long getTotalShippingPrice() {
+    return totalShippingPrice;
+  }
+
+  public void setTotalShippingPrice(Long totalShippingPrice) {
+    this.totalShippingPrice = totalShippingPrice;
+  }
+
+  public Long getTotalInbound() {
+    return totalInbound;
+  }
+
+  public void setTotalInbound(Long totalInbound) {
+    this.totalInbound = totalInbound;
+  }
+
+  public Long getTotalOrder() {
     return totalOrder;
   }
 
-  public void setTotalOrder(int totalOrder) {
+  public void setTotalOrder(Long totalOrder) {
     this.totalOrder = totalOrder;
   }
 

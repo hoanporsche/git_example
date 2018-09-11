@@ -12,5 +12,5 @@ public interface CommonMethod {
   public String createQuantityCode(String orderCode, int index);
   public Date createStartDate(Date now);
   public Date createEndDate(Date now);
-  public List<Date> getValueOrderReportDayOption(String key);
+  public List<Date> createRangeDateFilter(String key);
 }

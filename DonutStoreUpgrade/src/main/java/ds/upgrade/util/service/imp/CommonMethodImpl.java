@@ -72,23 +72,29 @@ public class CommonMethodImpl implements CommonMethod {
   }
 
   @Override
-  public List<Date> getValueOrderReportDayOption(String key) {
+  public List<Date> createRangeDateFilter(String key) {
     Date now = new Date();
     Date startDate;
     Date endDate = this.createEndDate(now);
     switch (key) {
     case "A_DAY":
       startDate = this.createStartDate(DateUtils.addDays(now, -1));
+      break;
     case "A_WEEK":
       startDate = this.createStartDate(DateUtils.addDays(now, -7));
+      break;
     case "A_MONTH":
       startDate = this.createStartDate(DateUtils.addMonths(now, -1));
+      break;
     case "A_YEAR":
       startDate = this.createStartDate(DateUtils.addYears(now, -1));
+      break;
     case "ALL_TIME":
       startDate = null;
+      break;
     default:
       startDate = endDate;
+      break;
     }
     List<Date> list = new ArrayList<>();
     list.add(startDate);
