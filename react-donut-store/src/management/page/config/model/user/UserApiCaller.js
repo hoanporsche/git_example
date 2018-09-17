@@ -20,8 +20,8 @@ export const save = (params) => {
   return BaseService.post(saveUrl, params);
 }
 
-export const changePassword = (oldPass, newPass) => {
-  return BaseService.post(changePasswordUrl, { oldPassword: oldPass, newPassword: newPass });
+export const changePassword = (oldPass, newPass, logoutAll) => {
+  return BaseService.post(changePasswordUrl, { oldPassword: oldPass, newPassword: newPass, logoutAll: logoutAll });
 }
 
 export const resetPassword = (email) => {

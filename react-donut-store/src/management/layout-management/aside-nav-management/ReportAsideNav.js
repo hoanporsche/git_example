@@ -69,10 +69,10 @@ class ReportAsideNav extends Component {
     }, () => {
       if (this.state.isOpen) {
         document.getElementById("div-aside-nav-report").style.width = "185px";
-        document.getElementById("config-content").style.paddingLeft = "185px";
+        document.getElementById("config-content").style.paddingLeft = "175px";
       } else {
-        document.getElementById("div-aside-nav-report").style.width = "3em";
-        document.getElementById("config-content").style.paddingLeft = "3em";
+        document.getElementById("div-aside-nav-report").style.width = "3.9em";
+        document.getElementById("config-content").style.paddingLeft = "3.1em";
       }
     })
   }
@@ -80,8 +80,8 @@ class ReportAsideNav extends Component {
     return(
       <ul id="aside-nav-mana">
         {this.state.isOpen ? (<li>
-          <span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={this.onOpenClose}>&#9747;</span>
-        </li>) : <li style={{marginLeft: '-2.5em'}}><span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={this.onOpenClose}>&#9776;</span></li>}
+          <span style={{ fontSize: '30px', cursor: 'pointer', marginLeft: '130px' }} onClick={this.onOpenClose}>&#9747;</span>
+        </li>) : <li style={{marginLeft: '-2.2em'}}><span style={{ fontSize: '30px', cursor: 'pointer' }} onClick={this.onOpenClose}>&#9776;</span></li>}
         {this.state.isOpen ? this.showMenu(menus) : null}
       </ul>
     );

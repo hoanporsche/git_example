@@ -3,7 +3,8 @@
 }
 
 .aside-nav {
-  height: 100%;
+  background-color: #D5AE41;
+  /* height: 85%; */
   /* 100% Full-height */
   position: absolute;
   /* Stay in place */
@@ -18,9 +19,10 @@
 } */
 
 .aside-nav li {
-  padding-left: 1em;
+  padding-left: 0.5em;
   margin-bottom: 1em;
   margin-left: -20px;
+  margin-right: 0.5em;
 }
 
 .aside-nav a {
