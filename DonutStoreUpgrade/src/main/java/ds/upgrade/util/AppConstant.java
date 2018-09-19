@@ -160,6 +160,8 @@ public class AppConstant {
     public static final String SUBSIDY_PRICE = "subsidyPrice";
     public static final String SINGLE_SHIPPING_PRICE = "singleShippingPrice";
     public static final String MIN_SHIPPING_PRICE = "minShippingPrice";
+    public static final String PRIVACY = "privacy";
+    public static final String SHIPPING_PRICE = "shippingPrice";
     public static final String DEFAULT_PASSWORD = "12345678";
   }
 }

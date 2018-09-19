@@ -76,7 +76,9 @@ public class CustomValidationImp implements CustomValidation {
         || AppConstant.CONFIG_NAME.MIN_AHA_DISTANCE.equals(newName)
         || AppConstant.CONFIG_NAME.SUBSIDY_PRICE.equals(newName)
         || AppConstant.CONFIG_NAME.SINGLE_SHIPPING_PRICE.equals(newName)
-        || AppConstant.CONFIG_NAME.MIN_SHIPPING_PRICE.equals(newName));
+        || AppConstant.CONFIG_NAME.MIN_SHIPPING_PRICE.equals(newName)
+        || AppConstant.CONFIG_NAME.PRIVACY.equals(newName)
+        || AppConstant.CONFIG_NAME.SHIPPING_PRICE.equals(newName));
   }
 
   @Override

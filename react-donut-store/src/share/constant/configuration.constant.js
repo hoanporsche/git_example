@@ -16,6 +16,8 @@ export const CONFIG_NAME = {
   SUBSIDY_PRICE: "subsidyPrice",
   SINGLE_SHIPPING_PRICE: "singleShippingPrice",
   MIN_SHIPPING_PRICE: "minShippingPrice",
+  PRIVACY: "privacy",
+  SHIPPING_PRICE: "shippingPrice",
 }
 
 export const selectEnabledOption = [
