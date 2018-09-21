@@ -3,6 +3,7 @@ import './OrderList.css';
 import { connect } from 'react-redux';
 import { CONFIG } from '../../../share/constant/configuration.constant';
 import { fetAllStore } from '../../../redux/action/store.constant';
+import { fetAllConfigGlobal } from '../../../redux/action/config-global.constant';
 import * as orderStatusService from '../config/model/order-status/OrderStatusApiCaller';
 import * as Helper from '../../../share/common/helper/Helper';
 import CustomSelect from '../../../share/common/custom-select/CustomSelect';
@@ -56,6 +57,9 @@ class OrderList extends Component {
     }).catch(error => {
       Helper.setLoading(false);
     });
+    if (this.props.listConfigGlobal.length === 0) {
+      this.props.fetchAllConfigGlobal();
+    }
     await this.props.fetchListOrder(this.state.params);
   }
 
@@ -93,7 +97,7 @@ class OrderList extends Component {
     const { listOrder } = this.props;
     return (listOrder.content && listOrder.content.length > 0) ? listOrder.content.map((order, index) => {
       return (
-        <SingleOrderManagement key={index} order={order} listOrderStatus={this.state.listOrderStatus} onEmittedValue={this.onFilter}/>
+        <SingleOrderManagement key={index} order={order} listOrderStatus={this.state.listOrderStatus} onEmittedValue={this.onFilter} />
       )
     }) : <SingleOrderManagement message={"Rất tiếc đã không có đơn hàng nào phù hợp."} />;
   }
@@ -149,7 +153,7 @@ class OrderList extends Component {
       Page {(totalPages === 0) ? 0 : this.props.listOrder.number + 1} of {totalPages}
     </p>) : (<p>Page 0 of 0</p>);
   }
-  
+
   closeDoNotModal = () => {
     this.setState({
       showCreateModal: false,
@@ -215,7 +219,7 @@ class OrderList extends Component {
             </div>
           </div>
         </div>
-        {this.state.showCreateModal ? <CreateOrder currentUser={currentUser} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
+        {this.state.showCreateModal ? <CreateOrder currentUser={currentUser} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal} /> : null}
         <ReactTooltip />
       </div>
     )
@@ -226,6 +230,7 @@ const mapStateToProps = state => {
   return {
     listOrder: state.orderReducer,
     listStore: state.storeReducer,
+    listConfigGlobal: state.configGlobalReducer,
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -235,6 +240,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchListOrder: (params) => {
       dispatch(fetListOrder(params));
+    },
+    fetchAllConfigGlobal: () => {
+      dispatch(fetAllConfigGlobal());
     }
   }
 }

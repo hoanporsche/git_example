@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import { MENU_NAME, MODEL_ROUTING } from '../../../share/constant/routing.constant';
 import './HeaderManagement.css';
-import { connect } from 'react-redux';
-import { fetAllConfigGlobal } from '../../../redux/action/config-global.constant';
 import Notification from '../../component/notification/Notification';
 import UserAvatar from '../../component/user-avatar/UserAvatar';
 import { isAdmin, isStore } from '../../../auth/util';
@@ -48,13 +46,6 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, show }) => {
 }
 
 class HeaderManagement extends Component {
-
-  componentDidMount() {
-    if (this.props.listConfigGlobal.length === 0) {
-      this.props.fetchAllConfigGlobal();
-    }
-  }
-
   showMenu = (menus) => {
     let result = null;
     if (menus.length > 0) {
@@ -90,16 +81,5 @@ class HeaderManagement extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    listConfigGlobal: state.configGlobalReducer,
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchAllConfigGlobal: () => {
-      dispatch(fetAllConfigGlobal());
-    }
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderManagement);
+
+export default HeaderManagement;
