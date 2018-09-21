@@ -10,9 +10,6 @@ import { CONFIG_NAME } from '../../../share/constant/configuration.constant';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 const queryString = require('query-string');
 
-const privacy = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.PRIVACY).value;
-const shippingPrice = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.SHIPPING_PRICE).value;
-
 class Home extends Component {
 
   constructor(props) {
@@ -73,11 +70,13 @@ class Home extends Component {
   }
 
   showPrivacy = () => {
+    const privacy = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)) ? JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.PRIVACY).value : '';
     return (privacy && privacy !== '') ? privacy.split('/').map((p, index) => {
       return <li key={index}>{p}</li>
     }) : null;
   }
   render() {
+    const shippingPrice = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)) ? JSON.parse(localStorage.getItem(LOCAL_STORAGE.CONFIG_GLOBAL)).find(i => i.name === CONFIG_NAME.SHIPPING_PRICE).value : '';
     return (
       <div className="container" style={{ minHeight: '45vh' }}>
         <div className="row">

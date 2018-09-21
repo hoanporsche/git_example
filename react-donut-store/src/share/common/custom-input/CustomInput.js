@@ -63,7 +63,8 @@ class CustomInput extends Component {
           onBlur={this.onChange}
           name={this.props.name}
           value={this.props.value}
-          maxLength={this.props.maxLength} />
+          maxLength={this.props.maxLength} 
+          autoComplete="off"/>
         {this.showRequired()}
       </div>
     )
