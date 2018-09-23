@@ -183,12 +183,12 @@ class OrderList extends Component {
               </div>
               <div className="col-md-4 col-lg-2">
                 <div className="form-group">
-                  <CustomDate name="startDate" placeholder="Từ ngày" onEmittedValue={this.onReceivedSelectValue} />
+                  <CustomDate name="startDate" placeholder="Từ ngày" value={this.state.params.startDate} onEmittedValue={this.onReceivedSelectValue} />
                 </div>
               </div>
               <div className="col-md-4 col-lg-2">
                 <div className="form-group">
-                  <CustomDate name="endDate" placeholder="đến ngày" onEmittedValue={this.onReceivedSelectValue} />
+                  <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
                 </div>
               </div>
               <div className="col-md-4 col-lg-2">

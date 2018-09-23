@@ -23,7 +23,7 @@ class CustomDate extends Component {
   render() {
     return (
       <Datetime dateFormat="YYYY-MM-DD" locale="vi" timeFormat={false} onChange={this.onChange}
-        inputProps={{ name: this.props.name, placeholder: this.props.placeholder, className: 'form-control' }}
+        inputProps={{ name: this.props.name, placeholder: this.props.placeholder, className: 'form-control', value: this.props.value }}
       />
     )
   }
@@ -33,6 +33,7 @@ class CustomDate extends Component {
 CustomDate.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  value: PropTypes.any
 }
 export default CustomDate;
 

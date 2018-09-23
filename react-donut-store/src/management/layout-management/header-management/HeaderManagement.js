@@ -15,12 +15,12 @@ const menus = [
   }, {
     name: MENU_NAME.REPORT,
     to: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT,
-    exact: true,
+    exact: false,
     show: isStore(),
   }, {
     name: MENU_NAME.TIMEKEEPING,
     to: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.TIMEKEEPING,
-    exact: true,
+    exact: false,
     show: isStore(),
   }, {
     name: MENU_NAME.CONFIG,

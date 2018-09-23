@@ -31,7 +31,7 @@ public class ReportRestController {
   @Autowired
   private UserService userService;
 
-  @GetMapping("/order/counting-infomation")
+  @GetMapping("/order/counting-info")
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   public ResponseEntity<?> coutingInfomation(
       @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM, required = false) String storeCode,

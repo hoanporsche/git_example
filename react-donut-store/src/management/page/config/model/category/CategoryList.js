@@ -57,6 +57,7 @@ class CategoryList extends Component {
   }
 
   onFilter = () => {
+    console.log(this.state.params)
     findListCategory(this.state.params).then(({ data }) => {
       this.setState({
         listCategory: data,
