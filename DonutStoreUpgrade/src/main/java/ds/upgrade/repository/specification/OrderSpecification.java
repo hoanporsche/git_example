@@ -47,6 +47,13 @@ public class OrderSpecification implements Specification<Order> {
     this.endDate = endDate;
     this.orderCode = orderCode;
   }
+  
+  public OrderSpecification(Date startDate, String storeCode, Date endDate) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.storeCode = storeCode;
+  }
 
   public OrderSpecification() {
   }
@@ -109,6 +116,7 @@ public class OrderSpecification implements Specification<Order> {
           cb.greaterThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), startDate));
     }
     if (endDate != null) {
+      System.out.println(endDate);
       predicate = cb.and(predicate,
           cb.lessThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), endDate));
     }

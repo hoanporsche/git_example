@@ -47,10 +47,12 @@ public class ReportServiceImpl implements ReportService {
       Pageable pageable) {
     Specification<Order> spec;
     if (StringUtils.isEmpty(rangeTime)) {
-      spec = new OrderSpecification(storeCode, startDate, endDate);
+      spec = new OrderSpecification(startDate, storeCode, endDate);
     } else {
       List<Date> rangeDate = commonMethod.createRangeDateFilter(rangeTime.trim());
-      spec = new OrderSpecification(storeCode, rangeDate.get(0), rangeDate.get(1));
+      System.out.println(rangeDate);
+      System.out.println(storeCode);
+      spec = new OrderSpecification(rangeDate.get(0), storeCode, rangeDate.get(1));
     }
     return orderRepository.findAll(spec, pageable);
   }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import './OrderReport.css';
 import { selectReportDay } from '../../../../../share/constant/configuration.constant';
 import CustomSelect from '../../../../../share/common/custom-select/CustomSelect';
 import CustomDate from '../../../../../share/common/custom-datetime/CustomDate';
 import { connect } from 'react-redux';
 import { CONFIG } from '../../../../../share/constant/configuration.constant';
 import { fetAllStore } from '../../../../../redux/action/store.constant';
-import { findCoutingInfo } from '../../ReportApiCaller';
+import { findCoutingInfo, findOrderList } from '../../ReportApiCaller';
+import NumberFormat from 'react-number-format';
 
 class OrderReport extends Component {
 
@@ -22,6 +24,7 @@ class OrderReport extends Component {
         sort: 'code,desc'
       },
       countingInfo: undefined,
+      listOrder: {},
     }
   }
 
@@ -66,41 +69,123 @@ class OrderReport extends Component {
     }).catch(error => {
       console.log(error);
     });
+    this.onFilter();
   }
 
   showCountingInfo = () => {
     const { countingInfo } = this.state;
     return countingInfo ? (
-      <div className="row">
+      <div className="row text-center">
         <div className="col-2">
-          <h2>Thông tin chung</h2>
+          <div className="detail-counting-info">
+            Tổng đơn :
+          <h2>{countingInfo.totalOrder}</h2>
+          </div>
         </div>
         <div className="col-2">
-          Tổng số : 
-          <h2>{countingInfo.totalOrder}</h2>
+          <div className="detail-counting-info">
+            Đơn tại chỗ :
+          <h2>{countingInfo.totalNotShipping}</h2>
+          </div>
         </div>
         <div className="col-2">
-          Tổng đơn :
-          <h2>{countingInfo.totalOrder}</h2>
+          <div className="detail-counting-info">
+            Đơn giao đi :
+          <h2>{countingInfo.totalShipping}</h2>
+          </div>
         </div>
-        <div className="col-2">
-          Tổng đơn :
-          <h2>{countingInfo.totalOrder}</h2>
+        <div className="col-3">
+          <div className="detail-counting-info">
+            Tổng phí ship :
+          <h2><NumberFormat value={countingInfo.totalShippingPrice} displayType={'text'} thousandSeparator={true} />₫</h2>
+          </div>
         </div>
-        <div className="col-2">
-          Tổng đơn :
-          <h2>{countingInfo.totalOrder}</h2>
-        </div>
-        <div className="col-2">
-          Tổng đơn :
-          <h2>{countingInfo.totalOrder}</h2>
+        <div className="col-3">
+          <div className="detail-counting-info">
+            Tổng thu nhập:
+          <h2><NumberFormat value={countingInfo.totalInbound} displayType={'text'} thousandSeparator={true} />₫</h2>
+          </div>
         </div>
       </div>
     ) : null;
   }
+
+  first = () => {
+    if (!this.props.listOrder.first) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: 0,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  prev = () => {
+    if (!this.props.listOrder.first) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: this.props.listOrder.number - 1,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  next = () => {
+    if (!this.props.listOrder.last) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: this.props.listOrder.number + 1,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  last = () => {
+    if (!this.props.listOrder.last) {
+      this.setState({
+        params: Object.assign({}, this.state.params, {
+          page: this.props.listOrder.totalPages - 1,
+        })
+      }, () => {
+        this.onFilter();
+      });
+    }
+  }
+  showPagination = () => {
+    const { totalPages } = this.state.listOrder;
+    return (totalPages) ? (<p>
+      Page {(totalPages === 0) ? 0 : this.state.listOrder.number + 1} of {totalPages}
+    </p>) : (<p>Page 0 of 0</p>);
+  }
+
+  onFilter = () => {
+    findOrderList(this.state.params).then(({ data }) => {
+      this.setState({
+        listOrder: data,
+      })
+    })
+  }
+  showListOrder = () => {
+    const { listOrder } = this.state;
+    return (listOrder.content && listOrder.content.length > 0) ? (
+      <div className="row">
+        {this.showSingleOrder(listOrder.content)}
+      </div>
+    ) : null;
+  }
+  showSingleOrder = (list) => {
+    return list.map((order, index) => {
+      return <div key={index} className="col-12">
+        {new Date(order.dateCreated).toLocaleString()} - {order.nameCreated}
+      </div>
+    })
+  }
   render() {
     return (
-      <div className="container-fluid page-min-height">
+      <div id="order-report" className="container-fluid page-min-height">
         OrderReport
         <div className="row main-row">
           <div className="col-md-4 col-lg-2">
@@ -127,7 +212,26 @@ class OrderReport extends Component {
             </div>
           </div>
         </div>
+        <hr />
         {this.showCountingInfo()}
+        {this.showListOrder()}
+        <div className="row padding-top1">
+          <div className="col-12">
+            <div className="float-right">
+              <div className="btn-group btn-group-sm" role="group">
+                <button type="button" className="btn btn-outline-info" onClick={this.first}><i className="fas fa-angle-double-left"></i></button>
+                <button type="button" className="btn btn-outline-info" onClick={this.prev}><i className="fas fa-angle-left"></i></button>
+              </div>
+              <div className="pagination__page-number">
+                {this.showPagination()}
+              </div>
+              <div className="btn-group btn-group-sm" role="group">
+                <button type="button" className="btn btn-outline-info" onClick={this.next}><i className="fas fa-angle-right"></i></button>
+                <button type="button" className="btn btn-outline-info" onClick={this.last}><i className="fas fa-angle-double-right"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
