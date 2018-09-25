@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Order;
 import ds.upgrade.model.User;
-import ds.upgrade.model.json.OrderReportJson;
+import ds.upgrade.model.json.ReportOrderJson;
 import ds.upgrade.service.ReportService;
 import ds.upgrade.service.UserService;
 import ds.upgrade.util.AppConstant;
@@ -52,11 +52,11 @@ public class ReportRestController {
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-      OrderReportJson orderReportJson = reportService.countingInfomation(newStoreCode, newStartDate,
+      ReportOrderJson orderReportJson = reportService.countingInfomation(newStoreCode, newStartDate,
           newEndDate, rangeTime);
 
       if (orderReportJson != null)
-        return new ResponseEntity<OrderReportJson>(orderReportJson, HttpStatus.OK);
+        return new ResponseEntity<ReportOrderJson>(orderReportJson, HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {

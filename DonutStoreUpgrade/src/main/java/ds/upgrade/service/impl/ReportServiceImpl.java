@@ -10,9 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import ds.upgrade.model.Item;
 import ds.upgrade.model.Order;
-import ds.upgrade.model.json.OrderReportJson;
+import ds.upgrade.model.json.ReportOrderJson;
+import ds.upgrade.model.json.ReportQuantityJson;
+import ds.upgrade.repository.ItemRepository;
 import ds.upgrade.repository.OrderRepository;
+import ds.upgrade.repository.QuantityRepository;
 import ds.upgrade.repository.specification.OrderSpecification;
 import ds.upgrade.service.ReportService;
 import ds.upgrade.util.service.CommonMethod;
@@ -24,15 +28,24 @@ public class ReportServiceImpl implements ReportService {
   private OrderRepository orderRepository;
   @Autowired
   private CommonMethod commonMethod;
+  @Autowired
+  private ItemRepository itemRepository;
+  @Autowired
+  private QuantityRepository quantityRepository;
   
   @Override
-  public OrderReportJson countingInfomation(String storeCode, Date startDate, Date endDate,
+  public ReportOrderJson countingInfomation(String storeCode, Date startDate, Date endDate,
       String rangeTime) {
-    OrderReportJson orderReportJson = new OrderReportJson();
+    List<Item> listItem = itemRepository.findAll();
+    ReportOrderJson orderReportJson = new ReportOrderJson();
     if (StringUtils.isEmpty(rangeTime)) {
       orderReportJson = orderRepository.countingInfomation(startDate, endDate, storeCode);
       orderReportJson.setTotalShipping(orderRepository.countingShipping(startDate, endDate, storeCode));
       orderReportJson.setTotalNotShipping(orderRepository.countingNotShipping(startDate, endDate, storeCode));
+      listItem.forEach(i -> {
+        ReportQuantityJson rqj = new ReportQuantityJson(i.getName(), quantityRepository.countQuantityForCountingInfo(startDate, endDate, i.getId()));
+//        orderReportJson.getReportQuantityJsons().add(rqj);
+      });
     } else {
       List<Date> rangeDate = commonMethod.createRangeDateFilter(rangeTime.trim());
       orderReportJson = orderRepository.countingInfomation(rangeDate.get(0), rangeDate.get(1), storeCode);

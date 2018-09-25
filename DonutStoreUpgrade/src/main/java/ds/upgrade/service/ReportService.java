@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ds.upgrade.model.Order;
-import ds.upgrade.model.json.OrderReportJson;
+import ds.upgrade.model.json.ReportOrderJson;
 
 public interface ReportService {
 
-  OrderReportJson countingInfomation(String storeCode, Date startDate, Date endDate, String rangeTime);
+  ReportOrderJson countingInfomation(String storeCode, Date startDate, Date endDate, String rangeTime);
   
   Page<Order> findListOrder(String storeCode, Date startDate, Date endDate, String rangeTime, Pageable pageable);
 }

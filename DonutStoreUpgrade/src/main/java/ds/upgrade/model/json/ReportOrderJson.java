@@ -1,8 +1,10 @@
 package ds.upgrade.model.json;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class OrderReportJson implements Serializable {
+public class ReportOrderJson implements Serializable {
 
   private static final long serialVersionUID = 4197942078910386097L;
   private Long totalOrder;
@@ -10,18 +12,18 @@ public class OrderReportJson implements Serializable {
   private int totalNotShipping;
   private Long totalShippingPrice;
   private Long totalInbound;
-
-  public OrderReportJson() {
+  private List<ReportQuantityJson> reportQuantityJsons = new ArrayList<>();
+  public ReportOrderJson() {
   }
 
-  public OrderReportJson(Long totalOrder, Long totalShippingPrice, Long totalInbound) {
+  public ReportOrderJson(Long totalOrder, Long totalShippingPrice, Long totalInbound) {
     super();
     this.totalOrder = totalOrder;
     this.totalShippingPrice = totalShippingPrice;
     this.totalInbound = totalInbound;
   }
 
-  public OrderReportJson(Long totalOrder, int totalShipping, int totalNotShipping,
+  public ReportOrderJson(Long totalOrder, int totalShipping, int totalNotShipping,
       Long totalShippingPrice, Long totalInbound) {
     this.totalOrder = totalOrder;
     this.totalShipping = totalShipping;
@@ -68,5 +70,13 @@ public class OrderReportJson implements Serializable {
 
   public void setTotalNotShipping(int totalNotShipping) {
     this.totalNotShipping = totalNotShipping;
+  }
+
+  public List<ReportQuantityJson> getReportQuantityJsons() {
+    return reportQuantityJsons;
+  }
+
+  public void setReportQuantityJsons(List<ReportQuantityJson> reportQuantityJsons) {
+    this.reportQuantityJsons = reportQuantityJsons;
   }
 }
