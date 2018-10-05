@@ -8,6 +8,7 @@ import { CONFIG } from '../../../../../share/constant/configuration.constant';
 import { fetAllStore } from '../../../../../redux/action/store.constant';
 import { findCoutingInfo, findOrderList } from '../../ReportApiCaller';
 import NumberFormat from 'react-number-format';
+import FlexReport from '../../../../component/flex-report/FlexReport';
 
 class OrderReport extends Component {
 
@@ -183,11 +184,25 @@ class OrderReport extends Component {
       </div>
     })
   }
+  showListQuantity = () => {
+    const reportQuantityJsons = this.state.countingInfo ? this.state.countingInfo.reportQuantityJsons : undefined;
+    const listFlex = [];
+    let result = null;
+    if (reportQuantityJsons && reportQuantityJsons.length > 0) {
+      reportQuantityJsons.forEach(i => {
+        listFlex.push({
+          name: i.itemName,
+          sum: i.totalQuantity,
+        });
+      });
+      result = (<FlexReport listFlex={listFlex} />);
+    }
+    return result;
+  }
   render() {
     return (
       <div id="order-report" className="container-fluid page-min-height">
-        OrderReport
-        <div className="row main-row">
+        <div className="row main-row padding-top1">
           <div className="col-md-4 col-lg-2">
             <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode} required={false}
               data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
@@ -206,7 +221,7 @@ class OrderReport extends Component {
               <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
           </div>
-          <div className="col-md-4 col-lg-4">
+          <div className="col-md-8 col-lg-4">
             <div className="float-right">
               <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.findReport}><i className="fas fa-filter"></i></button>
             </div>
@@ -214,6 +229,9 @@ class OrderReport extends Component {
         </div>
         <hr />
         {this.showCountingInfo()}
+        <div className="row padding-top1">
+          <div className="col-12">{this.showListQuantity()}</div>
+        </div>
         {this.showListOrder()}
         <div className="row padding-top1">
           <div className="col-12">

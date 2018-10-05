@@ -1,5 +1,6 @@
 package ds.upgrade.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,20 +39,25 @@ public class ReportServiceImpl implements ReportService {
       String rangeTime) {
     List<Item> listItem = itemRepository.findAll();
     ReportOrderJson orderReportJson = new ReportOrderJson();
+    List<ReportQuantityJson> listReportQuantityJson = new ArrayList<>();
     if (StringUtils.isEmpty(rangeTime)) {
       orderReportJson = orderRepository.countingInfomation(startDate, endDate, storeCode);
       orderReportJson.setTotalShipping(orderRepository.countingShipping(startDate, endDate, storeCode));
       orderReportJson.setTotalNotShipping(orderRepository.countingNotShipping(startDate, endDate, storeCode));
       listItem.forEach(i -> {
         ReportQuantityJson rqj = new ReportQuantityJson(i.getName(), quantityRepository.countQuantityForCountingInfo(startDate, endDate, i.getId()));
-//        orderReportJson.getReportQuantityJsons().add(rqj);
+        listReportQuantityJson.add(rqj);
       });
     } else {
       List<Date> rangeDate = commonMethod.createRangeDateFilter(rangeTime.trim());
       orderReportJson = orderRepository.countingInfomation(rangeDate.get(0), rangeDate.get(1), storeCode);
       orderReportJson.setTotalShipping(orderRepository.countingShipping(rangeDate.get(0), rangeDate.get(1), storeCode));
-      orderReportJson.setTotalNotShipping(orderRepository.countingNotShipping(rangeDate.get(0), rangeDate.get(1), storeCode));
+      orderReportJson.setTotalNotShipping(orderRepository.countingNotShipping(rangeDate.get(0), rangeDate.get(1), storeCode));listItem.forEach(i -> {
+        ReportQuantityJson rqj = new ReportQuantityJson(i.getName(), quantityRepository.countQuantityForCountingInfo(rangeDate.get(0), rangeDate.get(1), i.getId()));
+        listReportQuantityJson.add(rqj);
+      });
     }
+    orderReportJson.setReportQuantityJsons(listReportQuantityJson);
     return orderReportJson;
   }
 
@@ -63,8 +69,6 @@ public class ReportServiceImpl implements ReportService {
       spec = new OrderSpecification(startDate, storeCode, endDate);
     } else {
       List<Date> rangeDate = commonMethod.createRangeDateFilter(rangeTime.trim());
-      System.out.println(rangeDate);
-      System.out.println(storeCode);
       spec = new OrderSpecification(rangeDate.get(0), storeCode, rangeDate.get(1));
     }
     return orderRepository.findAll(spec, pageable);

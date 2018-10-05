@@ -61,7 +61,7 @@ public class ReportRestController {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
     } catch (Exception e) {
       System.out.println(e.getMessage());
-      return new ResponseEntity<String>(AppConstant.REPONSE.SERVER_ERROR,
+      return new ResponseEntity<String>(e.getMessage() +AppConstant.REPONSE.SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<String>(AppConstant.REPONSE.NO_CONTENT, HttpStatus.NO_CONTENT);

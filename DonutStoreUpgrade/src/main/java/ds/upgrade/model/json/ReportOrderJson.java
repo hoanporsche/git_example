@@ -1,7 +1,6 @@
 package ds.upgrade.model.json;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReportOrderJson implements Serializable {
@@ -12,7 +11,7 @@ public class ReportOrderJson implements Serializable {
   private int totalNotShipping;
   private Long totalShippingPrice;
   private Long totalInbound;
-  private List<ReportQuantityJson> reportQuantityJsons = new ArrayList<>();
+  private List<ReportQuantityJson> reportQuantityJsons;
   public ReportOrderJson() {
   }
 

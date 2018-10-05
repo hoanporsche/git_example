@@ -8,10 +8,10 @@ public class ReportQuantityJson implements Serializable {
   private String itemName;
   private int totalQuantity;
 
-  public ReportQuantityJson(String itemName, int totalQuantity) {
+  public ReportQuantityJson(String itemName, Integer totalQuantity) {
     super();
     this.itemName = itemName;
-    this.totalQuantity = totalQuantity;
+    this.totalQuantity = (totalQuantity == null) ? 0 : totalQuantity;
   }
 
   @Override
@@ -31,7 +31,7 @@ public class ReportQuantityJson implements Serializable {
     return totalQuantity;
   }
 
-  public void setTotalQuantity(int totalQuantity) {
-    this.totalQuantity = totalQuantity;
+  public void setTotalQuantity(Integer totalQuantity) {
+    this.totalQuantity = (totalQuantity == null) ? 0 : totalQuantity;
   }
 }

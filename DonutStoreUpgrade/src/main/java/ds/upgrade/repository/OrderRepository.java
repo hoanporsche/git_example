@@ -15,7 +15,7 @@ public interface OrderRepository
 
   Order findBycode(String code);
 
-  @Query("SELECT new ds.upgrade.model.json.OrderReportJson(count(ord), sum(ord.shippingPrice), sum(ord.totalPrice)) FROM Order ord"
+  @Query("SELECT new ds.upgrade.model.json.ReportOrderJson(count(ord), sum(ord.shippingPrice), sum(ord.totalPrice)) FROM Order ord"
       + " WHERE ord.dateCreated <=:endDate " + "AND ord.storeId.code =:storeCode "
       + "AND ((:startDate IS NULL AND ord.dateCreated IS NOT NULL) or ord.dateCreated >=:startDate)")
   ReportOrderJson countingInfomation(@Param("startDate") Date startDate,

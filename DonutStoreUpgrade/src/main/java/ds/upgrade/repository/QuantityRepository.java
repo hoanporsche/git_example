@@ -20,7 +20,7 @@ public interface QuantityRepository
   @Query(QueryConstant.QUANTITY.DELETE_BY_ORDER_CODE)
   void deleteByOrderCode(@Param(AppConstant.PARAM.CODE_PARAM) String code);
 
-  @Query("SELECT count(q.quantity) FROM Quantity q WHERE q.orderCode.dateCreated <= :endDate AND q.itemId.id = :itemId AND ((:startDate IS NULL AND q.orderCode.dateCreated IS NOT NULL) OR q.orderCode.dateCreated >= :startDate)")
-  int countQuantityForCountingInfo(@Param("startDate") Date startDate,
-      @Param("endDate") Date endDate, @Param("itemId") Long itemId);
+  @Query("SELECT sum(q.quantity) FROM Quantity q WHERE q.orderCode.dateCreated <= :endDate AND q.itemId.id = :itemId AND ((:startDate IS NULL AND q.orderCode.dateCreated IS NOT NULL) OR q.orderCode.dateCreated >= :startDate)")
+  Integer countQuantityForCountingInfo(@Param(AppConstant.PARAM.START_DATE_PARAM) Date startDate,
+      @Param(AppConstant.PARAM.END_DATE_PARAM) Date endDate, @Param(AppConstant.PARAM.ITEM_ID_PARAM) Long itemId);
 }
