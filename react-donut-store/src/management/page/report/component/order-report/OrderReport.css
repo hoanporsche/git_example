@@ -3,3 +3,55 @@
   border-radius: 10px;
   color: blue;
 }
+
+#order-report .row .flex-report {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: stretch;
+  margin-bottom: 3%;
+}
+
+#order-report .row .flex-report .single-flex {
+  display: inline-block;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background-color: #f2f3f880;
+  min-width: 100px;
+  flex: auto;
+  position: relative;
+  border: 1px solid red;
+  text-align: center;
+  color: blue;
+  border-radius: 10px;
+}
+
+#order-report .row .flex-report .single-flex:not(:first-child) {
+  margin-left: 0.5%;
+}
+
+#order-report .row .flex-report .single-flex .flex-container {
+  padding-top: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#order-report .row .flex-report .single-flex .flex-container p {
+  font-size: 2em;
+}
+
+@media only screen and (max-width: 768px) {
+  #order-report .row .flex-report .single-flex .flex-container p {
+    font-size: 1em;
+  }
+  #order-report .row .flex-report .single-flex .flex-container h4 {
+    font-size: 1em;
+  }
+}

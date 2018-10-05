@@ -76,38 +76,38 @@ class OrderReport extends Component {
   showCountingInfo = () => {
     const { countingInfo } = this.state;
     return countingInfo ? (
-      <div className="row text-center">
-        <div className="col-2">
-          <div className="detail-counting-info">
-            Tổng đơn :
-          <h2>{countingInfo.totalOrder}</h2>
+      <ul className="flex-report">
+        <li className="single-flex">
+          <div className="flex-container">
+            <h4>Tổng đơn :</h4>
+            <p>{countingInfo.totalOrder}</p>
           </div>
-        </div>
-        <div className="col-2">
-          <div className="detail-counting-info">
-            Đơn tại chỗ :
-          <h2>{countingInfo.totalNotShipping}</h2>
+        </li>
+        <li className="single-flex">
+          <div className="flex-container">
+            <h4>Đơn tại chỗ :</h4>
+            <p>{countingInfo.totalNotShipping}</p>
           </div>
-        </div>
-        <div className="col-2">
-          <div className="detail-counting-info">
-            Đơn giao đi :
-          <h2>{countingInfo.totalShipping}</h2>
+        </li>
+        <li className="single-flex">
+          <div className="flex-container">
+            <h4>Đơn giao đi :</h4>
+            <p>{countingInfo.totalShipping}</p>
           </div>
-        </div>
-        <div className="col-3">
-          <div className="detail-counting-info">
-            Tổng phí ship :
-          <h2><NumberFormat value={countingInfo.totalShippingPrice} displayType={'text'} thousandSeparator={true} />₫</h2>
+        </li>
+        <li className="single-flex">
+          <div className="flex-container">
+            <h4>Tổng phí ship :</h4>
+            <p><NumberFormat value={countingInfo.totalShippingPrice} displayType={'text'} thousandSeparator={true} />₫</p>
           </div>
-        </div>
-        <div className="col-3">
-          <div className="detail-counting-info">
-            Tổng thu nhập:
-          <h2><NumberFormat value={countingInfo.totalInbound} displayType={'text'} thousandSeparator={true} />₫</h2>
+        </li>
+        <li className="single-flex">
+          <div className="flex-container">
+            <h4>Tổng thu nhập :</h4>
+            <p><NumberFormat value={countingInfo.totalInbound} displayType={'text'} thousandSeparator={true} />₫</p>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     ) : null;
   }
 
@@ -228,8 +228,8 @@ class OrderReport extends Component {
           </div>
         </div>
         <hr />
-        {this.showCountingInfo()}
         <div className="row padding-top1">
+          <div className="col-12">{this.showCountingInfo()}</div>
           <div className="col-12">{this.showListQuantity()}</div>
         </div>
         {this.showListOrder()}
