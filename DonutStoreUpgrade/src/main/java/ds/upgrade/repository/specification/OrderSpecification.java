@@ -116,7 +116,6 @@ public class OrderSpecification implements Specification<Order> {
           cb.greaterThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), startDate));
     }
     if (endDate != null) {
-      System.out.println(endDate);
       predicate = cb.and(predicate,
           cb.lessThanOrEqualTo(root.<Date>get(AppConstant.PARAM.DATE_CREATED_PARAM), endDate));
     }
