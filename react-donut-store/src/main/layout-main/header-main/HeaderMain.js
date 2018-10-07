@@ -10,9 +10,7 @@ import { CONFIG_NAME } from '../../../share/constant/configuration.constant';
 class HeaderMain extends Component {
 
   componentDidMount() {
-    if (this.props.listConfigGlobal.length === 0) {
-      this.props.fetchAllConfigGlobal();
-    }
+    this.props.fetchAllConfigGlobal();
   }
 
   findLogo = () => {
@@ -27,7 +25,7 @@ class HeaderMain extends Component {
           <SearchRedirect />
           <div className="col-md-2 header-logo">
             <NavLink to={"/"} className="image-logo">
-            <img src={this.findLogo()} className="image" alt="brand" />
+              <img src={this.findLogo()} className="image" alt="brand" />
             </NavLink>
           </div>
           <div className="col-md-5 header-cart">

@@ -170,7 +170,7 @@ const calculatedDistance = (distance) => {
     calculated = findMinShippingPrice();
   }
   if (distance.value > findMinAhaDistance()*1000) {
-    calculated = (parseFloat(distance.value / 1000 + 0.1).toFixed(1) * findSingleShippingPrice()) - findSubsidyPrice();
+    calculated = parseInt(((distance.value + 100) * findSingleShippingPrice())/ 1000 - findSubsidyPrice(),0);
   }
   return calculated;
 }

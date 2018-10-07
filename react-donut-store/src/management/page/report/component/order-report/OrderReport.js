@@ -172,17 +172,18 @@ class OrderReport extends Component {
   showListOrder = () => {
     const { listOrder } = this.state;
     return (listOrder.content && listOrder.content.length > 0) ? (
-      <div className="row">
-        {this.showSingleOrder(listOrder.content)}
-      </div>
+      listOrder.content.map((order, index) => {
+        return <tr key={index}>
+          <th scope="row">{index}</th>
+          <td>{order.code}</td>
+          <td>{new Date(order.dateCreated).toLocaleString()}</td>
+          <td>{order.nameCreated}</td>
+          <td>{order.statusId.name}</td>
+          <td>{order.shipping ? 'Giao đi' : 'Tại chỗ'}</td>
+          <td><NumberFormat value={order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</td>
+        </tr>
+      })
     ) : null;
-  }
-  showSingleOrder = (list) => {
-    return list.map((order, index) => {
-      return <div key={index} className="col-12">
-        {new Date(order.dateCreated).toLocaleString()} - {order.nameCreated}
-      </div>
-    })
   }
   showListQuantity = () => {
     const reportQuantityJsons = this.state.countingInfo ? this.state.countingInfo.reportQuantityJsons : undefined;
@@ -232,7 +233,24 @@ class OrderReport extends Component {
           <div className="col-12">{this.showCountingInfo()}</div>
           <div className="col-12">{this.showListQuantity()}</div>
         </div>
-        {this.showListOrder()}
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Code</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Status</th>
+                <th scope="col">Shipping/Not</th>
+                <th scope="col">Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListOrder()}
+            </tbody>
+          </table>
+        </div>
         <div className="row padding-top1">
           <div className="col-12">
             <div className="float-right">
