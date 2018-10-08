@@ -98,83 +98,66 @@ class SingleOrderManagement extends Component {
     let popupWinindow;
     let pr = `
       <div id="invoice-POS">
-
+        
         <div id="mid">
           <div class="info">
             <h2>Bánh rán Hoàn</h2>
-            <p>
-              Khách hàng: Anh/chị ${order.nameCreated} <br>
-              Địa chỉ: ${order.shipping ? order.addressShipping : 'Khách dùng tại chỗ'} <br>
-              Điện thoại: ${order.phone} <br>
-            </p>
+            <h5>${order.storeId.address}</h5>
+            <h5>ĐT: ${order.storeId.phone}</h5>
+            <hr/>
+            <b>Ngày tháng:</b> <span>${new Date().toLocaleString('vi-VN')}</span> <br>
+            <b>Khách hàng:</b> <span>Anh/chị ${order.nameCreated}</span> <br>
+            <b>Địa chỉ:</b> <span>${order.shipping ? order.addressShipping : 'Khách dùng tại chỗ'}</span> <br>
+            <b>Điện thoại:</b> <span>${order.phone}</span> <br>
           </div>
         </div>
-
-        <div class="info">
-          <p>
-            Mã đơn hàng: ${order.code} <br>
-          </p>
-        </div>
-        
-
+        <hr/>
         <div id="bot">
-              <table>
-                <tr class="tieude">
-                  <th><strong>Sản phẩm</strong></th>
-                  <th><strong>Giá</strong></th>
-                 
-                  <th><strong>SL</strong></th>
-                </tr>`
+        <div class="info">
+          <b>Mã đơn hàng:</b> ${order.code} <br>
+        </div>
+        <table class="tieude">
+          <tr>
+            <th>Sản phẩm</th>
+            <th>Đ.Giá</th>
+            <th>SL</th>
+            <th class="soluong">T.Tiền</th>
+          </tr>`
     let a = ''
     order.quantities.forEach(quantity => {
-      a += `<tr><td><p>` + quantity.itemId.name + `</p></td>` +
-        `<td><p>` + quantity.itemId.singleValue + `</p></td>` +
-
-        `<td><p class="soluong">` + quantity.quantity + `</p></td></tr>`
+      a += `<tr><td><p>${quantity.itemId.name.toUpperCase()}</p></td>
+        <td><p>${(+quantity.itemId.singleValue).toLocaleString()}</p></td>
+        <td><p>${quantity.quantity}</p></td>
+        <td><p class="soluong">${(+(quantity.quantity * quantity.itemId.singleValue)).toLocaleString()}</p></td></tr>`
     })
     pr += a;
 
     pr += `
-            <tr id="total">
-              <td>
-                <strong>Phí ship:</strong>
-              </td>
-              <td class="money">
-                <strong>${order.shipping ? order.shippingPrice : 0}</strong>
-              </td>
-              <td></td>
-            </tr>
-            <tr id="total">
-              <td>
-                <strong>Tổng tiền:</strong>
-              </td>
-              <td class="money">
-                <strong>${order.totalPrice}</strong>
-              </td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>
-                <strong>Tổng tiền nhận:</strong>
-              </td>
-              <td class="money">
-                <strong>0</strong>
-              </td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>
-                <strong>Tổng tiền trả:</strong>
-              </td>
-              <td class="money">
-                <strong>0</strong>
-              </td>
-              <td></td>
-            </tr>
-
           </table>
+          <div style="width:100%;display: inline-flex; margin: -12px 0;">
+            <div style="width:50%">
+                <p>Tổng cộng:</p>
+            </div>
+            <div style="width:50%">
+              <p style="float: right;">${order.shipping ? (+(order.totalPrice - order.shippingPrice)).toLocaleString() : (+order.totalPrice).toLocaleString()}₫</p>
+            </div>
+          </div>
+          <div style="width:100%;display: inline-flex; margin: -12px 0;">
+            <div style="width:50%">
+                <p>Phí ship:</p>
+            </div>
+            <div style="width:50%">
+              <p style="float: right;">${order.shipping ? (+order.shippingPrice).toLocaleString() : 0}₫</p>
+            </div>
+          </div>
+          <div style="width:100%;display: inline-flex;">
+            <div style="width:50%">
+            <strong>Tổng tiền:</strong>
+            </div>
+            <div style="width:50%">
+            <strong style="float: right;">${(+order.totalPrice).toLocaleString()}₫</strong>
+            </div>
+          </div>
         </div>
       </div>
       <div id="legalcopy">
@@ -190,10 +173,8 @@ class SingleOrderManagement extends Component {
     <html>
       <head>
         <style>
-
         HTML, BODY {
           color: #000000;
-          font-family: monaco, Consolas, "Lucida Console", monospace;
         }
         #invoice-POS {
           padding: 0mm;
@@ -201,18 +182,34 @@ class SingleOrderManagement extends Component {
           width: 80mm;
         }
         h2 {
-          font-size: 1.1em;
           text-align: center;
+          margin: 1em 0 0 0;
         }
-        #tieude{
-          margin-top: -20mm;
-          display: block;
-          text-align: left;
+        h5 {
+          text-align: center;
+          margin: 0
         }
-        /* cell*/
-        strong {
-          font-size: 1em;
+        .tieude{
+          width: 100%;
+          margin-bottom: 1rem;
+          background-color: transparent;
+          margin-top: 1em;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td {
+          padding: 8px 0px;
           text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+        th {
+          padding: 2px 0px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+          border-top: 1px solid #ddd;
+          font-size:1em;
         }
         p {
           font-size: 0.9em;
@@ -220,13 +217,13 @@ class SingleOrderManagement extends Component {
         }
         .soluong{
           text-align: right;
-          padding-right: 0.5mm;
         }
         span {
-          font-size: 0.9em;
+          font-size: 0.7em;
           line-height: 0.8em;
         }
-        #top {
+        b {
+          font-size:0.7em;
         }
         #mid{
           margin-top: -2mm;
@@ -240,6 +237,7 @@ class SingleOrderManagement extends Component {
         </style>
       </head>
       <body onload="window.print();window.close()"> 
+      <body > 
 
       ${pr}
       
