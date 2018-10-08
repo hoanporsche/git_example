@@ -92,13 +92,169 @@ class SingleOrderManagement extends Component {
       showUpdateModal: false
     })
   }
+
+  onPrint = () => {
+    const { order } = this.props;
+    let popupWinindow;
+    let pr = `
+      <div id="invoice-POS">
+
+        <div id="mid">
+          <div class="info">
+            <h2>Bánh rán Hoàn</h2>
+            <p>
+              Khách hàng: Anh/chị ${order.nameCreated} <br>
+              Địa chỉ: ${order.shipping ? order.addressShipping : 'Khách dùng tại chỗ'} <br>
+              Điện thoại: ${order.phone} <br>
+            </p>
+          </div>
+        </div>
+
+        <div class="info">
+          <p>
+            Mã đơn hàng: ${order.code} <br>
+          </p>
+        </div>
+        
+
+        <div id="bot">
+              <table>
+                <tr class="tieude">
+                  <th><strong>Sản phẩm</strong></th>
+                  <th><strong>Giá</strong></th>
+                 
+                  <th><strong>SL</strong></th>
+                </tr>`
+    let a = ''
+    order.quantities.forEach(quantity => {
+      a += `<tr><td><p>` + quantity.itemId.name + `</p></td>` +
+        `<td><p>` + quantity.itemId.singleValue + `</p></td>` +
+
+        `<td><p class="soluong">` + quantity.quantity + `</p></td></tr>`
+    })
+    pr += a;
+
+    pr += `
+            <tr id="total">
+              <td>
+                <strong>Phí ship:</strong>
+              </td>
+              <td class="money">
+                <strong>${order.shipping ? order.shippingPrice : 0}</strong>
+              </td>
+              <td></td>
+            </tr>
+            <tr id="total">
+              <td>
+                <strong>Tổng tiền:</strong>
+              </td>
+              <td class="money">
+                <strong>${order.totalPrice}</strong>
+              </td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>
+                <strong>Tổng tiền nhận:</strong>
+              </td>
+              <td class="money">
+                <strong>0</strong>
+              </td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>
+                <strong>Tổng tiền trả:</strong>
+              </td>
+              <td class="money">
+                <strong>0</strong>
+              </td>
+              <td></td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+      <div id="legalcopy">
+        <p class="legal">
+          <strong>Rất hân hạnh được phục vụ quý khách!</strong>
+        </p>
+      </div>
+    `
+    popupWinindow = window.open('', '_blank', `width=80mm,height=auto,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no,
+    top=0,left=0`);
+    popupWinindow.document.open();
+    popupWinindow.document.write(`
+    <html>
+      <head>
+        <style>
+
+        HTML, BODY {
+          color: #000000;
+          font-family: monaco, Consolas, "Lucida Console", monospace;
+        }
+        #invoice-POS {
+          padding: 0mm;
+          margin: 0 auto;
+          width: 80mm;
+        }
+        h2 {
+          font-size: 1.1em;
+          text-align: center;
+        }
+        #tieude{
+          margin-top: -20mm;
+          display: block;
+          text-align: left;
+        }
+        /* cell*/
+        strong {
+          font-size: 1em;
+          text-align: left;
+        }
+        p {
+          font-size: 0.9em;
+          line-height: 1.2em;
+        }
+        .soluong{
+          text-align: right;
+          padding-right: 0.5mm;
+        }
+        span {
+          font-size: 0.9em;
+          line-height: 0.8em;
+        }
+        #top {
+        }
+        #mid{
+          margin-top: -2mm;
+        }
+        #legalcopy {
+          margin-top: 4mm;
+          margin-bottom: 2mm;
+          display: block;
+          text-align: center;
+        }
+        </style>
+      </head>
+      <body onload="window.print();window.close()"> 
+
+      ${pr}
+      
+      </body>
+      </html>
+    `);
+    popupWinindow.document.close();
+  }
   render() {
     const { order } = this.props;
     return order ? (
       <div id="single-order-management" className="card">
         <div className="detail-header">
           <div className="row">
-            <div className="col-12 col-md-9">
+            <div className="col-12 col-lg-9">
               <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>&nbsp;
               <span className="normal-text">Đơn hàng </span>
               <span className="title-text">{order.code}</span>
@@ -107,14 +263,15 @@ class SingleOrderManagement extends Component {
               <span className="normal-text"> với giá trị </span>
               <span className="title-text"><NumberFormat value={order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span>
             </div>
-            <div className="col-12 col-md-3">
+            <div className="col-12 col-lg-3">
               <div className="row">
-                <div className="col-8 col-sm-8 col-lg-9 col-xl-6 offset-xl-3 main-row">
+                <div className="col-7 col-sm-8 col-lg-7 main-row">
                   {this.showChangeStatus(order.statusId.id)}
                 </div>
-                <div className="col-4 col-sm-4 col-lg-3">
+                <div className="col-5 col-sm-4 col-lg-5">
                   <div className="float-right">
-                    {this.showEditButton()}
+                    {this.showEditButton()}&nbsp;
+                    <button className="btn btn-outline-secondary" data-tip="In hóa đơn" onClick={this.onPrint}><i className="fas fa-print"></i></button>
                   </div>
                 </div>
               </div>
@@ -160,7 +317,7 @@ class SingleOrderManagement extends Component {
             </div>
           </div>
         </div>
-        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
+        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal} /> : null}
         <ReactTooltip />
       </div>
     ) : (
