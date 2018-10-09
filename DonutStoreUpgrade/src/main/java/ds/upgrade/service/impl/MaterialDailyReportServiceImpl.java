@@ -55,9 +55,9 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @return
    */
   @Override
-  public Page<MaterialDailyReport> findList(String storeName, Long materialId, Date startDate,
+  public Page<MaterialDailyReport> findList(String storeCode, Long materialId, Date startDate,
       Date endDate, Pageable pageable) {
-    Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeName,
+    Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeCode,
         materialId, startDate, endDate);
     return materialDailyReportRepository.findAll(spec, pageable);
   }

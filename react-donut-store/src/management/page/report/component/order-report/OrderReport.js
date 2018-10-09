@@ -176,7 +176,7 @@ class OrderReport extends Component {
         return <tr key={index}>
           <th scope="row">{index}</th>
           <td>{order.code}</td>
-          <td>{new Date(order.dateCreated).toLocaleString()}</td>
+          <td>{new Date(order.dateCreated).toLocaleString('vi-VN')}</td>
           <td>{order.nameCreated}</td>
           <td>{order.statusId.name}</td>
           <td>{order.shipping ? 'Giao đi' : 'Tại chỗ'}</td>
@@ -275,9 +275,7 @@ class OrderReport extends Component {
 
 const mapStateToProps = state => {
   return {
-    listOrder: state.orderReducer,
     listStore: state.storeReducer,
-    listConfigGlobal: state.configGlobalReducer,
   }
 }
 const mapDispatchToProps = (dispatch) => {

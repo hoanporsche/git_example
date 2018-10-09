@@ -304,12 +304,12 @@ class SingleOrderManagement extends Component {
                 </div>
                 <div className="row">
                   <div className="col-6"><span>Ngày tạo:</span></div>
-                  <div className="col-6"><span className="float-right">{(new Date(order.dateCreated)).toLocaleString()}</span></div>
+                  <div className="col-6"><span className="float-right">{(new Date(order.dateCreated)).toLocaleString('vi-VN')}</span></div>
                 </div>
                 <hr />
                 <div className="row" style={{ color: 'black' }}>
                   <div className="col-6"><h5>Cập nhật cuối:</h5></div>
-                  <div className="col-6"><h5 className="float-right">{(new Date(order.dateUpdated)).toLocaleString()}</h5></div>
+                  <div className="col-6"><h5 className="float-right">{(new Date(order.dateUpdated)).toLocaleString('vi-VN')}</h5></div>
                 </div>
               </div>
             </div>

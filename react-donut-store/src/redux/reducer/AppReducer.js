@@ -6,6 +6,7 @@ import quantityReducer from './QuantityReducer';
 import notificationReducer from './NotificationReducer';
 import configGlobalReducer from './ConfigGlobalReducer';
 import orderReducer from './OrderReducer';
+import materialReducer from './MaterialReducer';
 
 const appReducers = combineReducers({
   itemReducer,
@@ -15,6 +16,7 @@ const appReducers = combineReducers({
   notificationReducer,
   configGlobalReducer,
   orderReducer,
+  materialReducer,
 });
 
 export default appReducers;
