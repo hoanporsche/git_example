@@ -125,7 +125,7 @@ class SingleOrderManagement extends Component {
           </tr>`
     let a = ''
     order.quantities.forEach(quantity => {
-      a += `<tr><td><p>${quantity.itemId.name.toUpperCase()}</p></td>
+      a += `<tr><td style="width: 50%;"><p>${quantity.itemId.name.toUpperCase()}</p></td>
         <td><p>${(+quantity.itemId.singleValue).toLocaleString()}</p></td>
         <td><p>${quantity.quantity}</p></td>
         <td><p class="soluong">${(+(quantity.quantity * quantity.itemId.singleValue)).toLocaleString()}</p></td></tr>`

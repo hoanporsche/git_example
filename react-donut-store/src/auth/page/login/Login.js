@@ -54,14 +54,14 @@ class UnAuthorizedComponent extends Component {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: true
-          }, () => alert(response.data))
+          }, () => alert(response ? response.data : 'Something went wrongs!'))
         })
       }
     }).catch(({ response }) => {
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
-      }, () => alert(response.data))
+      }, () => alert(response ? response.data : 'Something went wrongs!'))
     })
   }
 

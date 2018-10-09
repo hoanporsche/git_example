@@ -71,7 +71,7 @@ class UserProfile extends Component {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
-          }, () => alert(response.data));
+          }, () => alert(response ? response.data : 'Something went wrongs!'));
         })
       } else {
         this.setState({
