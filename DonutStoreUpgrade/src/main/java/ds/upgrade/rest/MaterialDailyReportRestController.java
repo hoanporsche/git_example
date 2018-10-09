@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Material;
 import ds.upgrade.model.MaterialDailyReport;
+import ds.upgrade.model.MaterialReport;
 import ds.upgrade.model.User;
 import ds.upgrade.service.MaterialDailyReportService;
 import ds.upgrade.service.UserService;
@@ -120,7 +121,7 @@ public class MaterialDailyReportRestController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(AppConstant.API_URL.FIND_DAILY_REPORT)
   public ResponseEntity<?> findDailyReport(
-      @RequestParam(value = AppConstant.PARAM.NAME_PARAM, required = false) String storeName,
+      @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM, required = false) String storeCode,
       @RequestParam(value = AppConstant.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
     try {
       String newDateCreated;
@@ -131,11 +132,11 @@ public class MaterialDailyReportRestController {
       } else {
         newDateCreated = dateFormat.format(dateFormat.parse(dateCreated)).toString();
       }
-      String newStoreName = setStoreCorrespondingUserRequested(storeName);
-      List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(newDateCreated,
-          newStoreName);
-      if (list.size() > 0) {
-        return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
+      String newStoreCode = setStoreCorrespondingUserRequested(storeCode);
+      MaterialDailyReport report = materialDailyReportService.findDailyReport(newDateCreated,
+          newStoreCode);
+      if (report != null) {
+        return new ResponseEntity<MaterialDailyReport>(report, HttpStatus.OK);
       }
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
@@ -159,15 +160,15 @@ public class MaterialDailyReportRestController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @PostMapping(AppConstant.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(
-      @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result,
-      @RequestParam(value = AppConstant.PARAM.NAME_PARAM) String storeName) {
+      @RequestBody @Validated MaterialDailyReport listReport, BindingResult result,
+      @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM) String storeCode) {
     try {
-      if (result.hasErrors() || checkDuplicateMaterial(listReport))
+      if (result.hasErrors() || checkDuplicateMaterial(listReport.getListMaterialReport()))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT + result.getAllErrors(), HttpStatus.NOT_ACCEPTABLE);
-      String newStoreName = setStoreCorrespondingUserRequested(storeName);
-      listReport = materialDailyReportService.save(listReport, newStoreName);
-      if (listReport != null)
-        return new ResponseEntity<List<MaterialDailyReport>>(listReport, HttpStatus.OK);
+      String newStoreCode = setStoreCorrespondingUserRequested(storeCode);
+      Boolean saveResult = materialDailyReportService.save(listReport, newStoreCode);
+      if (saveResult)
+        return new ResponseEntity<Boolean>(saveResult, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
@@ -175,7 +176,7 @@ public class MaterialDailyReportRestController {
     return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
 
-  private boolean checkDuplicateMaterial(List<MaterialDailyReport> listReport) {
+  private boolean checkDuplicateMaterial(List<MaterialReport> listReport) {
     Vector<Material> v = new Vector<>();
     for (int i = 0; i < listReport.size(); i++) {
       if (v.contains(listReport.get(i).getMaterialId())) {

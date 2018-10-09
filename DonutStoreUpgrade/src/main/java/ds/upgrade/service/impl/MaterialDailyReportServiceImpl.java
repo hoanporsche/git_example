@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.MaterialDailyReport;
+import ds.upgrade.model.MaterialReport;
 import ds.upgrade.model.Store;
 import ds.upgrade.repository.MaterialDailyReportRepository;
 import ds.upgrade.repository.StoreRepository;
@@ -72,9 +73,8 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @return
    */
   @Override
-  public List<MaterialDailyReport> findDailyReport(String dateCreated, String storeName) {
-    return materialDailyReportRepository.findDailyReport(dateCreated,
-        storeRepository.findByname(storeName).getId());
+  public MaterialDailyReport findDailyReport(String dateCreated, String storeCode) {
+    return materialDailyReportRepository.findDailyReport(dateCreated, storeCode);
   }
 
   /**
@@ -83,33 +83,34 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @created_date: Apr 4, 2018
    * @modifier: hoan
    * @modifier_date: Apr 4, 2018
-   * @param listReport
+   * @param report
    * @return
    */
   @Override
-  public List<MaterialDailyReport> save(List<MaterialDailyReport> listReport, String storeName) {
-    // If list doesn't have id, will check to create
+  public Boolean save(MaterialDailyReport report, String storeCode) {
+    // If report doesn't have id, will check to create
     SimpleDateFormat dateFormat = new SimpleDateFormat(AppConstant.FORMAT.DATE_FORMAT_1);
-    List<MaterialDailyReport> listFoundReport = findDailyReport(
-        dateFormat.format(new Date()).toString(), storeName);
-    if (listReport.get(0).getId() == null) {
+    MaterialDailyReport foundReport = findDailyReport(
+        dateFormat.format(new Date()).toString(), storeCode);
+    if (report.getId() == null) {
       //
-      if (listFoundReport.size() > 0)
+      if (foundReport.getListMaterialReport().size() > 0)
         return null;
-      return saveOneByOneReport(listReport, storeName);
+      return saveOneByOneReport(report, storeCode);
     }
     // If list has id , will check to update
-    if (willUpdateIfItIsOldList(listReport, listFoundReport))
-      return saveOneByOneReport(listReport, storeName);
+    if (willUpdateIfItIsOldList(report.getListMaterialReport(), foundReport.getListMaterialReport()))
+      return saveOneByOneReport(report, storeCode);
     return null;
   }
 
-  private List<MaterialDailyReport> saveOneByOneReport(List<MaterialDailyReport> listReport,
-      String storeName) {
-    List<MaterialDailyReport> listSavedReport = new ArrayList<>();
-    Store store = storeRepository.findByname(storeName);
-    for (int i = 0; i < listReport.size(); i++) {
-      MaterialDailyReport savedReport = listReport.get(i);
+  private Boolean saveOneByOneReport(MaterialDailyReport report,
+      String storeCode) {
+    MaterialDailyReport savedReport;
+    Store store = storeRepository.findBycode(storeCode);
+    
+    for (int i = 0; i < report.size(); i++) {
+      MaterialDailyReport savedReport = report.get(i);
       savedReport.setDateCreated(new Date());
       savedReport.setStoreId(store);
       savedReport = materialDailyReportRepository.save(savedReport);
@@ -121,17 +122,17 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
     return listSavedReport;
   }
 
-  private boolean willUpdateIfItIsOldList(List<MaterialDailyReport> listReport,
-      List<MaterialDailyReport> listFoundReport) {
+  private boolean willUpdateIfItIsOldList(List<MaterialReport> listReport,
+      List<MaterialReport> listFoundReport) {
     // If 2 list sizes difference, wrong input
     if (listReport.size() != listFoundReport.size())
       return false;
     // Check 2 list have id and material are equal
     for (int i = 0; i < listReport.size(); i++) {
-      MaterialDailyReport newReport = listReport.get(i);
-      MaterialDailyReport oldReport = listFoundReport.get(i);
+      MaterialReport newReport = listReport.get(i);
+      MaterialReport oldReport = listFoundReport.get(i);
       if ((newReport.getId() != oldReport.getId())
-          || (newReport.getMaterialId().getId() != oldReport.getMaterialId().getId()))
+          || (newReport.getMaterialId() != oldReport.getMaterialId()))
         return false;
     }
     return true;

@@ -342,13 +342,24 @@ CREATE TABLE IF NOT EXISTS `donutstore`.`material_daily_report` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
     `store_id` BIGINT NOT NULL,
     `date_created` TIMESTAMP NOT NULL,
+    PRIMARY KEY(`id`),
+    FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
+
+-- -----------------------------------------------------
+-- Table `donutstore`.`material_daily_report`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `donutstore`.`material_report` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+    `material_daily_report_id` BIGINT NOT NULL,
     `material_id` BIGINT NOT NULL,
-    `material_remain` INT NOT NULL,
-    `material_import` INT NOT NULL,
+    `remain` INT NOT NULL,
+    `in` INT NOT NULL,
     `description` VARCHAR(1000) ,
     PRIMARY KEY(`id`),
-    FOREIGN KEY (`store_id`) REFERENCES `donutstore`.`store`(`id`),
-    FOREIGN KEY (`material_id`) REFERENCES `donutstore`.`material`(`id`))
+    FOREIGN KEY (`material_id`) REFERENCES `donutstore`.`material`(`id`),
+    FOREIGN KEY (`material_daily_report_id`) REFERENCES `donutstore`.`material_daily_report`(`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 

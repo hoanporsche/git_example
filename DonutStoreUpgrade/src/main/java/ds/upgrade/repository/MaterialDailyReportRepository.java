@@ -3,8 +3,6 @@
  */
 package ds.upgrade.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +23,7 @@ public interface MaterialDailyReportRepository extends JpaRepository<MaterialDai
     JpaSpecificationExecutor<MaterialDailyReport> {
 
   @Query(QueryConstant.MATERIAL_DAILY_REPORT.FIND_DAILY_REPORT)
-  List<MaterialDailyReport> findDailyReport(
+  MaterialDailyReport findDailyReport(
       @Param(AppConstant.PARAM.DATE_CREATED_PARAM) String dateCreated,
-      @Param(AppConstant.PARAM.STORE_ID_PARAM) Long storeId);
+      @Param(AppConstant.PARAM.STORE_CODE_PARAM) String storeCode);
 }

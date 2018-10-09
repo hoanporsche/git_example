@@ -1,7 +1,6 @@
 package ds.upgrade.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ public interface MaterialDailyReportService {
 
   MaterialDailyReport findOne(Long id);
   
-  List<MaterialDailyReport> findDailyReport(String dateCreated, String storeName);
+  MaterialDailyReport findDailyReport(String dateCreated, String storeCode);
   
-  List<MaterialDailyReport> save(List<MaterialDailyReport> listReport, String storeName);
+  Boolean save(MaterialDailyReport listReport, String storeCode);
 }

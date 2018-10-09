@@ -12,7 +12,7 @@ public class QueryConstant {
   }
 
   public static class MATERIAL_DAILY_REPORT {
-    public static final String FIND_DAILY_REPORT = "SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId = :storeId ";
+    public static final String FIND_DAILY_REPORT = "SELECT mdr FROM MaterialDailyReport mdr WHERE CONVERT(mdr.dateCreated, DATE) = :dateCreated AND mdr.storeId.code = :storeCode ";
   }
 
   public static class MATERIAL {
