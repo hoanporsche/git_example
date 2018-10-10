@@ -9,6 +9,7 @@ import CustomSelect from '../../../../../share/common/custom-select/CustomSelect
 import CustomDate from '../../../../../share/common/custom-datetime/CustomDate';
 import { MODEL_ROUTING } from '../../../../../share/constant/routing.constant';
 import RedirectQueryParams from '../../../../../share/util/RedirectQueryParams';
+import './MaterialDailyReport.css';
 const queryString = require('query-string');
 
 class MaterialDailyReport extends Component {
@@ -16,10 +17,9 @@ class MaterialDailyReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listReport: [],
+      listReport: {},
       params: {
         storeCode: '',
-        materialId: '',
         startDate: '',
         endDate: '',
         page: 0,
@@ -44,7 +44,6 @@ class MaterialDailyReport extends Component {
       this.setState({
         params: {
           storeCode: queryParam.storeCode ? queryParam.storeCode : '',
-          materialId: queryParam.materialId ? queryParam.materialId : '',
           startDate: queryParam.startDate ? queryParam.startDate : '',
           endDate: queryParam.endDate ? queryParam.endDate : '',
           page: queryParam.page ? queryParam.page : 0,
@@ -79,6 +78,32 @@ class MaterialDailyReport extends Component {
     });
   }
 
+  showDailyReport = () => {
+    return (this.state.listReport.content && this.state.listReport.content.length > 0) ? (
+      this.state.listReport.content.map((report, index) => {
+        return (
+          <div key={index} className="card single-daily-report">
+            <h5 className="card-title">Ngày : {new Date(report.dateCreated).toLocaleString('vi-VN')} - Cửa hàng: {report.storeId.name}</h5>
+            <div className="flex-report">
+              {this.showMaterialReport(report.listMaterialReport)}
+            </div>
+          </div>
+        )
+      })
+    ) : 'No data'
+  }
+
+  showMaterialReport = (list) => {
+    return (list.length > 0) ? (
+      list.map((report, index) => {
+        return <div key={index} className="single-flex">
+          <h4>{report.materialId.name} :</h4>
+          <p>In : {report.in} - Remain : {report.remain}</p>
+          <p>Description: {report.description}</p>
+        </div>
+      })
+    ) : null;
+  }
   first = () => {
     if (!this.props.listReport.first) {
       this.setState({
@@ -131,10 +156,9 @@ class MaterialDailyReport extends Component {
   }
 
   findReport = () => {
-    const { storeCode, materialId, startDate, endDate, size, sort } = this.state.params;
+    const { storeCode, startDate, endDate, size, sort } = this.state.params;
     const listSearch = [
       { name: 'storeCode', value: storeCode },
-      { name: 'materialId', value: materialId },
       { name: 'startDate', value: startDate },
       { name: 'endDate', value: endDate },
       { name: 'size', value: size },
@@ -152,8 +176,8 @@ class MaterialDailyReport extends Component {
       Helper.setLoading(false);
       this.setState({
         isSubmitting: false,
+        listReport: data,
       });
-      console.log(data);
     }).catch(({ response }) => {
       Helper.setLoading(false);
       this.setState({
@@ -171,10 +195,6 @@ class MaterialDailyReport extends Component {
               data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
           </div>
           <div className="col-md-4 col-lg-2">
-            <CustomSelect placeholder="Nguyên liệu" name="materialId" value={this.state.params.materialId} required={false}
-              data={this.props.listMaterial} onEmittedValue={this.onReceivedSelectValue} />
-          </div>
-          <div className="col-md-4 col-lg-2">
             <div className="form-group">
               <CustomDate name="startDate" placeholder="Từ ngày" value={this.state.params.startDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
@@ -184,13 +204,14 @@ class MaterialDailyReport extends Component {
               <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
           </div>
-          <div className="col-md-8 col-lg-4">
+          <div className="col-md-8 col-lg-6">
             <div className="float-right">
               <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.findReport}><i className="fas fa-filter"></i></button>
             </div>
           </div>
         </div>
         <hr />
+        {this.showDailyReport()}
         <div className="row padding-top1">
           <div className="col-12">
             <div className="float-right">

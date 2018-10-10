@@ -9,7 +9,7 @@ import ds.upgrade.model.MaterialDailyReport;
 
 public interface MaterialDailyReportService {
 
-  Page<MaterialDailyReport> findList(String storeCode, Long materialId, Date startDate, Date endDate,
+  Page<MaterialDailyReport> findList(String storeCode, Date startDate, Date endDate,
       Pageable pageable);
 
   MaterialDailyReport findOne(Long id);

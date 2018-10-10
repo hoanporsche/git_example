@@ -60,18 +60,15 @@ public class MaterialDailyReportRestController {
   @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
       @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM, required = false) String storeCode,
-      @RequestParam(value = AppConstant.PARAM.MATERIAL_ID_PARAM, required = false) String materialId,
       @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate) {
     try {
       String newStoreCode = setStoreCorrespondingUserRequested(storeCode);
       SimpleDateFormat format = new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1);
-      Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-      Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreCode,
-          newMaterialId, newStartDate, newEndDate, pageable);
+      Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreCode, newStartDate, newEndDate, pageable);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<MaterialDailyReport>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {

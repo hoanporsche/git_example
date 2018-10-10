@@ -25,16 +25,14 @@ import ds.upgrade.util.AppConstant;
 public class MaterialDailyReportSpecification implements Specification<MaterialDailyReport> {
   
   private String storeCode;
-  private Long materialId;
   private Date startDate;
   private Date endDate;
 
   public MaterialDailyReportSpecification() {
   }
 
-  public MaterialDailyReportSpecification(String storeCode, Long materialId, Date startDate, Date endDate) {
+  public MaterialDailyReportSpecification(String storeCode, Date startDate, Date endDate) {
     this.storeCode = storeCode;
-    this.materialId = materialId;
     this.startDate = startDate;
     this.endDate = endDate;
   }
@@ -56,10 +54,6 @@ public class MaterialDailyReportSpecification implements Specification<MaterialD
     if (storeCode != null) {
       predicate = cb.and(predicate, cb.equal(
           root.<String>get(AppConstant.PARAM.STORE_ID_PARAM).get(AppConstant.PARAM.CODE_PARAM), storeCode));
-    }
-    if (materialId != null) {
-      predicate = cb.and(predicate, cb.equal(
-          root.<Long>get(AppConstant.PARAM.MATERIAL_ID_PARAM).get(AppConstant.PARAM.ID_PARAM), materialId));
     }
     if (startDate != null) {
       predicate = cb.and(predicate, cb.greaterThanOrEqualTo(

@@ -15,6 +15,7 @@ import ds.upgrade.model.MaterialDailyReport;
 import ds.upgrade.model.MaterialReport;
 import ds.upgrade.model.Store;
 import ds.upgrade.repository.MaterialDailyReportRepository;
+import ds.upgrade.repository.MaterialReportRepository;
 import ds.upgrade.repository.StoreRepository;
 import ds.upgrade.repository.specification.MaterialDailyReportSpecification;
 import ds.upgrade.service.MaterialDailyReportService;
@@ -27,6 +28,8 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
   private MaterialDailyReportRepository materialDailyReportRepository;
   @Autowired
   private StoreRepository storeRepository;
+  @Autowired
+  private MaterialReportRepository materialReportRepository;
 
   /**
    * @description: .
@@ -56,10 +59,9 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
    * @return
    */
   @Override
-  public Page<MaterialDailyReport> findList(String storeCode, Long materialId, Date startDate,
+  public Page<MaterialDailyReport> findList(String storeCode, Date startDate,
       Date endDate, Pageable pageable) {
-    Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeCode,
-        materialId, startDate, endDate);
+    Specification<MaterialDailyReport> spec = new MaterialDailyReportSpecification(storeCode, startDate, endDate);
     return materialDailyReportRepository.findAll(spec, pageable);
   }
 
@@ -90,36 +92,47 @@ public class MaterialDailyReportServiceImpl implements MaterialDailyReportServic
   public Boolean save(MaterialDailyReport report, String storeCode) {
     // If report doesn't have id, will check to create
     SimpleDateFormat dateFormat = new SimpleDateFormat(AppConstant.FORMAT.DATE_FORMAT_1);
-    MaterialDailyReport foundReport = findDailyReport(
-        dateFormat.format(new Date()).toString(), storeCode);
+    MaterialDailyReport foundReport = findDailyReport(dateFormat.format(new Date()).toString(),
+        storeCode);
     if (report.getId() == null) {
-      //
       if (foundReport.getListMaterialReport().size() > 0)
-        return null;
+        return Boolean.FALSE;
       return saveOneByOneReport(report, storeCode);
     }
     // If list has id , will check to update
-    if (willUpdateIfItIsOldList(report.getListMaterialReport(), foundReport.getListMaterialReport()))
+    if (willUpdateIfItIsOldList(report.getListMaterialReport(),
+        foundReport.getListMaterialReport()))
       return saveOneByOneReport(report, storeCode);
-    return null;
+    return Boolean.FALSE;
   }
 
-  private Boolean saveOneByOneReport(MaterialDailyReport report,
-      String storeCode) {
-    MaterialDailyReport savedReport;
+  private Boolean saveOneByOneReport(MaterialDailyReport report, String storeCode) {
     Store store = storeRepository.findBycode(storeCode);
-    
-    for (int i = 0; i < report.size(); i++) {
-      MaterialDailyReport savedReport = report.get(i);
-      savedReport.setDateCreated(new Date());
-      savedReport.setStoreId(store);
-      savedReport = materialDailyReportRepository.save(savedReport);
-      if (savedReport == null) {
-        return null;
+    MaterialDailyReport savedReport = new MaterialDailyReport(report.getId(), store,
+        new Date());
+    savedReport = materialDailyReportRepository.save(savedReport);
+    if (savedReport == null)
+      return Boolean.FALSE;
+    List<MaterialReport> listSavedMaterialReport = new ArrayList<>();
+    for (int i = 0; i < report.getListMaterialReport().size(); i++) {
+      MaterialReport saved = materialReportRepository.save(report.getListMaterialReport().get(i));
+      /**
+       * If : not save, delete all saved items
+       * else : add to listSaved
+       */
+      if (saved == null && listSavedMaterialReport != null) {
+        /**
+         * If not save item, the listSaved always one piece less than list
+         */
+        for (int j = 0; j < i; j++) {
+          materialReportRepository.delete(listSavedMaterialReport.get(j).getId());
+        }
+        return Boolean.FALSE;
+      } else {
+        listSavedMaterialReport.add(saved);
       }
-      listSavedReport.add(savedReport);
     }
-    return listSavedReport;
+    return Boolean.TRUE;
   }
 
   private boolean willUpdateIfItIsOldList(List<MaterialReport> listReport,

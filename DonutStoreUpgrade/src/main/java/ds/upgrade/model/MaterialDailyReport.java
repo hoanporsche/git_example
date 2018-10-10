@@ -48,7 +48,7 @@ public class MaterialDailyReport implements Serializable {
   @JoinColumn(name = "store_id", referencedColumnName = "id")
   private Store storeId;
   
-  @JsonFormat(pattern = "MM/dd/yyyy", timezone = "Asia/Ho_Chi_Minh")
+  @JsonFormat(pattern = "MM/dd/yyyy hh:mm:ss", timezone = "Asia/Ho_Chi_Minh")
   @Column(name = "date_created")
   private Date dateCreated;
   
@@ -61,6 +61,13 @@ public class MaterialDailyReport implements Serializable {
     this.id = id;
   }
   
+  public MaterialDailyReport(Long id, Store storeId, Date dateCreated) {
+    super();
+    this.id = id;
+    this.storeId = storeId;
+    this.dateCreated = dateCreated;
+  }
+
   public String toString() {
     return "Material daily report";
   }

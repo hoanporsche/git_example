@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @modifier_date: Oct 9, 2018
  */
 @Entity
-@Table(name = "material_daily_report")
+@Table(name = "material_report")
 public class MaterialReport implements Serializable {
   private static final long serialVersionUID = 4197942078910386097L;
   
