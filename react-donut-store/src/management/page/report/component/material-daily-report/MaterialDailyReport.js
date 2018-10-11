@@ -10,6 +10,7 @@ import CustomDate from '../../../../../share/common/custom-datetime/CustomDate';
 import { MODEL_ROUTING } from '../../../../../share/constant/routing.constant';
 import RedirectQueryParams from '../../../../../share/util/RedirectQueryParams';
 import './MaterialDailyReport.css';
+import { isAdmin } from '../../../../../auth/util';
 const queryString = require('query-string');
 
 class MaterialDailyReport extends Component {
@@ -190,10 +191,12 @@ class MaterialDailyReport extends Component {
     return (
       <div className="container-fluid page-min-height">
         <div className="row main-row padding-top1">
-          <div className="col-md-4 col-lg-2">
-            <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode} required={false}
-              data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
-          </div>
+          {isAdmin() ? (
+            <div className="col-md-4 col-lg-2">
+              <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode} required={false}
+                data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
+            </div>
+          ) : null}
           <div className="col-md-4 col-lg-2">
             <div className="form-group">
               <CustomDate name="startDate" placeholder="Từ ngày" value={this.state.params.startDate} onEmittedValue={this.onReceivedSelectValue} />
@@ -204,7 +207,7 @@ class MaterialDailyReport extends Component {
               <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
           </div>
-          <div className="col-md-8 col-lg-6">
+          <div className={`col-md-8 ${isAdmin() ? 'col-lg-6': 'col-lg-8'}`}>
             <div className="float-right">
               <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.findReport}><i className="fas fa-filter"></i></button>
             </div>

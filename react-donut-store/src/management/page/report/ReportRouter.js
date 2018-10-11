@@ -15,13 +15,13 @@ const configRoutes = [
   {
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT + MODEL_ROUTING.ORDER_REPORT,
     exact: true,
-    canActive: Guard.adminGuard(),
+    canActive: Guard.storeGuard(),
     main: () => <OrderReport />,
   },
   {
     path: '',
     exact: true,
-    canActive: Guard.storeGuard(),
+    canActive: Guard.staffGuard(),
     main: () => <NotFound />,
   }
 ]

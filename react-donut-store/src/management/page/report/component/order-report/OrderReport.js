@@ -9,6 +9,7 @@ import { fetAllStore } from '../../../../../redux/action/store.constant';
 import { findCoutingInfo, findOrderList } from '../../ReportApiCaller';
 import NumberFormat from 'react-number-format';
 import FlexReport from '../../../../component/flex-report/FlexReport';
+import { isAdmin } from '../../../../../auth/util';
 
 class OrderReport extends Component {
 
@@ -204,10 +205,12 @@ class OrderReport extends Component {
     return (
       <div id="order-report" className="container-fluid page-min-height">
         <div className="row main-row padding-top1">
-          <div className="col-md-4 col-lg-2">
-            <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode} required={false}
-              data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
-          </div>
+          {isAdmin() ? (
+            <div className="col-md-4 col-lg-2">
+              <CustomSelect placeholder="Cửa hàng" name="storeCode" value={this.state.params.storeCode} required={false}
+                data={this.props.listStore} onEmittedValue={this.onReceivedSelectValue} />
+            </div>
+          ) : null}
           <div className="col-md-4 col-lg-2">
             <CustomSelect placeholder="Khoảng thời gian" name="rangeTime" value={this.state.params.rangeTime} required={false}
               data={selectReportDay} onEmittedValue={this.onReceivedSelectValue} />
@@ -222,7 +225,7 @@ class OrderReport extends Component {
               <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
           </div>
-          <div className="col-md-8 col-lg-4">
+          <div className={`col-md-8 ${isAdmin() ? 'col-lg-6': 'col-lg-8'}`}>
             <div className="float-right">
               <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.findReport}><i className="fas fa-filter"></i></button>
             </div>
