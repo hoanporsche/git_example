@@ -16,7 +16,7 @@ const configRoutes = [
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT + MODEL_ROUTING.ORDER_REPORT,
     exact: true,
     canActive: Guard.storeGuard(),
-    main: () => <OrderReport />,
+    main: ({ location, history }) => <OrderReport location={location} history={history}/>,
   },
   {
     path: '',

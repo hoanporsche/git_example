@@ -10,6 +10,9 @@ import { findCoutingInfo, findOrderList } from '../../ReportApiCaller';
 import NumberFormat from 'react-number-format';
 import FlexReport from '../../../../component/flex-report/FlexReport';
 import { isAdmin } from '../../../../../auth/util';
+import { MODEL_ROUTING } from '../../../../../share/constant/routing.constant';
+import RedirectQueryParams from '../../../../../share/util/RedirectQueryParams';
+const queryString = require('query-string');
 
 class OrderReport extends Component {
 
@@ -55,6 +58,25 @@ class OrderReport extends Component {
   componentDidMount() {
     if (this.props.listStore.length === 0)
       this.props.fetchAllStore();
+  }
+
+  componentWillReceiveProps({ location }) {
+    const queryParam = queryString.parse(location.search);
+    if (location.search !== '') {
+      this.setState({
+        params: {
+          rangeTime: queryParam.rangeTime ? queryParam.rangeTime : 'A_DAY',
+          storeCode: queryParam.storeCode ? queryParam.storeCode : '',
+          startDate: queryParam.startDate ? queryParam.startDate : '',
+          endDate: queryParam.endDate ? queryParam.endDate : '',
+          page: queryParam.page ? queryParam.page : 0,
+          size: queryParam.size ? queryParam.size : CONFIG.PAGE_SIZE,
+          sort: queryParam.sort ? queryParam.sort : 'id,desc'
+        },
+      }, () => {
+        this.findReport();
+      });
+    }
   }
 
   findReport = () => {
@@ -112,8 +134,22 @@ class OrderReport extends Component {
     ) : null;
   }
 
+  redirectOrder = () => {
+    const { rangeTime, storeCode, startDate, endDate, page, size, sort } = this.state.params;
+    const listSearch = [
+      { name: 'rangeTime', value: rangeTime },
+      { name: 'storeCode', value: storeCode },
+      { name: 'startDate', value: startDate },
+      { name: 'endDate', value: endDate },
+      { name: 'page', value: page },
+      { name: 'size', value: size },
+      { name: 'sort', value: sort },
+    ]
+    this.props.history.push(RedirectQueryParams(MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT + MODEL_ROUTING.ORDER_REPORT, listSearch));
+  }
+
   first = () => {
-    if (!this.props.listOrder.first) {
+    if (!this.state.listOrder.first) {
       this.setState({
         params: Object.assign({}, this.state.params, {
           page: 0,
@@ -124,10 +160,10 @@ class OrderReport extends Component {
     }
   }
   prev = () => {
-    if (!this.props.listOrder.first) {
+    if (!this.state.listOrder.first) {
       this.setState({
         params: Object.assign({}, this.state.params, {
-          page: this.props.listOrder.number - 1,
+          page: this.state.listOrder.number - 1,
         })
       }, () => {
         this.onFilter();
@@ -135,10 +171,10 @@ class OrderReport extends Component {
     }
   }
   next = () => {
-    if (!this.props.listOrder.last) {
+    if (!this.state.listOrder.last) {
       this.setState({
         params: Object.assign({}, this.state.params, {
-          page: this.props.listOrder.number + 1,
+          page: this.state.listOrder.number + 1,
         })
       }, () => {
         this.onFilter();
@@ -146,10 +182,10 @@ class OrderReport extends Component {
     }
   }
   last = () => {
-    if (!this.props.listOrder.last) {
+    if (!this.state.listOrder.last) {
       this.setState({
         params: Object.assign({}, this.state.params, {
-          page: this.props.listOrder.totalPages - 1,
+          page: this.state.listOrder.totalPages - 1,
         })
       }, () => {
         this.onFilter();
@@ -225,9 +261,9 @@ class OrderReport extends Component {
               <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
           </div>
-          <div className={`col-md-8 ${isAdmin() ? 'col-lg-6': 'col-lg-8'}`}>
+          <div className={`col-md-8 ${isAdmin() ? 'col-lg-4' : 'col-lg-6'}`}>
             <div className="float-right">
-              <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.findReport}><i className="fas fa-filter"></i></button>
+              <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.redirectOrder}><i className="fas fa-filter"></i></button>
             </div>
           </div>
         </div>

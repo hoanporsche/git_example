@@ -13,7 +13,7 @@ const managementRoutes = [
     path: MODEL_ROUTING.MANAGEMENT,
     exact: true,
     canActive: Guard.storeGuard(),
-    main: () => <OrderList />,
+    main: ({ location, history }) => <OrderList location={location} history={history} />,
   },
   {
     path: MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT,

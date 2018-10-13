@@ -9,11 +9,14 @@ import * as Helper from '../../../share/common/helper/Helper';
 import CustomSelect from '../../../share/common/custom-select/CustomSelect';
 import CustomDate from '../../../share/common/custom-datetime/CustomDate';
 import CustomSearchInput from '../../../share/common/custom-search-input/CustomSearchInput';
-import { fetListOrder } from '../../../redux/action/order.constant';
 import SingleOrderManagement from '../../component/single-order-management/SingleOrderManagement';
 import CreateOrder from './component/create-order/CreateOrder';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 import ReactTooltip from 'react-tooltip';
+import RedirectQueryParams from '../../../share/util/RedirectQueryParams';
+import { MODEL_ROUTING } from '../../../share/constant/routing.constant';
+import { findListOrder } from './OrderApiCaller'; 
+const queryString = require('query-string');
 
 const currentUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
 const selectOption = [
@@ -43,13 +46,14 @@ class OrderList extends Component {
         sort: 'code,desc'
       },
       showCreateModal: false,
+      listOrder: {},
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.listStore.length === 0)
-      await this.props.fetchAllStore();
-    await orderStatusService.findAllOrderStatus().then(({ data }) => {
+      this.props.fetchAllStore();
+    orderStatusService.findAllOrderStatus().then(({ data }) => {
       this.setState({
         listOrderStatus: data,
       });
@@ -60,7 +64,28 @@ class OrderList extends Component {
     if (this.props.listConfigGlobal.length === 0) {
       this.props.fetchAllConfigGlobal();
     }
-    await this.props.fetchListOrder(this.state.params);
+    this.onFilter();
+  }
+
+  componentWillReceiveProps({ location }) {
+    const queryParam = queryString.parse(location.search);
+    if (location.search !== '') {
+      this.setState({
+        params: {
+          startDate: queryParam.startDate ? queryParam.startDate : '',
+          endDate: queryParam.endDate ? queryParam.endDate : '',
+          shipping: queryParam.shipping ? queryParam.shipping : '',
+          storeCode: queryParam.storeCode ? queryParam.storeCode : '',
+          statusId: queryParam.statusId ? queryParam.statusId : '',
+          searchString: queryParam.searchString ? queryParam.searchString : '',
+          page: queryParam.page ? queryParam.page : 0,
+          size: queryParam.size ? queryParam.size : CONFIG.PAGE_SIZE,
+          sort: queryParam.sort ? queryParam.sort : 'code,desc'
+        },
+      }, () => {
+        this.onFilter();
+      })
+    }
   }
 
   onReceivedSelectValue = (event) => {
@@ -68,13 +93,21 @@ class OrderList extends Component {
       params: Object.assign({}, this.state.params, { [event.name]: event.value })
     }, () => {
       if (event.name === 'searchString') {
-        this.onFilter();
+        this.redirectOrder();
       }
     });
   }
 
   onFilter = () => {
-    this.props.fetchListOrder(this.state.params);
+    findListOrder(this.state.params).then(({ data }) => {
+      this.setState({
+        listOrder: data
+      })
+      Helper.setLoading(false);
+    }).catch(error => {
+      Helper.setLoading(false);
+      console.log(error);
+    });
   }
 
   onNewOrder = () => {
@@ -94,7 +127,7 @@ class OrderList extends Component {
   }
 
   showListOrder = () => {
-    const { listOrder } = this.props;
+    const { listOrder } = this.state;
     return (listOrder.content && listOrder.content.length > 0) ? listOrder.content.map((order, index) => {
       return (
         <SingleOrderManagement key={index} order={order} listOrderStatus={this.state.listOrderStatus} onEmittedValue={this.onFilter} />
@@ -102,55 +135,70 @@ class OrderList extends Component {
     }) : <SingleOrderManagement message={"Rất tiếc đã không có đơn hàng nào phù hợp."} />;
   }
 
+  redirectOrder = () => {
+    const { startDate, endDate, shipping, storeCode, statusId, searchString, page, size, sort } = this.state.params;
+    const listSearch = [
+      { name: 'startDate', value: startDate },
+      { name: 'endDate', value: endDate },
+      { name: 'shipping', value: shipping },
+      { name: 'storeCode', value: storeCode },
+      { name: 'statusId', value: statusId },
+      { name: 'searchString', value: searchString },
+      { name: 'page', value: page },
+      { name: 'size', value: size },
+      { name: 'sort', value: sort },
+    ]
+    this.props.history.push(RedirectQueryParams(MODEL_ROUTING.MANAGEMENT, listSearch));
+  }
   first = () => {
-    if (!this.props.listOrder.first) {
+    if (!this.state.listOrder.first) {
       this.setState({
         params: Object.assign({}, this.state.params, {
           page: 0,
         })
       }, () => {
-        this.onFilter();
+        this.redirectOrder();
       });
     }
   }
   prev = () => {
-    if (!this.props.listOrder.first) {
+    if (!this.state.listOrder.first) {
       this.setState({
         params: Object.assign({}, this.state.params, {
-          page: this.props.listOrder.number - 1,
+          page: this.state.listOrder.number - 1,
         })
       }, () => {
-        this.onFilter();
+        this.redirectOrder();
       });
     }
   }
   next = () => {
-    if (!this.props.listOrder.last) {
+    if (!this.state.listOrder.last) {
       this.setState({
         params: Object.assign({}, this.state.params, {
-          page: this.props.listOrder.number + 1,
+          page: this.state.listOrder.number + 1,
         })
       }, () => {
-        this.onFilter();
+        this.redirectOrder();
       });
     }
   }
   last = () => {
-    if (!this.props.listOrder.last) {
+    if (!this.state.listOrder.last) {
       this.setState({
         params: Object.assign({}, this.state.params, {
-          page: this.props.listOrder.totalPages - 1,
+          page: this.state.listOrder.totalPages - 1,
         })
       }, () => {
-        this.onFilter();
+        this.redirectOrder();
       });
     }
   }
 
   showPagination = () => {
-    const { totalPages } = this.props.listOrder;
+    const { totalPages } = this.state.listOrder;
     return (totalPages) ? (<p>
-      Page {(totalPages === 0) ? 0 : this.props.listOrder.number + 1} of {totalPages}
+      Page {(totalPages === 0) ? 0 : this.state.listOrder.number + 1} of {totalPages}
     </p>) : (<p>Page 0 of 0</p>);
   }
 
@@ -193,7 +241,7 @@ class OrderList extends Component {
               </div>
               <div className="col-md-4 col-lg-2">
                 <div className="float-right">
-                  <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.onFilter}><i className="fas fa-filter"></i></button>&nbsp;
+                  <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.redirectOrder}><i className="fas fa-filter"></i></button>&nbsp;
                   <button type="button" className="btn btn-outline-primary" data-tip="Tạo mới" onClick={this.onNewOrder}><i className="fas fa-plus-circle"></i></button>
                 </div>
               </div>
@@ -228,7 +276,6 @@ class OrderList extends Component {
 
 const mapStateToProps = state => {
   return {
-    listOrder: state.orderReducer,
     listStore: state.storeReducer,
     listConfigGlobal: state.configGlobalReducer,
   }
@@ -237,9 +284,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllStore: () => {
       dispatch(fetAllStore());
-    },
-    fetchListOrder: (params) => {
-      dispatch(fetListOrder(params));
     },
     fetchAllConfigGlobal: () => {
       dispatch(fetAllConfigGlobal());

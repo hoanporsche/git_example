@@ -215,7 +215,7 @@ class Detail extends Component {
           {this.showItem()}
           <div className="container text-center" style={{ marginTop: '40px' }}>
             <SectionHeader title="Thực đơn khác" />
-            <ul className="row main-menu-category">
+            <ul className="main-menu-category">
               {this.showAllCategory()}
             </ul>
             <hr />

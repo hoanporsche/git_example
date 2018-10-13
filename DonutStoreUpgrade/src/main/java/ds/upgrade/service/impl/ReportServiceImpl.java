@@ -12,10 +12,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import ds.upgrade.model.Item;
+import ds.upgrade.model.Material;
 import ds.upgrade.model.Order;
+import ds.upgrade.model.json.ReportMaterial;
 import ds.upgrade.model.json.ReportOrderJson;
 import ds.upgrade.model.json.ReportQuantityJson;
 import ds.upgrade.repository.ItemRepository;
+import ds.upgrade.repository.MaterialReportRepository;
+import ds.upgrade.repository.MaterialRepository;
 import ds.upgrade.repository.OrderRepository;
 import ds.upgrade.repository.QuantityRepository;
 import ds.upgrade.repository.specification.OrderSpecification;
@@ -33,6 +37,10 @@ public class ReportServiceImpl implements ReportService {
   private ItemRepository itemRepository;
   @Autowired
   private QuantityRepository quantityRepository;
+  @Autowired
+  private MaterialRepository materialRepository;
+  @Autowired
+  private MaterialReportRepository materialReportRepository;
   
   @Override
   public ReportOrderJson countingInfomation(String storeCode, Date startDate, Date endDate,
@@ -72,6 +80,18 @@ public class ReportServiceImpl implements ReportService {
       spec = new OrderSpecification(rangeDate.get(0), storeCode, rangeDate.get(1));
     }
     return orderRepository.findAll(spec, pageable);
+  }
+
+  @Override
+  public List<ReportMaterial> countingTotalIn(String storeCode, Date startDate,
+      Date endDate) {
+    List<Material> listMaterial = materialRepository.findAll();
+    List<ReportMaterial> listReport = new ArrayList<>();
+    listMaterial.forEach(i -> {
+      ReportMaterial rm = new ReportMaterial(i.getName(), materialReportRepository.countingTotalIn(startDate, endDate, storeCode, i.getId()));
+      listReport.add(rm);
+    });
+    return listReport;
   }
 
 }

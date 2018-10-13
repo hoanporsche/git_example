@@ -11,6 +11,7 @@ import { MODEL_ROUTING } from '../../../../../share/constant/routing.constant';
 import RedirectQueryParams from '../../../../../share/util/RedirectQueryParams';
 import './MaterialDailyReport.css';
 import { isAdmin } from '../../../../../auth/util';
+import { findCoutingMaterialIn } from '../../ReportApiCaller';
 const queryString = require('query-string');
 
 class MaterialDailyReport extends Component {
@@ -18,6 +19,7 @@ class MaterialDailyReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      listMaterialIn: [],
       listReport: {},
       params: {
         storeCode: '',
@@ -37,6 +39,7 @@ class MaterialDailyReport extends Component {
     if (this.props.listMaterial.length === 0)
       this.props.fetchAllMaterial();
     this.findListReport();
+    this.findCountingMaterialIn();
   }
 
   componentWillReceiveProps({ location }) {
@@ -53,6 +56,7 @@ class MaterialDailyReport extends Component {
         },
       }, () => {
         this.findListReport();
+        this.findCountingMaterialIn();
       });
     }
   }
@@ -105,6 +109,20 @@ class MaterialDailyReport extends Component {
       })
     ) : null;
   }
+
+  showTotalIn = () => {
+    const { listMaterialIn } = this.state;
+    return listMaterialIn.length > 0 ? (
+      listMaterialIn.map((material, index) => {
+        return (
+          <div key={index} className="single-flex">
+            <h4>{material.name} :</h4>
+            <p>Total In : {material.totalIn}</p>
+          </div>
+        )
+      })
+    ) : null;
+  }
   first = () => {
     if (!this.props.listReport.first) {
       this.setState({
@@ -112,7 +130,7 @@ class MaterialDailyReport extends Component {
           page: 0,
         })
       }, () => {
-        this.findReport();
+        this.findListReport();
       });
     }
   }
@@ -123,7 +141,7 @@ class MaterialDailyReport extends Component {
           page: this.props.listReport.number - 1,
         })
       }, () => {
-        this.findReport();
+        this.findListReport();
       });
     }
   }
@@ -134,7 +152,7 @@ class MaterialDailyReport extends Component {
           page: this.props.listReport.number + 1,
         })
       }, () => {
-        this.findReport();
+        this.findListReport();
       });
     }
   }
@@ -145,7 +163,7 @@ class MaterialDailyReport extends Component {
           page: this.props.listReport.totalPages - 1,
         })
       }, () => {
-        this.findReport();
+        this.findListReport();
       });
     }
   }
@@ -166,6 +184,18 @@ class MaterialDailyReport extends Component {
       { name: 'sort', value: sort },
     ]
     this.props.history.push(RedirectQueryParams(MODEL_ROUTING.MANAGEMENT + MODEL_ROUTING.REPORT, listSearch));
+  }
+
+  findCountingMaterialIn = () => {
+    if (this.state.params.storeCode !== '') {
+      findCoutingMaterialIn(this.state.params).then(({ data }) => {
+        this.setState({
+          listMaterialIn: data
+        }, () => {
+          console.log(data)
+        })
+      })
+    }
   }
 
   findListReport = () => {
@@ -207,13 +237,16 @@ class MaterialDailyReport extends Component {
               <CustomDate name="endDate" placeholder="đến ngày" value={this.state.params.endDate} onEmittedValue={this.onReceivedSelectValue} />
             </div>
           </div>
-          <div className={`col-md-8 ${isAdmin() ? 'col-lg-6': 'col-lg-8'}`}>
+          <div className={`col-md-8 ${isAdmin() ? 'col-lg-6' : 'col-lg-8'}`}>
             <div className="float-right">
               <button type="button" className="btn btn-outline-success" data-tip="Lọc đơn hàng" onClick={this.findReport}><i className="fas fa-filter"></i></button>
             </div>
           </div>
         </div>
         <hr />
+        <div className="total-material-in-flex">
+          {this.showTotalIn()}
+        </div>
         {this.showDailyReport()}
         <div className="row padding-top1">
           <div className="col-12">
