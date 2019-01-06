@@ -12,6 +12,7 @@ import FlexReport from '../../../../component/flex-report/FlexReport';
 import { isAdmin } from '../../../../../auth/util';
 import { MODEL_ROUTING } from '../../../../../share/constant/routing.constant';
 import RedirectQueryParams from '../../../../../share/util/RedirectQueryParams';
+import * as Helper from '../../../../../share/common/helper/Helper';
 const queryString = require('query-string');
 
 class OrderReport extends Component {
@@ -86,12 +87,15 @@ class OrderReport extends Component {
       startDate: this.state.params.startDate,
       endDate: this.state.params.endDate,
     }
+    Helper.setLoading(true);
     findCoutingInfo(paramsCoutingInfo).then(({ data }) => {
       this.setState({
         countingInfo: data,
-      })
-    }).catch(error => {
-      console.log(error);
+      });
+      Helper.setLoading(false);
+    }).catch(({response}) => {
+      Helper.setLoading(false);
+      Helper.validateResponse(response);
     });
     this.onFilter();
   }
@@ -200,11 +204,16 @@ class OrderReport extends Component {
   }
 
   onFilter = () => {
+    Helper.setLoading(true);
     findOrderList(this.state.params).then(({ data }) => {
       this.setState({
         listOrder: data,
-      })
-    })
+      });
+      Helper.setLoading(false);
+    }).catch(({response}) => {
+      Helper.setLoading(false);
+      Helper.validateResponse(response);
+    });
   }
   showListOrder = () => {
     const { listOrder } = this.state;

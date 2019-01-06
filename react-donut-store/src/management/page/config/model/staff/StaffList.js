@@ -77,6 +77,11 @@ class StaffList extends Component {
       this.setState({
         listStaff: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -112,7 +117,7 @@ class StaffList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        }, () => alert(response ? response.data : 'Something went wrongs!'));
+        }, () => Helper.catchError(response));
       })
     }
   }

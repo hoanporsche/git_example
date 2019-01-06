@@ -9,7 +9,7 @@ export const fetAllMaterial = () => {
     return findAll().then(({data}) => {
       dispatch(actFetchMaterial(data));
       Helper.setLoading(false);
-    }).catch(error => console.log(error));
+    }).catch(error => Helper.setLoading(false));
   }
 }
 

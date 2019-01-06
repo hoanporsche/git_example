@@ -70,6 +70,11 @@ class ItemList extends Component {
       this.setState({
         listItem: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -105,7 +110,7 @@ class ItemList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        }, () => alert(response ? response.data : 'Something went wrongs!'));
+        }, () => Helper.catchError(response));
       })
     }
   }

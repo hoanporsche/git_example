@@ -60,6 +60,11 @@ class OrderStatusList extends Component {
       this.setState({
         listOrderStatus: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -95,7 +100,7 @@ class OrderStatusList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        }, () => alert(response ? response.data : 'Something went wrongs!'));
+        }, () => Helper.catchError(response));
       })
     }
   }

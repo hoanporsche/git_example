@@ -9,7 +9,7 @@ export const fetAllConfigGlobal = () => {
     return findAllConfigGlobal().then(({data}) => {
       dispatch(actFetchConfigGlobal(data));
       Helper.setLoading(false);
-    }).catch(error => console.log(error));
+    }).catch(error => Helper.setLoading(false));
   }
 }
 

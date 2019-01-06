@@ -60,6 +60,11 @@ class WorkingCalenderList extends Component {
       this.setState({
         listWorkingCalender: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -95,7 +100,7 @@ class WorkingCalenderList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        }, () => alert(response ? response.data : 'Something went wrongs!'));
+        }, () => Helper.catchError(response));
       })
     }
   }

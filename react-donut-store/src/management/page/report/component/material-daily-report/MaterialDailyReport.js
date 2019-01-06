@@ -211,9 +211,10 @@ class MaterialDailyReport extends Component {
       });
     }).catch(({ response }) => {
       Helper.setLoading(false);
+      Helper.validateResponse(response);
       this.setState({
         isSubmitting: false,
-      }, () => alert(response ? response.data : 'Something went wrongs!'));
+      }, () => Helper.catchError(response));
     })
   }
 

@@ -9,7 +9,7 @@ export const fetAllCategory = () => {
     return findAllCategory().then(({data}) => {
       dispatch(actFetchCategory(data));
       Helper.setLoading(false);
-    }).catch(error => console.log(error));
+    }).catch(error => Helper.setLoading(false));
   }
 }
 

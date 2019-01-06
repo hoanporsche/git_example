@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { findAllConfigGlobal } from './ConfigGlobalApiCaller';
 import ReactTooltip from 'react-tooltip';
 import Update from './component/Update';
+import * as Helper from '../../../../../share/common/helper/Helper';
 
 class ConfigGlobalList extends Component {
   constructor(props) {
@@ -45,6 +46,11 @@ class ConfigGlobalList extends Component {
       this.setState({
         listConfigGlobal: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 

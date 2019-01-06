@@ -57,7 +57,6 @@ class CategoryList extends Component {
   }
 
   onFilter = () => {
-    console.log(this.state.params)
     findListCategory(this.state.params).then(({ data }) => {
       this.setState({
         listCategory: data,
@@ -95,9 +94,10 @@ class CategoryList extends Component {
         this.updateList(list, data);
       }).catch(({ response }) => {
         Helper.setLoading(false);
+        Helper.validateResponse(response);
         this.setState({
           isSubmitting: false
-        }, () => alert(response ? response.data : 'Something went wrongs!'));
+        }, () => Helper.catchError(response));
       })
     }
   }

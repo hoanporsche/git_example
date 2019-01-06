@@ -124,7 +124,7 @@ class UpdateOrder extends Component {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
-          }, () => alert(response ? response.data : 'Something went wrongs!'));
+          }, () => Helper.catchError(response));
         })
       } else {
         this.setState({
