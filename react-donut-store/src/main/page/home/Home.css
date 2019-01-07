@@ -7,10 +7,12 @@
 	max-height: 250px;
 }
 
-.more-detail {
-	background-image: url(https://res.cloudinary.com/hitkeodog/image/upload/v1533796074/donut-store/shipping-price.png);
+.shipping-price {
 	background-position: center;
 	background-repeat: no-repeat;
+	background-size: contain;
+	height: 200px;
+	width: 100%;
 }
 
 .ds-card-padding {

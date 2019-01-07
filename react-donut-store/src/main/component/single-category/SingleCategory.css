@@ -35,3 +35,8 @@
   margin: 15px auto;
   border-top: 3px solid #e86a00;
 }
+.single-flex-category {
+  display: inline-block;
+  flex: auto;
+  position: relative;
+}

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ds.upgrade.model.Material;
 import ds.upgrade.model.MaterialDailyReport;
+import ds.upgrade.model.MaterialReport;
 import ds.upgrade.model.User;
 import ds.upgrade.service.MaterialDailyReportService;
 import ds.upgrade.service.UserService;
@@ -58,19 +59,16 @@ public class MaterialDailyReportRestController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(AppConstant.API_URL.FIND_LIST)
   public ResponseEntity<?> findAll(Pageable pageable,
-      @RequestParam(value = AppConstant.PARAM.NAME_PARAM, required = false) String storeName,
-      @RequestParam(value = AppConstant.PARAM.MATERIAL_ID_PARAM, required = false) String materialId,
+      @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM, required = false) String storeCode,
       @RequestParam(value = AppConstant.PARAM.START_DATE_PARAM, required = false) String startDate,
       @RequestParam(value = AppConstant.PARAM.END_DATE_PARAM, required = false) String endDate) {
     try {
-      String newStoreName = setStoreCorrespondingUserRequested(storeName);
+      String newStoreCode = setStoreCorrespondingUserRequested(storeCode);
       SimpleDateFormat format = new SimpleDateFormat(AppConstant.FORMAT.DATE_TIME_FORMAT_1);
-      Long newMaterialId = (StringUtils.isEmpty(materialId)) ? null : Long.parseLong(materialId);
       Date newStartDate = (StringUtils.isEmpty(startDate)) ? null
           : format.parse(startDate + " 00:00:00");
       Date newEndDate = (StringUtils.isEmpty(endDate)) ? null : format.parse(endDate + " 23:59:59");
-      Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreName,
-          newMaterialId, newStartDate, newEndDate, pageable);
+      Page<MaterialDailyReport> list = materialDailyReportService.findList(newStoreCode, newStartDate, newEndDate, pageable);
       if (list.getSize() > 0)
         return new ResponseEntity<Page<MaterialDailyReport>>(list, HttpStatus.OK);
     } catch (NumberFormatException e) {
@@ -120,7 +118,7 @@ public class MaterialDailyReportRestController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @GetMapping(AppConstant.API_URL.FIND_DAILY_REPORT)
   public ResponseEntity<?> findDailyReport(
-      @RequestParam(value = AppConstant.PARAM.NAME_PARAM, required = false) String storeName,
+      @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM, required = false) String storeCode,
       @RequestParam(value = AppConstant.PARAM.DATE_CREATED_PARAM, required = false) String dateCreated) {
     try {
       String newDateCreated;
@@ -131,11 +129,11 @@ public class MaterialDailyReportRestController {
       } else {
         newDateCreated = dateFormat.format(dateFormat.parse(dateCreated)).toString();
       }
-      String newStoreName = setStoreCorrespondingUserRequested(storeName);
-      List<MaterialDailyReport> list = materialDailyReportService.findDailyReport(newDateCreated,
-          newStoreName);
-      if (list.size() > 0) {
-        return new ResponseEntity<List<MaterialDailyReport>>(list, HttpStatus.OK);
+      String newStoreCode = setStoreCorrespondingUserRequested(storeCode);
+      MaterialDailyReport report = materialDailyReportService.findDailyReport(newDateCreated,
+          newStoreCode);
+      if (report != null) {
+        return new ResponseEntity<MaterialDailyReport>(report, HttpStatus.OK);
       }
     } catch (NumberFormatException e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT, HttpStatus.NOT_ACCEPTABLE);
@@ -159,15 +157,15 @@ public class MaterialDailyReportRestController {
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STORE')")
   @PostMapping(AppConstant.API_URL.SAVE)
   public ResponseEntity<?> createOrUpdate(
-      @RequestBody @Validated List<MaterialDailyReport> listReport, BindingResult result,
-      @RequestParam(value = AppConstant.PARAM.NAME_PARAM) String storeName) {
+      @RequestBody @Validated MaterialDailyReport listReport, BindingResult result,
+      @RequestParam(value = AppConstant.PARAM.STORE_CODE_PARAM) String storeCode) {
     try {
-      if (result.hasErrors() || checkDuplicateMaterial(listReport))
+      if (result.hasErrors() || checkDuplicateMaterial(listReport.getListMaterialReport()))
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT + result.getAllErrors(), HttpStatus.NOT_ACCEPTABLE);
-      String newStoreName = setStoreCorrespondingUserRequested(storeName);
-      listReport = materialDailyReportService.save(listReport, newStoreName);
-      if (listReport != null)
-        return new ResponseEntity<List<MaterialDailyReport>>(listReport, HttpStatus.OK);
+      String newStoreCode = setStoreCorrespondingUserRequested(storeCode);
+      Boolean saveResult = materialDailyReportService.save(listReport, newStoreCode);
+      if (saveResult)
+        return new ResponseEntity<Boolean>(saveResult, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER,
           HttpStatus.INTERNAL_SERVER_ERROR);
@@ -175,7 +173,7 @@ public class MaterialDailyReportRestController {
     return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
   }
 
-  private boolean checkDuplicateMaterial(List<MaterialDailyReport> listReport) {
+  private boolean checkDuplicateMaterial(List<MaterialReport> listReport) {
     Vector<Material> v = new Vector<>();
     for (int i = 0; i < listReport.size(); i++) {
       if (v.contains(listReport.get(i).getMaterialId())) {
@@ -186,16 +184,16 @@ public class MaterialDailyReportRestController {
     return false;
   }
   
-  private String setStoreCorrespondingUserRequested(String storeName) {
+  private String setStoreCorrespondingUserRequested(String storeCode) {
     User user = userService.findInfoUser();
-    String newStoreName = null;
+    String newStoreCode = null;
     // Admin can overwatch all material daily reports and Store have just overwatch
     // all material daily reports belong to their store.
     if (userService.isAdmin(user.getRoles())) {
-      newStoreName = (StringUtils.isEmpty(storeName)) ? newStoreName : storeName; 
+      newStoreCode = (StringUtils.isEmpty(storeCode)) ? newStoreCode : storeCode; 
     } else {
-      newStoreName = user.getStoreId().getName();
+      newStoreCode = user.getStoreId().getCode();
     }
-    return newStoreName;
+    return newStoreCode;
   }
 }

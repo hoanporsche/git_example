@@ -47,6 +47,13 @@ public class OrderSpecification implements Specification<Order> {
     this.endDate = endDate;
     this.orderCode = orderCode;
   }
+  
+  public OrderSpecification(Date startDate, String storeCode, Date endDate) {
+    super();
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.storeCode = storeCode;
+  }
 
   public OrderSpecification() {
   }

@@ -69,6 +69,11 @@ class MaterialList extends Component {
       this.setState({
         listMaterial: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -104,7 +109,7 @@ class MaterialList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        }, () => alert(response.data));
+        }, () => Helper.catchError(response));
       })
     }
   }
@@ -220,24 +225,26 @@ class MaterialList extends Component {
             </div>
           </div>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Picture</th>
-              <th scope="col">Supply</th>
-              <th scope="col">Date Created</th>
-              <th scope="col">Date Updated</th>
-              <th scope="col">Single Value</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.showListMaterial()}
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Supply</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Date Updated</th>
+                <th scope="col">Single Value</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListMaterial()}
+            </tbody>
+          </table>
+        </div>
         <div className="row padding-top1">
           <div className="col-12">
             <div className="float-right">

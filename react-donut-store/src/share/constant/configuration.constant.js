@@ -16,6 +16,8 @@ export const CONFIG_NAME = {
   SUBSIDY_PRICE: "subsidyPrice",
   SINGLE_SHIPPING_PRICE: "singleShippingPrice",
   MIN_SHIPPING_PRICE: "minShippingPrice",
+  PRIVACY: "privacy",
+  SHIPPING_PRICE: "shippingPrice",
 }
 
 export const selectEnabledOption = [
@@ -25,5 +27,24 @@ export const selectEnabledOption = [
   }, {
     name: 'Disabled',
     code: false,
+  }
+]
+
+export const selectReportDay = [
+  {
+    name: '1 ngày',
+    code: 'A_DAY',
+  }, {
+    name: '1 tuần',
+    code: 'A_WEEK',
+  }, {
+    name: '1 tháng',
+    code: 'A_MONTH',
+  }, {
+    name: '1 năm',
+    code: 'A_YEAR',
+  }, {
+    name: 'Toàn bộ thời gian',
+    code: 'ALL_TIME',
   }
 ]

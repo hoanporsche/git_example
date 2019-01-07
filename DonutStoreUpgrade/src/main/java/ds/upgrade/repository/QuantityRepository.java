@@ -1,5 +1,7 @@
 package ds.upgrade.repository;
 
+import java.util.Date;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,9 +13,14 @@ import ds.upgrade.model.Quantity;
 import ds.upgrade.util.AppConstant;
 import ds.upgrade.util.QueryConstant;
 
-public interface QuantityRepository extends JpaRepository<Quantity, String>, JpaSpecificationExecutor<Quantity> {
+public interface QuantityRepository
+    extends JpaRepository<Quantity, String>, JpaSpecificationExecutor<Quantity> {
   @Transactional
   @Modifying
   @Query(QueryConstant.QUANTITY.DELETE_BY_ORDER_CODE)
   void deleteByOrderCode(@Param(AppConstant.PARAM.CODE_PARAM) String code);
+
+  @Query("SELECT sum(q.quantity) FROM Quantity q WHERE q.orderCode.dateCreated <= :endDate AND q.itemId.id = :itemId AND ((:startDate IS NULL AND q.orderCode.dateCreated IS NOT NULL) OR q.orderCode.dateCreated >= :startDate)")
+  Integer countQuantityForCountingInfo(@Param(AppConstant.PARAM.START_DATE_PARAM) Date startDate,
+      @Param(AppConstant.PARAM.END_DATE_PARAM) Date endDate, @Param(AppConstant.PARAM.ITEM_ID_PARAM) Long itemId);
 }

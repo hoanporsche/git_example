@@ -28,6 +28,8 @@ public interface UserService {
   
   User save(UserForm userForm);
   
+  UserJson updateProfile(String email, String picture);
+  
   User enabledOrNot(Long id);
   
   User findInfoUser();

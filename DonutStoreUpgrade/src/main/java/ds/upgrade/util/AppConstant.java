@@ -59,6 +59,7 @@ public class AppConstant {
     public static final String ROOM_DB_S_PARAM = "roomDbs";
     public static final String CODE_PARAM = "code";
     public static final String SEARCH_STRING_PARAM = "searchString";
+    public static final String RANGE_TIME_PARAM = "rangeTime";
   }
   
   public static class PATH_PARAM {
@@ -113,6 +114,7 @@ public class AppConstant {
     public static final String MESSAGE_DB_MODEL = "message-db";
     public static final String SENDER_DB_MODEL = "sender-db";
     public static final String CONFIG_GLOBAL_MODEL = "config-global";
+    public static final String REPORT_MODEL = "report";
   }
   
   public static class FORMAT {
@@ -158,6 +160,8 @@ public class AppConstant {
     public static final String SUBSIDY_PRICE = "subsidyPrice";
     public static final String SINGLE_SHIPPING_PRICE = "singleShippingPrice";
     public static final String MIN_SHIPPING_PRICE = "minShippingPrice";
+    public static final String PRIVACY = "privacy";
+    public static final String SHIPPING_PRICE = "shippingPrice";
     public static final String DEFAULT_PASSWORD = "12345678";
   }
 }

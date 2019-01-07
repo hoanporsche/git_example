@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './UserAvatar.css';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 import { NavLink, withRouter } from 'react-router-dom';
-import { ROUTING_URL } from '../../../share/constant/routing.constant';
+import { ROUTING_URL, MODEL_ROUTING } from '../../../share/constant/routing.constant';
 import ChangePassword from '../change-password/ChangePassword';
 
 const currentUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
@@ -43,7 +43,7 @@ class UserAvatar extends Component {
       <div className="some-function text-center">
         <h5>{currentUser.email}</h5>
         <hr />
-        <h5><NavLink className="single-function" to={"/"}>Thông tin cá nhân</NavLink></h5>
+        <h5><NavLink className="single-function" to={MODEL_ROUTING.MANAGEMENT + ROUTING_URL.USER_PROFILE}>Thông tin cá nhân</NavLink></h5>
         <h5 className="single-function"><a className="single-function" onClick={this.onShowChangePassword}>Thay đổi mật khẩu</a></h5>
         <hr />
         <button className="btn btn-outline-info" style={{ bottom: '1em' }} onClick={this.onLogout}>Đăng xuất</button>

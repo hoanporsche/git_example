@@ -5,8 +5,8 @@ import './Notification.css';
 import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 import * as NotiService from './NotificationApiCaller';
 import { PAGE_MAIN_NAME } from '../../../enviroment';
-import { connect } from 'react-redux';
-import { fetListOrder } from '../../../redux/action/order.constant';
+import RedirectQueryParams from '../../../share/util/RedirectQueryParams';
+import { MODEL_ROUTING } from '../../../share/constant/routing.constant';
 
 let stompClient;
 const currentUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE.CURRENT_USER));
@@ -100,13 +100,20 @@ class Notification extends Component {
 				}, () => {
 					this.setState({
 						countNotSeen: this.countNotSeen(),
+					}, () => {
+						const listSearch = [
+							{ name: 'searchString', value: noti.text.substring(13,33) },
+							{ name: 'page', value: 0 },
+							{ name: 'size', value: 15 },
+							{ name: 'sort', value: 'code,desc' },
+						]
+						window.location.href = RedirectQueryParams(MODEL_ROUTING.MANAGEMENT, listSearch);
 					});
 				})
 			}).catch((error) => {
 				console.log(error);
 			});
 		}
-		this.props.fetchListOrder({searchString: noti.text.substring(13,33),size: 15, sort: 'code,desc'});
 	}
 	countNotSeen = () => {
 		let count = 0;
@@ -133,11 +140,4 @@ class Notification extends Component {
 	}
 }
 
-const mapDispatchToProps = dispatch => {
-	return {
-		fetchListOrder: (params) => {
-			dispatch(fetListOrder(params));
-		}
-	}
-}
-export default connect(null, mapDispatchToProps)(Notification);
+export default Notification;

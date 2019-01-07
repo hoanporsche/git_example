@@ -11,7 +11,7 @@ class SingleCategory extends Component {
 
   render() {
     const active = this.props.active ? 'active' : '';
-    const classname = `col-4 ${active}`;
+    const classname = `single-flex-category ${active}`;
     return(
       <li className={classname} onClick={this.onClickCategory}>
         <div className="menu-item" aria-expanded="true">

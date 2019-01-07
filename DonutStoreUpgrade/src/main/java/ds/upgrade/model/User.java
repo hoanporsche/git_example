@@ -75,6 +75,8 @@ public class User implements Serializable {
   private String oldPassword;
   @Transient
   private String newPassword;
+  @Transient
+  private boolean logoutAll;
   
   public User() {}
 
@@ -164,6 +166,14 @@ public class User implements Serializable {
 
   public void setNewPassword(String newPassword) {
     this.newPassword = newPassword;
+  }
+
+  public boolean isLogoutAll() {
+    return logoutAll;
+  }
+
+  public void setLogoutAll(boolean logoutAll) {
+    this.logoutAll = logoutAll;
   }
 
   public SenderDb getSenderDbId() {

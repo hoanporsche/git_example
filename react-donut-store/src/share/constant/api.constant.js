@@ -24,6 +24,7 @@ export const API_URL = Object.freeze({
     FIND_BY_USERS_IN_ROOM: '/find-by-users-in-room',
     COUNT_NOT_SEEN_NOTI: '/count-not-seen-noti',
     CREATE: '/create',
+    COUNTING_INFO: '/counting-info',
 });
 
 export const MODEL_URL= Object.freeze({
@@ -47,6 +48,7 @@ export const MODEL_URL= Object.freeze({
     MESSAGE_DB: '/message-db',
     SENDER_DB: '/sender-db',
     CONFIG_GLOBAL: '/config-global',
+    REPORT: '/report',
 });
 
 export const CHAT_URL = Object.freeze({

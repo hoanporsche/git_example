@@ -20,6 +20,8 @@ public class ConfigGlobalServiceImpl implements ConfigGlobalService {
 
   @Override
   public ConfigGlobal createOrUpdate(ConfigGlobal cg) {
+    if (customValidation.notDeleteConfigGlobal(cg.getName()))
+      return null;
     return configGlobalRepository.save(cg);
   }
 

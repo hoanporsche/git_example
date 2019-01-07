@@ -92,13 +92,167 @@ class SingleOrderManagement extends Component {
       showUpdateModal: false
     })
   }
+
+  onPrint = () => {
+    const { order } = this.props;
+    let popupWinindow;
+    let pr = `
+      <div id="invoice-POS">
+        
+        <div id="mid">
+          <div class="info">
+            <h2>Bánh rán Hoàn</h2>
+            <h5>${order.storeId.address}</h5>
+            <h5>ĐT: ${order.storeId.phone}</h5>
+            <hr/>
+            <b>Ngày tháng:</b> <span>${new Date().toLocaleString('vi-VN')}</span> <br>
+            <b>Khách hàng:</b> <span>Anh/chị ${order.nameCreated}</span> <br>
+            <b>Địa chỉ:</b> <span>${order.shipping ? order.addressShipping : 'Khách dùng tại chỗ'}</span> <br>
+            <b>Điện thoại:</b> <span>${order.phone}</span> <br>
+          </div>
+        </div>
+        <hr/>
+        <div id="bot">
+        <div class="info">
+          <b>Mã đơn hàng:</b> ${order.code} <br>
+        </div>
+        <table class="tieude">
+          <tr>
+            <th>Sản phẩm</th>
+            <th>Đ.Giá</th>
+            <th>SL</th>
+            <th class="soluong">T.Tiền</th>
+          </tr>`
+    let a = ''
+    order.quantities.forEach(quantity => {
+      a += `<tr><td style="width: 50%;"><p>${quantity.itemId.name.toUpperCase()}</p></td>
+        <td><p>${(+quantity.itemId.singleValue).toLocaleString()}</p></td>
+        <td><p>${quantity.quantity}</p></td>
+        <td><p class="soluong">${(+(quantity.quantity * quantity.itemId.singleValue)).toLocaleString()}</p></td></tr>`
+    })
+    pr += a;
+
+    pr += `
+          </table>
+          <div style="width:100%;display: inline-flex; margin: -12px 0;">
+            <div style="width:50%">
+                <p>Tổng cộng:</p>
+            </div>
+            <div style="width:50%">
+              <p style="float: right;">${order.shipping ? (+(order.totalPrice - order.shippingPrice)).toLocaleString() : (+order.totalPrice).toLocaleString()}₫</p>
+            </div>
+          </div>
+          <div style="width:100%;display: inline-flex; margin: -12px 0;">
+            <div style="width:50%">
+                <p>Phí ship:</p>
+            </div>
+            <div style="width:50%">
+              <p style="float: right;">${order.shipping ? (+order.shippingPrice).toLocaleString() : 0}₫</p>
+            </div>
+          </div>
+          <div style="width:100%;display: inline-flex;">
+            <div style="width:50%">
+            <strong>Tổng tiền:</strong>
+            </div>
+            <div style="width:50%">
+            <strong style="float: right;">${(+order.totalPrice).toLocaleString()}₫</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="legalcopy">
+        <p class="legal">
+          <strong>Rất hân hạnh được phục vụ quý khách!</strong>
+        </p>
+      </div>
+    `
+    popupWinindow = window.open('', '_blank', `width=80mm,height=auto,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no,
+    top=0,left=0`);
+    popupWinindow.document.open();
+    popupWinindow.document.write(`
+    <html>
+      <head>
+        <style>
+        HTML, BODY {
+          color: #000000;
+        }
+        #invoice-POS {
+          padding: 0mm;
+          margin: 0 auto;
+          width: 80mm;
+        }
+        h2 {
+          text-align: center;
+          margin: 1em 0 0 0;
+        }
+        h5 {
+          text-align: center;
+          margin: 0
+        }
+        .tieude{
+          width: 100%;
+          margin-bottom: 1rem;
+          background-color: transparent;
+          margin-top: 1em;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td {
+          padding: 8px 0px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+        th {
+          padding: 2px 0px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+          border-top: 1px solid #ddd;
+          font-size:1em;
+        }
+        p {
+          font-size: 0.9em;
+          line-height: 1.2em;
+        }
+        .soluong{
+          text-align: right;
+        }
+        span {
+          font-size: 0.7em;
+          line-height: 0.8em;
+        }
+        b {
+          font-size:0.7em;
+        }
+        #mid{
+          margin-top: -2mm;
+        }
+        #legalcopy {
+          margin-top: 4mm;
+          margin-bottom: 2mm;
+          display: block;
+          text-align: center;
+        }
+        </style>
+      </head>
+      <body onload="window.print();window.close()"> 
+      <body > 
+
+      ${pr}
+      
+      </body>
+      </html>
+    `);
+    popupWinindow.document.close();
+  }
   render() {
     const { order } = this.props;
     return order ? (
       <div id="single-order-management" className="card">
         <div className="detail-header">
           <div className="row">
-            <div className="col-12 col-md-9">
+            <div className="col-12 col-lg-9">
               <span className={`status ${order.statusId.name}`}>{order.statusId.description}</span>&nbsp;
               <span className="normal-text">Đơn hàng </span>
               <span className="title-text">{order.code}</span>
@@ -107,14 +261,15 @@ class SingleOrderManagement extends Component {
               <span className="normal-text"> với giá trị </span>
               <span className="title-text"><NumberFormat value={order.totalPrice} displayType={'text'} thousandSeparator={true} />₫</span>
             </div>
-            <div className="col-12 col-md-3">
+            <div className="col-12 col-lg-3">
               <div className="row">
-                <div className="col-8 col-sm-8 col-lg-9 col-xl-6 offset-xl-3 main-row">
+                <div className="col-7 col-sm-8 col-lg-7 main-row">
                   {this.showChangeStatus(order.statusId.id)}
                 </div>
-                <div className="col-4 col-sm-4 col-lg-3">
+                <div className="col-5 col-sm-4 col-lg-5">
                   <div className="float-right">
-                    {this.showEditButton()}
+                    {this.showEditButton()}&nbsp;
+                    <button className="btn btn-outline-secondary" data-tip="In hóa đơn" onClick={this.onPrint}><i className="fas fa-print"></i></button>
                   </div>
                 </div>
               </div>
@@ -149,18 +304,18 @@ class SingleOrderManagement extends Component {
                 </div>
                 <div className="row">
                   <div className="col-6"><span>Ngày tạo:</span></div>
-                  <div className="col-6"><span className="float-right">{(new Date(order.dateCreated)).toLocaleString()}</span></div>
+                  <div className="col-6"><span className="float-right">{(new Date(order.dateCreated)).toLocaleString('vi-VN')}</span></div>
                 </div>
                 <hr />
                 <div className="row" style={{ color: 'black' }}>
                   <div className="col-6"><h5>Cập nhật cuối:</h5></div>
-                  <div className="col-6"><h5 className="float-right">{(new Date(order.dateUpdated)).toLocaleString()}</h5></div>
+                  <div className="col-6"><h5 className="float-right">{(new Date(order.dateUpdated)).toLocaleString('vi-VN')}</h5></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal}/> : null}
+        {this.state.showUpdateModal ? <UpdateOrder order={this.props.order} onEmittedCloseModal={this.onReceivedValue} onEmittedCloseDoNotModal={this.closeDoNotModal} /> : null}
         <ReactTooltip />
       </div>
     ) : (

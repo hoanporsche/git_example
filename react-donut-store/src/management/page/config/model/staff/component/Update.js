@@ -106,7 +106,7 @@ class Update extends Component {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
-          }, () => alert(response.alert));
+          }, () => Helper.catchError(response));
         })
       } else {
         this.setState({

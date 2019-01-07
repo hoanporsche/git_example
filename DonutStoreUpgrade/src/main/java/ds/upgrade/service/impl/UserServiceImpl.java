@@ -122,6 +122,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public UserJson updateProfile(String email, String picture) {
+    User user = findInfoUser();
+    user.setEmail(email);
+    user.setPicture(picture);
+    userRepository.save(user);
+    senderDbService.createByUser(user);
+    user = userRepository.findOne(user.getId());
+    return new UserJson(user);
+  }
+
+  @Override
   public User enabledOrNot(Long id) {
     User foundUser = userRepository.findOne(id);
     if (foundUser == null)

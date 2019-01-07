@@ -76,6 +76,11 @@ class UserList extends Component {
       this.setState({
         listUser: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -111,7 +116,7 @@ class UserList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false
-        }, () => alert(response.data));
+        }, () => Helper.catchError(response));
       })
     }
   }
@@ -130,7 +135,7 @@ class UserList extends Component {
         Helper.setLoading(false);
         this.setState({
           isSubmitting: false,
-        }, () => alert(response.data));
+        }, () => Helper.catchError(response));
       })
     }
   }
@@ -247,25 +252,27 @@ class UserList extends Component {
             </div>
           </div>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Email</th>
-              <th scope="col">Picture</th>
-              <th scope="col">Date Created</th>
-              <th scope="col">Date Updated</th>
-              <th scope="col">Store</th>
-              <th scope="col">Role</th>
-              <th scope="col">SenderDb</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.showListUser()}
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Date Updated</th>
+                <th scope="col">Store</th>
+                <th scope="col">Role</th>
+                <th scope="col">SenderDb</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListUser()}
+            </tbody>
+          </table>
+        </div>
         <div className="row padding-top1">
           <div className="col-12">
             <div className="float-right">

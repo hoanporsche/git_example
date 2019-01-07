@@ -79,7 +79,7 @@ class Update extends Component {
           Helper.setLoading(false);
           this.setState({
             isSubmitting: false,
-          }, () => alert(response.data));
+          }, () => Helper.catchError(response));
         })
       } else {
         this.setState({

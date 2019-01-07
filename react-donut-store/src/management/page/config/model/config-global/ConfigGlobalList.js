@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { findAllConfigGlobal } from './ConfigGlobalApiCaller';
 import ReactTooltip from 'react-tooltip';
 import Update from './component/Update';
+import * as Helper from '../../../../../share/common/helper/Helper';
 
 class ConfigGlobalList extends Component {
   constructor(props) {
@@ -45,6 +46,11 @@ class ConfigGlobalList extends Component {
       this.setState({
         listConfigGlobal: data,
       });
+    }).catch(({ response }) => {
+      Helper.validateResponse(response);
+      this.setState({
+        isSubmitting: false
+      }, () => Helper.catchError(response));
     })
   }
 
@@ -77,19 +83,21 @@ class ConfigGlobalList extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Value</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.showListConfigGlobal()}
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Value</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListConfigGlobal()}
+            </tbody>
+          </table>
+        </div>
         <ReactTooltip />
         {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} configGlobal={this.state.updateConfigGlobal} /> : null}
       </div>

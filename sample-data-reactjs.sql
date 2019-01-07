@@ -101,18 +101,22 @@ INSERT INTO `donutstore`.`user_role` VALUES
 ('4','2');
 
 INSERT INTO `donutstore`.`material_daily_report` VALUES 
-('1','1','2018-02-07','1','10','11','enough'),
-('2','1','2018-03-07','2','10','11','enough'),
-('3','1','2018-03-07','3','10','11','enough'),
-('4','1','2018-03-08','4','10','11','enough'),
-('5','1','2018-03-09','5','10','11','enough'),
-('6','1','2018-03-07','6','10','11','enough'),
-('7','2','2018-03-07','1','10','11','enough'),
-('8','2','2018-03-07','2','10','11','enough'),
-('9','2','2018-03-07','3','10','11','enough'),
-('10','2','2018-03-07','4','10','11','enough'),
-('11','2','2018-03-07','5','10','11','enough'),
-('12','2','2018-02-03','6','10','11','enough');
+('1','1','2018-02-07'),
+('2','2','2018-03-07');
+
+INSERT INTO `donutstore`.`material_report` VALUES 
+('1','1','1','10','11','enough'),
+('2','1','2','10','11','enough'),
+('3','1','3','10','11','enough'),
+('4','1','4','10','11','enough'),
+('5','1','5','10','11','enough'),
+('6','1','6','10','11','enough'),
+('7','2','1','10','11','enough'),
+('8','2','2','10','11','enough'),
+('9','2','3','10','11','enough'),
+('10','2','4','10','11','enough'),
+('11','2','5','10','11','enough'),
+('12','2','6','10','11','enough');
 
 INSERT INTO `donutstore`.`room_db` VALUES 
 ('1', 'Customer1'),
@@ -155,4 +159,6 @@ INSERT INTO `donutstore`.`config_global` VALUES
 ('minAhaDistance','4'),
 ('subsidyPrice','10000'),
 ('singleShippingPrice','5600'),
-('minShippingPrice','12000');
+('minShippingPrice','12000'),
+('privacy','Giao hàng tận nơi với đơn hàng từ 80.000₫/Miễn phí giao hàng 3km đầu tiên/Miễn phí giao hàng toàn bộ nội thành Hà Nội với đơn hàng từ 400.000₫'),
+('shippingPrice','https://res.cloudinary.com/hitkeodog/image/upload/v1533796074/donut-store/shipping-price.png');

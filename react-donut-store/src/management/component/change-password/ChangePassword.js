@@ -4,6 +4,7 @@ import CustomInput from '../../../share/common/custom-input/CustomInput';
 import { isFormValid } from '../../../share/common/custom-validation';
 import { changePassword } from '../../page/config/model/user/UserApiCaller';
 import * as Helper from '../../../share/common/helper/Helper';
+import { LOCAL_STORAGE } from '../../../share/constant/local-storage.constant';
 
 class ChangePassword extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class ChangePassword extends Component {
       reNewPassword: { value: '', valid: false },
       showRequired: false,
       message: '',
+      logoutAll: false,
     }
   }
 
@@ -31,26 +33,34 @@ class ChangePassword extends Component {
   }
 
   onChangePassword = () => {
-    const { oldPassword, newPassword, reNewPassword } = this.state;
+    const { oldPassword, newPassword, reNewPassword, logoutAll } = this.state;
     if (isFormValid([oldPassword, newPassword, reNewPassword])) {
       if (newPassword.value === reNewPassword.value && newPassword.value !== oldPassword.value) {
         Helper.setLoading(true);
         this.setState({
           isSubmitting: true,
         });
-        changePassword(oldPassword.value, newPassword.value).then(() => {
+        changePassword(oldPassword.value, newPassword.value, logoutAll).then(() => {
           Helper.setLoading(false);
           this.setState({
             showRequired: true,
             message: "Bạn đã thay đổi mật khẩu thành công",
             isSubmitting: false,
+          }, () => {
+            if(this.state.logoutAll) {
+              setTimeout(() => {
+                localStorage.removeItem(LOCAL_STORAGE.CURRENT_USER);
+                localStorage.removeItem(LOCAL_STORAGE.TOKEN);
+                window.location.href = '/dang-nhap';
+              },1500);
+            }
           });
 
         }).catch(error => {
           Helper.setLoading(false);
           this.setState({
             showRequired: true,
-            message: error.response.data,
+            message: "Something when wrong",
             isSubmitting: false,
           });
         })
@@ -71,6 +81,12 @@ class ChangePassword extends Component {
     this.setState({
       [event.name]: { value: event.value, valid: event.valid },
     })
+  }
+
+  onCheckboxChange = (event) => {
+    this.setState({
+      logoutAll: event.target.checked,
+    });
   }
 
   showRequired = () => {
@@ -119,6 +135,13 @@ class ChangePassword extends Component {
                     <div className="col-8 offset-2">
                       <CustomInput type="password" name="reNewPassword" placeholder="Nhập lại mật khẩu mới" value={this.state.reNewPassword.value}
                         maxLength={20} onEmittedValue={this.onReceivedValue} wasSubmitted={this.state.wasSubmitted} />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-8 offset-2">
+                      <div className="form-group">
+                        <input type="checkbox" name="logoutAll" value={true} onChange={this.onCheckboxChange}/> Đăng xuất tất cả .
+                      </div>
                     </div>
                   </div>
                   <div className="row">

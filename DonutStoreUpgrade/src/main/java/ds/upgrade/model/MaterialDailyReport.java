@@ -5,6 +5,7 @@ package ds.upgrade.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -51,20 +52,8 @@ public class MaterialDailyReport implements Serializable {
   @Column(name = "date_created")
   private Date dateCreated;
   
-  @ManyToOne
-  @JoinColumn(name = "material_id", referencedColumnName = "id",nullable = false)
-  private Material materialId;
-  
-  @NotNull
-  @Column(name = "material_remain")
-  private int materialRemain;
-  
-  @NotNull
-  @Column(name = "material_import")
-  private int materialImport;
-  
-  @Column(name = "description")
-  private String description;
+  @OneToMany(mappedBy = "materialDailyReportId")
+  private List<MaterialReport> listMaterialReport;
   
   public MaterialDailyReport() {}
   
@@ -72,6 +61,13 @@ public class MaterialDailyReport implements Serializable {
     this.id = id;
   }
   
+  public MaterialDailyReport(Long id, Store storeId, Date dateCreated) {
+    super();
+    this.id = id;
+    this.storeId = storeId;
+    this.dateCreated = dateCreated;
+  }
+
   public String toString() {
     return "Material daily report";
   }
@@ -100,36 +96,12 @@ public class MaterialDailyReport implements Serializable {
     this.dateCreated = dateCreated;
   }
 
-  public Material getMaterialId() {
-    return materialId;
+  public List<MaterialReport> getListMaterialReport() {
+    return listMaterialReport;
   }
 
-  public void setMaterialId(Material materialId) {
-    this.materialId = materialId;
-  }
-
-  public int getMaterialRemain() {
-    return materialRemain;
-  }
-
-  public void setMaterialRemain(int materialRemain) {
-    this.materialRemain = materialRemain;
-  }
-
-  public int getMaterialImport() {
-    return materialImport;
-  }
-
-  public void setMaterialImport(int materialImport) {
-    this.materialImport = materialImport;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
+  public void setListMaterialReport(List<MaterialReport> listMaterialReport) {
+    this.listMaterialReport = listMaterialReport;
   }
 
 }

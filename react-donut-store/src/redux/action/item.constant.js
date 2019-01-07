@@ -9,7 +9,7 @@ export const fetAllItem = () => {
     return findAllItem().then(({data}) => {
       dispatch(actFetchItem(data));
       Helper.setLoading(false);
-    }).catch(error => console.log(error));
+    }).catch(error => Helper.setLoading(false));
   }
 }
 

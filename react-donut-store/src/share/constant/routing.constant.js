@@ -11,6 +11,7 @@ export const ROUTING_URL = Object.freeze({
   FORGOT_PASSWORD: '/quen-mat-khau',
   UNAUTHORIZED: '/unauthorized',
   CONFIG: '/config',
+  USER_PROFILE: '/thong-tin-ca-nhan',
 });
 
 export const MODEL_ROUTING = Object.freeze({
@@ -32,6 +33,8 @@ export const MODEL_ROUTING = Object.freeze({
   WORKING_CALENDER: '/working-calender',
   CONFIG: '/config',
   CONFIG_GLOBAL: '/config-global',
+  REPORT: '/bao-cao',
+  ORDER_REPORT: '/don-hang',
 });
 
 export const MENU_NAME = Object.freeze({
@@ -45,7 +48,7 @@ export const MENU_NAME = Object.freeze({
   LOGIN: 'Đăng nhập',
   FORGOT_PASSWORD: 'Quên mật khẩu',
   ORDER_MANAGEMENT: 'Đơn hàng',
-  MATERIAL_DAILY_REPORT: 'Báo cáo',
+  MATERIAL_DAILY_REPORT: 'Nguyên liệu',
   TIMEKEEPING: 'Chấm công',
   CONFIG: 'Configuration',
   CATEGORY: 'Category',
@@ -60,4 +63,6 @@ export const MENU_NAME = Object.freeze({
   TIMEKEEPING_STATUS: 'Timekeeping Status',
   USER: 'User',
   WORKING_CALENDER: 'Working Calender',
+  REPORT: 'Báo cáo',
+  ORDER_REPORT: 'Đơn hàng',
 });

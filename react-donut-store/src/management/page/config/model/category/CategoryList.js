@@ -94,9 +94,10 @@ class CategoryList extends Component {
         this.updateList(list, data);
       }).catch(({ response }) => {
         Helper.setLoading(false);
+        Helper.validateResponse(response);
         this.setState({
           isSubmitting: false
-        }, () => alert(response.data));
+        }, () => Helper.catchError(response));
       })
     }
   }
@@ -187,9 +188,11 @@ class CategoryList extends Component {
       <div className="container-fluid">
         <div className="row padding-top1">
           <div className="col-md-9">
-            <div className="col-md-2">
-              <CustomSelect placeholder="Status" name="enabled" value={this.state.params.enabled} required={false}
-                data={selectEnabledOption} onEmittedValue={this.onReceivedSelectValue} />
+            <div className="row">
+              <div className="col-md-2">
+                <CustomSelect placeholder="Status" name="enabled" value={this.state.params.enabled} required={false}
+                  data={selectEnabledOption} onEmittedValue={this.onReceivedSelectValue} />
+              </div>
             </div>
           </div>
           <div className="col-md-3">
@@ -198,23 +201,24 @@ class CategoryList extends Component {
                   <button type="button" className="btn btn-outline-primary" data-tip="Tạo mới" onClick={this.onNew}><i className="fas fa-plus-circle"></i></button>
             </div>
           </div>
+        </div><div style={{ overflowX: 'auto' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Date Updated</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.showListCategory()}
+            </tbody>
+          </table>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Picture</th>
-              <th scope="col">Date Created</th>
-              <th scope="col">Date Updated</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.showListCategory()}
-          </tbody>
-        </table>
         <div className="row padding-top1">
           <div className="col-12">
             <div className="float-right">
@@ -234,7 +238,7 @@ class CategoryList extends Component {
         </div>
         <ReactTooltip />
         {this.state.showModalCreate ? <Create onEmittedCloseModalCreate={this.onReceivedValue} /> : null}
-        {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} category={this.state.updateCategory}/> : null}
+        {this.state.showModalUpdate ? <Update onEmittedCloseModalUpdate={this.onReceivedValue} category={this.state.updateCategory} /> : null}
       </div>
     )
   }

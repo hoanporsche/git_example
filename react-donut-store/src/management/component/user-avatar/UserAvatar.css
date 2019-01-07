@@ -10,6 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 50%;
 }
 
 #user-avatar .avatar-user:hover {
@@ -25,12 +26,14 @@
 @media only screen and (max-width: 992px) {
   #user-avatar {
     right: 11.5%;
+    top: 10px;
   }
 }
 
 @media only screen and (max-width: 576px) {
   #user-avatar {
     right: 22.5%;
+    top: 10px;
   }
 }
 

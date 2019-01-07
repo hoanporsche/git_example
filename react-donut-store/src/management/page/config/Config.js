@@ -22,10 +22,10 @@ class Config extends Component {
   render() {
     return (
       <div className="row page-min-height">
-        <div className="aside-nav col-2 padding-top1">
+        <div id="div-aside-nav-mana" className="aside-nav padding-top1">
           <AsideNavManagement />
         </div>
-        <div className="config-content col-12 col-md-10">
+        <div id="config-content" className="config-content col-12">
           <Switch>
             {this.showRoute(configRoutes)}
           </Switch>

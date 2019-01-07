@@ -1,0 +1,53 @@
+.single-daily-report {
+  padding: 1%;
+  margin-bottom: 1%
+}
+
+.single-daily-report .flex-report {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.single-daily-report .flex-report .single-flex {
+  display: inline-block;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background-color: #f2f3f880;
+  min-width: 100px;
+  flex: auto;
+  position: relative;
+  border: 1px solid red;
+  text-align: center;
+  color: blue;
+}
+
+.total-material-in-flex {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: stretch;
+  margin-bottom: 1%;
+}
+
+.total-material-in-flex .single-flex {
+  display: inline-block;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background-color: #f2f3f880;
+  min-width: 100px;
+  flex: auto;
+  position: relative;
+  border: 1px solid red;
+  text-align: center;
+  color: blue;
+}

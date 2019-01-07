@@ -4,7 +4,7 @@ class Timekeeping extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container page-min-height">
         Timekeeping
       </div>
     )

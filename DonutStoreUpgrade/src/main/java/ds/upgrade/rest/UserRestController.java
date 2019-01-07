@@ -4,6 +4,7 @@
 package ds.upgrade.rest;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -42,6 +48,10 @@ public class UserRestController {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  private TokenStore tokenStore;
+  @Autowired
+  private ConsumerTokenServices tokenServices;
 
   @GetMapping(AppConstant.API_URL.FIND_INFO)
   public ResponseEntity<?> findInfo() {
@@ -231,7 +241,8 @@ public class UserRestController {
    */
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(AppConstant.API_URL.SAVE)
-  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated UserForm userForm, BindingResult result) {
+  public ResponseEntity<?> createOrUpdate(@RequestBody @Validated UserForm userForm,
+      BindingResult result) {
     try {
       if (result.hasErrors())
         return new ResponseEntity<String>(AppConstant.REPONSE.WRONG_INPUT,
@@ -243,7 +254,7 @@ public class UserRestController {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.FORBIDDEN);
   }
 
   /**
@@ -261,8 +272,19 @@ public class UserRestController {
     try {
       user = userService.changePassword(userService.findInfoUser().getEmail(),
           user.getOldPassword(), user.getNewPassword());
-      if (user != null)
+      if (user != null) {
+        if (user.isLogoutAll()) {
+          OAuth2Authentication auth = (OAuth2Authentication) SecurityContextHolder.getContext()
+              .getAuthentication();
+          String clientId = auth.getOAuth2Request().getClientId();
+          ArrayList<OAuth2AccessToken> listAccessToken = (ArrayList<OAuth2AccessToken>) tokenStore
+              .findTokensByClientIdAndUserName(clientId, user.getEmail());
+          for (OAuth2AccessToken i : listAccessToken) {
+            tokenServices.revokeToken(i.getValue());
+          }
+        }
         return new ResponseEntity<User>(user, HttpStatus.OK);
+      }
     } catch (Exception e) {
       return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + e.getMessage(),
           HttpStatus.INTERNAL_SERVER_ERROR);
@@ -275,5 +297,18 @@ public class UserRestController {
   public ResponseEntity<?> findRole() {
     User user = userService.findInfoUser();
     return new ResponseEntity<User>(user, HttpStatus.OK);
+  }
+
+  @GetMapping(AppConstant.API_URL.SAVE)
+  public ResponseEntity<?> saveProfile(@RequestParam String email, @RequestParam String picture) {
+    try {
+      UserJson updated = userService.updateProfile(email.trim(), picture.trim());
+      if (updated != null)
+        return new ResponseEntity<UserJson>(updated, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(AppConstant.REPONSE.ERROR_SERVER + " " + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<String>(AppConstant.REPONSE.NOT_SAVE, HttpStatus.FORBIDDEN);
   }
 }
