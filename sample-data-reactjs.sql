@@ -3,7 +3,8 @@ USE `donutstore` ;
 INSERT INTO `donutstore`.`category` VALUES 
 (1,'CATltmdtvb','Bánh rán', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254307/donut-store/banh-ran/br-category.jpg', b'1'),
 (2,'CATyumxoqq','Bánh mì', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254448/donut-store/banh-ran/bm-category.jpg', b'1'),
-(3,'CATzcgnvwq','Đồ uống', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254449/donut-store/banh-ran/du-category.jpg', b'1');
+(3,'CATzcgnvwq','Đồ uống', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254449/donut-store/banh-ran/du-category.jpg', b'1'),
+(4,'THIzcgnvwa','Thịt xiên', '2018-01-02', '2018-02-03','https://res.cloudinary.com/hitkeodog/image/upload/v1534254449/donut-store/banh-ran/du-category.jpg', b'1');
 
 INSERT INTO `donutstore`.`item` VALUES 
 (1,'ITEkrfpyhe','Bánh rán mặn', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569786/donut-store/banh-ran/BR7.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305322/donut-store/banh-ran/br-man-3.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán với vỏ mỏng giòn; nhân bên trong có thịt, miến, mục nhĩ cùng các loại hương vị khác;bánh đi kèm nước sốt.'),
@@ -13,7 +14,11 @@ INSERT INTO `donutstore`.`item` VALUES
 (5,'ITEzpxtldd','Bánh mì pate trứng xúc xích', 'https://res.cloudinary.com/hitkeodog/image/upload/v1533569686/donut-store/banh-mi/BM3.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305639/donut-store/banh-mi/bm-pate-trung-xx-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305639/donut-store/banh-mi/bm-pate-trung-xx-3.jpg','2','2018-01-02', '2018-02-03','18000', b'1','Bánh mì với nhân là pate, trứng chiên, xúc xích rán cùng các loại rau và sốt.'),
 (6,'ITEaefalcu','Trà đá', 'https://res.cloudinary.com/hitkeodog/image/upload/v1534305855/donut-store/do-uong/tra-da-3.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305855/donut-store/do-uong/tra-da-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305855/donut-store/do-uong/tra-da-1.jpg','3','2018-01-02', '2018-02-03','3000', b'1','Trà xanh ướp lạnh.'),
 (7,'ITEffiqllw','Sữa chua uống', 'https://res.cloudinary.com/hitkeodog/image/upload/v1534306210/donut-store/do-uong/sua-chua-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534306210/donut-store/do-uong/sua-chua-3.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534306210/donut-store/do-uong/sua-chua-1.jpg','3','2018-01-02', '2018-02-03','18000', b'1','Sữa chua uống ướp lạnh'),
-(8,'ITEuwhpeaj','Coca ướp lạnh', 'https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-1.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-3.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Coca ướp lạnh');
+(8,'ITEuwhpeaj','Coca ướp lạnh', 'https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-1.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-3.jpg','3','2018-01-02', '2018-02-03','10000', b'1','Coca ướp lạnh'),
+(9,'ITErahpeaj','Thịt xiên', 'https://res.cloudinary.com/hitkeodog/image/upload/v1548127214/donut-store/thit-xien/49836862_1086308444874832_1954335902092230656_n.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1548127215/donut-store/thit-xien/th%E1%BB%8Bt-xi%C3%AAn1.png,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-3.jpg','4','2018-01-02', '2018-02-03','7000', b'1','Thịt xiên nướng'),
+(10,'ITEtthpeaj','Bánh mì thịt xiên ( 1 xiên )', 'https://res.cloudinary.com/hitkeodog/image/upload/v1548127215/donut-store/thit-xien/50586588_1090660344439642_1212958236802547712_n.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1548127214/donut-store/thit-xien/foody-mobile-foody-banh-mi-thit-x-346-636329506030758654.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1548127214/donut-store/thit-xien/foody-mobile-foody-banh-mi-thit-x-502-636344988314991614.jpg','4','2018-01-02', '2018-02-03','10000', b'1','Bánh mì 1 xiên, có thêm rau dưa và sốt'),
+(11,'ITEubbpeaj','Bánh mì thịt xiên ( 2 xiên )', 'https://res.cloudinary.com/hitkeodog/image/upload/v1548127215/donut-store/thit-xien/50586588_1090660344439642_1212958236802547712_n.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1548127214/donut-store/thit-xien/foody-mobile-foody-banh-mi-thit-x-346-636329506030758654.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1548127214/donut-store/thit-xien/foody-mobile-foody-banh-mi-thit-x-502-636344988314991614.jpg','4','2018-01-02', '2018-02-03','17000', b'1','Bánh mì 2 xiên, có thêm rau dưa và sốt'),
+(12,'ITEuwhseaj','Bánh rán gà nấm', 'https://res.cloudinary.com/hitkeodog/image/upload/v1548129332/donut-store/banh-ran/49897568_1083110288527981_6622240306530091008_n.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-2.jpg,https://res.cloudinary.com/hitkeodog/image/upload/v1534305941/donut-store/do-uong/coca-3.jpg','1','2018-01-02', '2018-02-03','4000', b'1','Bánh rán nhân gà , nấm hương và miến');
 
 INSERT INTO `donutstore`.`supply` VALUES 
 ('1','Chị Lý','0988888888','C4 Giảng Võ', '2018-01-02', '2018-02-03', b'1'),
@@ -44,7 +49,7 @@ INSERT INTO `donutstore`.`order_status` VALUES
 ('5','cancel','Hủy',b'1');
 
 INSERT INTO `donutstore`.`store` VALUES 
-('1','STOsfgtjnm','Giảng Võ','','0943451794','D6 Giảng Võ','21.026846','105.821322','2018-01-02', '2018-02-03', b'1'),
+('1','STOsfgtjnm','Giảng Võ','','0943451794','113 D6 Giảng Võ','21.026846','105.821322','2018-01-02', '2018-02-03', b'1'),
 ('2','STOqwdcvts','Núi Trúc','','0969550954','135 Núi Trúc','21.026846','105.881322','2018-01-02', '2018-02-03', b'1');
 
 INSERT INTO `donutstore`.`orders` VALUES 

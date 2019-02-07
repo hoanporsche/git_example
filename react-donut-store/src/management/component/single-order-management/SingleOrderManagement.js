@@ -134,7 +134,7 @@ class SingleOrderManagement extends Component {
 
     pr += `
           </table>
-          <div style="width:100%;display: inline-flex; margin: -12px 0;">
+          <div style="width:100%;display: inline-flex; margin: 0 0;">
             <div style="width:50%">
                 <p>Tổng cộng:</p>
             </div>
@@ -161,12 +161,18 @@ class SingleOrderManagement extends Component {
         </div>
       </div>
       <div id="legalcopy">
+        <p>
+        <span style="font-size: 1rem;"><i class="fab fa-facebook-square"></i> Bánh rán Hoàn</span>
+        </p>
+        <p>
+        <span style="font-size: 1rem;"><i class="fab fa-instagram"></i> banhranhoan</span>
+        </p>
         <p class="legal">
           <strong>Rất hân hạnh được phục vụ quý khách!</strong>
         </p>
       </div>
     `
-    popupWinindow = window.open('', '_blank', `width=80mm,height=auto,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no,
+    popupWinindow = window.open('', '_blank', `width=58mm,height=auto,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no,
     top=0,left=0`);
     popupWinindow.document.open();
     popupWinindow.document.write(`
@@ -177,9 +183,9 @@ class SingleOrderManagement extends Component {
           color: #000000;
         }
         #invoice-POS {
-          padding: 0mm;
+          padding: 0mm 10mm 0mm 0mm;
           margin: 0 auto;
-          width: 80mm;
+          width: 58mm;
         }
         h2 {
           text-align: center;
@@ -233,8 +239,11 @@ class SingleOrderManagement extends Component {
           margin-bottom: 2mm;
           display: block;
           text-align: center;
+          padding-right: 10mm;
         }
         </style>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+          crossorigin="anonymous">
       </head>
       <body onload="window.print();window.close()"> 
       <body > 

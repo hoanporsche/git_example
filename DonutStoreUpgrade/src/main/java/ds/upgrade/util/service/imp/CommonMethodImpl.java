@@ -21,8 +21,8 @@ public class CommonMethodImpl implements CommonMethod {
   public String createOrderCode(Date date) {
     String prefix = AppConstant.PREFIX_CODE.ORDER_PREFIX;
     String middle = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(date);
-    String end = RandomStringUtils.random(3, AppConstant.FORMAT.RANDOM_STRING_BASIC);
-    return prefix + middle + end;
+//    String end = RandomStringUtils.random(3, AppConstant.FORMAT.RANDOM_STRING_BASIC);
+    return prefix + middle;
   }
 
   @Override
