@@ -7,7 +7,7 @@ public class QueryConstant {
   }
 
   public static class ITEM {
-    public static final String FIND_ALL = "SELECT i FROM Item i WHERE i.enabled = true";
+    public static final String FIND_ALL = "SELECT i FROM Item i WHERE i.enabled = true ORDER BY i.categoryId.id";
     public static final String FIND_BY_CATEGORY = "SELECT i FROM Item i WHERE i.categoryId.id = :id";
   }
 

@@ -187,6 +187,41 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 -- -----------------------------------------------------
+-- Table `donutstore`.`discount_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `donutstore`.`category` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `enabled` BOOLEAN NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE, code_UNIQUE` (`name` ASC)
+  )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
+
+-- -----------------------------------------------------
+-- Table `donutstore`.`item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `donutstore`.`discount` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(40) NOT NULL,
+  `discount_type_id` BIGINT NOT NULL,
+  `date_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `range` BIGINT NOT NULL,
+  `enabled` boolean not null,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE, code_UNIQUE` (`name` ASC),
+  FOREIGN KEY (`discount_type_id`)
+  REFERENCES `donutstore`.`discount`(`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
+
+-- -----------------------------------------------------
 -- Table `donutstore`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `donutstore`.`orders` (
