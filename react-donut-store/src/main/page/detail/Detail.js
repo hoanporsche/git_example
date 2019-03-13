@@ -17,7 +17,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '',
+      url: '',
       quantity: 1,
       categoryCode: '',
       picture: '',
@@ -27,7 +27,7 @@ class Detail extends Component {
   componentDidMount() {
     if (this.props.match !== undefined) {
       this.setState({
-        code: this.props.match.params.code,
+        url: this.props.match.params.url,
       })
     }
     if (this.props.listItem.length === 0) {
@@ -41,9 +41,11 @@ class Detail extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log(newProps);
+    
     if (newProps.match) {
       this.setState({
-        code: newProps.match.params.code,
+        url: newProps.match.params.url,
         quantity: 1,
         picture: '',
       });
@@ -54,9 +56,9 @@ class Detail extends Component {
   }
 
   setDefaultItem = (listItem) => {
-    if (this.state.code === '' && listItem.length > 0) {
+    if (this.state.url === '' && listItem.length > 0) {
       this.setState({
-        code: listItem[0].code,
+        url: listItem[0].url,
       });
     }
   }
@@ -83,7 +85,7 @@ class Detail extends Component {
 
   onClick = () => {
     if (0 < this.state.quantity < 301) {
-      const item = this.props.listItem.find(i => i.code === this.state.code);
+      const item = this.props.listItem.find(i => i.url === this.state.url);
       this.props.addOneQuantity({
         item: item,
         quantity: this.state.quantity,
@@ -128,7 +130,7 @@ class Detail extends Component {
     if (listCategory.length > 0) {
       const foundCategory = listCategory.find(i => i.code === this.state.categoryCode);
       if (foundCategory !== undefined) {
-        const items = foundCategory.items.filter(i => i.code !== this.state.code);
+        const items = foundCategory.items.filter(i => i.url !== this.state.url);
         result = items.map((item, index) => {
           return (
             <SingleItem key={index} item={item} />
@@ -140,7 +142,9 @@ class Detail extends Component {
   }
 
   showItem = () => {
-    const item = this.props.listItem.find(i => i.code === this.state.code);
+    const item = this.props.listItem.find(i => i.url === this.state.url);
+    console.log(this.state.url,item);
+    
     if (item !== undefined) {
       return (
         <div className="container">

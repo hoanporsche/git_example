@@ -10,6 +10,7 @@ public interface CommonMethod {
   public String createCategoryCode();
   public String createStoreCode();
   public String createQuantityCode(String orderCode, int index);
+  public String createDiscountCode(long index);
   public Date createStartDate(Date now);
   public Date createEndDate(Date now);
   public List<Date> createRangeDateFilter(String key);

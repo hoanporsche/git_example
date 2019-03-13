@@ -50,6 +50,11 @@ public class CommonMethodImpl implements CommonMethod {
   }
 
   @Override
+  public String createDiscountCode(long index) {
+    return  AppConstant.PREFIX_CODE.DISCOUNT_PREFIX + index;
+  }
+
+  @Override
   public Date createStartDate(Date now) {
     String format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(now);
     try {

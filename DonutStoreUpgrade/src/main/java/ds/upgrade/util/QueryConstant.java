@@ -79,4 +79,9 @@ public class QueryConstant {
   public static class WORKING_CALENDER {
     public static final String FIND_ALL = "SELECT wc FROM WorkingCalender wc WHERE wc.enabled = true";
   }
+
+  public static class DISCOUNT {
+    public static final String FIND_ALL = "SELECT d FROM Discount d WHERE d.enabled = true ORDER BY d.discountTypeId.id";
+    public static final String FIND_BY_DISCOUNT_TYPE = "SELECT d FROM Discount d WHERE d.discountTypeId.id = :id";
+  }
 }

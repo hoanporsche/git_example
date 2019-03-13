@@ -60,6 +60,7 @@ public class AppConstant {
     public static final String CODE_PARAM = "code";
     public static final String SEARCH_STRING_PARAM = "searchString";
     public static final String RANGE_TIME_PARAM = "rangeTime";
+    public static final String DISCOUNT_TYPE_ID_PARAM = "discountTypeId";
   }
   
   public static class PATH_PARAM {
@@ -147,6 +148,7 @@ public class AppConstant {
     public static final String ITEM_PREFIX = "ITE";
     public static final String CATEGORY_PREFIX = "CAT";
     public static final String STORE_PREFIX = "STO";
+    public static final String DISCOUNT_PREFIX = "DCO";
   }
   
   public static class CONFIG_NAME {

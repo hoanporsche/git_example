@@ -34,7 +34,7 @@ const mainRoutes = [
     main : () => <Detail />
   },
   {
-    path : ROUTING_URL.DETAIL + '/:code',
+    path : ROUTING_URL.DETAIL + '/:url',
     exact : false,
     main : ({location, match}) => <Detail location={location} match={match}/>
   },

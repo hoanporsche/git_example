@@ -43,6 +43,14 @@ public class Item implements Serializable {
   @Size(max = 1000)
   @Column(name = "picture")
   private String picture;
+  @NotEmpty
+  @Size(max = 100)
+  @Column(name = "title", nullable = false, unique = true)
+  private String title;
+  @NotEmpty
+  @Size(max = 1000)
+  @Column(name = "url", nullable = false, unique = true)
+  private String url;
 
   @ManyToOne
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
@@ -103,6 +111,22 @@ public class Item implements Serializable {
 
   public void setPicture(String picture) {
     this.picture = picture;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 
   public Category getCategoryId() {

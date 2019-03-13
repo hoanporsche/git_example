@@ -11,6 +11,8 @@ public class ItemJson implements Serializable {
 
   private String code;
   private String name;
+  private String title;
+  private String url;
   private String[] picture;
   private BigDecimal singleValue;
   private String description;
@@ -18,6 +20,8 @@ public class ItemJson implements Serializable {
   public ItemJson(Item item) {
     this.setCode(item.getCode());
     this.setName(item.getName());
+    this.setUrl(item.getUrl());
+    this.setTitle(item.getTitle());
     this.setPicture(item.getPicture());
     this.setSingleValue(item.getSingleValue());
     this.setDescription(item.getDescription());
@@ -39,6 +43,26 @@ public class ItemJson implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setPicture(String[] picture) {
+    this.picture = picture;
   }
 
   public String[] getPicture() {

@@ -21,7 +21,7 @@ class SingleItem extends Component {
   }
 
   render() {
-    const to = `${ROUTING_URL.DETAIL}/${this.props.item.code}`;
+    const to = `${ROUTING_URL.DETAIL}/${this.props.item.url}`;
     const fadeImage = this.props.quickLook ? 'fade-image' : '';
     return (
       <div id="ds-item" className={this.props.definedClass}>
