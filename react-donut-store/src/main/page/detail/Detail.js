@@ -17,7 +17,7 @@ class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: '',
+      url: props.match.params.url,
       quantity: 1,
       categoryCode: '',
       picture: '',
@@ -41,9 +41,7 @@ class Detail extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
-    
-    if (newProps.match) {
+    if (newProps.match && !this.state.url) {
       this.setState({
         url: newProps.match.params.url,
         quantity: 1,
@@ -143,8 +141,6 @@ class Detail extends Component {
 
   showItem = () => {
     const item = this.props.listItem.find(i => i.url === this.state.url);
-    console.log(this.state.url,item);
-    
     if (item !== undefined) {
       return (
         <div className="container">
