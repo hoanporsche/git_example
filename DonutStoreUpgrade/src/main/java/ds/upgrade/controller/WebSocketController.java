@@ -44,7 +44,7 @@ public class WebSocketController {
   @Autowired
   private NotificationDbService notificationDbService;
 
-  @GetMapping("/")
+  @GetMapping("/web-socket")
   public String webSocket() {
     return "web-socket";
   }
