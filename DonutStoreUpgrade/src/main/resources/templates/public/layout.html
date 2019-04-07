@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head(title)">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title th:text="${title}"></title>
+<!-- Bootstrap -->
+<link
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+    rel="stylesheet" />
+<link
+    th:href="@{/css/bootstrap-datetimepicker.min.css}"
+    rel="stylesheet" />
+<link href="/css/style.css"
+	th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse" th:fragment="header(currentPage)">
+		<div class="container">
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> 
+                    <span class="icon-bar"></span> 
+                    <span class="icon-bar"></span> 
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}"><img src="/images/BR6.jpg" class="img-thumbnail" style="width:80px;"/></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+            		<ul class="nav navbar-nav" >
+            			<li th:class="${currentPage == 'order'}? 'active':null"><a th:href="@{/order}" >Đặt hàng</a></li>
+      				<li th:class="${currentPage == 'reference'}? 'active':null" ><a th:href="@{/main/reference}">Hướng dẫn</a></li>
+      				<li th:class="${currentPage == 'contact'}? 'active':null" ><a th:href="@{/main/contact}" >Liên hệ</a></li>
+      				<li><h4 style="margin-top: 17px;margin-left: 90px;color: red;">Since 2001</h4></li>
+    				</ul>
+    				<ul sec:authorize="hasRole('ROLE_ADMIN')" class="nav navbar-nav navbar-right">
+                        <li th:class="${currentPage == order}? 'active':null" ><a th:href="@{/admin}">Admin</a></li>
+                    </ul>
+    				<ul sec:authorize="hasAnyRole('MEMBER')" class="nav navbar-nav navbar-right">
+    					<li><a sec:authentication="name" style="color:white"></a></li>
+    					<li><a th:href="@{/logout}">[Đăng xuất]</a></li>
+    				</ul>
+    				<div th:unless="${#authorization.expression('hasRole(''ROLE_MEMBER'')')}" class="navbar-right">
+    					<a class="btn btn-danger navbar-btn" th:href="@{/registry}">Đăng ký</a>
+    					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#userLogin">Đăng nhập</button>
+    				</div>
+    			</div>
+		</div>
+		
+		<div id="userLogin" class="modal modal-style fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" align="center"><b>Đăng nhập</b></h4>
+					</div>
+					<div class="modal-body form-style">
+						<form action="#" th:action="@{/login}" method="post">
+							<div class="form-group">
+								<label><b>Email</b></label>
+								<input type="text" class="form-control" name="userEmail" placeholder="" />
+								<label><b>Mật khẩu</b></label>
+								<input type="password" class="form-control" name="userPassword" placeholder="" />
+								<button type="submit">Đăng nhập</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>		
+		</div>
+	</nav>
+	
+	<footer th:fragment="footer">
+		<div class="container">
+       <div class="row">
+       
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <img src="/images/BR6.jpg" style="width:200px;"/>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="menu">
+                         <li><span>Menu</span></li>    
+                         <li>
+                            <a href="#">Home</a>
+                          </li>
+                               
+                          <li>
+                             <a href="#">About</a>
+                          </li>
+                               
+                          <li>
+                            <a href="#">Blog</a>
+                          </li>
+                               
+                          <li>
+                             <a href="#">Gallery </a>
+                          </li>
+                     </ul>
+                </div>
+           
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <ul class="adress">
+                        <li><span>Contact</span></li>       
+                        <li>
+                           <i class="fa fa-phone" aria-hidden="true"></i> <a href="#">Phone</a>
+                        </li>
+                        <li>
+                           <i class="fa fa-map-marker" aria-hidden="true"></i> <a href="#">Adress</a>
+                        </li> 
+                        <li>
+                           <i class="fa fa-envelope" aria-hidden="true"></i> <a href="#">Email</a>
+                        </li> 
+                   </ul>
+               </div>
+           
+           
+           </div> 
+        </div>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    		<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+	</footer>
+</body>
+</html>
