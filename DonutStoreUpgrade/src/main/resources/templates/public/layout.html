@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head th:fragment="head(title)">
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title th:text="${title}"></title>
-<!-- Bootstrap -->
-<link
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-    rel="stylesheet" />
-<link
-    th:href="@{/css/bootstrap-datetimepicker.min.css}"
-    rel="stylesheet" />
-<link href="/css/style.css"
-	th:href="@{/css/style.css}" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${title}"></title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+        rel="stylesheet" />
+    <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
+    <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse" th:fragment="header(currentPage)">
-		<div class="container">
+    <nav class="navbar navbar-expand-sm bg-light navbar-light" th:fragment="header(currentPage)">
+        <!-- <div class="container">
 			<div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
                     data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -73,61 +68,88 @@
 					</div>
 				</div>
 			</div>		
-		</div>
-	</nav>
-	
-	<footer th:fragment="footer">
-		<div class="container">
-       <div class="row">
-       
+        </div> -->
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/thuc-don">Thực đơn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dat-mon">Đặt món</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/lien-he">Liên hệ</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <footer th:fragment="footer">
+        <div class="container">
+            <div class="row">
+
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                  <img src="/images/BR6.jpg" style="width:200px;"/>
+                    <img src="/images/BR6.jpg" style="width:200px;" />
                 </div>
-                
+
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <ul class="menu">
-                         <li><span>Menu</span></li>    
-                         <li>
-                            <a href="#">Home</a>
-                          </li>
-                               
-                          <li>
-                             <a href="#">About</a>
-                          </li>
-                               
-                          <li>
-                            <a href="#">Blog</a>
-                          </li>
-                               
-                          <li>
-                             <a href="#">Gallery </a>
-                          </li>
-                     </ul>
-                </div>
-           
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <ul class="adress">
-                        <li><span>Contact</span></li>       
+                        <li><span>Menu</span></li>
                         <li>
-                           <i class="fa fa-phone" aria-hidden="true"></i> <a href="#">Phone</a>
+                            <a href="#">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="#">About</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Blog</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Gallery </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="adress">
+                        <li><span>Contact</span></li>
+                        <li>
+                            <i class="fa fa-phone" aria-hidden="true"></i> <a href="#">Phone</a>
                         </li>
                         <li>
-                           <i class="fa fa-map-marker" aria-hidden="true"></i> <a href="#">Adress</a>
-                        </li> 
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> <a href="#">Adress</a>
+                        </li>
                         <li>
-                           <i class="fa fa-envelope" aria-hidden="true"></i> <a href="#">Email</a>
-                        </li> 
-                   </ul>
-               </div>
-           
-           
-           </div> 
+                            <i class="fa fa-envelope" aria-hidden="true"></i> <a href="#">Email</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
         </div>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-    		<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
-	</footer>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+    </footer>
 </body>
+
 </html>

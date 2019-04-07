@@ -11,13 +11,13 @@
 </head>
 
 <body>
-    <nav th:replace="public/layout :: header('home')"></nav>
-    <script th:inline="javascript">
+    <nav th:replace="public/layout :: header('order')"></nav>
+    <!-- <script th:inline="javascript">
         var categories = /*[[${categories}]]*/;
-    </script>
+    </script> -->
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/public/home.js}"></script>
+    <script th:src="@{/js/public/order.js}"></script>
 </body>
 
 </html>
