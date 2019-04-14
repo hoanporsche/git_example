@@ -9,13 +9,18 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.util.AppConstant;
 import ds.upgrade.util.service.CommonMethod;
 
 @Service
 public class CommonMethodImpl implements CommonMethod {
+  @Autowired
+  private ConfigGlobalService configGlobalService;
 
   @Override
   public String createOrderCode(Date date) {
@@ -51,7 +56,7 @@ public class CommonMethodImpl implements CommonMethod {
 
   @Override
   public String createDiscountCode(long index) {
-    return  AppConstant.PREFIX_CODE.DISCOUNT_PREFIX + index;
+    return AppConstant.PREFIX_CODE.DISCOUNT_PREFIX + index;
   }
 
   @Override
@@ -105,5 +110,11 @@ public class CommonMethodImpl implements CommonMethod {
     list.add(startDate);
     list.add(endDate);
     return list;
+  }
+
+  @Override
+  public void findHeaderInfo(String pageTitle, Model model) {
+    model.addAttribute("title", pageTitle);
+    model.addAttribute("logo", configGlobalService.findByname("logo").getValue());
   }
 }

@@ -3,6 +3,8 @@ package ds.upgrade.util.service;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 public interface CommonMethod {
   
   public String createOrderCode(Date date);
@@ -14,4 +16,5 @@ public interface CommonMethod {
   public Date createStartDate(Date now);
   public Date createEndDate(Date now);
   public List<Date> createRangeDateFilter(String key);
+  public void findHeaderInfo(String pageTitle, Model model);
 }

@@ -6,14 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+        th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
 </head>
 
 <body>
     <nav th:replace="public/layout :: header('home')"></nav>
+    <div class="logo-picture" th:style="'background-image:url(' + @{${logo}} + ');'">
+
+    </div>
+    <div class="container-fluid">
+        <div class="row" th:each="category,iter : ${categories}">
+            <div th:classappend="${iter.index % 2 == 0} ? col-md-2 : col-md-10">
+                <div th:if="${iter.index % 2 == 0}" th:text="${category.name}">
+
+                </div>
+                <div th:if="${iter.index % 2 != 0}">
+
+                </div>
+            </div>
+            <div th:classappend="${iter.index % 2 == 0} ? col-md-10 : col-md-2">
+                <div th:if="${iter.index % 2 == 0}">
+
+                </div>
+                <div th:if="${iter.index % 2 != 0}" th:text="${category.name}">
+
+                </div>
+            </div>
+        </div>
+    </div>
     <script th:inline="javascript">
-        var categories = /*[[${categories}]]*/;
+        var categories = /*[[${categories}]]*/
     </script>
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>

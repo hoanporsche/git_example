@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import ds.upgrade.service.CategoryService;
 import ds.upgrade.service.ConfigGlobalService;
+import ds.upgrade.util.service.CommonMethod;
 
 @Controller
 public class HomeController {
@@ -14,13 +15,14 @@ public class HomeController {
   @Autowired
   private CategoryService categoryService;
   @Autowired
-  private ConfigGlobalService configGlobalService;
+  private CommonMethod commonMethod;
+//  @Autowired
+//  private ConfigGlobalService configGlobalService;
 
   @GetMapping("/")
   public String webSocket(Model model) {
-    model.addAttribute("title","Banh ran Vu Hoan");
     model.addAttribute("categories",categoryService.findAllJson());
-    model.addAttribute("logo",configGlobalService.findByname("logo"));
+    commonMethod.findHeaderInfo("Bánh rán Hoàn - Bánh rán, bánh gà, gà xiên, heo xiên", model);
     return "public/home";
   }
 }
