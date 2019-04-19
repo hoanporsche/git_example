@@ -9,7 +9,7 @@ public class OrderController {
 	
 	@GetMapping("/dat-mon")
 	  public String orderPage(Model model) {
-	    model.addAttribute("title","Đặt món - Bánh rán Vũ Hoàn");
+	    model.addAttribute("title","Đặt món giao ngay - Bánh rán Vũ Hoàn");
 	    return "public/order";
 	  }
 }

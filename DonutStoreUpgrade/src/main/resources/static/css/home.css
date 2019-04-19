@@ -1,0 +1,13 @@
+.slide-picture {
+	height: 400px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	text-align: center;
+}
+
+.header-info {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-family: cursive;
+}

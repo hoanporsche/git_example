@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
     <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-        rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
     <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
@@ -70,13 +72,13 @@
 			</div>		
         </div> -->
         <a class="navbar-brand" href="/">
-        	<!-- <div class="logo-image" th:style="'background-image:url(' + @{${logo}} + ');'">
+            <!-- <div class="logo-image" th:style="'background-image:url(' + @{${logo}} + ');'">
         		
         	</div>-->
-        	<img th:src="@{${logo}}" class="logo-image" alt="brand" />
+            <img th:src="@{${logo}}" class="logo-image" alt="brand" />
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -96,8 +98,11 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+                <a class="mr-sm-2" style="font-size: 2em;" href="https://www.facebook.com/banhranhoan/" target="_blank"><i
+                        class="fab fa-facebook-square"></i></a>
+                <a  class="my-2 my-sm-0" style="font-size: 2em;" href="https://www.instagram.com/banhranhoan/" target="_blank"><i class="fab fa-instagram"></i></a>
             </form>
         </div>
     </nav>

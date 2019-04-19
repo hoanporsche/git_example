@@ -220,4 +220,7 @@ INSERT INTO `donutstore`.`config_global` VALUES
 ('singleShippingPrice','5600'),
 ('minShippingPrice','12000'),
 ('privacy','Giao hàng tận nơi với đơn hàng từ 80.000₫/Miễn phí giao hàng 3km đầu tiên/Miễn phí giao hàng toàn bộ nội thành Hà Nội với đơn hàng từ 400.000₫'),
-('shippingPrice','https://res.cloudinary.com/hitkeodog/image/upload/v1533796074/donut-store/shipping-price.png');
+('shippingPrice','https://res.cloudinary.com/hitkeodog/image/upload/v1533796074/donut-store/shipping-price.png'),
+('slidePicture1','https://res.cloudinary.com/hitkeodog/image/upload/v1533569767/donut-store/banh-ran/BR1.jpg'),
+('slidePicture2','https://res.cloudinary.com/hitkeodog/image/upload/v1533569771/donut-store/banh-ran/BR3.jpg'),
+('slidePicture3','https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR4.jpg');

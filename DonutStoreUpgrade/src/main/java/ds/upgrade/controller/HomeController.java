@@ -16,13 +16,16 @@ public class HomeController {
   private CategoryService categoryService;
   @Autowired
   private CommonMethod commonMethod;
-//  @Autowired
-//  private ConfigGlobalService configGlobalService;
+  @Autowired
+  private ConfigGlobalService configGlobalService;
 
   @GetMapping("/")
   public String webSocket(Model model) {
     model.addAttribute("categories",categoryService.findAllJson());
     commonMethod.findHeaderInfo("Bánh rán Hoàn - Bánh rán, bánh gà, gà xiên, heo xiên", model);
+    model.addAttribute("slidePicture1", configGlobalService.findByname("slidePicture1").getValue());
+    model.addAttribute("slidePicture2", configGlobalService.findByname("slidePicture2").getValue());
+    model.addAttribute("slidePicture3", configGlobalService.findByname("slidePicture3").getValue());
     return "public/home";
   }
 }
