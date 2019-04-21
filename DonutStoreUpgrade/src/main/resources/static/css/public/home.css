@@ -7,15 +7,90 @@
 }
 
 .header-info {
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-family: cursive;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	font-family: cursive;
 }
 
 .single-row-category {
-	border: 1px solid red;
+	/* border: 1px solid red; */
 }
 
 .row-item {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: stretch;
+	justify-content: stretch;
+	list-style: none;
+	/* border-radius: 10px; */
+	font-family: cursive;
+}
+
+.orange-background {
 	background-color: orange;
 }
+
+.bisque-background {
+	background-color: bisque;
+}
+
+.single-item {
+	display: inline-block;
+	flex: auto;
+	position: relative;
+	text-align: center;
+	padding-bottom: 15px;
+	margin-right: 6%;
+	margin-left: 6%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: white;
+	text-align: center;
+}
+
+.ds-single-item-image {
+	padding-top: 5em;
+	height: 180px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	text-align: center;
+}
+
+.nav-link-item {
+	text-decoration: none;
+}
+
+.nav-link-item h4:hover {
+	color: red;
+	transition: all 0.2s ease-in-out;
+}
+
+/* .img-circle {
+	border-radius: 50%;
+	border: solid 3px #e86a00;
+	width: 100px;
+	max-width: 100%;
+	height: 100px;
+	text-align: center;
+}
+
+.single-item span {
+	font-family: "UTM American Sans";
+	color: #512728;
+	font-size: 30px;
+	text-transform: uppercase;
+	display: block;
+	margin-top: 10px;
+	line-height: 1em;
+}
+
+.single-item hr {
+	width: 45px;
+	margin: 15px auto;
+	border-top: 3px solid #e86a00;
+} */

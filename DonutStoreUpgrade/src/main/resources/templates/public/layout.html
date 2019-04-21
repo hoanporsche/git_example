@@ -100,64 +100,76 @@
             <form class="form-inline my-2 my-lg-0">
                 <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-                <a class="mr-sm-2" style="font-size: 2em;" href="https://www.facebook.com/banhranhoan/" target="_blank"><i
-                        class="fab fa-facebook-square"></i></a>
-                <a  class="my-2 my-sm-0" style="font-size: 2em;" href="https://www.instagram.com/banhranhoan/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a class="mr-sm-2" style="font-size: 2em;" href="https://www.facebook.com/banhranhoan/"
+                    target="_blank"><i class="fab fa-facebook-square"></i></a>
+                <a class="my-2 my-sm-0" style="font-size: 2em;" href="https://www.instagram.com/banhranhoan/"
+                    target="_blank"><i class="fab fa-instagram"></i></a>
             </form>
         </div>
     </nav>
 
     <footer th:fragment="footer">
         <div class="container">
+            <hr />
             <div class="row">
-
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <img src="/images/BR6.jpg" style="width:200px;" />
+                <div class="col-sm-12 col-xl-8">
+                    <div class="row">
+                        <div class="col-4 col-sm-3">
+                            <img th:src="@{${logo}}" style="width: 100;" alt="footer-img" />
+                        </div>
+                        <div class="col-8 col-sm-3">
+                            <ul class="menu">
+                                <li>
+                                    <span>Menu</span>
+                                </li>
+                                <li>
+                                    <a to="/" style="font-size: 14px;">Trang chủ</a>
+                                </li>
+                                <li>
+                                    <a to="/lien-he" style="font-size: 14px;">Liên hệ</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <ul class="adress">
+                                <li>
+                                    <span>Liên hệ</span>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="fas fa-phone" aria-hidden="true" /> <span th:text="${hotLine}"></span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="fas fa-map-marker" aria-hidden="true" /> Cơ sở chính:
+                                        <span th:text="${headquarter}"></span></p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="fas fa-envelope" aria-hidden="true" /> <span
+                                            th:text="${email}"></span></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <ul class="menu">
-                        <li><span>Menu</span></li>
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-
-                        <li>
-                            <a href="#">About</a>
-                        </li>
-
-                        <li>
-                            <a href="#">Blog</a>
-                        </li>
-
-                        <li>
-                            <a href="#">Gallery </a>
-                        </li>
-                    </ul>
+                <div class="col-sm-12 col-12 col-md-6 col-xl-4">
+                    <iframe
+                            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbanhranhoan%2F&tabs=timeline&width=340px&height=200px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2150713538567990;"
+                            width="340px" height="200px" style="border: none; overflow: hidden;"
+                            scrolling="no" frameBorder="0" allowtransparency="true" allow="encrypted-media"
+                            title="home-page"></iframe>
                 </div>
-
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <ul class="adress">
-                        <li><span>Contact</span></li>
-                        <li>
-                            <i class="fa fa-phone" aria-hidden="true"></i> <a href="#">Phone</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-map-marker" aria-hidden="true"></i> <a href="#">Adress</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope" aria-hidden="true"></i> <a href="#">Email</a>
-                        </li>
-                    </ul>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Developed by <a href="https://www.facebook.com/vu.hoan.39">Vũ Hoàn</a> @2019</p>
                 </div>
-
-
             </div>
         </div>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+        <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
         <script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
     </footer>
 </body>

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 
 import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.util.AppConstant;
+import ds.upgrade.util.UIUtil;
 import ds.upgrade.util.service.CommonMethod;
 
 @Service
@@ -116,5 +117,9 @@ public class CommonMethodImpl implements CommonMethod {
   public void findHeaderInfo(String pageTitle, Model model) {
     model.addAttribute("title", pageTitle);
     model.addAttribute("logo", configGlobalService.findByname("logo").getValue());
+    model.addAttribute("formatter", new UIUtil());
+    model.addAttribute("hotLine", configGlobalService.findByname("hotLine").getValue());
+    model.addAttribute("headquarter", configGlobalService.findByname("headquarter").getValue());
+    model.addAttribute("email", configGlobalService.findByname("email").getValue());
   }
 }

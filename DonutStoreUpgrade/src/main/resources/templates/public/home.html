@@ -80,30 +80,60 @@
 
     <div class="container-fluid">
         <div class="row single-row-category" th:each="category,iter : ${categories}">
-            <div th:classappend="${iter.index % 2 == 0} ? col-md-2 : col-md-10">
-                <div th:if="${iter.index % 2 == 0}" th:text="${category.name}">
-
+            <div th:classappend="${iter.index % 2 == 0} ? col-2 : col-10">
+                <div th:if="${iter.index % 2 == 0}">
+                    <h2 class="header-info" th:text="${category.name}"></h2>
                 </div>
-                <div th:if="${iter.index % 2 != 0}" class="row-item">
-
+                <div th:if="${iter.index % 2 != 0}" class="row-item"
+                    th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
+                    <div class="single-item" th:each="item : ${category.items}">
+                        <!-- <img class="img-circle" th:src="${item.picture[0]}" alt="category-img" />
+                        <span th:text="${item.name}"></span>
+                        <hr /> -->
+                        <!-- <div className={`ds-single-item-image ${fadeImage}`}
+                            th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
+                            { this.showQuickLook() }
+                        </div> -->
+                        <div class="ds-single-item-image"
+                            th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
+                            <!-- { this.showQuickLook() } -->
+                        </div>
+                        <a th:href="${item.url}" class="nav-link-item">
+                            <h4 th:text="${item.name}"></h4>
+                        </a>
+                        <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫
+                    </div>
                 </div>
             </div>
-            <div th:classappend="${iter.index % 2 == 0} ? col-md-10 : col-md-2">
-                <div th:if="${iter.index % 2 == 0}" class="row-item">
-
+            <div th:classappend="${iter.index % 2 == 0} ? col-10 : col-2">
+                <div th:if="${iter.index % 2 == 0}" class="row-item"
+                    th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
+                    <div class="single-item" th:each="item : ${category.items}">
+                        <!-- <img class="img-circle" th:src="${item.picture[0]}" alt="category-img" />
+                        <span th:text="${item.name}"></span>
+                        <hr /> -->
+                        <div class="ds-single-item-image"
+                            th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
+                            <!-- { this.showQuickLook() } -->
+                        </div>
+                        <a th:href="${item.url}" class="nav-link-item">
+                            <h4 th:text="${item.name}"></h4>
+                        </a>
+                        <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫
+                    </div>
                 </div>
-                <div th:if="${iter.index % 2 != 0}" th:text="${category.name}">
-
+                <div th:if="${iter.index % 2 != 0}">
+                    <h2 class="header-info float-right" th:text="${category.name}"></h2>
                 </div>
             </div>
         </div>
         <div class="clearfix"></div>
     </div>
+    
+    <footer th:replace="public/layout :: footer"></footer>
     <script th:inline="javascript">
         var categories = /*[[${categories}]]*/
     </script>
-    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/public/home.js}"></script>
 </body>
 
