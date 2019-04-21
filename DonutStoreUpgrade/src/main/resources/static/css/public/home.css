@@ -11,3 +11,11 @@
     padding-bottom: 5%;
     font-family: cursive;
 }
+
+.single-row-category {
+	border: 1px solid red;
+}
+
+.row-item {
+	background-color: orange;
+}
