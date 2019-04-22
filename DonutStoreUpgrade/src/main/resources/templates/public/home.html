@@ -103,7 +103,8 @@
                         <a th:href="${item.url}" class="nav-link-item">
                             <h4 th:text="${item.name}"></h4>
                         </a>
-                        <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫
+                        <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />
+                        <a href="/dat-mon" class="btn btn-danger">Đặt ngay</a>
                     </div>
                 </div>
             </div>
@@ -121,7 +122,8 @@
                         <a th:href="${item.url}" class="nav-link-item">
                             <h4 th:text="${item.name}"></h4>
                         </a>
-                        <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫
+                        <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />
+                        <a href="/dat-mon" class="btn btn-danger">Đặt ngay</a>
                     </div>
                 </div>
                 <div th:if="${iter.index % 2 != 0}">

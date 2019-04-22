@@ -84,16 +84,16 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item" th:class="${currentPage == 'home'}? 'active':null">
                     <a class="nav-link" href="/">Trang Chủ</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:class="${currentPage == 'menu'}? 'active':null">
                     <a class="nav-link" href="/thuc-don">Thực đơn</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:class="${currentPage == 'order'}? 'active':null">
                     <a class="nav-link" href="/dat-mon">Đặt món</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:class="${currentPage == 'contact'}? 'active':null">
                     <a class="nav-link" href="/lien-he">Liên hệ</a>
                 </li>
             </ul>
@@ -101,7 +101,7 @@
                 <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
                 <a class="mr-sm-2" style="font-size: 2em;" href="https://www.facebook.com/banhranhoan/" target="_blank"><i
-                        class="fab fa-facebook-square"></i></a>
+                        class="fab fa-facebook-square"></i></a>&nbsp;
                 <a class="my-2 my-sm-0" style="font-size: 2em;" href="https://www.instagram.com/banhranhoan/" target="_blank"><i
                         class="fab fa-instagram"></i></a>
             </form>

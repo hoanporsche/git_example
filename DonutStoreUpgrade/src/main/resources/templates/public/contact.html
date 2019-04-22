@@ -6,18 +6,90 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="shortcut icon"
+        href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+        th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/public/contact.css}" rel="stylesheet" />
 </head>
 
 <body>
     <nav th:replace="public/layout :: header('contact')"></nav>
-    <!-- <script th:inline="javascript">
-        var categories = /*[[${categories}]]*/;
-    </script> -->
-    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 ggmap-css">
+                <div id="show_ggmaps">
+                </div>
+            </div>
+            <div class="col-sm-6" style="padding-top: 2%">
+                <h5><b>Địa chỉ:</b></h5>
+                <ul>
+                    <li th:each="store : ${stores}">
+                        <span th:text="${store.address}"></span>
+                    </li>
+                </ul>
+                <h5><b>Thời gian mở cửa:</b></h5>
+                <ul>
+                    <li>Thứ 2 - Chủ nhật : 7:00 - 19:30</li>
+                </ul>
+                <h5><b>Dịch vụ giao hàng:</b></h5>
+                <ul>
+                    <li>Giao hàng với đơn hàng từ
+                        <!-- <NumberFormat value={this.findMinTotalPrice()} displayType={'text'} thousandSeparator={true} />₫ -->
+                        <span th:text="${formatter.formatNumber(minTotalPrice)}"></span>₫
+                    </li>
+                    <li>Freeship <span th:text="${formatter.formatNumber(freeShipDistance)}"></span>km đầu tiên</li>
+                    <li>Có hóa đơn</li>
+                </ul>
+                <h5><b>Hotline phản hồi:</b></h5>
+                <h4 style="color: red;"><i class="fas fa-mobile-alt"></i>&nbsp;<b th:text="${hotLine}"></b></h4>
+            </div>
+        </div>
+        <hr />
+        <div id="section-header" class="text-center">
+            <h1>Hòm thư góp ý</h1>
+        </div>
+        <form class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="*Tên của bạn" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="*Số điện thoại của bạn" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="*Email của bạn" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="*Tiêu đề" />
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" class="form-control" style="max-height: 93px;"
+                        placeholder="*Nội dung"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="bottom-button">
+                    <button type="button" class="btn btn-primary" style="text-align: center;">Gửi góp ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <footer th:replace="public/layout :: footer"></footer>
+    <script th:inline="javascript">
+        var stores = /*[[${stores}]]*/
+    </script>
     <script th:src="@{/js/public/contact.js}"></script>
+    <script type="text/javascript"
+        th:src="@{http://maps.googleapis.com/maps/api/js(key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM)}"></script>
 </body>
 
 </html>
