@@ -12,7 +12,7 @@
 
 footer {
 	background-color: white;
-	padding: 30px 0px;
+	padding-top: 2em;
 	position: relative;
 	bottom: 0;
 	width: 100%;
@@ -27,15 +27,18 @@ footer {
 .adress span, .menu span {
 	color: black;
 	font-weight: 400;
-	border-bottom: 1px solid #c7c7c7;
+	/* border-bottom: 1px solid #c7c7c7; */
 	padding-bottom: 10px;
 	margin-bottom: 20px;
-	display: block;
+	/* display: block; */
 	text-transform: uppercase;
 	font-size: 16px;
 }
-
-.adress li a, .adress li p, .menu li a {
+.menu span, #contact-adress {
+	border-bottom: 1px solid #c7c7c7;
+	display: block;
+}
+.adress li a, .adress li a span, .adress li p, .adress li p span, .menu li a span {
 	color: black;
 	text-decoration: none;
 	font-size: 12px;
@@ -58,4 +61,14 @@ footer {
 	.adress {
 		padding: 0;
 	}
+}
+
+.fb-messengermessageus-custom {
+  position: fixed !important;
+  bottom: 0px;
+  right: 20px;
+  z-index: 999999999999999;
+  width: 250px;
+  height: auto;
+  overflow: hidden;
 }

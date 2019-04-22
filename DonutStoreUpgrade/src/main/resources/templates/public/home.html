@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
+    <link rel="shortcut icon" href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
         th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
@@ -82,7 +83,8 @@
         <div class="row single-row-category" th:each="category,iter : ${categories}">
             <div th:classappend="${iter.index % 2 == 0} ? col-2 : col-10">
                 <div th:if="${iter.index % 2 == 0}">
-                    <h2 class="header-info" th:text="${category.name}"></h2>
+                    <h2 class="category-name" th:text="${category.name}"></h2>
+                    <img class="img-circle" th:src="${category.picture}" alt="category-img" />
                 </div>
                 <div th:if="${iter.index % 2 != 0}" class="row-item"
                     th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
@@ -123,7 +125,8 @@
                     </div>
                 </div>
                 <div th:if="${iter.index % 2 != 0}">
-                    <h2 class="header-info float-right" th:text="${category.name}"></h2>
+                    <h2 class="category-name" th:text="${category.name}"></h2>
+                    <img class="img-circle" th:src="${category.picture}" alt="category-img" />
                 </div>
             </div>
         </div>
@@ -136,5 +139,4 @@
     </script>
     <script th:src="@{/js/public/home.js}"></script>
 </body>
-
 </html>
