@@ -100,7 +100,7 @@
                             th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
                             <!-- { this.showQuickLook() } -->
                         </div>
-                        <a th:href="${item.url}" class="nav-link-item">
+                        <a th:href="'/thuc-don/' + ${item.url}" class="nav-link-item">
                             <h4 th:text="${item.name}"></h4>
                         </a>
                         <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />
@@ -119,7 +119,7 @@
                             th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
                             <!-- { this.showQuickLook() } -->
                         </div>
-                        <a th:href="${item.url}" class="nav-link-item">
+                        <a th:href="'/thuc-don/' + ${item.url}" class="nav-link-item">
                             <h4 th:text="${item.name}"></h4>
                         </a>
                         <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />

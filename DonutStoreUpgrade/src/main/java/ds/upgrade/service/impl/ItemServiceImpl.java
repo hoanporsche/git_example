@@ -118,4 +118,16 @@ public class ItemServiceImpl implements ItemService {
   public Item findByName(String name) {
     return itemRepository.findByName(name);
   }
+  
+  @Override
+  public Item findByUrl(String url) {
+    Item foundItem = itemRepository.findByUrl(url);
+    return foundItem.isEnabled() ? foundItem : null;
+  }
+
+  @Override
+  public ItemJson findFirstEnabledItem() {
+    List<ItemJson> list = findAll();
+    return (list == null) ? new ItemJson() : list.get(0);
+  }
 }

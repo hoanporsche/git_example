@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title th:text="${title}"></title>
+    <title th:text="${foundItem.title}"></title>
     <link rel="shortcut icon"
         href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -15,30 +15,92 @@
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link th:href="@{/css/public/menu.css}" rel="stylesheet" />
+    <link th:href="@{/css/public/component.css}" rel="stylesheet" />
 </head>
 
 <body>
     <nav th:replace="public/layout :: header('menu')"></nav>
 
-    <div className="container-fluid">
+    <div class="container-fluid">
         <!-- {this.showItem()} -->
-        <div className="container text-center" style="margin-top: 40px">
-            <div id="section-header" class="text-center">
+        <div class="container">
+            <div class="section-header text-center">
+                <h1 th:text="${foundItem.name}"></h1>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-4 padding-top1">
+                    <div class="row">
+                        <!-- {this.showMiniItemPicture(item.picture)} -->
+                        <div class="col-12" th:each="picture,iter : ${foundItem.picture}">
+                            <div class="single-item-image" th:classappend="${iter.index == 0} ? border-picture : ''"
+                                th:id="'mini-picture-' + ${iter.index}"
+                                th:style="'background-image:url(' + @{${picture}} + ');'"
+                                th:onclick="'onChangePicture(\'' +${picture} +'\')'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-8 padding-top1">
+                    <div class="item-picture" th:style="'background-image:url(' + @{${foundItem.picture[0]}} + ');'">
+                    </div>
+                </div>
+                <div class="col-md-5 col-12 padding-top1">
+                    <div class="detail-item">
+                        <span th:text="${formatter.formatNumber(foundItem.singleValue) + 'đ'}">
+                        </span>
+                        <p th:text="${foundItem.description}"></p>
+                        <div class="row" style="margin-left: 0px;">
+                            <div class="col-6">
+                                <div th:replace="public/component :: chooseQuantity"></div>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-success" onclick="addToCart()">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SHOW ITEM-->
+
+        <div class="container text-center" style="margin-top: 40px">
+            <div class="section-header text-center">
                 <h1>Thực đơn khác</h1>
             </div>
-            <ul className="main-menu-category">
-                <!-- {this.showAllCategory()} -->
+            <ul class="main-menu-category">
+                <li class="single-flex-category" th:each="category, iter : ${categories}"
+                    th:classappend="${category.code == foundItem.categoryCode} ? active : ''"
+                    th:id="'main-menu-category-' + ${iter.index}">
+                    <div class="menu-item" aria-expanded="true"
+                        th:onclick="'onClickCategory(\'' +${category.code} +'\')'">
+                        <img class="img-circle" th:src="@{${category.picture}}" alt="category-img" />
+                        <span th:text="${category.name}"></span>
+                        <hr />
+                    </div>
+                </li>
             </ul>
             <hr />
-            <div className="row">
+            <div class="row" th:each="category, iter : ${categories}"
+                th:classappend="${category.code != foundItem.categoryCode} ? 'none-display' : ''"
+                th:id="'row-item-' + ${iter.index}">
                 <!-- {this.showOtherItemByCategory()} -->
+                <div class="single-item" th:each="item : ${category.items}">
+                    <div class="ds-single-item-image" th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
+                        <!-- { this.showQuickLook() } -->
+                    </div>
+                    <a th:href="'/thuc-don/' + ${item.url}" class="nav-link-item">
+                        <h4 th:text="${item.name}"></h4>
+                    </a>
+                    <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />
+                </div>
             </div>
         </div>
     </div>
 
     <footer th:replace="public/layout :: footer"></footer>
     <script th:inline="javascript">
-        var categories = /*[[${categories}]]*/
+        var categories = /*[[${categories}]]*/;
+        var foundItem = /*[[${foundItem}]]*/
     </script>
     <script th:src="@{/js/public/menu.js}"></script>
 </body>

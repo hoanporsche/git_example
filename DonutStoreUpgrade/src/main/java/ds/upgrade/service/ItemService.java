@@ -21,4 +21,8 @@ public interface ItemService {
   Item enabledOrNot(Long id);
 
   Item findByName(String name);
+  
+  Item findByUrl(String url);
+  
+  ItemJson findFirstEnabledItem();
 }

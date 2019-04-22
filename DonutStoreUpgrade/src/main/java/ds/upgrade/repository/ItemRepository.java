@@ -17,6 +17,8 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
   List<Item> findAll();
   
   Item findByName(String name);
+
+  Item findByUrl(String url);
   
   @Query(QueryConstant.ITEM.FIND_BY_CATEGORY)
   List<Item> findByCategory(@Param(AppConstant.PARAM.ID_PARAM) Long id);

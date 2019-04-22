@@ -16,7 +16,8 @@ public class ItemJson implements Serializable {
   private String[] picture;
   private BigDecimal singleValue;
   private String description;
-  
+  private String categoryCode;
+
   public ItemJson(Item item) {
     this.setCode(item.getCode());
     this.setName(item.getName());
@@ -25,9 +26,11 @@ public class ItemJson implements Serializable {
     this.setPicture(item.getPicture());
     this.setSingleValue(item.getSingleValue());
     this.setDescription(item.getDescription());
+    this.setCategoryCode(item.getCategoryId().getCode());
   }
-  
-  public ItemJson() {}
+
+  public ItemJson() {
+  }
 
   public String getCode() {
     return code;
@@ -87,5 +90,13 @@ public class ItemJson implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getCategoryCode() {
+    return categoryCode;
+  }
+
+  public void setCategoryCode(String categoryCode) {
+    this.categoryCode = categoryCode;
   }
 }

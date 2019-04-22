@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:fragment="head(title)">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${title}"></title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/public/component.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="choose-quantity" th:fragment="chooseQuantity">
+        <div class="input-quantity-container clearfix">
+            <a class="input-quantity-minus" name="decrease" onclick="onMinius()"><i
+                    class="fa fa-minus fa-fw"></i></a>
+            <input type="text" class="input-quantity" id="input-quantity" value="0" onchange="onChange()" />
+            <a class="input-quantity-plus" name="increase" onclick="onPlus()"><i class="fa fa-plus fa-fw"></i></a>
+        </div>
+        <script th:src="@{/js/public/component.js}"></script>
+    </div>
+</body>
+
+</html>
