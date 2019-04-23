@@ -10,6 +10,23 @@
 	height: 36px;
 }
 
+.header-cart {
+	/* height: 100px; */
+	text-align: right;
+	text-transform: uppercase;
+	/* line-height: 100px; */
+}
+
+.header-cart .text-cart {
+	color: black;
+	text-decoration: none;
+}
+
+.header-cart .text-cart:hover {
+	color: red;
+	transition: all 0.2s ease-in-out;
+}
+
 footer {
 	background-color: white;
 	padding-top: 2em;
@@ -34,10 +51,12 @@ footer {
 	text-transform: uppercase;
 	font-size: 16px;
 }
+
 .menu span, #contact-adress {
 	border-bottom: 1px solid #c7c7c7;
 	display: block;
 }
+
 .adress li a, .adress li a span, .adress li p, .adress li p span, .menu li a span {
 	color: black;
 	text-decoration: none;
@@ -64,11 +83,11 @@ footer {
 }
 
 .fb-messengermessageus-custom {
-  position: fixed !important;
-  bottom: 0px;
-  right: 20px;
-  z-index: 999999999999999;
-  width: 250px;
-  height: auto;
-  overflow: hidden;
+	position: fixed !important;
+	bottom: 0px;
+	right: 20px;
+	z-index: 999999999999999;
+	width: 250px;
+	height: auto;
+	overflow: hidden;
 }

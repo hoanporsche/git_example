@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
-    <link rel="shortcut icon" href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg"/>
+    <link rel="shortcut icon"
+        href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
         th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
@@ -14,6 +15,7 @@
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link th:href="@{/css/public/home.css}" rel="stylesheet" />
+    <link th:href="@{/css/public/component.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -89,13 +91,6 @@
                 <div th:if="${iter.index % 2 != 0}" class="row-item"
                     th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
                     <div class="single-item" th:each="item : ${category.items}">
-                        <!-- <img class="img-circle" th:src="${item.picture[0]}" alt="category-img" />
-                        <span th:text="${item.name}"></span>
-                        <hr /> -->
-                        <!-- <div className={`ds-single-item-image ${fadeImage}`}
-                            th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
-                            { this.showQuickLook() }
-                        </div> -->
                         <div class="ds-single-item-image"
                             th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
                             <!-- { this.showQuickLook() } -->
@@ -104,7 +99,104 @@
                             <h4 th:text="${item.name}"></h4>
                         </a>
                         <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />
-                        <a href="/dat-mon" class="btn btn-danger">Đặt ngay</a>
+                        <!-- <a href="/dat-mon" class="btn btn-danger">Đặt ngay</a> -->
+                        <button type="button" id="open-modal-si" data-backdrop="static" data-keyboard="false"
+                            class="btn btn-danger" data-toggle="modal"
+                            th:attr="data-target='#modal-single-item'+${item.code}"
+                            th:onclick="'checkExistedItemInCart(\'' +${item.code} +'\')'">
+                            Chi tiết thêm...
+                        </button>
+                        <div th:id="'modal-single-item'+${item.code}"
+                            class="modal-single-item modal fade bd-example-modal-lg" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="container ">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h3 th:text="${item.name}"></h3>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="float-right">
+                                                        <h4 style="display: inline-block; margin-top: 4px">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span
+                                                                    th:text="${formatter.formatNumber(item.singleValue)}"></span>
+                                                                <span aria-hidden="true">₫ ×</span>
+                                                            </button>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr style="margin-top: -10px" />
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <div id="carouselExampleIndicators2" class="carousel slide"
+                                                        data-ride="carousel">
+                                                        <ul class="carousel-indicators">
+                                                            <li data-target="#carouselExampleIndicators2"
+                                                                data-slide-to="0" class="active" />
+                                                            <li data-target="#carouselExampleIndicators2"
+                                                                data-slide-to="1" />
+                                                            <li data-target="#carouselExampleIndicators2"
+                                                                data-slide-to="2" />
+                                                        </ul>
+                                                        <div class="carousel-inner">
+                                                            <div class="carousel-item"
+                                                                th:each="picture, iter : ${item.picture}"
+                                                                th:classappend="${iter.index == 0} ? 'active' : ''">
+                                                                <div class="d-block w-100 slide-div"
+                                                                    th:style="'background-image:url(' + @{${picture}} + ');'">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-control-prev"
+                                                            href="#carouselExampleIndicators2" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon"
+                                                                aria-hidden="true" />
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next"
+                                                            href="#carouselExampleIndicators2" data-slide="next">
+                                                            <span class="carousel-control-next-icon"
+                                                                aria-hidden="true" />
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-8">
+                                                    <p style="font-size: 1.3em" th:text="${item.description}">
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            Số lượng:
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <div
+                                                                th:replace="public/component :: chooseQuantity(${item.code})">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="float-right">
+                                                                <button type="button" class="btn btn-light"
+                                                                    data-dismiss="modal" aria-label="Close">Quay
+                                                                    lại</button>&nbsp;
+                                                                <button type="button" class="btn btn-success"
+                                                                    th:onclick="'addToCartFromMenu(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Thêm
+                                                                    vào
+                                                                    giỏ</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,9 +204,6 @@
                 <div th:if="${iter.index % 2 == 0}" class="row-item"
                     th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
                     <div class="single-item" th:each="item : ${category.items}">
-                        <!-- <img class="img-circle" th:src="${item.picture[0]}" alt="category-img" />
-                        <span th:text="${item.name}"></span>
-                        <hr /> -->
                         <div class="ds-single-item-image"
                             th:style="'background-image:url(' + @{${item.picture[0]}} + ');'">
                             <!-- { this.showQuickLook() } -->
@@ -123,7 +212,104 @@
                             <h4 th:text="${item.name}"></h4>
                         </a>
                         <span th:text="${formatter.formatNumber(item.singleValue)}"></span>₫<br />
-                        <a href="/dat-mon" class="btn btn-danger">Đặt ngay</a>
+                        <!-- <a href="/dat-mon" class="btn btn-danger">Đặt ngay</a> -->
+                        <button type="button" id="open-modal-si" data-backdrop="static" data-keyboard="false"
+                            class="btn btn-danger" data-toggle="modal"
+                            th:attr="data-target='#modal-single-item'+${item.code}"
+                            th:onclick="'checkExistedItemInCart(\'' +${item.code} +'\')'">
+                            Chi tiết thêm...
+                        </button>
+                        <div th:id="'modal-single-item'+${item.code}"
+                            class="modal-single-item modal fade bd-example-modal-lg" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="container ">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h3 th:text="${item.name}"></h3>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="float-right">
+                                                        <h4 style="display: inline-block; margin-top: 4px">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span
+                                                                    th:text="${formatter.formatNumber(item.singleValue)}"></span>
+                                                                <span aria-hidden="true">₫ ×</span>
+                                                            </button>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr style="margin-top: -10px" />
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-4">
+                                                    <div id="carouselExampleIndicators2" class="carousel slide"
+                                                        data-ride="carousel">
+                                                        <ul class="carousel-indicators">
+                                                            <li data-target="#carouselExampleIndicators2"
+                                                                data-slide-to="0" class="active" />
+                                                            <li data-target="#carouselExampleIndicators2"
+                                                                data-slide-to="1" />
+                                                            <li data-target="#carouselExampleIndicators2"
+                                                                data-slide-to="2" />
+                                                        </ul>
+                                                        <div class="carousel-inner">
+                                                            <div class="carousel-item"
+                                                                th:each="picture, iter : ${item.picture}"
+                                                                th:classappend="${iter.index == 0} ? 'active' : ''">
+                                                                <div class="d-block w-100 slide-div"
+                                                                    th:style="'background-image:url(' + @{${picture}} + ');'">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="carousel-control-prev"
+                                                            href="#carouselExampleIndicators2" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon"
+                                                                aria-hidden="true" />
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next"
+                                                            href="#carouselExampleIndicators2" data-slide="next">
+                                                            <span class="carousel-control-next-icon"
+                                                                aria-hidden="true" />
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-8">
+                                                    <p style="font-size: 1.3em" th:text="${item.description}">
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            Số lượng:
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <div
+                                                                th:replace="public/component :: chooseQuantity(${item.code})">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="float-right">
+                                                                <button type="button" class="btn btn-light"
+                                                                    data-dismiss="modal" aria-label="Close">Quay
+                                                                    lại</button>&nbsp;
+                                                                <button type="button" class="btn btn-success"
+                                                                    th:onclick="'addToCartFromMenu(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Thêm
+                                                                    vào
+                                                                    giỏ</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div th:if="${iter.index % 2 != 0}">
@@ -134,11 +320,12 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    
+
     <footer th:replace="public/layout :: footer"></footer>
     <script th:inline="javascript">
         var categories = /*[[${categories}]]*/
     </script>
     <script th:src="@{/js/public/home.js}"></script>
 </body>
+
 </html>

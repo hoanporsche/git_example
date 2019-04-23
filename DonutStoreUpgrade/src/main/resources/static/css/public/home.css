@@ -56,7 +56,7 @@
 	margin-bottom: 20px;
 	background-color: beige;
 	text-align: center;
-	max-width: 240px;
+	width: 240px;
 }
 
 .ds-single-item-image {
@@ -86,18 +86,18 @@
 	text-align: center;
 }
 
-/* .single-item span {
-	font-family: "UTM American Sans";
-	color: #512728;
-	font-size: 30px;
-	text-transform: uppercase;
-	display: block;
-	margin-top: 10px;
-	line-height: 1em;
+.modal-single-item h3, .modal-single-item h4 {
+	color: #0b8d44;
+	font-family: Open Sans;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	letter-spacing: 0em;
 }
 
-.single-item hr {
-	width: 45px;
-	margin: 15px auto;
-	border-top: 3px solid #e86a00;
-} */
+.modal-single-item .slide-div {
+	height: 220px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}

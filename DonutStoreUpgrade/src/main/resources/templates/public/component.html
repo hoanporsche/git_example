@@ -17,12 +17,12 @@
 </head>
 
 <body>
-    <div id="choose-quantity" th:fragment="chooseQuantity">
+    <div class="choose-quantity" th:fragment="chooseQuantity(customId)">
         <div class="input-quantity-container clearfix">
-            <a class="input-quantity-minus" name="decrease" onclick="onMinius()"><i
+            <a class="input-quantity-minus" name="decrease" th:onclick="'onMinius(\'' +${customId} +'\')'"><i
                     class="fa fa-minus fa-fw"></i></a>
-            <input type="text" class="input-quantity" id="input-quantity" value="0" onchange="onChange()" />
-            <a class="input-quantity-plus" name="increase" onclick="onPlus()"><i class="fa fa-plus fa-fw"></i></a>
+            <input type="text" class="input-quantity" th:id="'input-quantity' + ${customId}" value="0" th:onchange="'onChange(\'' +${customId} +'\')'" />
+            <a class="input-quantity-plus" name="increase" th:onclick="'onPlus(\'' +${customId} +'\')'"><i class="fa fa-plus fa-fw"></i></a>
         </div>
         <script th:src="@{/js/public/component.js}"></script>
     </div>

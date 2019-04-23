@@ -51,10 +51,10 @@
                         <p th:text="${foundItem.description}"></p>
                         <div class="row" style="margin-left: 0px;">
                             <div class="col-6">
-                                <div th:replace="public/component :: chooseQuantity"></div>
+                                <div th:replace="public/component :: chooseQuantity(${foundItem.code})"></div>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-success" onclick="addToCart()">Thêm vào giỏ</button>
+                                <button class="btn btn-success" th:onclick="'addToCart(\'' +${foundItem.code} +'\')'">Thêm vào giỏ</button>
                             </div>
                         </div>
                     </div>

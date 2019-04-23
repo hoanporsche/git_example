@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    checkExistedItemInCart(foundItem.code)
 });
 
 function onChangePicture(picture) {
@@ -12,21 +12,22 @@ function onChangePicture(picture) {
     }
 }
 
-function addToCart() {
-    let itemQuantity = $('#input-quantity').val();
-    console.log(itemQuantity);
-    
-}
-
 function onClickCategory(categoryCode) {
-    console.log(categoryCode);
     for (let index = 0; index < categories.length; index++) {
         $('#main-menu-category-' + index).removeClass("active");
         $('#row-item-' + index).removeClass("none-display").addClass("none-display");
         if (categoryCode === categories[index].code) {
             $('#main-menu-category-' + index).addClass("active");
             $('#row-item-' + index).removeClass("none-display");
-            // $('.item-picture').css({'background-image': `url(${picture})`});
         }
     }
+}
+
+function checkExistedItemInCart(itemCode) {
+    const quantities = JSON.parse(localStorage.getItem('cart')).quantities;
+    quantities.forEach(q => {
+        if (q.item.code == itemCode) {
+            $('#input-quantity'+itemCode).val(q.quantity);
+        }
+    })
 }
