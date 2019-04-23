@@ -20,20 +20,58 @@
 
 <body>
     <nav th:replace="public/layout :: header('order')"></nav>
-    
+
     <div class="container" style="min-height: 45vh">
         <div class="section-header text-center">
             <h1>Giỏ hàng của bạn</h1>
-          </div>
-        <p class="text-center">Giỏ hàng ₫</p>
-        <!-- {this.showShippingCart()} -->
-      </div>
-    
+        </div>
+        <p class="text-center">Giỏ hàng ( <span id="order-header-quantity-item"></span> loại món - <span
+                id="order-header-total-price"></span> ₫)</p>
+        <div class="row order-single-category" th:each="category : ${categories}">
+            <div class="section-header">
+                <h1 th:text="${category.name}"></h1>
+            </div>
+            <div class="col-12 order-single-row-item" th:each="item : ${category.items}"
+                th:id="'order-single-row-item-' + ${item.code}">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-2 order-single-field-item">
+                        <img class="order-img-circle" th:src="${item.picture[0]}" th:attr="alt=${item.name}" />
+                    </div>
+                    <div class="col-8 col-sm-3 order-single-field-item">
+                        <h5><i class="fas fa-clipboard-check" th:id="'order-item-check-' + ${item.code}" style="display: none"></i><span th:text="${item.name}"></span></h5>
+                    </div>
+                    <div class="col-5 col-sm-3 order-single-field-item">
+                        <div th:replace="public/component :: chooseQuantity(${item.code})"></div>
+                    </div>
+                    <div class="col-7 col-sm-3 col-md-4 order-single-field-item">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-light"
+                                th:onclick="'clearToCartFromOrder(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Xóa
+                                món</button>&nbsp;
+                            <button class="btn btn-danger"
+                                th:onclick="'addToCartFromMenu(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Xác
+                                nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 button-go-to-checkout">
+                <a class="text-center" href="/thong-tin-giao-hang">Đặt giao hàng ( <span id="order-bottom-quantity-item"></span> loại món - <span
+                        id="order-bottom-total-price"></span> ₫) <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
     <footer th:replace="public/layout :: footer"></footer>
     <script th:inline="javascript">
         var categories = /*[[${categories}]]*/;
     </script>
-    <script th:src="@{/js/public/menu.js}"></script>
+    <script th:src="@{/js/public/order.js}"></script>
 </body>
 
 </html>

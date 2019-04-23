@@ -54,7 +54,7 @@ function addQuantites(item, quantity) {
             totalPrice
         });
         setCart(newCart);
-        changeViewValueCart(newList.length, totalPrice);
+        changeViewValueCart(newList.length, totalPrice, item.code, true);
         showNotification(quantity, item.name, item.picture[0]);
     } else {
         //Còn trùng thì update lại item với số lượng và tính lại tổng giá
@@ -70,7 +70,7 @@ function addQuantites(item, quantity) {
             totalPrice
         });
         setCart(newCart);
-        changeViewValueCart(newList.length, totalPrice);
+        changeViewValueCart(newList.length, totalPrice, foundItemQuantity.item.code, true);
         showNotification(quantity, foundItemQuantity.item.name, foundItemQuantity.item.picture[0]);
     }
 }
@@ -88,7 +88,7 @@ function removeQuantites(item) {
         totalPrice
     });
     setCart(newCart);
-    changeViewValueCart(newList.length, totalPrice);
+    changeViewValueCart(newList.length, totalPrice, item.code, false);
 }
 
 function clearQuantites() {
@@ -100,9 +100,22 @@ $(document).ready(function () {
     initCart();
 })
 
-function changeViewValueCart(length, totalPrice) {
+function changeViewValueCart(length, totalPrice, itemCode, isChosen) {
     $('#cart-quantity-length').text(length);
-    $('#cart-total-price').text(totalPrice);
+    $('#cart-total-price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 0 }));
+
+    $('#order-single-row-item-' + itemCode).removeClass('order-chosen-single-row-item');
+    $('#order-item-check-' + itemCode).css({'display': 'none'});
+    $('#order-header-quantity-item').text(length);
+    $('#order-header-total-price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 0 }));
+    $('#order-bottom-quantity-item').text(length);
+    $('#order-bottom-total-price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 0 }));
+    if (isChosen) {
+        $('#order-single-row-item-' + itemCode).addClass('order-chosen-single-row-item');
+        $('#order-item-check-' + itemCode).css({'display': 'block'});
+    } else {
+        $('#input-quantity' + itemCode).val('0');
+    }
 }
 
 function getCart() {
@@ -112,8 +125,6 @@ function getCart() {
 function setCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
-
-
 
 function addToCart(id) {
     let itemQuantity = $('#input-quantity' + id).val();
@@ -166,4 +177,21 @@ function checkExistedItemInCart(itemCode) {
             $('#input-quantity' + itemCode).val(q.quantity);
         }
     })
+}
+
+
+
+function clearToCartFromOrder(itemCode, categoryCode) {
+    let item;
+    categories.forEach(c => {
+        if (c.code == categoryCode) {
+            c.items.forEach(i => {
+                if (i.code == itemCode) {
+                    item = i;
+                }
+            })
+        }
+    });
+    removeQuantites(item);
+
 }

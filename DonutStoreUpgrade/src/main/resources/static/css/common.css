@@ -1,3 +1,23 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: #050505;
+	font-family: Open Sans;
+	font-size: 0.8em !important;
+	font-weight: 400;
+	letter-spacing: 0;
+	line-height: 1.8em;
+}
+
+.section-header h1 {
+	color: #0b8d44;
+	font-family: Open Sans;
+	font-size: 2em;
+	font-weight: 400;
+	font-variant: normal;
+	letter-spacing: 0em;
+}
+
 .logo-picture {
 	height: 50px;
 	background-repeat: no-repeat;
@@ -57,7 +77,8 @@ footer {
 	display: block;
 }
 
-.adress li a, .adress li a span, .adress li p, .adress li p span, .menu li a span {
+.adress li a, .adress li a span, .adress li p, .adress li p span, .menu li a span
+	{
 	color: black;
 	text-decoration: none;
 	font-size: 12px;
@@ -84,12 +105,14 @@ footer {
 
 .fb-messengermessageus-custom {
 	position: fixed !important;
-	bottom: 0px;
-	right: 20px;
+	bottom: 60px;
+	/* right: 20px; */
+	right: 0px;
 	z-index: 999999999999999;
-	width: 250px;
+	/* width: 250px; */
 	height: auto;
 	overflow: hidden;
+	border-radius: 50px;
 }
 
 .notifications-tr {
@@ -144,13 +167,15 @@ footer {
 	font-weight: bold;
 	text-align: center;
 }
+
 .item-go-to-image {
 	height: 70px;
-    width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+	width: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
+
 #go-to-cart-noti {
 	font-family: Open Sans;
 	font-weight: 400;
@@ -164,4 +189,13 @@ footer {
 	text-decoration: none;
 	margin: 5px 0 0 0;
 	display: inline-block;
+}
+
+.img-circle {
+	border-radius: 50%;
+	border: solid 3px #e86a00;
+	width: 100px;
+	max-width: 100%;
+	height: 100px;
+	text-align: center;
 }
