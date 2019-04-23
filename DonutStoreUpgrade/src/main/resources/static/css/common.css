@@ -93,5 +93,75 @@ footer {
 }
 
 .notifications-tr {
-	font-family: inherit; position: fixed; width: 320px; padding: 0px 10px 10px; z-index: 9998; box-sizing: border-box; height: auto; top: 0px; bottom: auto; left: auto; right: 0px;
+	font-family: inherit;
+	position: fixed;
+	width: 320px;
+	padding: 0px 10px 10px;
+	z-index: 9998;
+	box-sizing: border-box;
+	height: auto;
+	top: 0px;
+	bottom: auto;
+	left: auto;
+	right: 0px;
+}
+
+.notification-success {
+	position: relative;
+	width: 100%;
+	cursor: pointer;
+	border-radius: 2px;
+	font-size: 13px;
+	margin: 10px 0px 0px;
+	padding: 10px;
+	display: block;
+	box-sizing: border-box;
+	opacity: 1;
+	transition: all 0.3s ease-in-out 0s;
+	transform: translate3d(0px, 0px, 0px);
+	will-change: transform, opacity;
+	border-top: 2px solid rgb(94, 164, 0);
+	background-color: rgb(240, 245, 234);
+	color: rgb(75, 88, 58);
+	box-shadow: rgba(94, 164, 0, 0.9) 0px 0px 1px;
+	right: 0px;
+	height: 122px;
+}
+
+.notification-dismiss {
+	cursor: pointer;
+	font-family: Arial;
+	font-size: 17px;
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	line-height: 15px;
+	background-color: rgb(176, 202, 146);
+	color: rgb(240, 245, 234);
+	border-radius: 50%;
+	width: 14px;
+	height: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+.item-go-to-image {
+	height: 70px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#go-to-cart-noti {
+	font-family: Open Sans;
+	font-weight: 400;
+}
+
+#go-to-cart-noti .nav-to-cart {
+	width: 100%;
+	background-color: #0b8d44;
+	text-transform: uppercase;
+	color: #ffffff;
+	text-decoration: none;
+	margin: 5px 0 0 0;
+	display: inline-block;
 }

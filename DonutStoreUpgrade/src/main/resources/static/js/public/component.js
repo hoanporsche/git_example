@@ -1,19 +1,19 @@
 function onMinius(id) {
-    const inputValue = $('#input-quantity'+id).val();
+    const inputValue = $('#input-quantity' + id).val();
     const newValue = isNaN(inputValue) || inputValue <= 0 ? 0 : +inputValue - 1;
-    $('#input-quantity'+id).val(newValue);
+    $('#input-quantity' + id).val(newValue);
 }
 
 function onChange(id) {
-    const inputValue = $('#input-quantity'+id).val();
+    const inputValue = $('#input-quantity' + id).val();
     const newValue = (!isNaN(inputValue) && +inputValue > 0 && +inputValue <= 300) ? +inputValue : (+inputValue > 300) ? 300 : 0;
-    $('#input-quantity'+id).val(newValue);
+    $('#input-quantity' + id).val(newValue);
 }
 
 function onPlus(id) {
-    const inputValue = $('#input-quantity'+id).val();
+    const inputValue = $('#input-quantity' + id).val();
     const newValue = isNaN(inputValue) || inputValue > 300 ? 0 : +inputValue + 1;
-    $('#input-quantity'+id).val(newValue);
+    $('#input-quantity' + id).val(newValue);
 
 }
 
@@ -36,9 +36,9 @@ function addQuantites(item, quantity) {
     */
     const cart = getCart();
     const listOldQuantity = cart.quantities;
-    let foundItem = listOldQuantity.find(i => i.item.code === item.code);
+    let foundItemQuantity = listOldQuantity.find(i => i.item.code === item.code);
     //Nếu k trùng thì thêm mới và tính lại tổng giá
-    if (foundItem === undefined) {
+    if (foundItemQuantity === undefined) {
         const newQuantity = {
             item: item,
             quantity: quantity,
@@ -55,11 +55,12 @@ function addQuantites(item, quantity) {
         });
         setCart(newCart);
         changeViewValueCart(newList.length, totalPrice);
+        showNotification(quantity, item.name, item.picture[0]);
     } else {
         //Còn trùng thì update lại item với số lượng và tính lại tổng giá
-        foundItem.quantity = quantity;
-        foundItem.price = quantity * item.singleValue;
-        const newList = listOldQuantity.filter(i => i.item.code !== foundItem.item.code).concat(foundItem);
+        foundItemQuantity.quantity = quantity;
+        foundItemQuantity.price = quantity * item.singleValue;
+        const newList = listOldQuantity.filter(i => i.item.code !== foundItemQuantity.item.code).concat(foundItemQuantity);
         let totalPrice = 0;
         for (let i = 0; i < newList.length; i++) {
             totalPrice = totalPrice + newList[i].price;
@@ -70,11 +71,24 @@ function addQuantites(item, quantity) {
         });
         setCart(newCart);
         changeViewValueCart(newList.length, totalPrice);
+        showNotification(quantity, foundItemQuantity.item.name, foundItemQuantity.item.picture[0]);
     }
 }
 
-function removeQuantites() {
-
+function removeQuantites(item) {
+    const cart = getCart();
+    const listOldQuantity = cart.quantities;
+    const newList = listOldQuantity.filter(i => i.item.code !== item.code);
+    let totalPrice = 0;
+    for (let i = 0; i < newList.length; i++) {
+        totalPrice = totalPrice + newList[i].price;
+    }
+    const newCart = Object.assign({}, cart, {
+        quantities: newList,
+        totalPrice
+    });
+    setCart(newCart);
+    changeViewValueCart(newList.length, totalPrice);
 }
 
 function clearQuantites() {
@@ -102,7 +116,7 @@ function setCart(cart) {
 
 
 function addToCart(id) {
-    let itemQuantity = $('#input-quantity'+id).val();
+    let itemQuantity = $('#input-quantity' + id).val();
     if (itemQuantity == 0) {
         clearQuantites();
     } else {
@@ -123,20 +137,32 @@ function addToCartFromMenu(itemCode, categoryCode) {
         }
     });
 
-    const itemQuantity = $('#input-quantity'+ itemCode).val();
+    const itemQuantity = $('#input-quantity' + itemCode).val();
     if (itemQuantity == 0) {
-        clearQuantites();
+        removeQuantites(item);
     } else {
         addQuantites(item, itemQuantity)
     }
 
 }
 
+function showNotification(quantity, itemName, itemImage) {
+    const notiItemName = `${quantity} ${itemName}`;
+    $('#notification').css({ 'display': 'block' });
+    $('.item-go-to-image').css({ 'background-image': `url(${itemImage})` });
+    $('#noti-item-name').text(notiItemName);
+    setTimeout(() => {
+        $('#notification').css({ 'display': 'none' });
+        $('.item-go-to-image').css({ 'background-image': `url()` });
+        $('#noti-item-name').text('');
+    }, 6000)
+}
+
 function checkExistedItemInCart(itemCode) {
     const quantities = getCart().quantities;
     quantities.forEach(q => {
         if (q.item.code == itemCode) {
-            $('#input-quantity'+itemCode).val(q.quantity);
+            $('#input-quantity' + itemCode).val(q.quantity);
         }
     })
 }
