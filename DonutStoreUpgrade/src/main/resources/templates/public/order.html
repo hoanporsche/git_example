@@ -6,18 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="shortcut icon"
+        href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+        th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/public/order.css}" rel="stylesheet" />
+    <link th:href="@{/css/public/component.css}" rel="stylesheet" />
 </head>
 
 <body>
     <nav th:replace="public/layout :: header('order')"></nav>
-    <!-- <script th:inline="javascript">
+    
+    <div class="container" style="min-height: 45vh">
+        <div class="section-header text-center">
+            <h1>Giỏ hàng của bạn</h1>
+          </div>
+        <p class="text-center">Giỏ hàng ₫</p>
+        <!-- {this.showShippingCart()} -->
+      </div>
+    
+    <footer th:replace="public/layout :: footer"></footer>
+    <script th:inline="javascript">
         var categories = /*[[${categories}]]*/;
-    </script> -->
-    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/public/order.js}"></script>
+    </script>
+    <script th:src="@{/js/public/menu.js}"></script>
 </body>
 
 </html>

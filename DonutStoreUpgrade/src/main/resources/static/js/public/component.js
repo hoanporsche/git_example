@@ -151,6 +151,7 @@ function showNotification(quantity, itemName, itemImage) {
     $('#notification').css({ 'display': 'block' });
     $('.item-go-to-image').css({ 'background-image': `url(${itemImage})` });
     $('#noti-item-name').text(notiItemName);
+    clearTimeout();
     setTimeout(() => {
         $('#notification').css({ 'display': 'none' });
         $('.item-go-to-image').css({ 'background-image': `url()` });

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ds.upgrade.model.Item;
 import ds.upgrade.model.json.ItemJson;
 import ds.upgrade.service.CategoryService;
-import ds.upgrade.service.ConfigGlobalService;
 import ds.upgrade.service.ItemService;
 import ds.upgrade.util.service.CommonMethod;
 
@@ -23,8 +22,8 @@ public class MenuController {
   private ItemService itemService;
   @Autowired
   private CommonMethod commonMethod;
-  @Autowired
-  private ConfigGlobalService configGlobalService;
+//  @Autowired
+//  private ConfigGlobalService configGlobalService;
 
   @GetMapping("/thuc-don")
   public String menuPage(Model model) {
