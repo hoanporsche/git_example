@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title}"></title>
     <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous" />
     <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
     <link href="/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
 </head>
@@ -74,8 +74,8 @@
         <a class="navbar-brand" href="/">
             <img th:src="@{${logo}}" class="logo-image" alt="brand" />
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -97,14 +97,14 @@
             <div class="form-inline my-2 my-lg-0">
                 <div class="mr-sm-2 header-cart">
                     <a href="/dat-mon" class="text-cart">
-                        <i class="fa fa-shopping-cart fa-fw" /> Giỏ hàng
-                        (<span id="cart-quantity-length">0</span> <span>loại món</span> - <span id="cart-total-price"></span>₫)
+                        <i class="fa fa-shopping-cart fa-fw" /> Giỏ hàng (
+                        <span id="cart-quantity-length">0</span> <span>loại món</span> - <span id="cart-total-price"></span>₫)
                     </a>
                 </div>
-                <a class="mr-sm-2" style="font-size: 2em;" href="https://www.facebook.com/banhranhoan/"
-                    target="_blank"><i class="fab fa-facebook-square"></i></a>&nbsp;
-                <a class="my-2 my-sm-0" style="font-size: 2em;" href="https://www.instagram.com/banhranhoan/"
-                    target="_blank"><i class="fab fa-instagram"></i></a>
+                <a class="mr-sm-2" style="font-size: 2em;" href="https://www.facebook.com/banhranhoan/" target="_blank"><i
+                        class="fab fa-facebook-square"></i></a>&nbsp;
+                <a class="my-2 my-sm-0" style="font-size: 2em;" href="https://www.instagram.com/banhranhoan/" target="_blank"><i
+                        class="fab fa-instagram"></i></a>
             </div>
         </div>
         <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
@@ -140,29 +140,28 @@
                                 </li>
                                 <li>
                                     <p>
-                                        <i class="fas fa-phone" aria-hidden="true"></i> <span
-                                            style="text-transform: lowercase;" th:text="${hotLine}"></span>
+                                        <i class="fas fa-phone" aria-hidden="true"></i> <span style="text-transform: lowercase;"
+                                            th:text="${hotLine}"></span>
                                     </p>
                                 </li>
                                 <li>
                                     <p>
-                                        <i class="fas fa-map-marker" aria-hidden="true"></i> Cơ sở chính:<span
-                                            style="text-transform: lowercase;" th:text="${headquarter}"></span></p>
+                                        <i class="fas fa-map-marker" aria-hidden="true"></i> Cơ sở chính:<span style="text-transform: lowercase;"
+                                            th:text="${headquarter}"></span></p>
                                 </li>
                                 <li>
                                     <p>
-                                        <i class="fas fa-envelope" aria-hidden="true"></i> <span
-                                            style="text-transform: lowercase;" th:text="${email}"></span></p>
+                                        <i class="fas fa-envelope" aria-hidden="true"></i> <span style="text-transform: lowercase;"
+                                            th:text="${email}"></span></p>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-12 col-md-6 col-xl-4">
-                    <iframe
-                        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbanhranhoan%2F&amp;tabs=timeline&amp;width=340px&amp;height=200px&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=true&amp;appId=2150713538567990"
-                        width="340" height="200" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                        allowTransparency="true" allow="encrypted-media" title="home-page"></iframe>
+                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbanhranhoan%2F&amp;tabs=timeline&amp;width=340px&amp;height=200px&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=true&amp;appId=2150713538567990"
+                        width="340" height="200" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"
+                        allow="encrypted-media" title="home-page"></iframe>
                 </div>
             </div>
         </div>
@@ -187,8 +186,25 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-        <div class="fb-messengermessageus fb-messengermessageus-custom" messengerappid="2150713538567990"
-            pageid="478740035631679" color="blue" size="xlarge"></div>
+        <div class="fb-messengermessageus fb-messengermessageus-custom" messengerappid="2150713538567990" pageid="478740035631679"
+            color="blue" size="xlarge"></div>
+        <div class="notifications-tr">
+            <div
+                class="notification notification-success notification-visible" style="position: relative; width: 100%; cursor: pointer; border-radius: 2px; font-size: 13px; margin: 10px 0px 0px; padding: 10px; display: block; box-sizing: border-box; opacity: 1; transition: all 0.3s ease-in-out 0s; transform: translate3d(0px, 0px, 0px); will-change: transform, opacity; border-top: 2px solid rgb(94, 164, 0); background-color: rgb(240, 245, 234); color: rgb(75, 88, 58); box-shadow: rgba(94, 164, 0, 0.9) 0px 0px 1px; right: 0px; height: 122px;"><span class="notification-dismiss" style="cursor: pointer; font-family: Arial; font-size: 17px; position: absolute; top: 4px; right: 5px; line-height: 15px; background-color: rgb(176, 202, 146); color: rgb(240, 245, 234); border-radius: 50%; width: 14px; height: 14px; font-weight: bold; text-align: center;">×</span><div
+                    id="go-to-cart-noti" class="container-fluid">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="item-go-to-image" style="background-image: url(&quot;https://res.cloudinary.com/hitkeodog/image/upload/v1533569777/donut-store/banh-ran/BR8.jpg&quot;);"></div>
+                        </div>
+                        <div class="col-8">
+                            <h5>2 Bánh rán ngọt</h5>
+                            <p>Đưa vào giỏ hàng thành công</p>
+                        </div>
+                        <div class="col-12 text-center"><a class="nav-to-cart" href="/gio-hang"><span>Kiểm tra giỏ hàng</span></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
 </body>
 

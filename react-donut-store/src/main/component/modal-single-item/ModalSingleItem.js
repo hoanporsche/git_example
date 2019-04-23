@@ -85,7 +85,7 @@ class ModalSingleItem extends Component {
         title: `${this.state.quantity} ${item.name}`,
         message: "Đưa vào giỏ hàng thành công",
         level: "success",
-        autoDismiss: 1,
+        autoDismiss: 0,
         children: <GoToCartNoti title={`${this.state.quantity} ${item.name}`} message="Đưa vào giỏ hàng thành công" picture={item.picture[0]} />
       });
       this.onCloseModal();

@@ -91,3 +91,7 @@ footer {
 	height: auto;
 	overflow: hidden;
 }
+
+.notifications-tr {
+	font-family: inherit; position: fixed; width: 320px; padding: 0px 10px 10px; z-index: 9998; box-sizing: border-box; height: auto; top: 0px; bottom: auto; left: auto; right: 0px;
+}
