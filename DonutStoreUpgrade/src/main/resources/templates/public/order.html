@@ -1,81 +1,121 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title th:text="${title}"></title>
-    <link rel="shortcut icon"
-        href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
-        th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-    <link th:href="@{/css/common.css}" rel="stylesheet" />
-    <link th:href="@{/css/public/order.css}" rel="stylesheet" />
-    <link th:href="@{/css/public/component.css}" rel="stylesheet" />
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title th:text="${title}"></title>
+<link rel="shortcut icon"
+	href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous" />
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+<link th:href="@{/css/public/order.css}" rel="stylesheet" />
+<link th:href="@{/css/public/component.css}" rel="stylesheet" />
 </head>
 
 <body>
-    <nav th:replace="public/layout :: header('order')"></nav>
+	<nav th:replace="public/layout :: header('order')"></nav>
 
-    <div class="container" style="min-height: 45vh">
-        <div class="section-header text-center">
-            <h1>Giỏ hàng của bạn</h1>
-        </div>
-        <p class="text-center">Giỏ hàng ( <span id="order-header-quantity-item"></span> loại món - <span
-                id="order-header-total-price"></span> ₫)<p class="latest-new" th:if="${headerInfo != ''}" th:text="${headerInfo}"></p></p>
-        <div class="row order-single-category" th:each="category : ${categories}">
-            <div class="section-header">
-                <h1 th:text="${category.name}"></h1>
-            </div>
-            <div class="col-12 order-single-row-item" th:each="item : ${category.items}"
-                th:id="'order-single-row-item-' + ${item.code}">
-                <div class="row">
-                    <div class="col-4 col-sm-3 col-md-2 order-single-field-item">
-                        <img class="order-img-circle" th:src="${item.picture[0]}" th:attr="alt=${item.name}" />
-                    </div>
-                    <div class="col-8 col-sm-3 order-single-field-item">
-                        <h5><i class="fas fa-clipboard-check" th:id="'order-item-check-' + ${item.code}"
-                                style="display: none"></i><span
-                                th:text="${item.name} + ' - ' + ${formatter.formatNumber(item.singleValue) + ' ₫'}"></span>
-                        </h5>
-                    </div>
-                    <div class="col-5 col-sm-3 order-single-field-item">
-                        <div th:replace="public/component :: chooseQuantity(${item.code})"></div>
-                    </div>
-                    <div class="col-7 col-sm-3 col-md-4 order-single-field-item">
-                        <div class="float-right">
-                            <button type="button" class="btn btn-light"
-                                th:onclick="'clearToCartFromOrder(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Xóa
-                                món</button>&nbsp;
-                            <button class="btn btn-danger"
-                                th:onclick="'addToCartFromMenu(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Xác
-                                nhận</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container" style="min-height: 45vh">
+		<div class="section-header text-center">
+			<h1>Giỏ hàng của bạn</h1>
+		</div>
+		<p class="text-center">
+			Giỏ hàng ( <span id="order-header-quantity-item"></span> loại món - <span
+				id="order-header-total-price"></span> ₫)
+		<p class="latest-new" th:if="${headerInfo != ''}"
+			th:text="${headerInfo}"></p>
+		</p>
+		<div class="row order-single-category"
+			th:each="category : ${categories}">
+			<div class="section-header">
+				<h1 th:text="${category.name}"></h1>
+			</div>
+			<div class="col-12 order-single-row-item"
+				th:each="item : ${category.items}"
+				th:id="'order-single-row-item-' + ${item.code}">
+				<div class="row">
+					<div class="col-4 col-sm-3 col-md-2 order-single-field-item">
+						<img class="order-img-circle" th:src="${item.picture[0]}"
+							th:attr="alt=${item.name}" />
+					</div>
+					<div class="col-8 col-sm-3 order-single-field-item">
+						<h5>
+							<i class="fas fa-clipboard-check"
+								th:id="'order-item-check-' + ${item.code}" style="display: none"></i><span
+								th:text="${item.name} + ' - ' + ${formatter.formatNumber(item.singleValue) + ' ₫'}"></span>
+						</h5>
+					</div>
+					<div class="col-5 col-sm-3 order-single-field-item">
+						<div th:replace="public/component :: chooseQuantity(${item.code})"></div>
+					</div>
+					<div class="col-7 col-sm-3 col-md-4 order-single-field-item">
+						<div class="float-right">
+							<button type="button" class="btn btn-light"
+								th:onclick="'clearToCartFromOrder(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Xóa
+								món</button>
+							&nbsp;
+							<button class="btn btn-danger"
+								th:onclick="'addToCartFromMenu(\'' +${item.code} +'\', \'' +${item.categoryCode} +'\')'">Xác
+								nhận</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12 button-go-to-checkout">
-                <a class="text-center" href="/thong-tin-giao-hang">Đặt giao hàng ( <span
-                        id="order-bottom-quantity-item"></span> loại món - <span id="order-bottom-total-price"></span>
-                    ₫) <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 button-go-to-checkout">
+				<a class="text-center" href="/thong-tin-giao-hang"
+					onclick="goToCheckOut(event)">Đặt giao hàng ( <span
+					id="order-bottom-quantity-item"></span> loại món - <span
+					id="order-bottom-total-price"></span> ₫) <i
+					class="fas fa-arrow-right"></i></a>
+			</div>
+		</div>
+	</div>
+	<!-- Trigger the modal with a button -->
+	<button type="button" id="openModalWarning" class="btn btn-info btn-lg" data-toggle="modal" style="display: none;"
+		data-target="#myModal">Open Small Modal</button>
 
-    <footer th:replace="public/layout :: footer"></footer>
-    <script th:inline="javascript">
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<!-- <div class="modal-header">
+					<h4 class="modal-title">Modal Header</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div> -->
+				<div class="modal-body">
+					<h5>Đơn hàng của bạn có giá trị nhỏ hơn <span style="color:red;" th:text="${formatter.formatNumber(minTotalPrice)}"></span>₫ nên chúng tôi không thể giao hàng.</h5>
+					<div class="float-right">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+				<!-- <div class="modal-footer">
+				</div> -->
+			</div>
+		</div>
+	</div>
+	<footer th:replace="public/layout :: footer"></footer>
+	<script th:inline="javascript">
         var categories = /*[[${categories}]]*/;
+        var minTotalPrice = /*[[${minTotalPrice}]]*/;
     </script>
-    <script th:src="@{/js/public/order.js}"></script>
+	<script th:src="@{/js/public/order.js}"></script>
 </body>
 
 </html>
