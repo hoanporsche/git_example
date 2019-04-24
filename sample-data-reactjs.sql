@@ -223,4 +223,5 @@ INSERT INTO `donutstore`.`config_global` VALUES
 ('shippingPrice','https://res.cloudinary.com/hitkeodog/image/upload/v1533796074/donut-store/shipping-price.png'),
 ('slidePicture1','https://res.cloudinary.com/hitkeodog/image/upload/v1533569767/donut-store/banh-ran/BR1.jpg'),
 ('slidePicture2','https://res.cloudinary.com/hitkeodog/image/upload/v1533569771/donut-store/banh-ran/BR3.jpg'),
-('slidePicture3','https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR4.jpg');
+('slidePicture3','https://res.cloudinary.com/hitkeodog/image/upload/v1533569776/donut-store/banh-ran/BR4.jpg'),
+('headerInfo',"Cuar hang tam nghi den het ngay thu 4 24/5/2019");

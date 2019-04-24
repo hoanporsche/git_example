@@ -26,6 +26,8 @@ public class HomeController {
     model.addAttribute("slidePicture1", configGlobalService.findByname("slidePicture1").getValue());
     model.addAttribute("slidePicture2", configGlobalService.findByname("slidePicture2").getValue());
     model.addAttribute("slidePicture3", configGlobalService.findByname("slidePicture3").getValue());
+    model.addAttribute("headerInfo", configGlobalService.findByname("headerInfo").getValue());
+    model.addAttribute("shippingPrice", configGlobalService.findByname("shippingPrice").getValue());
     return "public/home";
   }
 }

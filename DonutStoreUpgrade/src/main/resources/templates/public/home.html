@@ -66,14 +66,15 @@
     <div class="container">
         <div class="row">
             <div class="header-info">
+                <p class="latest-new" th:if="${headerInfo != ''}" th:text="${headerInfo}"></p>
                 <p>
                     Bánh rán truyền thống, bánh gà, gà xiên que, heo xiên que. Miễn phí giao hàng 3km. Liên hệ đặt món
                     ngay
                     tại: 094 345 1794 - 0969 5509 54, hoặc
-                    <a href="https://www.facebook.com/banhranhoan/" target="_blank"><i
-                            class="fab fa-facebook-square big-icon"></i></a>
-                    <a href="https://www.instagram.com/banhranhoan/" target="_blank"><i
-                            class="fab fa-instagram big-icon"></i></a>
+                    <a href='https://www.facebook.com/banhranhoan/' target='_blank'><i
+                            class='fab fa-facebook-square big-icon'></i></a>
+                    <a href='https://www.instagram.com/banhranhoan/' target='_blank'><i
+                            class='fab fa-instagram big-icon'></i></a>
                     Mại zô mại zô.
                 </p>
 
@@ -323,15 +324,19 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div class="row">
-            <div class="col-12 bottom-info">
+        <div class="row bottom-info">
+            <div class="col-6">
                 <p>Đặt món ngay để nhận giao hàng liền tay trong 20 phút, lựa chọn giỏ hàng của bạn tại <a
                         href="/dat-mon">đặt món giao ngay</a>.</p>
+                <p>Hệ thống đặt hàng trực tuyến có tích hợp tính quán phí ship cụ thể, và miễn trừ phí giao hàng dưới 3km</p>
                 <p>Hoặc liên hệ trực tiếp thông qua hotline: 094 345 1794 - 0969 5509 54 .</p>
                 <p>Ghé qua <a href="https://www.facebook.com/banhranhoan/" target="_blank"><i
                             class="fab fa-facebook-square big-icon"></i></a>
                     <a href="https://www.instagram.com/banhranhoan/" target="_blank"><i
                             class="fab fa-instagram big-icon"></i></a> để có những cập nhật khuyến mại mới nhất nhé</p>
+            </div>
+            <div class="col-6">
+                <div class="bottom-image" th:style="'background-image:url(' + @{${shippingPrice}} + ');'"></div>
             </div>
         </div>
     </div>

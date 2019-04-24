@@ -26,7 +26,7 @@
             <h1>Giỏ hàng của bạn</h1>
         </div>
         <p class="text-center">Giỏ hàng ( <span id="order-header-quantity-item"></span> loại món - <span
-                id="order-header-total-price"></span> ₫)</p>
+                id="order-header-total-price"></span> ₫)<p class="latest-new" th:if="${headerInfo != ''}" th:text="${headerInfo}"></p></p>
         <div class="row order-single-category" th:each="category : ${categories}">
             <div class="section-header">
                 <h1 th:text="${category.name}"></h1>

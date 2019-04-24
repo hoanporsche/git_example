@@ -458,7 +458,7 @@ DEFAULT CHARACTER SET = utf8 COLLATE utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `donutstore`.`config_global` (
 	`name` VARCHAR(60) NOT NULL,
-    `value` VARCHAR(255) NOT NULL,
+    `value` VARCHAR(5000) NOT NULL,
     PRIMARY KEY(`name`)
 )
 ENGINE = InnoDB

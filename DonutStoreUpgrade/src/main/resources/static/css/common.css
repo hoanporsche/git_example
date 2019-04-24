@@ -203,3 +203,11 @@ footer {
 .big-icon {
 	font-size: 24px;
 }
+.latest-new {
+	border: 3px red;
+	border-style: dotted dashed solid double;
+	font-size: 2em;
+	text-align: center;
+	padding: 1em;
+	background-color: orange;
+}
