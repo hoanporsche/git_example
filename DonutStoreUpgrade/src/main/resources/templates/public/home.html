@@ -71,9 +71,9 @@
                     ngay
                     tại: 094 345 1794 - 0969 5509 54, hoặc
                     <a href="https://www.facebook.com/banhranhoan/" target="_blank"><i
-                            class="fab fa-facebook-square"></i></a>
+                            class="fab fa-facebook-square big-icon"></i></a>
                     <a href="https://www.instagram.com/banhranhoan/" target="_blank"><i
-                            class="fab fa-instagram"></i></a>
+                            class="fab fa-instagram big-icon"></i></a>
                     Mại zô mại zô.
                 </p>
 
@@ -83,12 +83,13 @@
 
     <div class="container-fluid">
         <div class="row single-row-category" th:each="category,iter : ${categories}">
-            <div th:classappend="${iter.index % 2 == 0} ? col-2 : col-10">
-                <div th:if="${iter.index % 2 == 0}">
+            <div th:classappend="${iter.index % 2 == 0} ? 'col-3 padding-bottom-col-3': 'col-9'">
+                <div class="avoid-padding-col-3" th:if="${iter.index % 2 == 0}"
+                    th:style="'background-image:url(' + @{${category.picture}} + ');'">
                     <h2 class="category-name" th:text="${category.name}"></h2>
                     <img class="img-circle" th:src="${category.picture}" alt="category-img" />
                 </div>
-                <div th:if="${iter.index % 2 != 0}" class="row-item"
+                <div th:if="${iter.index % 2 != 0}" class="row-item avoid-padding-col-9"
                     th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
                     <div class="single-item" th:each="item : ${category.items}">
                         <div class="ds-single-item-image"
@@ -201,8 +202,8 @@
                     </div>
                 </div>
             </div>
-            <div th:classappend="${iter.index % 2 == 0} ? col-10 : col-2">
-                <div th:if="${iter.index % 2 == 0}" class="row-item"
+            <div th:classappend="${iter.index % 2 == 0} ? 'col-9' : 'col-3 padding-bottom-col-3'">
+                <div th:if="${iter.index % 2 == 0}" class="row-item avoid-padding-col-9-odd-number"
                     th:classappend="${iter.index % 2 == 0} ? orange-background : bisque-background">
                     <div class="single-item" th:each="item : ${category.items}">
                         <div class="ds-single-item-image"
@@ -314,13 +315,25 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${iter.index % 2 != 0}">
+                <div class="avoid-padding-col-3-odd-number" th:if="${iter.index % 2 != 0}"
+                    th:style="'background-image:url(' + @{${category.picture}} + ');'">
                     <h2 class="category-name" th:text="${category.name}"></h2>
                     <img class="img-circle" th:src="${category.picture}" alt="category-img" />
                 </div>
             </div>
         </div>
         <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-12 bottom-info">
+                <p>Đặt món ngay để nhận giao hàng liền tay trong 20 phút, lựa chọn giỏ hàng của bạn tại <a
+                        href="/dat-mon">đặt món giao ngay</a>.</p>
+                <p>Hoặc liên hệ trực tiếp thông qua hotline: 094 345 1794 - 0969 5509 54 .</p>
+                <p>Ghé qua <a href="https://www.facebook.com/banhranhoan/" target="_blank"><i
+                            class="fab fa-facebook-square big-icon"></i></a>
+                    <a href="https://www.instagram.com/banhranhoan/" target="_blank"><i
+                            class="fab fa-instagram big-icon"></i></a> để có những cập nhật khuyến mại mới nhất nhé</p>
+            </div>
+        </div>
     </div>
 
     <footer th:replace="public/layout :: footer"></footer>

@@ -38,7 +38,10 @@
                         <img class="order-img-circle" th:src="${item.picture[0]}" th:attr="alt=${item.name}" />
                     </div>
                     <div class="col-8 col-sm-3 order-single-field-item">
-                        <h5><i class="fas fa-clipboard-check" th:id="'order-item-check-' + ${item.code}" style="display: none"></i><span th:text="${item.name}"></span></h5>
+                        <h5><i class="fas fa-clipboard-check" th:id="'order-item-check-' + ${item.code}"
+                                style="display: none"></i><span
+                                th:text="${item.name} + ' - ' + ${formatter.formatNumber(item.singleValue) + ' ₫'}"></span>
+                        </h5>
                     </div>
                     <div class="col-5 col-sm-3 order-single-field-item">
                         <div th:replace="public/component :: chooseQuantity(${item.code})"></div>
@@ -61,8 +64,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12 button-go-to-checkout">
-                <a class="text-center" href="/thong-tin-giao-hang">Đặt giao hàng ( <span id="order-bottom-quantity-item"></span> loại món - <span
-                        id="order-bottom-total-price"></span> ₫) <i class="fas fa-arrow-right"></i></a>
+                <a class="text-center" href="/thong-tin-giao-hang">Đặt giao hàng ( <span
+                        id="order-bottom-quantity-item"></span> loại món - <span id="order-bottom-total-price"></span>
+                    ₫) <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
