@@ -81,7 +81,7 @@ class Checkout extends Component {
       dateUpdated: '',
       nameCreated: { value: '', valid: false },
       phone: { value: '', valid: false },
-      storeCode: { value: 'STOsfgtjnm', valid: true },
+      storeCode: { value: 'STOgv', valid: true },
       addressShipping: { value: '', valid: false },
       distance: { value: '', valid: false },
       shippingPrice: { value: '', valid: false },

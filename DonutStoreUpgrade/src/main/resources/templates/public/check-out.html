@@ -1,36 +1,165 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title th:text="${title}"></title>
-<link rel="shortcut icon"
-	href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous"
-	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-	crossorigin="anonymous" />
-<link th:href="@{/css/common.css}" rel="stylesheet" />
-<link th:href="@{/css/public/check-out.css}" rel="stylesheet" />
-<link th:href="@{/css/public/component.css}" rel="stylesheet" />
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title th:text="${title}"></title>
+	<link rel="shortcut icon"
+		href="https://res.cloudinary.com/hitkeodog/image/upload/v1534304957/donut-store/banh-ran/br-man-2.jpg" />
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+		th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<link th:href="@{/css/public/check-out.css}" rel="stylesheet" />
+	<link th:href="@{/css/public/component.css}" rel="stylesheet" />
 </head>
 
 <body>
 	<nav th:replace="public/layout :: header('order')"></nav>
+
+	<div id="check-out" class="container-fluid">
+		<div class="row">
+			<form class="container buyer-info">
+				<div class="buyer-header">
+					<h3>Bánh rán Hoàn</h3>
+					<!-- Breadcrumb  -->
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb custom-breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="/">Trang Chủ</a>
+							</li>
+							<li class="breadcrumb-item">
+								<a href="/dat-mon">Giỏ hàng</a>
+							</li>
+							<li class="breadcrumb-item active">
+								Thông tin giao hàng
+							</li>
+						</ol>
+					</nav>
+				</div>
+				<div class="row buyer-step">
+					<div class="col-12 col-lg-11">
+						<h5>Thông tin giao hàng</h5>
+					</div>
+					<div class="col-12 col-lg-11">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Tên của bạn" name="nameCreated"
+								maxLength="20" />
+						</div>
+						<!-- <CustomInput type='text' placeholder="Tên của bạn" name="nameCreated"
+							value={this.state.nameCreated.value} maxLength={20} onEmittedValue={this.onReceivedValue}
+							wasSubmitted={this.state.wasSubmitted} /> -->
+					</div>
+					<div class="col-12 col-lg-11">
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Số điện thoại" name="phone"
+										maxLength="12" />
+								</div>
+								<!-- <CustomInput type='text' placeholder="Số điện thoại" name="phone"
+									value={this.state.phone.value} maxLength={12} onEmittedValue={this.onReceivedValue}
+									wasSubmitted={this.state.wasSubmitted} /> -->
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="form-group">
+									<input type="datetime-local" class="form-control" placeholder="Thời gian giao hàng"
+										name="dateUpdated" maxLength="12" />
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Số điện thoại" name="phone"
+										maxLength="12" />
+								</div>
+								<!-- <CustomInput type='datetime-local' required={true} placeholder="Thời gian giao hàng"
+									name="dateUpdated" value={this.state.dateUpdated} maxLength={12}
+									onEmittedValue={this.onReceivedValue} /> */}
+								<CustomSelect placeholder="Tại cửa hàng" name="storeCode"
+									value={this.state.storeCode.value} data={this.props.listStore}
+									onEmittedValue={this.onReceivedSelectValue}
+									wasSubmitted={this.state.wasSubmitted} /> -->
+								<div class="form-group">
+									<select class="form-control" placeholder="Tại cửa hàng" name="storeCode">
+										<option th:each="store : ${listStore}" th:value="${store.code}"
+											th:utext="${store.name}" />
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-11">
+						{this.showInfoShipment()}
+					</div>
+					{this.showIsTooFar()}
+					{this.showGGMaps()}
+					<div class="col-12 col-lg-11 padding-top1">
+						<div class="row">
+							<div class="col-6" style="padding-top: 10px;">
+								<!-- <NavLink to={ROUTING_URL.ORDER}><span><i class="fas fa-angle-left"></i>
+										{MENU_NAME.ORDER}</span></NavLink> -->
+								<a href="/dat-mon"><span><i class="fas fa-angle-left"></i> Giỏ Hàng</span></a>
+							</div>
+							<div class="col-6">
+								<div class="float-right">
+									<!-- <button type="submit" disabled={this.state.isSubmitting ||
+										(+this.state.shippingPrice.value> 100000)} class="btn btn-primary"><span>Xác
+											nhận đặt hàng</span></button> -->
+									<button type="submit" class="btn btn-primary"><span>Xác
+											nhận đặt hàng</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="container slide-item">
+				<div class="row">
+					<div class="col-12 col-lg-11 offset-lg-1">
+						<!-- <ReCAPTCHA ref={recaptchaRef} size="invisible" sitekey={capchaKey}
+							onChange={this.onCaptchaCompleted} /> -->
+						{this.showQuantites()}
+						<hr />
+						<div class="row">
+							<div class="col-6"><span>Tạm tính:</span></div>
+							<div class="col-6"><span class="float-right">
+									<!-- <NumberFormat value={this.props.quantity.totalPrice} displayType={'text'}
+										thousandSeparator={true} /> -->
+									₫</span></div>
+						</div>
+						<div class="row">
+							<div class="col-6"><span>Phí vận chuyển:</span></div>
+							<div class="col-6"><span class="float-right">
+									<!-- <NumberFormat value={(this.state.shippingPrice.value==='' ) ? 0 :
+										this.state.shippingPrice.value} displayType={'text'} thousandSeparator={true} /> -->
+									₫</span></div>
+						</div>
+						<hr />
+						<div class="row" style="color: black;">
+							<div class="col-6">
+								<h5>Tổng cộng:</h5>
+							</div>
+							<div class="col-6">
+								<h5 class="float-right">
+									<!-- <NumberFormat value={totalPrice} displayType={'text'} thousandSeparator={true} />₫ -->
+								</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 	<footer th:replace="public/layout :: footer"></footer>
 	<script th:inline="javascript">
         // var categories = /*[[${categories}]]*/;
         // var minTotalPrice = /*[[${minTotalPrice}]]*/;
-    </script>
+	</script>
 	<script th:src="@{/js/public/check-out.js}"></script>
 </body>
 

@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import ds.upgrade.service.CategoryService;
 import ds.upgrade.service.ConfigGlobalService;
+import ds.upgrade.service.StoreService;
 import ds.upgrade.util.service.CommonMethod;
 
 @Controller
 public class OrderController {
   @Autowired
   private CategoryService categoryService;
+  @Autowired
+  private StoreService storeService;
   @Autowired
   private ConfigGlobalService configGlobalService;
   @Autowired
@@ -29,7 +32,8 @@ public class OrderController {
 	
 	@GetMapping("/thong-tin-giao-hang") 
 	public String checkOut(Model model) {
-    commonMethod.findHeaderInfo("Đặt món giao ngay - Bánh rán Hoàn", model);
+    commonMethod.findHeaderInfo("Thông tin giao hàng - Bánh rán Hoàn", model);
+    model.addAttribute("listStore", storeService.findAllJson());
 	  return "public/check-out";
 	}
 }

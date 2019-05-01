@@ -77,8 +77,7 @@ footer {
 	display: block;
 }
 
-.adress li a, .adress li a span, .adress li p, .adress li p span, .menu li a span
-	{
+.adress li a, .adress li a span, .adress li p, .adress li p span, .menu li a span {
 	color: black;
 	text-decoration: none;
 	font-size: 12px;
@@ -203,6 +202,7 @@ footer {
 .big-icon {
 	font-size: 24px;
 }
+
 .latest-new {
 	border: 3px red;
 	border-style: dotted dashed solid double;
@@ -210,4 +210,11 @@ footer {
 	text-align: center;
 	padding: 1em;
 	background-color: orange;
+}
+
+.custom-breadcrumb {
+	background-color: white;
+	padding-left: 0px;
+	font-size: 1em;
+	margin-bottom: 0px;
 }
