@@ -50,9 +50,6 @@
 							<input type="text" class="form-control" placeholder="Tên của bạn" name="nameCreated"
 								maxLength="20" />
 						</div>
-						<!-- <CustomInput type='text' placeholder="Tên của bạn" name="nameCreated"
-							value={this.state.nameCreated.value} maxLength={20} onEmittedValue={this.onReceivedValue}
-							wasSubmitted={this.state.wasSubmitted} /> -->
 					</div>
 					<div class="col-12 col-lg-11">
 						<div class="row">
@@ -61,26 +58,8 @@
 									<input type="text" class="form-control" placeholder="Số điện thoại" name="phone"
 										maxLength="12" />
 								</div>
-								<!-- <CustomInput type='text' placeholder="Số điện thoại" name="phone"
-									value={this.state.phone.value} maxLength={12} onEmittedValue={this.onReceivedValue}
-									wasSubmitted={this.state.wasSubmitted} /> -->
 							</div>
 							<div class="col-12 col-md-6">
-								<div class="form-group">
-									<input type="datetime-local" class="form-control" placeholder="Thời gian giao hàng"
-										name="dateUpdated" maxLength="12" />
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Số điện thoại" name="phone"
-										maxLength="12" />
-								</div>
-								<!-- <CustomInput type='datetime-local' required={true} placeholder="Thời gian giao hàng"
-									name="dateUpdated" value={this.state.dateUpdated} maxLength={12}
-									onEmittedValue={this.onReceivedValue} /> */}
-								<CustomSelect placeholder="Tại cửa hàng" name="storeCode"
-									value={this.state.storeCode.value} data={this.props.listStore}
-									onEmittedValue={this.onReceivedSelectValue}
-									wasSubmitted={this.state.wasSubmitted} /> -->
 								<div class="form-group">
 									<select class="form-control" placeholder="Tại cửa hàng" name="storeCode">
 										<option th:each="store : ${listStore}" th:value="${store.code}"
@@ -91,10 +70,29 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-11">
-						{this.showInfoShipment()}
+						<!-- {this.showInfoShipment()} -->
+						<div id="show_is_shipping" class="row" style="display:block;margin:10px auto;
+                                    padding-bottom:10px;">
+							<table>
+								<tbody>
+									<tr>
+										<th class="col-xs-6"><input type="text" class="form-control" id="ggmaps_input"
+												placeholder="địa chỉ nhận" /></th>
+										<th class="col-xs-2"><input type="text" class="form-control" id="distance"
+												placeholder="Quãng đường" disabled="disabled" /></th>
+										<th class="col-xs-4"><input type="text" class="form-control" id="shippingPrice"
+												placeholder="Tiền ship"
+												disabled="disabled" /></th>
+									</tr>
+								</tbody>
+							</table>
+							<div id="show_ggmaps">
+
+							</div>
+						</div>
 					</div>
 					{this.showIsTooFar()}
-					{this.showGGMaps()}
+					<!-- {this.showGGMaps()} -->
 					<div class="col-12 col-lg-11 padding-top1">
 						<div class="row">
 							<div class="col-6" style="padding-top: 10px;">
@@ -121,21 +119,37 @@
 					<div class="col-12 col-lg-11 offset-lg-1">
 						<!-- <ReCAPTCHA ref={recaptchaRef} size="invisible" sitekey={capchaKey}
 							onChange={this.onCaptchaCompleted} /> -->
-						{this.showQuantites()}
+						<!--{this.showQuantites()}-->
+						<div class="row single-row" th:each="quantity: ${cart.quantities}">
+							<div class="col-3">
+								<div class="quantity-item"
+									th:style="'background-image:url(' + @{${quantity.item.picture[0]}} + ');'">
+									<span class="product-thumbnail-quantity" aria-hidden="true"
+										th:text="${quantity.quantity}"></span>
+								</div>
+							</div>
+							<div class="col-6">
+								<h5 th:text="${quantity.item.name}"></h5>
+								<p th:text="${quantity.item.description}"></p>
+							</div>
+							<div class="col-3"><span class="float-right"
+									th:text="${formatter.formatNumber(quantity.price)} + '₫'">
+									<!-- <NumberFormat value={quantity.price} displayType={'text'} thousandSeparator={true} /> -->
+								</span></div>
+						</div>
 						<hr />
 						<div class="row">
 							<div class="col-6"><span>Tạm tính:</span></div>
-							<div class="col-6"><span class="float-right">
+							<div class="col-6"><span class="float-right"
+									th:text="${formatter.formatNumber(cart.totalPrice)} + '₫'"
+									id="checkout-temporary-total-price">
 									<!-- <NumberFormat value={this.props.quantity.totalPrice} displayType={'text'}
 										thousandSeparator={true} /> -->
-									₫</span></div>
+								</span></div>
 						</div>
 						<div class="row">
 							<div class="col-6"><span>Phí vận chuyển:</span></div>
-							<div class="col-6"><span class="float-right">
-									<!-- <NumberFormat value={(this.state.shippingPrice.value==='' ) ? 0 :
-										this.state.shippingPrice.value} displayType={'text'} thousandSeparator={true} /> -->
-									₫</span></div>
+							<div class="col-6"><span class="float-right" id="checkout-shipping-price">0₫</span></div>
 						</div>
 						<hr />
 						<div class="row" style="color: black;">
@@ -143,7 +157,8 @@
 								<h5>Tổng cộng:</h5>
 							</div>
 							<div class="col-6">
-								<h5 class="float-right">
+								<h5 class="float-right" id="checkout-total-price"
+									th:text="${formatter.formatNumber(cart.totalPrice)} + '₫'">
 									<!-- <NumberFormat value={totalPrice} displayType={'text'} thousandSeparator={true} />₫ -->
 								</h5>
 							</div>
@@ -157,10 +172,12 @@
 
 	<footer th:replace="public/layout :: footer"></footer>
 	<script th:inline="javascript">
-        // var categories = /*[[${categories}]]*/;
-        // var minTotalPrice = /*[[${minTotalPrice}]]*/;
+		var cart = /*[[${cart}]]*/;
+        var listStore = /*[[${listStore}]]*/;
 	</script>
 	<script th:src="@{/js/public/check-out.js}"></script>
+	<script th:src="@{https://maps.googleapis.com/maps/api/js(key=AIzaSyAg44sIHbBu2Ex5DLSvMRFL4SVBr6qDuwM,libraries=places,callback=showGgmaps)}" 
+     	async="async" defer="defer"></script>
 </body>
 
 </html>

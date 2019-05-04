@@ -185,3 +185,10 @@
     top: -0.75em;
     z-index: 2;
 }
+
+
+#show_ggmaps{
+	width:100%;
+	height:240px;
+	margin-top:10px;
+}

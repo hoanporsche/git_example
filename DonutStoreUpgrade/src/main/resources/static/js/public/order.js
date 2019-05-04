@@ -49,6 +49,23 @@ function goToCheckOut(e) {
 	if (totalPrice < minTotalPrice) {
 		$('#openModalWarning').click();
 	} else {
-		window.location.href = "/thong-tin-giao-hang";
+        /**
+         * send cart's infomation to server
+         * store cart's infomation into session storage
+         */
+        $.ajax({
+            type: 'post',
+            url: 'cart-check-out',
+            contentType : 'application/json',
+            dataType : 'json',
+            data: localStorage.getItem('cart'),
+            success: () => {
+                window.location.href = "/thong-tin-giao-hang";
+            }, 
+            error: (e) => {
+                alert(e);
+            }
+        })
+
 	}
 }
