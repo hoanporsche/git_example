@@ -3,6 +3,10 @@ package ds.upgrade.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +14,11 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,5 +86,37 @@ public class WebSocketController {
   public void chatRoom(@DestinationVariable String name, Message message) throws Exception {
     MessageDb messageDb = messageDbService.save(message.getSenderDb(), name, message.getText());
     this.template.convertAndSend("/topic/room/" + name.trim(), messageDb);
+  }
+
+  @GetMapping("/403")
+  public String accessDenied() {
+    return "403";
+  }
+
+  @GetMapping("/login")
+  public String getLogin(Model model, Authentication auth) {
+    return "login";
+  }
+
+  /**.
+   * @author HoanVD - 31/10/2017.
+   * @param request .
+   * @param response .
+   * @param session .
+   * @return.
+   */
+  @GetMapping("/logout")
+  public String logout(HttpServletRequest request, HttpServletResponse response,
+      HttpSession session) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null) {
+      new SecurityContextLogoutHandler().logout(request, response, auth);
+    }
+    return "redirect:/";
+  }
+
+  @GetMapping("/test")
+  public String test() {
+    return "index";
   }
 }
